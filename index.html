@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CCAR's Altimetry Explorer</title>
+    <base href="http://ccar.colorado.edu/altimetry/"/>
+
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <meta name="keywords" content="JPL, Geodesy, Altimetry, CCAR, Croteau, Nerem"/>
+    <meta name="description" content="CCAR's JPL Altimetry Visualization Tool."/>
+    <meta name="author" content="Michael J. Croteau"/>
+    <meta charset='utf-8'/>
+
+    <link rel="icon" href="http://ccar.colorado.edu/images/culogo_sm.jpg" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="css/mainstyles.css"/>
+    <link rel="stylesheet" type="text/css" href="css/extrastyles.css"/>
+
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.0/mapbox-gl.css' rel='stylesheet' />
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjs/2.6.0/math.min.js'></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-51905010-3', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body>
+
+<div id='background'></div>
+
+<div id="foreground">
+
+    <div id="menu-container">
+        <header>
+            <div id="menuhead">
+                <div id="menucontentname"><h1 class="top">CCAR's Altimetry Explorer</h1></div>
+                <div id="menucontenttitle"><h2 class="top"><a href="/">Colorado Center for Astrodynamics Research</a> | <a href="https://www.colorado.edu">CU Boulder</a></h2></div>
+            </div>
+            <div id="menulinks"><ul>
+                    <li><a class="navbar" href="">Main</a></li>
+                    <li><a class="navbar" href="about.html">About</a></li><!--
+                    <li><a class="navbar" href="contact.html">Contact</a></li> -->
+            </ul></div>
+        </header>
+    </div>
+
+    <div id='main-container'>
+
+        <div class='content-container' style='height:20px;'></div>
+
+        <div class='content-container' id="map-container">
+            <div id='map-area'>
+                <div id="map-click">
+                    <div id="click-location">
+                        <h2>Location Lookup</h2>
+                        <p>Use your mouse to zoom and navigate the map. <span class="bold">Click</span> on the map or <span class="bold">input</span> latitude and longitude coordinates to get a local timeseries.</p>
+                        <form id="GetTimeseries">
+                            <div class="click-latlon-div"> Lat. [Deg]: </div><div class="click-latlonfield-div"><input type="text" id="click-lat"></div><br>
+                            <div class="click-latlon-div"> Lon. [Deg]: </div><div class="click-latlonfield-div"><input type="text" id="click-lon"></div><br>
+                            <input id="timeseries-button" type="submit" value="Get Timeseries">
+                        </form>
+                    </div>
+                </div><!--
+             --><div id="map-and-cbar">
+                    <nav id="map-style-menu"></nav>
+                    <div id='map'>
+                        <div id="scroll-popup" class="popup-msg success-msg">Location data loaded.<br>Scroll down to see local timeseries.</div>
+                        <div id="error-popup" class="popup-msg error-msg">That location is unavailable.<br>Either it is not in the dataset or there has been an error.</div>
+                    </div>
+
+                    <div id='map-meta'>
+                        <!-- Map Colorbar Info -->
+                        <div id='map-cbar-container'>
+                            <div class="map-colorbar" id="trend-colorbar">
+                                <div class="cbar" id="cbar-trend"></div>
+                                <div class="cbar-labels" id="cbar-trend-labels">
+                                    <div class="cbar-num" id="cbar-t-l-0"></div><div class="cbar-num" id="cbar-t-l-2"></div><div class="cbar-num" id="cbar-t-l-4"></div><div class="cbar-num" id="cbar-t-l-6"></div><div class="cbar-num" id="cbar-t-l-8"></div><div class="cbar-num" id="cbar-t-l-10"></div><div class="cbar-num" id="cbar-t-l-12"></div><div class="cbar-num" id="cbar-t-l-14"></div><div class="cbar-num" id="cbar-t-l-16"></div><div class="cbar-num" id="cbar-t-l-18"></div><div class="cbar-num" id="cbar-t-l-20"></div>
+                                </div>
+                                <div class="cbar-labels">cm/year</div>
+                            </div>
+                            <div class="map-colorbar" id="annual-colorbar">
+                                <div class="cbar" id="cbar-annual"></div>
+                                <div class="cbar-labels" id="cbar-annual-labels">
+                                    <div class="cbar-num" id="cbar-a-l-0"></div><div class="cbar-num" id="cbar-a-l-1"></div><div class="cbar-num" id="cbar-a-l-2"></div><div class="cbar-num" id="cbar-a-l-3"></div><div class="cbar-num" id="cbar-a-l-4"></div><div class="cbar-num" id="cbar-a-l-5"></div><div class="cbar-num" id="cbar-a-l-6"></div><div class="cbar-num" id="cbar-a-l-7"></div><div class="cbar-num" id="cbar-a-l-8"></div><div class="cbar-num" id="cbar-a-l-9"></div><div class="cbar-num" id="cbar-a-l-10"></div>
+                                </div>
+                                <div class="cbar-labels">cm</div>
+                            </div>
+                            <div class="map-colorbar" id="rms-colorbar">
+                                <div class="cbar" id="cbar-rms"></div>
+                                <div class="cbar-labels" id="cbar-rms-labels">
+                                    <div class="cbar-num" id="cbar-r-l-0"></div><div class="cbar-num" id="cbar-r-l-1"></div><div class="cbar-num" id="cbar-r-l-2"></div><div class="cbar-num" id="cbar-r-l-3"></div><div class="cbar-num" id="cbar-r-l-4"></div><div class="cbar-num" id="cbar-r-l-5"></div><div class="cbar-num" id="cbar-r-l-6"></div><div class="cbar-num" id="cbar-r-l-7"></div><div class="cbar-num" id="cbar-r-l-8"></div><div class="cbar-num" id="cbar-r-l-9"></div><div class="cbar-num" id="cbar-r-l-10"></div>
+                                </div>
+                                <div class="cbar-labels">cm</div>
+                            </div>
+                        </div>
+                        <div id="cbar-bounds">
+                            Set Colorbar Maximum: <span id="cbar-max-set">40</span> cm
+                            <input type="range" min="1" max="60" value="40" step="1" id="colorbar-max-bounds" onchange="updateColorbarMap(this.value);" oninput="updateColorbarText(this.value);"/>
+                        </div>
+
+                        <div class="right">
+                            <p class="right small">Data Source: Victor Zlotnicki, Jet Propulsion Lab&nbsp;</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class='content-container' id="chart-container">
+            <div id="chart-area">
+                <div id="chart-options">
+                    <!-- <h2>Plot Options</h2> -->
+                    <form id="PlotOptionsForm" onsubmit="return false;">
+                        <h2>Plot Settings</h2>
+                        <div class="left"><span class="bold">Detrend:</span></div>
+                        <input type="radio" name="draw-detrend" value="1">On &nbsp;
+                        <input type="radio" name="draw-detrend" value="0" checked>Off<br>
+                        <div class="left"><span class="bold">Deseason:</span> <a href="faq.html#Q4">(?)</a></div>
+                        <input type="radio" name="draw-deseason" value="1">On &nbsp;
+                        <input type="radio" name="draw-deseason" value="0" checked>Off<br>
+                        <div class="left"><span class="bold">Smooth (Days):</span></div>
+                        <input type="text" id="smooth-width"><button id="set-smooth-width" type="button">Set</button><br>
+                        <div id="show-trend-toggle">
+                            <div class="left"><span class="bold">Show Trend:</span></div>
+                            <input type="radio" name="draw-trend" value="1" checked>On &nbsp;
+                            <input type="radio" name="draw-trend" value="0">Off<br>
+                        </div>
+                    </form>
+                    <div class="hline"></div>
+                    <button id="save-button" type="button"><img src="img/ic_image_grey600_48dp.png"/> &nbsp;&nbsp; Save Image</button>
+                    <button id="data-button" type="button"><img src="img/ic_file_download_grey600_48dp.png"/> &nbsp;&nbsp; Get Data</button>
+                </div><!--
+             --><div id="timeseries">
+                    <div id="LS-params">
+                        <div class="best-fit-title">Trend:</div><div class="best-fit-param" id="LS-param-trend"></div><br>
+                        <div class="best-fit-title">Annual Amplitude:</div><div class="best-fit-param" id="LS-param-annual"></div><br>
+                        <div class="best-fit-title">Semi-Annual Amp.:</div><div class="best-fit-param" id="LS-param-semiann"></div>
+                    </div>
+                    <div id="data-timeseries"></div>
+                    <div id="data-navbar"></div>
+                    <canvas width="960" height="500" style="display:none"></canvas>
+                    <div class="tooltip" id="plot-tooltip" style="opacity: 0;">
+                      <div id="tooltip-info-0"></div><div id="tooltip-info-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class='content-container' id="footer-container">
+        <div id="footer-area">
+            <div class="hline"></div>
+            <a href="">Altimetry Vizualization Tool</a>
+            | <a href="/" target="_blank">Colorado Center for Astrodynamics Research</a>
+            | <a href="http://www.jpl.nasa.gov/" target="_blank">Jet Propulsion Lab</a>
+        </div>
+    </div>
+
+</div><!-- End of #foreground -->
+
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="js/saveSvgAsPng.js"></script>
+<script type="text/javascript" src="js/globals.js"></script>
+<script type="text/javascript" src="js/statistics.js"></script>
+<script type="text/javascript" src="js/plotting.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/mapcontrol-colormap.js"></script>
+<script type="text/javascript" src="js/mapcontrol.js"></script>
+
+</body>
+</html>

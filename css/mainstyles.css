@@ -1,0 +1,303 @@
+/* Mascons Visualization Tool Primary Stylesheet */
+/* CU Colors [ Black:#000000, Gold:#CFB87C, Dark Gray:#565A5C, Light Gray:#A2A4A3 ] */
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+    top: 0px;
+    left: 0px;
+    min-height: 100vh;
+    font-family: "HelveticaNeue-Light","Helvetica Neue Light",
+        "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 300;
+}
+
+/* Header Styles */
+h1, h2 { padding: 0px; text-align: center; color: #565A5C; }
+h1 { margin: 10px; font-size: 24pt; }
+h2 { margin:  5px 10px; font-size: 14pt; }
+h3 { margin:  3px 0px; font-size: 13pt; width: 100%; text-align: left; color: #000000; }
+p {
+    font-size: 13pt;
+    font-family: Georgia, Times, 'Times New Roman', serif;
+    line-height: 16pt;
+}
+
+/* Link Styles */
+a:link, a:visited { color: #003399; text-decoration: none; }
+a:hover   { color: #3366CC; text-decoration: none; }
+a:active  { color: #6699FF; text-decoration: none; }
+
+/* Div, Span, Paragragh, etc. Classes */
+.bold    { font-weight: bold; }
+.italics { font-weight: italic; }
+.left    { text-align: left; width: 100%; margin: 10px 0; }
+.right   { text-align: right; width: 100%; clear: left; }
+.center  { text-align: center; width: 100%; }
+.justify { text-align: justify; width: 100%; }
+.small   { font-size: 9pt; padding: 1px 0; margin: 0; }
+.large   { font-size: 16pt; padding: 1px 0; margin: 10px 20px; width: auto; }
+.black { color: #000000; }
+
+/*---------------------------
+Define general div properties
+---------------------------*/
+
+/* Horizontal Line */
+div.hline { height: 1px; margin: 20px 0px; width: 100%; background-color: #DDDDDD; }
+
+/* Primary page foreground and background */
+#background { position: fixed; width: 100%; top: 0px; bottom: 0px; z-index: 1; background-color: #999999; }
+#foreground {
+    position: relative; width: 100%;  height: 100%; padding: 0px; margin: 0px;
+    text-align: center; display: block; float: left; z-index: 2;
+}
+
+/* Left and Right Primary sections */
+.left-section {
+    width: calc(100% - 40px);
+    max-width: 760px;
+    margin: 0px;
+    padding: 20px;
+    background-color: #FFFFFF;
+    display: inline-block;
+    vertical-align: top;
+}
+.left-section ul { width: 80%; }
+.left-section ul li { width: 100%; }
+
+.right-section {
+    width: 100%;
+    max-width: 270px;
+    margin: 20px 20px 0px 0px;
+    padding: 0px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/* Right "Info Box" Subsection Styling */
+.right-subsection {
+    width: calc(100%-40px);
+    padding: 19px;
+    border: 1px solid #DDDDDD;
+    border-radius: 8px;
+    margin: 20px 0px 0px;
+    display: block;
+    float: right;
+    background-color: #FAFAFA;
+}
+.right-subsection img { width: 100%; }
+.right-subsection ul, .right-subsection ul li { text-align: left; clear: left;}
+.right-subsection ul { width: 100%; }
+.right-subsection ul li { width: 100%; list-style: none; margin: 5px 0px; }
+
+#faq { margin: 20px 0px 0px 20px; }
+#faq ul { padding: 0; }
+
+/*-----------------------
+Define Content Properties
+-----------------------*/
+
+.content-container {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    display: block;
+}
+
+/* Style Primary Containers */
+#menu-container {
+    position:relative; top:0px; left:0px;
+    width:100%; margin: 0px; border: 0px; padding:0px;
+    text-align: center;
+    z-index: 2;
+}
+
+#main-container, #footer-container {
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
+    background-color: #FFFFFF;
+    position:relative;
+}
+
+#main-container {
+    min-height: calc( 100vh - 85px);
+    max-width: 1090px;
+    width: 100%;
+    padding: 0px;
+}
+
+#footer-container {
+    width: 100%;
+    max-width: 1090px;
+    min-height: 85px;
+    text-align: center;
+    padding: 0px;
+}
+
+#footer-area { width: 100%; padding: 0px; margin: 0px; font-size: 10pt; line-height: 22px; }
+
+#footer-area div.hline { width: auto; margin: 20px; }
+
+/* Image Container Styling */
+.image-box {
+    width: 208px;
+    height: 157px;
+    padding: 0px;
+    margin: 20px 10px;
+    border: 1px solid #DDDDDD;
+    display: inline-block;
+}
+.image-box img { width: 100%; height: 117px; display: block; float: left; }
+.img-text { width: 100%; height: 40px; display: block; float: left; }
+
+image-box:after {
+  content:url("img/ic_search_grey600_48dp.png");
+  position: absolute;
+  margin: 5px auto;
+  height: 100px;
+  width: 100%;
+}
+
+.image-box-large {
+    width: 260px;
+    height: 200px;
+    padding: 0px;
+    margin: 20px 10px;
+    border: 1px solid #DDDDDD;
+    display: inline-block;
+}
+.image-box-large img { width: 100%; height: 160px; display: block; float: left; }
+.img-text { width: 100%; height: 40px; display: block; float: left; }
+
+/*---------------------------
+Define page header properties
+---------------------------*/
+
+header { background-color: #000000; margin: 0px; border: 0px; }
+
+/* All content above the navigation bar */
+#menuhead { width: 100%; max-width: 1090px;  margin: 0px auto; height: 45px; }
+#menucontentname  { margin-left:  5px; text-align:  left; float:  left; }
+#menucontenttitle { margin-right: 5px; text-align: right; float: right; }
+#menucontentname, #menucontenttitle { line-height: 45px; vertical-align: middle; }
+
+.top { color: #FFFFFF; margin:0px auto; }
+
+/* Navigation Bar Links in Menu */
+#menulinks {
+    clear:both;
+    width:100%;
+    background-color: #CFB87C;
+    text-align:center;
+    top:auto;
+    left:0px;
+    border-radius:0px;
+    margin-top:0px;
+    margin-left:0px;
+    border:0px;
+    border-width:0px;
+    line-height: 22px;
+}
+
+/* Navbar Link List Style */
+#menulinks ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    max-width:1089px;
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    border:0px solid #FFFFFF;
+    /* border-left-width: 1px; */
+}
+
+#menulinks ul li {
+    display:inline-block;
+    float: left;
+    /* max-width: 26%;
+    min-width: 120px;
+    border:1px solid #FFFFFF;
+    border-left: 0px;
+    border-radius:0px;
+    margin: 0px 0px -1px 0; */
+    border: 0;
+    margin: 0;
+    overflow: hidden;
+    text-align:center;
+}
+
+/* Navbar Links Style */
+a.navbar:link, a.navbar:visited {
+    display: block;
+    /* width:100%;
+    max-width: 150px; */
+    background-color: #CFB87C;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 0px 20px;
+}
+a.navbar:hover, a.navbar:active { background-color: #bb9a44; }
+
+/* CCAR and CU Boulder links in Header of page */
+.top a:link, .top a:visited { color: #FFFFFF; text-decoration: none; }
+.top a:hover, .top a:active { color: #A2A4A3; }
+
+
+/* Image Popups */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.img-popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 80%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.img-popup h2 {
+  margin-top: 0;
+}
+.img-popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.img-popup .close:hover {
+  color: orange;
+}
+.img-popup .content {
+  max-height: 80%;
+  overflow: auto;
+}
+.img-popup .content img {
+  width: 100%;
+  overflow: auto;
+}
