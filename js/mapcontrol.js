@@ -51,7 +51,7 @@ function getLatLonJSONfilename(lng, lat) {
     while (jsonLat.length < 7) { jsonLat = '0' + jsonLat; }
 
     // Concatenate file extension:
-    filename = 'JSON/'.concat(jsonLat, '/', jsonLon, '.json');
+    filename = 'v2/JSON/'.concat(jsonLat, '/', jsonLon, '.json');
     return filename;
 }
 
