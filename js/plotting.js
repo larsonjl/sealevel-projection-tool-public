@@ -6,7 +6,7 @@ function checkTrend() {
     radios = document.getElementsByName('draw-trend');
     for (i = 0; i < radios.length; i += 1) {
         if (radios[i].checked) {
-            drawTrend = radios[i].value;
+            drawTrend = Number(radios[i].value);
             break;
         }
     }
@@ -21,7 +21,7 @@ function checkDetrend() {
     radios = document.getElementsByName('draw-detrend');
     for (i = 0; i < radios.length; i += 1) {
         if (radios[i].checked) {
-            drawDetrend = radios[i].value;
+            drawDetrend = Number(radios[i].value);
             break;
         }
     }
@@ -44,7 +44,7 @@ function checkDeseason() {
     radios = document.getElementsByName('draw-deseason');
     for (i = 0; i < radios.length; i += 1) {
         if (radios[i].checked) {
-            drawDeseason = radios[i].value;
+            drawDeseason = Number(radios[i].value);
             break;
         }
     }
