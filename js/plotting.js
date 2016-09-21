@@ -183,7 +183,7 @@ function dataDownloadListener() {
 
     i0 = jsonFilename.indexOf('JSON');
     i1 = jsonFilename.indexOf('.json');
-    fileName = 'CSV/'.concat(jsonFilename.substring(i0 + 5, i1), '.csv');
+    fileName = 'v2/CSV/'.concat(jsonFilename.substring(i0 + 5, i1), '.csv');
     // var fileName = 'CSV/' + jsonFilename.substr(5,jsonFilename.length-10) + '.csv';
     window.open(fileName, '_self');
 }
