@@ -136,13 +136,10 @@ function selectAltimetry(e, status) {
             // Show loaded successfully popup:
             scrollPopup = document.getElementById('scroll-popup');
             scrollPopup.style.zIndex = 5000;
+            scrollPopup.style.opacity = 1;
             scrollPopup.style.transition = "opacity 1s";
             setTimeout(function () {
                 scrollPopup.style.opacity = 0;
-                setTimeout(function () {
-                    scrollPopup.style.zIndex = 0;
-                    scrollPopup.style.opacity = 1;
-                }, 1100);
             }, 3000);
 
         } else {
@@ -152,12 +149,9 @@ function selectAltimetry(e, status) {
             scrollPopup = document.getElementById('error-popup');
             scrollPopup.style.zIndex = 5000;
             scrollPopup.style.transition = "opacity 1s";
+            scrollPopup.style.opacity = 1;
             setTimeout(function () {
                 scrollPopup.style.opacity = 0;
-                setTimeout(function () {
-                    scrollPopup.style.zIndex = 0;
-                    scrollPopup.style.opacity = 1;
-                }, 1100);
             }, 3000);
         }
     };
@@ -371,11 +365,7 @@ function initializeMap() {
             minZoom: 1.0
         });
 
-        map.on('style.load', function () {
-            addTrendAnnualRMSmap();
-            document.getElementById('scroll-popup').style.opacity = 1;
-            document.getElementById('error-popup').style.opacity = 1;
-        });
+        map.on('style.load', addTrendAnnualRMSmap);
 
         map.addControl(new mapboxgl.Navigation());
 
