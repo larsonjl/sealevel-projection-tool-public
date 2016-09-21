@@ -86,7 +86,7 @@ function getTimeSeries() {
     "use strict";
     // Get file:
     var req = new XMLHttpRequest();
-    req.open('GET', '/altimetry/JSON/v2/time.json', true);
+    req.open('GET', '/altimetry/v2/JSON/time.json', true);
     req.onload = function () {
         if (req.status >= 200 && req.status < 400) { // Success!
             time = JSON.parse(req.responseText);
