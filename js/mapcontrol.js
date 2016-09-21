@@ -220,12 +220,12 @@ function addTrendAnnualRMSmap() {
     // Fine and Coarse Resolution Grids:
     map.addSource('alti-fine', {
         type: 'vector',
-        url: 'mapbox://croteaumj.4wyb8e83'
+        url: 'mapbox://croteaumj.7wszv78f'
     });
 
     map.addSource('alti-coarse', {
         type: 'vector',
-        url: 'mapbox://croteaumj.6jcx7bwv'
+        url: 'mapbox://croteaumj.divhcoxq'
     });
 
     // Trend Layers
