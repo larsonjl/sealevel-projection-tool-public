@@ -357,7 +357,7 @@ function initializeMap() {
         alert('Your browser does not support Mapbox GL. Please try a different browser, or make sure that you have WebGL enabled on your current browser.');
     } else {
         map = new mapboxgl.Map({
-            container: 'map',
+            container: 'map-div',
             style: 'mapbox://styles/croteaumj/cirqkdgcn0000vnnm5nf5yxj6',
             center: [0, 20],
             zoom: 1.0,
