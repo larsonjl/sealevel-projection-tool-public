@@ -345,6 +345,65 @@ function addTrendAnnualRMSmap() {
     addLayer('RMS',    'alti-rms');
 }
 
+// addTideGauges :: Loads Tide Gauge Icons to Map.
+function loadTideGauges() {
+    map.addSource("tide_gauges", {
+        "type": "geojson",
+        "data": gauges
+    });
+
+    map.addLayer({
+        "id": "gauges",
+        "type": "circle",
+        "source": "tide_gauges",
+        "paint": {
+            "circle-radius": 4,
+            "circle-color": "#000000",
+            'circle-opacity': 0.9
+        },
+        'layout': {
+            'visibility': 'none'
+        },
+    });
+
+    map.on('zoom', function () {
+        map.setPaintProperty('gauges','circle-radius', (4 * (0.5 + map.getZoom()/3)));
+    })
+
+    // When a click event occurs near a polygon, open a popup at the location of
+    // the feature, with description HTML from its properties.
+    map.on('click', function (e) {
+        var features = map.queryRenderedFeatures(e.point, { layers: ['gauges'] });
+        if (!features.length) {
+            return;
+        }
+
+        var feature = features[0];
+
+        var popup = new mapboxgl.Popup()
+            .setLngLat(map.unproject(e.point))
+            .setHTML("<div class='center'>Site: " + feature.properties.title +
+                "<br>Code: " + feature.properties.code +
+                "<br><button type='button'>Show Timeseries</button></div>")
+            .addTo(map);
+    });
+
+    // Use the same approach as above to indicate that the symbols are clickable
+    // by changing the cursor style to 'pointer'.
+    map.on('mousemove', function (e) {
+        var features = map.queryRenderedFeatures(e.point, { layers: ['gauges'] });
+        map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+    });
+}
+
+function addTideGauges() {
+    map.setLayoutProperty('gauges', 'visibility', 'visible');
+}
+
+function removeTideGauges() {
+    map.setLayoutProperty('gauges', 'visibility', 'none');
+}
+
 // initializeMap :: loads background and interactive maps and starts page listeners.
 function initializeMap() {
     "use strict";
@@ -366,6 +425,8 @@ function initializeMap() {
         });
 
         map.on('style.load', addTrendAnnualRMSmap);
+
+        map.on('style.load', loadTideGauges);
 
         map.addControl(new mapboxgl.Navigation());
 
