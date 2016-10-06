@@ -32,16 +32,34 @@ function loadTideGauges() {
         "filter": ["==", "name", ""]
     });
 
-    // When the user moves their mouse over the page, we look for features
-    // at the mouse position (e.point) and within the gauges layer.
-    // If a feature is found, then we'll update the filter in the route-hover
-    // layer to only show that state, thus making a hover effect.
+    map.addLayer({
+        "id": "gauges-label",
+        "type": "symbol",
+        "source": "tide_gauges",
+        "layout": {
+            "text-field": "{title}",
+            "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+            "text-offset": [0, -2],
+            "text-anchor": "top"
+        },
+        "filter": ["==", "name", ""]
+    });
+
+    tideGaugeInteractions();
+}
+
+// tideGaugeInteractions :: Manage tide gauge mouse-over and click/zoom
+function tideGaugeInteractions() {
+
+    // On mouseover of a tide gauge, show larger icon and label
     map.on("mousemove", function(e) {
         var features = map.queryRenderedFeatures(e.point, { layers: ["gauges"] });
         if (features.length) {
             map.setFilter("gauges-hover", ["==", "code", features[0].properties.code]);
+            map.setFilter("gauges-label", ["==", "code", features[0].properties.code]);
         } else {
             map.setFilter("gauges-hover", ["==", "code", ""]);
+            map.setFilter("gauges-label", ["==", "code", ""]);
         }
     });
 
