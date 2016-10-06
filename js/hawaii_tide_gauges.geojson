@@ -234,7 +234,7 @@ var gauges = {"type":"FeatureCollection","features":[
     {"type":"Feature","geometry":{"type":"Point","coordinates":[-82.83166667,27.97666667]},"properties":{"title":"Clearwater Beach, USA","code":"cwfl"}},
     {"type":"Feature","geometry":{"type":"Point","coordinates":[-80.59333333,28.41500000]},"properties":{"title":"Port Canaveral, USA","code":"pcfl"}},
     {"type":"Feature","geometry":{"type":"Point","coordinates":[-104.85000000,70.98333333]},"properties":{"title":"Honningsvag, NOR","code":"honn"}},
-    {"type":"Feature","geometry":{"type":"Point","coordinates":[50.11666667,61.93333333]},"properties":{"title":"Maloy, NOR","code":"malo"}},
+    {"type":"Feature","geometry":{"type":"Point","coordinates":[5.11666667,61.93333333]},"properties":{"title":"Maloy, NOR","code":"malo"}},
     {"type":"Feature","geometry":{"type":"Point","coordinates":[115.11666667,78.93333333]},"properties":{"title":"Ny-Alesund, NOR","code":"nyal"}},
     {"type":"Feature","geometry":{"type":"Point","coordinates":[11.93333333,54.56666667]},"properties":{"title":"Gedser, DNK","code":"geds"}},
     {"type":"Feature","geometry":{"type":"Point","coordinates":[12.46666667,56.10000000]},"properties":{"title":"Hornbaek, DNK","code":"hord"}}]};

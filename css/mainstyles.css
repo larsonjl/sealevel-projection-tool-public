@@ -30,10 +30,10 @@ a:active  { color: #6699FF; text-decoration: none; }
 
 /* Div, Span, Paragragh, etc. Classes */
 .bold    { font-weight: bold; }
-.italics { font-weight: italic; }
+.italics { font-style: italic; }
 .left    { text-align: left; width: 100%; margin: 10px 0; }
-.right   { text-align: right; width: 100%; clear: left; }
-.center  { text-align: center; width: 100%; }
+.right   { text-align: right; width: 100%; margin: 10px 0; clear: left; }
+.center  { text-align: center; width: 100%; margin: 10px 0; }
 .justify { text-align: justify; width: 100%; }
 .small   { font-size: 9pt; padding: 1px 0; margin: 0; }
 .large   { font-size: 16pt; padding: 1px 0; margin: 10px 20px; width: auto; }

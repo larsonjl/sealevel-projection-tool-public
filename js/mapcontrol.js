@@ -157,12 +157,29 @@ function selectAltimetry(e, status) {
         //Show tide gauge:
         var feature = features[0];
         tideGaugeCode = feature.properties.code;
-
+        var lng_str = feature.geometry.coordinates[0];
+        var lat_str = feature.geometry.coordinates[1];
+        if (lng_str < 0) {
+            lng_str = (-lng_str).toFixed(6) + "&deg;W";
+        } else if (lng_str === 0) {
+            lng_str = "0.000000&deg;";
+        } else {
+            lng_str = (lng_str).toFixed(6) + "&deg;E";
+        }
+        if (lat_str < 0) {
+            lat_str = (-lat_str).toFixed(6) + "&deg;S";
+        } else if (lat_str === 0) {
+            lat_str = "0.000000&deg;";
+        } else {
+            lat_str = (lat_str).toFixed(6) + "&deg;N";
+        }
         var gauge_marker = new mapboxgl.Popup()
-            .setLngLat(map.unproject(e.point))
-            .setHTML("<h2 class='center'>Tide Gauge</h2><div class='left'><span class='bold'>Site:</span> " + feature.properties.title +
+            .setLngLat({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]})
+            .setHTML("<div class='tide-gauge-popup'><h2 class='center'>Tide Gauge</h2>" +
+                "<div class='center italics'>" + lat_str + ", " + lng_str + "</div>" +
+                "<span class='bold'>Site:</span> " + feature.properties.title +
                 "<br><span class='bold'>Code:</span> " + feature.properties.code +
-                "</div><div class='center'><button type='button'>Show Timeseries</button></div>")
+                "<div class='center'><button type='button'>Show Timeseries</button></div></div>")
             .addTo(map);
     } else {
         // Show altimetry:
@@ -422,40 +439,53 @@ function loadTideGauges() {
         "paint": {
             "circle-radius": 4,
             "circle-color": "#000000",
-            'circle-opacity': 0.9
+            'circle-opacity': 0.5
         },
         'layout': {
             'visibility': 'none'
         },
     });
 
+    map.addLayer({
+        "id": "gauges-hover",
+        "type": "circle",
+        "source": "tide_gauges",
+        "paint": {
+            "circle-radius": 6,
+            "circle-color": "#000000",
+            "circle-opacity": 1
+        },
+        "layout": {},
+        "filter": ["==", "name", ""]
+    });
+
+    // When the user moves their mouse over the page, we look for features
+    // at the mouse position (e.point) and within the gauges layer.
+    // If a feature is found, then we'll update the filter in the route-hover
+    // layer to only show that state, thus making a hover effect.
+    map.on("mousemove", function(e) {
+        var features = map.queryRenderedFeatures(e.point, { layers: ["gauges"] });
+        if (features.length) {
+            map.setFilter("gauges-hover", ["==", "code", features[0].properties.code]);
+        } else {
+            map.setFilter("gauges-hover", ["==", "code", ""]);
+        }
+    });
+
+    // Reset the route-hover layer's filter when the mouse leaves the map
+    map.on("mouseout", function() {
+        map.setFilter("gauges-hover", ["==", "name", ""]);
+    });
+
+    // Change circle size with zoom for better viewing
     map.on('zoom', function () {
         map.setPaintProperty('gauges','circle-radius', (4 * (0.5 + map.getZoom()/3)));
-    })
+        map.setPaintProperty('gauges-hover','circle-radius', 1.5*(4 * (0.5 + map.getZoom()/3)));
+    });
 
-    /*
-    // When a click event occurs near a polygon, open a popup at the location of
-    // the feature, with description HTML from its properties.
-    map.on('click', function (e) {
-        var features = map.queryRenderedFeatures(e.point, { layers: ['gauges'] });
-        if (!features.length) {
-            return;
-        }
-
-        var feature = features[0];
-
-        var popup = new mapboxgl.Popup()
-            .setLngLat(map.unproject(e.point))
-            .setHTML("<div class='center'>Site: " + feature.properties.title +
-                "<br>Code: " + feature.properties.code +
-                "<br><button type='button'>Show Timeseries</button></div>")
-            .addTo(map);
-    });*/
-
-    // Use the same approach as above to indicate that the symbols are clickable
-    // by changing the cursor style to 'pointer'.
+    // Make mouse a pointer when over a tide gauge
     map.on('mousemove', function (e) {
-        var features = map.queryRenderedFeatures(e.point, { layers: ['gauges'] });
+        var features = map.queryRenderedFeatures(e.point, { layers: ['gauges-hover'] });
         map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
     });
 }

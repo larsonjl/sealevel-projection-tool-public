@@ -393,3 +393,12 @@ div.about-toggle-up {
 div#about-grace-details { display: block; }
 div#about-grace-toggle-up { display: none; }
 div#about-grace-toggle-down { display: inline-block; }
+
+/* Style Tige Gauge Popups */
+ div.tide-gauge-popup {
+     text-align: left;
+     width: 160px;
+     margin: -10px -10px -15px;
+     padding: 10px;
+     border: 3px solid #E0E0E0;
+}
