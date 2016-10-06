@@ -40,8 +40,13 @@ function loadTideGauges() {
         "layout": {
             "text-field": "{title}",
             "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-            "text-offset": [0, -2],
-            "text-anchor": "top"
+            "text-offset": [0, -1],
+            "text-anchor": "bottom"
+        },
+        "paint": {
+            "text-halo-color": "#FFFFFF",
+            "text-halo-width": 1,
+            "text-halo-blur": 2
         },
         "filter": ["==", "name", ""]
     });
