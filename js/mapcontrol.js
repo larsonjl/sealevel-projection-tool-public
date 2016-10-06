@@ -99,39 +99,20 @@ function disableAllLayers() {
     for (i = 0; i < x.length; i += 1) { x[i].className = ''; }
 }
 
-// selectAltimetry :: get page click and grabs time series.
-function selectAltimetry(e, status) {
+function showTideGaugeData() {
     "use strict";
-    var request;
-
-    if (status === 'new') {
-        minDate = time.time_yrs[0];
-        maxDate = time.time_yrs[time.time_yrs.length - 1];
-    }
-
-    if (e.lngLat.lng > 180 && e.lngLat.lng <= 360) { e.lngLat.lng = e.lngLat.lng - 360; }
-    if (e.lngLat.lng < -180) { e.lngLat.lng = e.lngLat.lng + 360; }
-
-    LAT = e.lngLat.lat; // store Latitude for quick reference.
-    LNG = e.lngLat.lng; // store Longitude for quick reference.
-
-    // Define filename to get:
-    jsonFilename = getLatLonJSONfilename(e.lngLat.lng, e.lngLat.lat);
-
-    jsonFilename = '/altimetry/' + jsonFilename;
-
-    // Get file:
+    var tideGaugeFile = '/altimetry/tidegauge/JSON/' + tideGaugeCode + '.json';
     request = new XMLHttpRequest();
-    request.open('GET', jsonFilename, true);
+    request.open('GET', tideGaugeFile, true);
     request.onload = function () {
         var data, scrollPopup;
         if (request.status >= 200 && request.status < 400) {
             // Success!
             data = JSON.parse(request.responseText);
 
-            displayDataSeries(data, minDate, maxDate);
-            displayDataNavbar(data);
-            setPopupAndCenter(e);
+            ///displayDataSeries(data, minDate, maxDate);
+            ///displayDataNavbar(data);
+            console.log(data);
 
             // Show loaded successfully popup:
             scrollPopup = document.getElementById('scroll-popup');
@@ -159,6 +140,88 @@ function selectAltimetry(e, status) {
       // There was a connection error of some sort
     };
     request.send();
+}
+
+// selectAltimetry :: get page click and grabs time series.
+function selectAltimetry(e, status) {
+    "use strict";
+    var request, is_gauge = true;
+
+    // Check if click was over a tide gauge marker
+    var features = map.queryRenderedFeatures(e.point, { layers: ['gauges'] });
+    if (!features.length) {
+        is_gauge = false;
+    }
+
+    if (is_gauge === true) {
+        //Show tide gauge:
+        var feature = features[0];
+        tideGaugeCode = feature.properties.code;
+
+        var gauge_marker = new mapboxgl.Popup()
+            .setLngLat(map.unproject(e.point))
+            .setHTML("<h2 class='center'>Tide Gauge</h2><div class='left'><span class='bold'>Site:</span> " + feature.properties.title +
+                "<br><span class='bold'>Code:</span> " + feature.properties.code +
+                "</div><div class='center'><button type='button'>Show Timeseries</button></div>")
+            .addTo(map);
+    } else {
+        // Show altimetry:
+        if (status === 'new') {
+            minDate = time.time_yrs[0];
+            maxDate = time.time_yrs[time.time_yrs.length - 1];
+        }
+
+        if (e.lngLat.lng > 180 && e.lngLat.lng <= 360) { e.lngLat.lng = e.lngLat.lng - 360; }
+        if (e.lngLat.lng < -180) { e.lngLat.lng = e.lngLat.lng + 360; }
+
+        LAT = e.lngLat.lat; // store Latitude for quick reference.
+        LNG = e.lngLat.lng; // store Longitude for quick reference.
+
+        // Define filename to get:
+        jsonFilename = getLatLonJSONfilename(e.lngLat.lng, e.lngLat.lat);
+
+        jsonFilename = '/altimetry/' + jsonFilename;
+
+        // Get file:
+        request = new XMLHttpRequest();
+        request.open('GET', jsonFilename, true);
+        request.onload = function () {
+            var data, scrollPopup;
+            if (request.status >= 200 && request.status < 400) {
+                // Success!
+                data = JSON.parse(request.responseText);
+
+                displayDataSeries(data, minDate, maxDate);
+                displayDataNavbar(data);
+                setPopupAndCenter(e);
+
+                // Show loaded successfully popup:
+                scrollPopup = document.getElementById('scroll-popup');
+                scrollPopup.style.zIndex = 5000;
+                scrollPopup.style.opacity = 1;
+                scrollPopup.style.transition = "opacity 1s";
+                setTimeout(function () {
+                    scrollPopup.style.opacity = 0;
+                }, 3000);
+
+            } else {
+                // We reached our target server, but it returned an error
+                // alert("That location is unavailable. Either it is not in the dataset (such as if it is over land) or there has been an error.");
+                // Show loaded successfully popup:
+                scrollPopup = document.getElementById('error-popup');
+                scrollPopup.style.zIndex = 5000;
+                scrollPopup.style.transition = "opacity 1s";
+                scrollPopup.style.opacity = 1;
+                setTimeout(function () {
+                    scrollPopup.style.opacity = 0;
+                }, 3000);
+            }
+        };
+        request.onerror = function () {
+          // There was a connection error of some sort
+        };
+        request.send();
+    }
 }
 
 function switchMapLayer(this_id) {
@@ -370,6 +433,7 @@ function loadTideGauges() {
         map.setPaintProperty('gauges','circle-radius', (4 * (0.5 + map.getZoom()/3)));
     })
 
+    /*
     // When a click event occurs near a polygon, open a popup at the location of
     // the feature, with description HTML from its properties.
     map.on('click', function (e) {
@@ -386,7 +450,7 @@ function loadTideGauges() {
                 "<br>Code: " + feature.properties.code +
                 "<br><button type='button'>Show Timeseries</button></div>")
             .addTo(map);
-    });
+    });*/
 
     // Use the same approach as above to indicate that the symbols are clickable
     // by changing the cursor style to 'pointer'.
