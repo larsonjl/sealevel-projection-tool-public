@@ -72,10 +72,15 @@ function setPopupAndCenter(e) {
         .setHTML(popupText)
         .addTo(map);
 
-    if (map.getZoom() < 4) {
-        map.jumpTo({ "center": e.lngLat, "zoom": 4 });
+    centerMap(e.lngLat);
+}
+
+function centerMap(lngLat) {
+    "use strict";
+    if (map.getZoom() < 3) {
+        map.jumpTo({ "center": lngLat, "zoom": 3 });
     } else {
-        map.jumpTo({ "center": e.lngLat });
+        map.jumpTo({ "center": lngLat });
     }
 }
 
@@ -101,8 +106,8 @@ function disableAllLayers() {
 
 function showTideGaugeData() {
     "use strict";
-    var tideGaugeFile = '/altimetry/tidegauge/JSON/' + tideGaugeCode + '.json';
-    request = new XMLHttpRequest();
+    var tideGaugeFile = 'http://ccar.colorado.edu/altimetry/api/v1/tidegauges/JSON/' + tideGaugeCode + '.json';
+    var request = new XMLHttpRequest();
     request.open('GET', tideGaugeFile, true);
     request.onload = function () {
         var data, scrollPopup;
@@ -179,8 +184,10 @@ function selectAltimetry(e, status) {
                 "<div class='center italics'>" + lat_str + ", " + lng_str + "</div>" +
                 "<span class='bold'>Site:</span> " + feature.properties.title +
                 "<br><span class='bold'>Code:</span> " + feature.properties.code +
-                "<div class='center'><button type='button'>Show Timeseries</button></div></div>")
+                "<div class='center'><button type='button' onclick='showTideGaugeData();'>Show Timeseries</button></div></div>")
             .addTo(map);
+        centerMap({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]});
+
     } else {
         // Show altimetry:
         if (status === 'new') {
