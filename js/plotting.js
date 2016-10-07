@@ -66,24 +66,31 @@ function setLeastSquaresDisplay(trend, annual, semiann, plot_units) {
 }
 
 // prepDataForPlotting :: Process data for plotting (trim invalids; LS fit; deseason; smooth; and format).
-function prepDataForPlotting(data, plot_units, min_Date, max_Date) {
+function prepDataForPlotting(data, plot_units, min_Date, max_Date, dataset_id) {
     "use strict";
     var drawDetrend = checkDetrend(), drawDeseason = checkDeseason(),
         data_sla_trim = [], data_sla_err_trim = [], time_yrs_trim = [],
         time_dys_trim = [], dataMissing = 0, i, x_LS = [], y_LS = [],
         x_LS_plot = [], LSreturn, /* y_star, */ fit_params, y_trend, y_seasons,
         trend, annual, semiann, y_plot, smootherWidth, dt, y_plotting,
-        lineData, lineLSdata;
+        lineData, lineLSdata, sum_y = 0, mean_y, y_demean = [];
 
-
-    for (i = 0; i < time.time_yrs.length; i += 1) {
-        if (data.sla[i] > 9999.0) {
-            dataMissing += 1;
-        } else {
-            data_sla_trim.push(data.sla[i]);
-            data_sla_err_trim.push(data.sla_err[i]);
-            time_yrs_trim.push(time.time_yrs[i]);
-            time_dys_trim.push(time.time_dys[i]);
+    if (dataset_id === "altimetry") {
+        for (i = 0; i < time.time_yrs.length; i += 1) {
+            if (data.sla[i] > 9999.0) {
+                dataMissing += 1;
+            } else {
+                data_sla_trim.push(data.sla[i]);
+                data_sla_err_trim.push(data.sla_err[i]);
+                time_yrs_trim.push(time.time_yrs[i]);
+                time_dys_trim.push(time.time_dys[i]);
+            }
+        }
+    } else if (dataset_id === "tidegauges") {
+        for (i = 0; i < data.time_yrs.length; i += 1) {
+            data_sla_trim.push(data.sl_dt[i] / 10.0); // Convert mm to cm
+            time_yrs_trim.push(data.time_yrs[i]);
+            time_dys_trim.push(data.time_dys[i]);
         }
     }
 
@@ -95,6 +102,17 @@ function prepDataForPlotting(data, plot_units, min_Date, max_Date) {
             x_LS_plot.push(time_yrs_trim[i]);
         }
     }
+
+    // Demean timeseries:
+    for (i = 0; i < y_LS.length; i += 1) {
+        sum_y += y_LS[i];
+    }
+    mean_y = sum_y / y_LS.length;
+    for (i = 0; i < y_LS.length; i += 1) {
+        y_demean.push(y_LS[i] - mean_y);
+    }
+    y_LS = [];
+    y_LS = y_demean;
 
     // Calculate Best Fit information:
     LSreturn   = leastSquares(x_LS, y_LS);
@@ -217,160 +235,234 @@ function scaleTimeseriesMobile() {
 }
 
 // displayDataSeries :: takes returned data series and plots onto graph.
-function displayDataSeries(data, min_Date, max_Date) {
+function displayDataSeries(data, min_Date, max_Date, dataset_id, status) {
     "use strict";
-    var drawDetrend, drawTrend, plot_units, plotting, lineData, lineLSdata, svg,
+    var drawDetrend, drawTrend, plot_units, plotting_altimetry, plotting_timegauge,
+        lineData_al, lineData_tg, lineLSdata_al, lineLSdata_tg, svg,
         vis, yMinMax, yMin, yMax, yScale, xAxis, yAxis, lineFunc, divTooltip, divTooltip0,
-        divTooltip1; // dataLS;
+        divTooltip1, minDate_al = 10000, maxDate_al = 0, minDate_tg = 10000, maxDate_tg = 0,
+        yMin_al = 0, yMax_al = 0, yMin_tg = 0, yMax_tg = 0;
 
-    // Setup & Bookkeeping:
-    document.getElementById("chart-container").style.display = 'inline-block';
-    drawDetrend = checkDetrend();
-    drawTrend = checkTrend();
-    plot_units = 'cm';
-
-    if (plot_num > 0) {
-        d3.select("#" + svg_id).remove();
-        document.getElementById('data-timeseries').innerHTML = "";
+    if (dataset_id === "altimetry") {
+        altimetry_plotted = true;
+    } else if (dataset_id === "tidegauges") {
+        tidegauge_plotted = true;
     }
 
-    // Get data in a structure ready for plotting, including LS information:
-    plotting = prepDataForPlotting(data, plot_units, min_Date, max_Date);
-    lineData = plotting[0];
-    lineLSdata = plotting[1];
+    /*
+    if (status === "change") {
+        console.log('A change plot listener was clicked. Coming soon...');
+        console.log(dataset_id);
 
-    // Define plotting area:
-    plot_num += 1;
-    svg_id = "svg-timeseries-" + plot_num;
-    svg = d3.select("#data-timeseries")
-        .append("div")
-        .classed("svg-container", true)
-        .append("svg")
-        .attr("id", svg_id)
-        .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0 0 800 400")
-        .classed("svg-content-responsive", true);
-
-    vis = d3.select('#' + svg_id);
-
-    // Setup plotting bounds:
-    if (!min_Date) {
-        minDate = Math.floor(d3.min(lineData, function (d) { return d.x; }));
     } else {
-        minDate = min_Date;
-    }
-    if (!max_Date) {
-        maxDate = Math.ceil(d3.max(lineData, function (d) { return d.x; }));
-    } else {
-        maxDate = max_Date;
-    }
+    */
 
-    yMinMax = getYbounds(lineData);
-    yMin = yMinMax[0];
-    yMax = yMinMax[1];
+        // Setup & Bookkeeping:
+        document.getElementById("chart-container").style.display = 'inline-block';
+        drawDetrend = checkDetrend();
+        drawTrend = checkTrend();
+        plot_units = 'cm';
 
-    xScale = d3.scale.linear()
-        .range([MARGINS.left, WIDTH - MARGINS.right])
-        .domain([minDate, maxDate]);
-    yScale = d3.scale.linear()
-        .range([HEIGHT - MARGINS.top, MARGINS.bottom])
-        .domain([yMin, yMax]);
+        if (plot_num > 0) {
+            d3.select("#" + svg_id).remove();
+            document.getElementById('data-timeseries').innerHTML = "";
+        }
 
-    xAxis = d3.svg.axis()
-          .scale(xScale)
-          .orient("bottom")
-          .innerTickSize(-HEIGHT + MARGINS.top + MARGINS.bottom)
-          .outerTickSize(0)
-          .tickPadding(10)
-          .tickFormat(d3.format("d"));
+        if (altimetry_plotted === true) {
+            // Get data in a structure ready for plotting, including LS information:
+            plotting_altimetry = prepDataForPlotting(data_altimetry, plot_units, min_Date, max_Date, "altimetry");
 
-    yAxis = d3.svg.axis()
-          .scale(yScale)
-          .orient("left")
-          .innerTickSize(-WIDTH + MARGINS.right + MARGINS.left)
-          .outerTickSize(0)
-          .tickPadding(10);
+            lineData_al = plotting_altimetry[0];
+            lineLSdata_al = plotting_altimetry[1];
 
-    // Draw plotting area
-    vis.append('svg:g').attr('class', 'x axis')
-        .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-        .call(xAxis);
+            minDate_al = Math.floor(d3.min(lineData_al, function (d) { return d.x; }));
+            maxDate_al = Math.ceil(d3.max(lineData_al, function (d) { return d.x; }));
 
-    svg.append("text")
-        .attr("class", "x label").attr("text-anchor", "end")
-        .attr("x", 455).attr("y", 380).text("Year");
+            yMinMax = getYbounds(lineData_al);
+            yMin_al = yMinMax[0];
+            yMax_al = yMinMax[1];
+        }
 
-    vis.append('svg:g').attr('class', 'y axis')
-        .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-        .call(yAxis);
+        if (tidegauge_plotted === true) {
+            // Get data in a structure ready for plotting, including LS information:
+            plotting_timegauge = prepDataForPlotting(data_tidegauge, plot_units, min_Date, max_Date, "tidegauges");
 
-    svg.append("text")
-        .attr("class", "y label")
-        .attr("text-anchor", "end")
-        .attr("y", 45)
-        .attr("x", -130)
-        .attr("transform", "rotate(-90)")
-        .text("Height (cm)");
+            lineData_tg = plotting_timegauge[0];
+            lineLSdata_tg = plotting_timegauge[1];
 
-    // Define plot line:
-    lineFunc = d3.svg.line()
-        .x(function (d) { return xScale(d.x); })
-        .y(function (d) { return yScale(d.y); })
-        .interpolate('linear');
+            minDate_tg = Math.floor(d3.min(lineData_tg, function (d) { return d.x; }));
+            maxDate_tg = Math.ceil(d3.max(lineData_tg, function (d) { return d.x; }));
 
-    // Draw plot line:
-    //var dataSeries = vis.append('svg:path')
-    //    .attr('d', lineFunc(lineData))
-    //    .attr('stroke', 'blue').attr('stroke-width', 2)
-    //    .attr('fill', 'none');
+            yMinMax = getYbounds(lineData_tg);
+            yMin_tg = yMinMax[0];
+            yMax_tg = yMinMax[1];
+        }
 
-    // Add the scatterplot
-    divTooltip  = d3.select("#plot-tooltip"); // Define handle on tooltip
-    divTooltip0 = d3.select("#tooltip-info-0"); // Define handle on tooltip
-    divTooltip1 = d3.select("#tooltip-info-1"); // Define handle on tooltip
-    svg.selectAll("dot")
-        .data(lineData)
-        .enter().append("circle")
-        .attr("r", 2.5)
-        .style("stroke", "blue")
-        .style("fill", "white")
-        .attr("cx", function (d) { return xScale(d.x); })
-        .attr("cy", function (d) { return yScale(d.y); })
-        .attr("text", function (d) { return yScale(d.y); })
-        .on("mouseover", function (d) {
-            // Show the tooltip when hovering over a datapoint
-            divTooltip.transition().duration(200).style("opacity", 0.95);
-            divTooltip0.html('<span class="bold">SSH:</span> ' + d.y.toFixed(3) + ' ' + plot_units);
-            divTooltip1.html('<span class="bold">Date:</span> ' + convertDecimalDate(d.x.toFixed(3)));
-        })
-        .on("mouseout", function () {
-            divTooltip.transition()
-                .duration(2000)
-                .style("opacity", 0);
-        });
+        // Define plotting area:
+        plot_num += 1;
+        svg_id = "svg-timeseries-" + plot_num;
+        svg = d3.select("#data-timeseries")
+            .append("div")
+            .classed("svg-container", true)
+            .append("svg")
+            .attr("id", svg_id)
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("viewBox", "0 0 800 400")
+            .classed("svg-content-responsive", true);
 
-    // If any radio buttons are "On", add to plot:
-    if (drawTrend === 1 && drawDetrend === 0) {
-        // dataLS =
-        vis.append('svg:path')
-            .attr('d', lineFunc(lineLSdata))
-            .attr('stroke', 'red').attr('stroke-width', 2)
-            .attr('fill', 'none')
-            .style("stroke-dasharray", ("5, 5"));
-    }
+        vis = d3.select('#' + svg_id);
 
-    if (plot_num > 0) {
-        document.getElementById("save-button").removeEventListener("click", saveImageListener);
-        document.getElementById("data-button").removeEventListener("click", dataDownloadListener);
-    }
-    document.getElementById("save-button").addEventListener("click", saveImageListener);
-    document.getElementById("data-button").addEventListener("click", dataDownloadListener);
+        // Setup plotting bounds:
+        if (!min_Date) {
+            minDate = Math.min(minDate_al, minDate_tg);
+        } else {
+            minDate = min_Date;
+        }
+        console.log([minDate_al, minDate_tg, minDate]);
 
-    scaleTimeseriesMobile();
+        if (!max_Date) {
+            maxDate = Math.max(maxDate_al, maxDate_tg);
+        } else {
+            maxDate = max_Date;
+        }
+        console.log([maxDate_al, maxDate_tg, maxDate]);
+
+        yMin = Math.min(yMin_al, yMin_tg);
+        yMax = Math.max(yMax_al, yMax_tg);
+
+        xScale = d3.scale.linear()
+            .range([MARGINS.left, WIDTH - MARGINS.right])
+            .domain([minDate, maxDate]);
+        yScale = d3.scale.linear()
+            .range([HEIGHT - MARGINS.top, MARGINS.bottom])
+            .domain([yMin, yMax]);
+
+        xAxis = d3.svg.axis()
+              .scale(xScale)
+              .orient("bottom")
+              .innerTickSize(-HEIGHT + MARGINS.top + MARGINS.bottom)
+              .outerTickSize(0)
+              .tickPadding(10)
+              .tickFormat(d3.format("d"));
+
+        yAxis = d3.svg.axis()
+              .scale(yScale)
+              .orient("left")
+              .innerTickSize(-WIDTH + MARGINS.right + MARGINS.left)
+              .outerTickSize(0)
+              .tickPadding(10);
+
+        // Draw plotting area
+        vis.append('svg:g').attr('class', 'x axis')
+            .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+            .call(xAxis);
+
+        svg.append("text")
+            .attr("class", "x label").attr("text-anchor", "end")
+            .attr("x", 455).attr("y", 380).text("Year");
+
+        vis.append('svg:g').attr('class', 'y axis')
+            .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+            .call(yAxis);
+
+        svg.append("text")
+            .attr("class", "y label")
+            .attr("text-anchor", "end")
+            .attr("y", 45)
+            .attr("x", -130)
+            .attr("transform", "rotate(-90)")
+            .text("Height (cm)");
+
+        // Define plot line:
+        lineFunc = d3.svg.line()
+            .x(function (d) { return xScale(d.x); })
+            .y(function (d) { return yScale(d.y); })
+            .interpolate('linear');
+
+        // Draw plot line:
+        //var dataSeries = vis.append('svg:path')
+        //    .attr('d', lineFunc(lineData))
+        //    .attr('stroke', 'blue').attr('stroke-width', 2)
+        //    .attr('fill', 'none');
+
+        if (altimetry_plotted === true) {
+            // Add the scatterplot
+            divTooltip  = d3.select("#plot-tooltip"); // Define handle on tooltip
+            divTooltip0 = d3.select("#tooltip-info-0"); // Define handle on tooltip
+            divTooltip1 = d3.select("#tooltip-info-1"); // Define handle on tooltip
+            svg.selectAll("dot")
+                .data(lineData_al)
+                .enter().append("circle")
+                .attr("r", 2.5)
+                .style("stroke", "blue")
+                .style("fill", "white")
+                .attr("cx", function (d) { return xScale(d.x); })
+                .attr("cy", function (d) { return yScale(d.y); })
+                .attr("text", function (d) { return yScale(d.y); })
+                .on("mouseover", function (d) {
+                    // Show the tooltip when hovering over a datapoint
+                    divTooltip.transition().duration(200).style("opacity", 0.95);
+                    divTooltip0.html('<span class="bold">SSH:</span> ' + d.y.toFixed(3) + ' ' + plot_units);
+                    divTooltip1.html('<span class="bold">Date:</span> ' + convertDecimalDate(d.x.toFixed(3)));
+                })
+                .on("mouseout", function () {
+                    divTooltip.transition()
+                        .duration(2000)
+                        .style("opacity", 0);
+                });
+        }
+
+        if (tidegauge_plotted === true) {
+            // Add the scatterplot
+            divTooltip  = d3.select("#plot-tooltip"); // Define handle on tooltip
+            divTooltip0 = d3.select("#tooltip-info-0"); // Define handle on tooltip
+            divTooltip1 = d3.select("#tooltip-info-1"); // Define handle on tooltip
+            svg.selectAll("dot")
+                .data(lineData_tg)
+                .enter().append("circle")
+                .attr("r", 2)
+                .style("stroke", "green")
+                .style("fill", "green")
+                .attr("cx", function (d) { return xScale(d.x); })
+                .attr("cy", function (d) { return yScale(d.y); })
+                .attr("text", function (d) { return yScale(d.y); })
+                .on("mouseover", function (d) {
+                    // Show the tooltip when hovering over a datapoint
+                    divTooltip.transition().duration(200).style("opacity", 0.95);
+                    divTooltip0.html('<span class="bold">SSH:</span> ' + d.y.toFixed(3) + ' ' + plot_units);
+                    divTooltip1.html('<span class="bold">Date:</span> ' + convertDecimalDate(d.x.toFixed(3)));
+                })
+                .on("mouseout", function () {
+                    divTooltip.transition()
+                        .duration(2000)
+                        .style("opacity", 0);
+                });
+        }
+
+        // If any radio buttons are "On", add to plot:
+        if (drawTrend === 1 && drawDetrend === 0) {
+            // dataLS =
+            vis.append('svg:path')
+                .attr('d', lineFunc(lineLSdata_al))
+                .attr('stroke', 'red').attr('stroke-width', 2)
+                .attr('fill', 'none')
+                .style("stroke-dasharray", ("5, 5"));
+        }
+
+        if (plot_num > 0) {
+            document.getElementById("save-button").removeEventListener("click", saveImageListener);
+            document.getElementById("data-button").removeEventListener("click", dataDownloadListener);
+        }
+        document.getElementById("save-button").addEventListener("click", saveImageListener);
+        document.getElementById("data-button").addEventListener("click", dataDownloadListener);
+
+        scaleTimeseriesMobile();
+
+    // }
 }
 
 // displayDataNavbar :: plots timeseries data onto Navbar and initializes navbar brush.
-function displayDataNavbar(data) {
+function displayDataNavbar(data, dataset_id) {
     "use strict";
     var i, lineData = [], svg, navChart, navXScale, navYScale, xAxis, // lineFunc,
         viewport, ext, leftHandle, leftHandleGrip1, leftHandleGrip2,
@@ -382,9 +474,15 @@ function displayDataNavbar(data) {
     }
 
     // Define plot data:
-    for (i = 0; i < time.time_yrs.length; i += 1) {
-        if (data.sla[i] < 9999.0) {
-            lineData.push({x: time.time_yrs[i], y: data.sla[i]});
+    if (dataset_id === "altimetry") {
+        for (i = 0; i < time.time_yrs.length; i += 1) {
+            if (data.sla[i] < 9999.0) {
+                lineData.push({ x: time.time_yrs[i], y: data.sla[i] });
+            }
+        }
+    } else if (dataset_id === "tidegauges") {
+        for (i = 0; i < data.time_yrs.length; i += 1) {
+            lineData.push({ x: data.time_yrs[i], y: data.sl_dt[i] / 10.0 }); // convert mm to cm
         }
     }
 
@@ -544,6 +642,6 @@ function displayDataNavbar(data) {
         .call(zoom);
 
     viewport.on("brushend", function () {
-        displayDataSeries(data, viewport.extent()[0], viewport.extent()[1]);
+        displayDataSeries(data, viewport.extent()[0], viewport.extent()[1], dataset_id, "change");
     });
 }

@@ -104,20 +104,22 @@ function disableAllLayers() {
     for (i = 0; i < x.length; i += 1) { x[i].className = ''; }
 }
 
-function showTideGaugeData() {
+function showTideGaugeData(dataset_id) {
     "use strict";
     var tideGaugeFile = 'http://ccar.colorado.edu/altimetry/api/v1/tidegauges/JSON/' + tideGaugeCode + '.json';
     var request = new XMLHttpRequest();
     request.open('GET', tideGaugeFile, true);
     request.onload = function () {
-        var data, scrollPopup;
+        var scrollPopup;
         if (request.status >= 200 && request.status < 400) {
             // Success!
-            data = JSON.parse(request.responseText);
+            data_tidegauge = JSON.parse(request.responseText);
 
-            ///displayDataSeries(data, minDate, maxDate);
-            ///displayDataNavbar(data);
-            console.log(data);
+            minDate = data_tidegauge.time_yrs[0];
+            maxDate = data_tidegauge.time_yrs[data_tidegauge.time_yrs.length - 1];
+
+            displayDataSeries(data_tidegauge, minDate, maxDate, dataset_id, "new");
+            displayDataNavbar(data_tidegauge, dataset_id);
 
             // Show loaded successfully popup:
             scrollPopup = document.getElementById('scroll-popup');
@@ -147,104 +149,127 @@ function showTideGaugeData() {
     request.send();
 }
 
-// selectAltimetry :: get page click and grabs time series.
-function selectAltimetry(e, status) {
+// selectTideGauge :: opens Tide Gauge popup with link to show data
+function selectTideGauge(feature) {
     "use strict";
-    var request, is_gauge = true;
+    var request, dataset_id;
 
-    // Check if click was over a tide gauge marker
-    var features = map.queryRenderedFeatures(e.point, { layers: ['gauges'] });
-    if (!features.length) {
-        is_gauge = false;
+    var lng_str = feature.geometry.coordinates[0];
+    var lat_str = feature.geometry.coordinates[1];
+    tideGaugeCode = feature.properties.code;
+
+    if (lng_str < 0) {
+        lng_str = (-lng_str).toFixed(6) + "&deg;W";
+    } else if (lng_str === 0) {
+        lng_str = "0.000000&deg;";
+    } else {
+        lng_str = (lng_str).toFixed(6) + "&deg;E";
     }
 
-    if (is_gauge === true) {
-        //Show tide gauge:
-        var feature = features[0];
-        tideGaugeCode = feature.properties.code;
-        var lng_str = feature.geometry.coordinates[0];
-        var lat_str = feature.geometry.coordinates[1];
-        if (lng_str < 0) {
-            lng_str = (-lng_str).toFixed(6) + "&deg;W";
-        } else if (lng_str === 0) {
-            lng_str = "0.000000&deg;";
-        } else {
-            lng_str = (lng_str).toFixed(6) + "&deg;E";
-        }
-        if (lat_str < 0) {
-            lat_str = (-lat_str).toFixed(6) + "&deg;S";
-        } else if (lat_str === 0) {
-            lat_str = "0.000000&deg;";
-        } else {
-            lat_str = (lat_str).toFixed(6) + "&deg;N";
-        }
-        var gauge_marker = new mapboxgl.Popup()
-            .setLngLat({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]})
-            .setHTML("<div class='tide-gauge-popup'><h2 class='center'>Tide Gauge</h2>" +
-                "<div class='center italics'>" + lat_str + ", " + lng_str + "</div>" +
-                "<span class='bold'>Site:</span> " + feature.properties.title +
-                "<br><span class='bold'>Code:</span> " + feature.properties.code +
-                "<div class='center'><button type='button' onclick='showTideGaugeData();'>Show Timeseries</button></div></div>")
-            .addTo(map);
-        centerMap({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]});
-
+    if (lat_str < 0) {
+        lat_str = (-lat_str).toFixed(6) + "&deg;S";
+    } else if (lat_str === 0) {
+        lat_str = "0.000000&deg;";
     } else {
-        // Show altimetry:
-        if (status === 'new') {
-            minDate = time.time_yrs[0];
-            maxDate = time.time_yrs[time.time_yrs.length - 1];
+        lat_str = (lat_str).toFixed(6) + "&deg;N";
+    }
+
+    dataset_id = '"tidegauges"';
+
+    var gauge_marker = new mapboxgl.Popup()
+        .setLngLat({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]})
+        .setHTML("<div class='tide-gauge-popup'><h2 class='center'>Tide Gauge</h2>" +
+            "<div class='center italics'>" + lat_str + ", " + lng_str + "</div>" +
+            "<span class='bold'>Site:</span> " + feature.properties.title +
+            "<br><span class='bold'>Code:</span> " + feature.properties.code +
+            "<div class='center'><button type='button' onclick='showTideGaugeData(" +
+            dataset_id + ");'>Show Timeseries</button></div></div>")
+        .addTo(map);
+
+    centerMap({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]});
+}
+
+function selectAltimetry(e) {
+    "use strict";
+    var request, dataset_id;
+
+    // Show altimetry:
+    minDate = time.time_yrs[0];
+    maxDate = time.time_yrs[time.time_yrs.length - 1];
+
+    if (e.lngLat.lng > 180 && e.lngLat.lng <= 360) { e.lngLat.lng = e.lngLat.lng - 360; }
+    if (e.lngLat.lng < -180) { e.lngLat.lng = e.lngLat.lng + 360; }
+
+    LAT = e.lngLat.lat; // store Latitude for quick reference.
+    LNG = e.lngLat.lng; // store Longitude for quick reference.
+
+    // Define filename to get:
+    jsonFilename = getLatLonJSONfilename(e.lngLat.lng, e.lngLat.lat);
+
+    jsonFilename = '/altimetry/' + jsonFilename;
+    dataset_id = 'altimetry';
+
+    request = new XMLHttpRequest();
+    request.open('GET', jsonFilename, true);
+    request.onload = function () {
+        var scrollPopup;
+        if (request.status >= 200 && request.status < 400) {
+            // Success!
+            data_altimetry = JSON.parse(request.responseText);
+
+            displayDataSeries(data_altimetry, minDate, maxDate, dataset_id, "new");
+            displayDataNavbar(data_altimetry, dataset_id);
+            setPopupAndCenter(e);
+
+            // Show loaded successfully popup:
+            scrollPopup = document.getElementById('scroll-popup');
+            scrollPopup.style.zIndex = 5000;
+            scrollPopup.style.opacity = 1;
+            scrollPopup.style.transition = "opacity 1s";
+            setTimeout(function () {
+                scrollPopup.style.opacity = 0;
+            }, 3000);
+
+        } else {
+            // We reached our target server, but it returned an error
+            // alert("That location is unavailable. Either it is not in the dataset (such as if it is over land) or there has been an error.");
+            // Show loaded successfully popup:
+            scrollPopup = document.getElementById('error-popup');
+            scrollPopup.style.zIndex = 5000;
+            scrollPopup.style.transition = "opacity 1s";
+            scrollPopup.style.opacity = 1;
+            setTimeout(function () {
+                scrollPopup.style.opacity = 0;
+            }, 3000);
         }
+    };
+    request.onerror = function () {
+      // There was a connection error of some sort
+    };
+    request.send();
+}
 
-        if (e.lngLat.lng > 180 && e.lngLat.lng <= 360) { e.lngLat.lng = e.lngLat.lng - 360; }
-        if (e.lngLat.lng < -180) { e.lngLat.lng = e.lngLat.lng + 360; }
+// selectPlotting :: get page click and grabs time series.
+function selectPlotting(e, status) {
+    "use strict";
+    console.log(e);
 
-        LAT = e.lngLat.lat; // store Latitude for quick reference.
-        LNG = e.lngLat.lng; // store Longitude for quick reference.
+    if (status === "change") {
+        // The plots were updated from a settings listener. Plot updated data!
+        displayDataSeries(data_altimetry, minDate, maxDate, "altimetry", "change");
+        displayDataSeries(data_tidegauge, minDate, maxDate, "tidegauges", "change");
 
-        // Define filename to get:
-        jsonFilename = getLatLonJSONfilename(e.lngLat.lng, e.lngLat.lat);
+    } else if (status === "new") {
+        // There was a new click on the map. Plot new data!
+        var features = map.queryRenderedFeatures(e.point, { layers: ['gauges'] });
 
-        jsonFilename = '/altimetry/' + jsonFilename;
-
-        // Get file:
-        request = new XMLHttpRequest();
-        request.open('GET', jsonFilename, true);
-        request.onload = function () {
-            var data, scrollPopup;
-            if (request.status >= 200 && request.status < 400) {
-                // Success!
-                data = JSON.parse(request.responseText);
-
-                displayDataSeries(data, minDate, maxDate);
-                displayDataNavbar(data);
-                setPopupAndCenter(e);
-
-                // Show loaded successfully popup:
-                scrollPopup = document.getElementById('scroll-popup');
-                scrollPopup.style.zIndex = 5000;
-                scrollPopup.style.opacity = 1;
-                scrollPopup.style.transition = "opacity 1s";
-                setTimeout(function () {
-                    scrollPopup.style.opacity = 0;
-                }, 3000);
-
-            } else {
-                // We reached our target server, but it returned an error
-                // alert("That location is unavailable. Either it is not in the dataset (such as if it is over land) or there has been an error.");
-                // Show loaded successfully popup:
-                scrollPopup = document.getElementById('error-popup');
-                scrollPopup.style.zIndex = 5000;
-                scrollPopup.style.transition = "opacity 1s";
-                scrollPopup.style.opacity = 1;
-                setTimeout(function () {
-                    scrollPopup.style.opacity = 0;
-                }, 3000);
-            }
-        };
-        request.onerror = function () {
-          // There was a connection error of some sort
-        };
-        request.send();
+        if (features.length > 0) {
+            // Show tide gauge:
+            selectTideGauge(features[0]);
+        } else {
+            // Show altimetry:
+            selectAltimetry(e);
+        }
     }
 }
 
@@ -270,7 +295,7 @@ function switchMapLayer(this_id) {
     }
 
     if (plotDrawn === 1) {
-        selectAltimetry(evnt);
+        selectPlotting(evnt);
     }
 }
 
@@ -459,7 +484,7 @@ function initializeMap() {
         map.addControl(new mapboxgl.Navigation());
 
         // Listener: right-click handling:
-        map.on('click', function (e) { selectAltimetry(e, 'new'); });
+        map.on('click', function (e) { selectPlotting(e, 'new'); });
 
     } // End IF/ELSE mapboxgl supported.
 }

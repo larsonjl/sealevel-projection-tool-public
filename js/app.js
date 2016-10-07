@@ -6,7 +6,7 @@ function onPlottingFormChange() {
 
     if (plot_num > 0) {
         if (boxWidth >= 0) {
-            selectAltimetry({ "lngLat": { "lng": LNG, "lat": LAT } }, 'change');
+            selectPlotting({ "lngLat": { "lng": LNG, "lat": LAT } }, 'change');
         }
     }
 }
@@ -128,7 +128,7 @@ function inputLatLon(e) {
     document.getElementById('click-lon').value = lng;
 
     event = { "lngLat": { "lng" : lng, "lat" : lat } };
-    selectAltimetry(event, 'new');
+    selectPlotting(event, 'new');
 }
 
 // Wait until all content is loaded to do anything:
