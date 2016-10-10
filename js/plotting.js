@@ -104,16 +104,57 @@ function checkDeseason() {
     return drawDeseason;
 }
 
-// setLeastSquaresDisplay :: Display trend & seasonal fits on page.
-function setLeastSquaresDisplay(trend, annual, semiann, plot_units) {
+function showAltimetryLS() {
     "use strict";
-    document.getElementById("LS-param-trend").innerHTML = trend.toFixed(2) + ' ' + plot_units + '/yr';
-    if (annual >= 9999.0) {
-        document.getElementById("LS-param-annual").innerHTML = 'N/A';
-        document.getElementById("LS-param-semiann").innerHTML = 'N/A';
-    } else {
-        document.getElementById("LS-param-annual").innerHTML = annual.toFixed(2) + ' ' + plot_units;
-        document.getElementById("LS-param-semiann").innerHTML = semiann.toFixed(2) + ' ' + plot_units;
+    document.getElementById("LS-altimetry-trend").style.display = 'inline-block';
+    document.getElementById("LS-altimetry-annual").style.display = 'inline-block';
+    document.getElementById("LS-altimetry-semiann").style.display = 'inline-block';
+}
+
+function hideAltimetryLS() {
+    "use strict";
+    document.getElementById("LS-altimetry-trend").style.display = 'none';
+    document.getElementById("LS-altimetry-annual").style.display = 'none';
+    document.getElementById("LS-altimetry-semiann").style.display = 'none';
+}
+
+function showTideGaugeLS() {
+    "use strict";
+    document.getElementById("LS-tidegauge-trend").style.display = 'inline-block';
+    document.getElementById("LS-tidegauge-annual").style.display = 'inline-block';
+    document.getElementById("LS-tidegauge-semiann").style.display = 'inline-block';
+}
+
+function hideTideGaugeLS() {
+    "use strict";
+    document.getElementById("LS-tidegauge-trend").style.display = 'none';
+    document.getElementById("LS-tidegauge-annual").style.display = 'none';
+    document.getElementById("LS-tidegauge-semiann").style.display = 'none';
+}
+
+// setLeastSquaresDisplay :: Display trend & seasonal fits on page.
+function setLeastSquaresDisplay(trend, annual, semiann, plot_units, dataset_id) {
+    "use strict";
+    if (dataset_id === "altimetry") {
+        document.getElementById("LS-altimetry-trend").innerHTML = trend.toFixed(2) + ' ' + plot_units + '/yr';
+        if (annual >= 9999.0) {
+            document.getElementById("LS-altimetry-annual").innerHTML = 'N/A';
+            document.getElementById("LS-altimetry-semiann").innerHTML = 'N/A';
+        } else {
+            document.getElementById("LS-altimetry-annual").innerHTML = annual.toFixed(2) + ' ' + plot_units;
+            document.getElementById("LS-altimetry-semiann").innerHTML = semiann.toFixed(2) + ' ' + plot_units;
+        }
+        showAltimetryLS();
+    } else if (dataset_id === "tidegauges") {
+        document.getElementById("LS-tidegauge-trend").innerHTML = trend.toFixed(2) + ' ' + plot_units + '/yr';
+        if (annual >= 9999.0) {
+            document.getElementById("LS-tidegauge-annual").innerHTML = 'N/A';
+            document.getElementById("LS-tidegauge-semiann").innerHTML = 'N/A';
+        } else {
+            document.getElementById("LS-tidegauge-annual").innerHTML = annual.toFixed(2) + ' ' + plot_units;
+            document.getElementById("LS-tidegauge-semiann").innerHTML = semiann.toFixed(2) + ' ' + plot_units;
+        }
+        showTideGaugeLS();
     }
     document.getElementById("LS-params").style.display = 'block';
 }
@@ -191,7 +232,7 @@ function prepDataForPlotting(data, plot_units, min_Date, max_Date, dataset_id) {
     if (drawDeseason === 1) { y_plot = math.subtract(y_plot, y_seasons); }
 
     // Fill out LS Parameters display:
-    setLeastSquaresDisplay(trend, annual, semiann, plot_units);
+    setLeastSquaresDisplay(trend, annual, semiann, plot_units, dataset_id);
 
     // Get boxcar smoother width:
     smootherWidth = Number(document.getElementById('smooth-width').value);

@@ -119,6 +119,7 @@ function showTideGaugeData() {
             maxDate = data_tidegauge.time_yrs[data_tidegauge.time_yrs.length - 1];
 
             altimetry_plotted = false;
+            hideAltimetryLS();
 
             displayDataSeries(minDate, maxDate, "tidegauges", "new");
             displayDataNavbar();

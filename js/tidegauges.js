@@ -103,5 +103,6 @@ function removeTideGauges() {
     if (gauge_marker) {
         gauge_marker.remove();
     }
+    hideTideGaugeLS();
     displayDataNavbar();
 }

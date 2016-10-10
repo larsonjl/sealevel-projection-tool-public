@@ -157,13 +157,25 @@ div.tooltip {
 #tooltip-info-1 { width: 110px; }
 
 .best-fit-title {
-    margin: 0px 10px 0px 30px; font-weight: bold; text-align: left;
-    display: inline-block; line-height: 20px; vertical-align: bottom;
+    margin: 0px 10px 0px 30px;
+    font-weight: bold;
+    text-align: right;
+    display: inline-block;
+    line-height: 20px;
+    vertical-align: bottom;
+    width: 150px;
 }
 .best-fit-param {
-    text-align: left; color: #162252; display: inline-block;
-    line-height: 20px; vertical-align: bottom; margin: 0px 30px 0px 0px;
+    text-align: left;
+    color: #162252;
+    display: none;
+    line-height: 20px;
+    vertical-align: bottom;
+    margin: 0px 30px 0px 0px;
+    width: 100px;
 }
+#LS-altimetry-trend, #LS-altimetry-annual, #LS-altimetry-semiann { color: #377eb8; }
+#LS-tidegauge-trend, #LS-tidegauge-annual, #LS-tidegauge-semiann { color: #d95f02; }
 
 .resize path {
     fill: #666;
