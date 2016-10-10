@@ -104,7 +104,7 @@ function disableAllLayers() {
     for (i = 0; i < x.length; i += 1) { x[i].className = ''; }
 }
 
-function showTideGaugeData(dataset_id) {
+function showTideGaugeData() {
     "use strict";
     var tideGaugeFile = 'http://ccar.colorado.edu/altimetry/api/v1/tidegauges/JSON/' + tideGaugeCode + '.json';
     var request = new XMLHttpRequest();
@@ -118,8 +118,8 @@ function showTideGaugeData(dataset_id) {
             minDate = data_tidegauge.time_yrs[0];
             maxDate = data_tidegauge.time_yrs[data_tidegauge.time_yrs.length - 1];
 
-            displayDataSeries(data_tidegauge, minDate, maxDate, dataset_id, "new");
-            displayDataNavbar(data_tidegauge, dataset_id);
+            displayDataSeries(minDate, maxDate, "tidegauges", "new");
+            displayDataNavbar();
 
             // Show loaded successfully popup:
             scrollPopup = document.getElementById('scroll-popup');
@@ -152,7 +152,7 @@ function showTideGaugeData(dataset_id) {
 // selectTideGauge :: opens Tide Gauge popup with link to show data
 function selectTideGauge(feature) {
     "use strict";
-    var request, dataset_id;
+    var request;
 
     var lng_str = feature.geometry.coordinates[0];
     var lat_str = feature.geometry.coordinates[1];
@@ -174,8 +174,6 @@ function selectTideGauge(feature) {
         lat_str = (lat_str).toFixed(6) + "&deg;N";
     }
 
-    dataset_id = '"tidegauges"';
-
     var gauge_marker = new mapboxgl.Popup()
         .setLngLat({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]})
         .setHTML("<div class='tide-gauge-popup'><h2 class='center'>Tide Gauge</h2>" +
@@ -183,7 +181,7 @@ function selectTideGauge(feature) {
             "<span class='bold'>Site:</span> " + feature.properties.title +
             "<br><span class='bold'>Code:</span> " + feature.properties.code +
             "<div class='center'><button type='button' onclick='showTideGaugeData(" +
-            dataset_id + ");'>Show Timeseries</button></div></div>")
+            ");'>Show Timeseries</button></div></div>")
         .addTo(map);
 
     centerMap({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]});
@@ -191,7 +189,7 @@ function selectTideGauge(feature) {
 
 function selectAltimetry(e) {
     "use strict";
-    var request, dataset_id;
+    var request;
 
     // Show altimetry:
     minDate = time.time_yrs[0];
@@ -207,7 +205,6 @@ function selectAltimetry(e) {
     jsonFilename = getLatLonJSONfilename(e.lngLat.lng, e.lngLat.lat);
 
     jsonFilename = '/altimetry/' + jsonFilename;
-    dataset_id = 'altimetry';
 
     request = new XMLHttpRequest();
     request.open('GET', jsonFilename, true);
@@ -217,8 +214,8 @@ function selectAltimetry(e) {
             // Success!
             data_altimetry = JSON.parse(request.responseText);
 
-            displayDataSeries(data_altimetry, minDate, maxDate, dataset_id, "new");
-            displayDataNavbar(data_altimetry, dataset_id);
+            displayDataSeries(minDate, maxDate, "altimetry", "new");
+            displayDataNavbar();
             setPopupAndCenter(e);
 
             // Show loaded successfully popup:
@@ -256,9 +253,12 @@ function selectPlotting(e, status) {
 
     if (status === "change") {
         // The plots were updated from a settings listener. Plot updated data!
-        displayDataSeries(data_altimetry, minDate, maxDate, "altimetry", "change");
-        displayDataSeries(data_tidegauge, minDate, maxDate, "tidegauges", "change");
-
+        if (altimetry_plotted === true) {
+            displayDataSeries(minDate, maxDate, "altimetry", "change");
+        }
+        if (tidegauge_plotted === true) {
+            displayDataSeries(minDate, maxDate, "tidegauges", "change");
+        }
     } else if (status === "new") {
         // There was a new click on the map. Plot new data!
         var features = map.queryRenderedFeatures(e.point, { layers: ['gauges'] });
