@@ -118,6 +118,8 @@ function showTideGaugeData() {
             minDate = data_tidegauge.time_yrs[0];
             maxDate = data_tidegauge.time_yrs[data_tidegauge.time_yrs.length - 1];
 
+            altimetry_plotted = false;
+
             displayDataSeries(minDate, maxDate, "tidegauges", "new");
             displayDataNavbar();
 
