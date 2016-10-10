@@ -371,14 +371,12 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
     } else {
         minDate = min_Date;
     }
-    console.log([minDate_al, minDate_tg, minDate]);
 
     if (!max_Date) {
         maxDate = Math.max(maxDate_al, maxDate_tg);
     } else {
         maxDate = max_Date;
     }
-    console.log([maxDate_al, maxDate_tg, maxDate]);
 
     yMin = Math.min(yMin_al, yMin_tg);
     yMax = Math.max(yMax_al, yMax_tg);
@@ -432,14 +430,10 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
         .y(function (d) { return yScale(d.y); })
         .interpolate('linear');
 
-    // Draw plot line:
-    //var dataSeries = vis.append('svg:path')
-    //    .attr('d', lineFunc(lineData))
-    //    .attr('stroke', 'blue').attr('stroke-width', 2)
-    //    .attr('fill', 'none');
+    // Draw plots:
     if (tidegauge_plotted === true) {
         // Add the scatterplot
-        divTooltip  = d3.select("#plot-tooltip"); // Define handle on tooltip
+        divTooltip  = d3.select("#plot-tooltip");   // Define handle on tooltip
         divTooltip0 = d3.select("#tooltip-info-0"); // Define handle on tooltip
         divTooltip1 = d3.select("#tooltip-info-1"); // Define handle on tooltip
         svg.selectAll("dot")
@@ -729,12 +723,12 @@ function displayDataNavbar() {
             updateViewportFromChart();
         }); */
 
+    /*
     overlay = d3.svg.area()
         .x(function (d) { return xScale(d.x); })
         .y0(0)
         .y1(HEIGHT);
 
-    /*
     vis = d3.select('#' + svg_id);
     vis.append('path')
         .attr('class', 'overlay')
