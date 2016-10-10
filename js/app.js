@@ -149,6 +149,21 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize map:
     initializeMap();
 
+    // Toggle tide gauges:
+    document.getElementById('show-tide-gauges-button').addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (document.getElementById('show-tide-gauges-button').className === 'button-inactive') {
+            document.getElementById('show-tide-gauges-button').className = 'button-active';
+            document.getElementById('show-tide-gauges-button').textContent = "Remove Tide Gauges";
+            addTideGauges();
+        } else {
+            document.getElementById('show-tide-gauges-button').className = 'button-inactive';
+            document.getElementById('show-tide-gauges-button').textContent = "Show Tide Gauges";
+            removeTideGauges();
+        }
+    });
+
     // Listener: Map Location Form:
     document.getElementById("GetTimeseries").addEventListener("submit", function (e) {inputLatLon(e); });
 

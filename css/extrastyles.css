@@ -402,3 +402,28 @@ div#about-grace-toggle-down { display: inline-block; }
      padding: 10px;
      border: 3px solid #E0E0E0;
 }
+
+#show-tide-gauges {
+    position: absolute;
+    z-index: 2;
+    top: 10px;
+    font-size: 16pt;
+    overflow: hidden;
+    width: 140px;
+    left: 50%;
+    margin-left:-70px;
+}
+
+#show-tide-gauges a.button-inactive, #show-tide-gauges a.button-active {
+    font-size: 13px;
+    display: block;
+    margin: 0;
+    padding: 0px;
+    border-radius: 4px;
+    border: 2px solid rgba(0,0,0,0.3);
+    background-clip: padding-box;
+    text-decoration: none;
+    text-align: center;
+}
+#show-tide-gauges a.button-inactive { background-color: #FAFAFA; color: #333333; }
+#show-tide-gauges a.button-active { background-color: #3887BE; color: #FAFAFA; }

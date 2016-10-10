@@ -174,7 +174,7 @@ function selectTideGauge(feature) {
         lat_str = (lat_str).toFixed(6) + "&deg;N";
     }
 
-    var gauge_marker = new mapboxgl.Popup()
+    gauge_marker = new mapboxgl.Popup()
         .setLngLat({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]})
         .setHTML("<div class='tide-gauge-popup'><h2 class='center'>Tide Gauge</h2>" +
             "<div class='center italics'>" + lat_str + ", " + lng_str + "</div>" +
@@ -284,10 +284,6 @@ function switchMapLayer(this_id) {
         map.setLayoutProperty(fine_id, 'visibility', 'visible');
         map.setLayoutProperty(coarse_id, 'visibility', 'visible');
         showColorbar(this_id);
-    }
-
-    if (plotDrawn === 1) {
-        selectPlotting(evnt);
     }
 }
 

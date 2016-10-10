@@ -2,6 +2,7 @@
 var map,
     time,
     marker,
+    gauge_marker,
     jsonFilename,
     tideGaugeCode,
     LAT,

@@ -95,4 +95,13 @@ function addTideGauges() {
 function removeTideGauges() {
     "use strict";
     map.setLayoutProperty('gauges', 'visibility', 'none');
+    tidegauge_plotted = false;
+    data_tidegauge = undefined;
+    if (plot_num > 0) {
+        selectPlotting({ "lngLat": { "lng": LNG, "lat": LAT } }, "change");
+    }
+    if (gauge_marker) {
+        gauge_marker.remove();
+    }
+    displayDataNavbar();
 }
