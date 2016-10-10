@@ -156,6 +156,10 @@ function prepDataForPlotting(data, plot_units, min_Date, max_Date, dataset_id) {
         }
     }
 
+    if (x_LS.length === 0) {
+        return [[],[]];
+    }
+
     // Demean timeseries:
     for (i = 0; i < y_LS.length; i += 1) {
         sum_y += y_LS[i];
@@ -328,12 +332,14 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
         lineData_al = plotting_altimetry[0];
         lineLSdata_al = plotting_altimetry[1];
 
-        minDate_al = Math.floor(d3.min(lineData_al, function (d) { return d.x; }));
-        maxDate_al = Math.ceil(d3.max(lineData_al, function (d) { return d.x; }));
+        if (lineData_al.length > 0) {
+            minDate_al = Math.floor(d3.min(lineData_al, function (d) { return d.x; }));
+            maxDate_al = Math.ceil(d3.max(lineData_al, function (d) { return d.x; }));
 
-        yMinMax = getYbounds(lineData_al);
-        yMin_al = yMinMax[0];
-        yMax_al = yMinMax[1];
+            yMinMax = getYbounds(lineData_al);
+            yMin_al = yMinMax[0];
+            yMax_al = yMinMax[1];
+        }
     }
 
     if (tidegauge_plotted === true) {
@@ -343,12 +349,14 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
         lineData_tg = plotting_timegauge[0];
         lineLSdata_tg = plotting_timegauge[1];
 
-        minDate_tg = Math.floor(d3.min(lineData_tg, function (d) { return d.x; }));
-        maxDate_tg = Math.ceil(d3.max(lineData_tg, function (d) { return d.x; }));
+        if (lineData_tg.length > 0) {
+            minDate_tg = Math.floor(d3.min(lineData_tg, function (d) { return d.x; }));
+            maxDate_tg = Math.ceil(d3.max(lineData_tg, function (d) { return d.x; }));
 
-        yMinMax = getYbounds(lineData_tg);
-        yMin_tg = yMinMax[0];
-        yMax_tg = yMinMax[1];
+            yMinMax = getYbounds(lineData_tg);
+            yMin_tg = yMinMax[0];
+            yMax_tg = yMinMax[1];
+        }
     }
 
     // Define plotting area:
@@ -431,7 +439,7 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
         .interpolate('linear');
 
     // Draw plots:
-    if (tidegauge_plotted === true) {
+    if (tidegauge_plotted === true && lineData_tg.length > 0) {
         // Add the scatterplot
         divTooltip  = d3.select("#plot-tooltip");   // Define handle on tooltip
         divTooltip0 = d3.select("#tooltip-info-0"); // Define handle on tooltip
@@ -459,7 +467,7 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
             });
     }
 
-    if (altimetry_plotted === true) {
+    if (altimetry_plotted === true && lineData_al.length > 0) {
         // Add the scatterplot
         divTooltip  = d3.select("#plot-tooltip");   // Define handle on tooltip
         divTooltip0 = d3.select("#tooltip-info-0"); // Define handle on tooltip
@@ -512,21 +520,23 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
     document.getElementById("save-button").addEventListener("click", saveImageListener);
     document.getElementById("data-button").addEventListener("click", dataDownloadListener);
 
-    if (altimetry_plotted === true) {
+    if (altimetry_plotted === true && lineData_al.length > 0) {
         data_entries.push('Altimetry');
         data_colors.push(plotColors(0));
     }
-    if (tidegauge_plotted === true) {
+    if (tidegauge_plotted === true && lineData_tg.length > 0) {
         data_entries.push('Tide Gauge');
         data_colors.push(plotColors(1));
     }
-    if (altimetry_plotted === true) {
-        data_entries.push('Trend, Altimetry');
-        data_colors.push(plotColors(2));
-    }
-    if (tidegauge_plotted === true) {
-        data_entries.push('Trend, Tide Gauge');
-        data_colors.push(plotColors(3));
+    if (drawTrend === 1 && drawDetrend === 0) {
+        if (altimetry_plotted === true && lineData_al.length > 0) {
+            data_entries.push('Trend, Altimetry');
+            data_colors.push(plotColors(2));
+        }
+        if (tidegauge_plotted === true && lineData_tg.length > 0) {
+            data_entries.push('Trend, Tide Gauge');
+            data_colors.push(plotColors(3));
+        }
     }
     drawLegend(data_entries, data_colors);
 
