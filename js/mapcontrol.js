@@ -249,16 +249,8 @@ function selectAltimetry(e) {
 // selectPlotting :: get page click and grabs time series.
 function selectPlotting(e, status) {
     "use strict";
-    console.log(e);
-
     if (status === "change") {
-        // The plots were updated from a settings listener. Plot updated data!
-        if (altimetry_plotted === true) {
-            displayDataSeries(minDate, maxDate, "altimetry", "change");
-        }
-        if (tidegauge_plotted === true) {
-            displayDataSeries(minDate, maxDate, "tidegauges", "change");
-        }
+        displayDataSeries(minDate, maxDate, "", "change");
     } else if (status === "new") {
         // There was a new click on the map. Plot new data!
         var features = map.queryRenderedFeatures(e.point, { layers: ['gauges'] });
