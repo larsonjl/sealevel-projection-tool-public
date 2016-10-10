@@ -1,8 +1,8 @@
 // Sets default plotting colors. Call with index to return specific color.
 function plotColors(ind, style) {
     "use strict";
-    var main = ["#377eb8", "#4daf4a", "#e41a1c", "#984ea3", "#ff7f00", "#a65628", "#f781bf"],
-        light = ["#b0cfe8", "#b8e1b7", "#f5a3a5", "#d9bade", "#ffcc99", "#ebc4ad", "#f99fcf"],
+    var main = ["#377eb8", "#d95f02", "#1b9e77", "#e41a1c", "#66a61e", "#e6ab02", "#a6761d"],
+        light = ["#b0cfe8", "#fec59a", "#a8f0da", "#f5a3a5", "#ceefa9", "#fee39a", "#f0d7a8"],
         choice;
     switch (style) {
         case "main":
@@ -448,7 +448,7 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
             .data(lineData_tg)
             .enter().append("circle")
             .attr("r", 2)
-            .style("stroke", plotColors(1))
+            .style("stroke", plotColors(1)).style("stroke-width", 1.5)
             .style("fill", "none")
             .attr("cx", function (d) { return xScale(d.x); })
             .attr("cy", function (d) { return yScale(d.y); })
@@ -476,7 +476,7 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
             .data(lineData_al)
             .enter().append("circle")
             .attr("r", 2)
-            .style("stroke", plotColors(0))
+            .style("stroke", plotColors(0)).style("stroke-width", 1.5)
             .style("fill", "none")
             .attr("cx", function (d) { return xScale(d.x); })
             .attr("cy", function (d) { return yScale(d.y); })
