@@ -134,9 +134,8 @@ function setPopupAndCenter(e) {
     latitude = jsonAltimetryLocation[2];
     longitude = jsonAltimetryLocation[3];
 
-    popupText = '<h2 class="center">Altimetry</h2>' +
-        'Lat: ' + jsonLat +
-        '<br>Lon: ' + jsonLon;
+    popupText = "<div class='tide-gauge-popup'><h2 class='center'>Altimetry</h2>" +
+        "Lat: " + jsonLat + "<br>Lon: " + jsonLon + "</div>";
 
     marker = new mapboxgl.Popup()
         .setLngLat({ lng: longitude, lat: latitude })
@@ -255,10 +254,10 @@ function selectTideGauge(feature) {
         .setHTML("<div class='tide-gauge-popup'><h2 class='center'>Tide Gauge</h2>" +
             "<div class='center italics'>" + lat_str + ", " + lng_str + "</div>" +
             "<span class='bold'>Site:</span> " + feature.properties.title +
-            "<br><span class='bold'>Code:</span> " + feature.properties.code +
-            "<div class='center'><button type='button' onclick='showTideGaugeData(" +
-            ");'>Show Timeseries</button></div></div>")
+            "<br><span class='bold'>Code:</span> " + feature.properties.code + "</div>")
         .addTo(map);
+
+    showTideGaugeData();
 
     centerMap({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]});
 }
