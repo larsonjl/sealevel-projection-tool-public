@@ -17,11 +17,39 @@ function plotColors(ind, style) {
     return choice;
 }
 
+function drawTitle() {
+    "use strict"
+    var titleText = '', jsonAltimetryLocation, jsonLat, jsonLon;
+
+    if (altimetry_plotted === true) {
+        jsonAltimetryLocation = getLatLonGridLocation(LNG, LAT),
+        jsonLat = jsonAltimetryLocation[0],
+        jsonLon = jsonAltimetryLocation[1];
+        titleText += 'Altimetry (' + jsonLat + ', ' + jsonLon + ')';
+    }
+
+    if (altimetry_plotted === true && tidegauge_plotted === true) {
+        titleText += ' vs. ';
+    }
+    if (tidegauge_plotted === true) {
+        titleText += 'Tide Gauge ("' + tideGaugeCode + '")';
+    }
+
+    d3.select("svg").append("text")
+        .attr("x", (WIDTH / 2))
+        .attr("y", 25)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .style("text-decoration", "none")
+        .text(titleText);
+}
+
 // drawLegend :: Add a legend to the plot.
 function drawLegend(data_entries, data_colors) {
     "use strict";
     var legend, color,
-        legendSpacing = 10,
+        legendSpacing = 40,
         l_data = data_colors.length,
         legendEntryWidth = Math.min(200,(WIDTH - MARGINS.left - MARGINS.right)/l_data),
         legendLeftMargin = MARGINS.left;
@@ -435,15 +463,15 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
         .range([MARGINS.left, WIDTH - MARGINS.right])
         .domain([minDate, maxDate]);
     yScale = d3.scale.linear()
-        .range([HEIGHT - MARGINS.top, MARGINS.bottom])
+        .range([HEIGHT + MARGINS.bottom, MARGINS.top + MARGINS.bottom])
         .domain([yMin, yMax]);
 
     xAxis = d3.svg.axis()
           .scale(xScale)
           .orient("bottom")
-          .innerTickSize(-HEIGHT + MARGINS.top + MARGINS.bottom)
+          .innerTickSize(- HEIGHT + MARGINS.top)
           .outerTickSize(0)
-          .tickPadding(10)
+          .tickPadding(4)
           .tickFormat(d3.format("d"));
 
     yAxis = d3.svg.axis()
@@ -451,16 +479,16 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
           .orient("left")
           .innerTickSize(-WIDTH + MARGINS.right + MARGINS.left)
           .outerTickSize(0)
-          .tickPadding(10);
+          .tickPadding(8);
 
     // Draw plotting area
     vis.append('svg:g').attr('class', 'x axis')
-        .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+        .attr('transform', 'translate(0,' + (HEIGHT + MARGINS.bottom) + ')')
         .call(xAxis);
 
     svg.append("text")
         .attr("class", "x label").attr("text-anchor", "end")
-        .attr("x", 455).attr("y", 380).text("Year");
+        .attr("x", 455).attr("y", 392).text("Year");
 
     vis.append('svg:g').attr('class', 'y axis')
         .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
@@ -563,14 +591,11 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
     document.getElementById("data-button").addEventListener("click", dataDownloadListener);
 
     if (altimetry_plotted === true && lineData_al.length > 0) {
-        jsonAltimetryLocation = getLatLonGridLocation(LNG, LAT);
-        jsonLat = jsonAltimetryLocation[0];
-        jsonLon = jsonAltimetryLocation[1];
-        data_entries.push('Altimetry (' + jsonLat + ', ' + jsonLon + ')');
+        data_entries.push('Altimetry');
         data_colors.push(plotColors(0));
     }
     if (tidegauge_plotted === true && lineData_tg.length > 0) {
-        data_entries.push('Tide Gauge (' + tideGaugeCode + ')');
+        data_entries.push('Tide Gauge');
         data_colors.push(plotColors(1));
     }
     if (drawTrend === 1 && drawDetrend === 0) {
@@ -584,6 +609,7 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
         }
     }
     drawLegend(data_entries, data_colors);
+    drawTitle();
 
     scaleTimeseriesMobile();
 
@@ -652,7 +678,7 @@ function displayDataNavbar() {
         .domain(minMaxX);
 
     navYScale = d3.scale.linear()
-        .range([navHEIGHT - MARGINS.top, MARGINS.bottom])
+        .range([navHEIGHT - MARGINS.bottom, MARGINS.bottom])
         .domain(minMaxY);
 
     xAxis = d3.svg.axis()
