@@ -1,8 +1,8 @@
 // Sets default plotting colors. Call with index to return specific color.
 function plotColors(ind, style) {
     "use strict";
-    var main = ["#377eb8", "#d95f02", "#1b9e77", "#e41a1c", "#66a61e", "#e6ab02", "#a6761d"],
-        light = ["#b0cfe8", "#fec59a", "#a8f0da", "#f5a3a5", "#ceefa9", "#fee39a", "#f0d7a8"],
+    var main = ["#377eb8", "#d95f02", "#80428a", "#b81417", "#66a61e", "#e6ab02", "#a6761d"],
+        light = ["#b0cfe8", "#fec59a", "#d9bade", "#f5a3a5", "#ceefa9", "#fee39a", "#f0d7a8"],
         choice;
     switch (style) {
         case "main":
