@@ -339,7 +339,8 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
         lineData_al, lineData_tg, lineLSdata_al, lineLSdata_tg, svg,
         vis, yMinMax, yMin, yMax, yScale, xAxis, yAxis, lineFunc, divTooltip, divTooltip0,
         divTooltip1, minDate_al = 10000, maxDate_al = 0, minDate_tg = 10000, maxDate_tg = 0,
-        yMin_al = 0, yMax_al = 0, yMin_tg = 0, yMax_tg = 0, data_entries = [], data_colors = [];
+        yMin_al = 0, yMax_al = 0, yMin_tg = 0, yMax_tg = 0, data_entries = [], data_colors = [],
+        jsonAltimetryLocation, jsonLat, jsonLon;
 
     if (dataset_id === "altimetry") {
         altimetry_plotted = true;
@@ -562,20 +563,23 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
     document.getElementById("data-button").addEventListener("click", dataDownloadListener);
 
     if (altimetry_plotted === true && lineData_al.length > 0) {
-        data_entries.push('Altimetry');
+        jsonAltimetryLocation = getLatLonGridLocation(LNG, LAT);
+        jsonLat = jsonAltimetryLocation[0];
+        jsonLon = jsonAltimetryLocation[1];
+        data_entries.push('Altimetry (' + jsonLat + ', ' + jsonLon + ')');
         data_colors.push(plotColors(0));
     }
     if (tidegauge_plotted === true && lineData_tg.length > 0) {
-        data_entries.push('Tide Gauge');
+        data_entries.push('Tide Gauge (' + tideGaugeCode + ')');
         data_colors.push(plotColors(1));
     }
     if (drawTrend === 1 && drawDetrend === 0) {
         if (altimetry_plotted === true && lineData_al.length > 0) {
-            data_entries.push('Trend, Altimetry');
+            data_entries.push('Altimetry Trend');
             data_colors.push(plotColors(2));
         }
         if (tidegauge_plotted === true && lineData_tg.length > 0) {
-            data_entries.push('Trend, Tide Gauge');
+            data_entries.push('Tide Gauge Trend');
             data_colors.push(plotColors(3));
         }
     }

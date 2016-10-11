@@ -1,3 +1,67 @@
+function getLatLonGridLocation(lng, lat) {
+    "use strict";
+    var lngSym = 'E', latSym = 'N', latitude, longitude,
+        decimLng, wholeLng, decimLat, wholeLat, jsonLon, jsonLat;
+
+    // Get lat and lon signs, then make positive:
+    if (lng < 0) { lng = -lng; lngSym = 'W'; }
+    if (lat < 0) { lat = -lat; latSym = 'S'; }
+
+    // Latitude and Longitude Whole and Part:
+    decimLng = lng % 1.0;
+    wholeLng = lng - decimLng;
+    decimLat = lat % 1.0;
+    wholeLat = lat - decimLat;
+
+    // Round lng to nearest location & get lng filename:
+    //   -> Decimals: .0833, .2500, .4167, .5833, .7500, .9167
+    if (decimLng >= 0 && decimLng < 0.166667) {
+        jsonLon = wholeLng.toFixed(0) + '.0833°' + lngSym;
+        longitude = wholeLng + 0.083333;
+    } else if (decimLng >= 0.166667 && decimLng < 0.333333) {
+        jsonLon = wholeLng.toFixed(0) + '.2500°' + lngSym;
+        longitude = wholeLng + 0.25;
+    } else if (decimLng >= 0.333333 && decimLng < 0.5) {
+        jsonLon = wholeLng.toFixed(0) + '.4167°' + lngSym;
+        longitude = wholeLng + 0.416667;
+    } else if (decimLng >= 0.5 && decimLng < 0.666667) {
+        jsonLon = wholeLng.toFixed(0) + '.5833°' + lngSym;
+        longitude = wholeLng + 0.583333;
+    } else if (decimLng >= 0.666667 && decimLng < 0.833333) {
+        jsonLon = wholeLng.toFixed(0) + '.7500°' + lngSym;
+        longitude = wholeLng + 0.75;
+    } else {
+        jsonLon = wholeLng.toFixed(0) + '.9167°' + lngSym;
+        longitude = wholeLng + 0.916667;
+    }
+
+    // Round lat to nearest location & get lat filename:
+    if (decimLat >= 0 && decimLat < 0.166667) {
+        jsonLat = wholeLat.toFixed(0) + '.0833°' + latSym;
+        latitude = wholeLat + 0.083333;
+    } else if (decimLat >= 0.166667 && decimLat < 0.333333) {
+        jsonLat = wholeLat.toFixed(0) + '.2500°' + latSym;
+        latitude = wholeLat + 0.25;
+    } else if (decimLat >= 0.333333 && decimLat < 0.5) {
+        jsonLat = wholeLat.toFixed(0) + '.4167°' + latSym;
+        latitude = wholeLat + 0.416667;
+    } else if (decimLat >= 0.5 && decimLat < 0.666667) {
+        jsonLat = wholeLat.toFixed(0) + '.5833°' + latSym;
+        latitude = wholeLat + 0.583333;
+    } else if (decimLat >= 0.666667 && decimLat < 0.833333) {
+        jsonLat = wholeLat.toFixed(0) + '.7500°' + latSym;
+        latitude = wholeLat + 0.75;
+    } else {
+        jsonLat = wholeLat.toFixed(0) + '.9167°' + latSym;
+        latitude = wholeLat + 0.916667;
+    }
+
+    if (lngSym === 'W') { longitude = -longitude; }
+    if (latSym === 'S') { latitude = -latitude; }
+
+    return [jsonLat, jsonLon, latitude, longitude];
+}
+
 // getLatLonJSONfilename :: given a lat/lon pair, returns time series file name.
 function getLatLonJSONfilename(lng, lat) {
     "use strict";
@@ -58,21 +122,28 @@ function getLatLonJSONfilename(lng, lat) {
 // setPopupAndCenter :: When a new plot is requested, reset the Map Popup.
 function setPopupAndCenter(e) {
     "use strict";
-    var popupText;
+    var popupText, jsonAltimetryLocation, jsonLat, jsonLon, latitude, longitude;
 
     if (marker) {
         marker.remove();
     }
 
-    popupText = 'Lat: ' + e.lngLat.lat.toFixed(3) +
-        '<br>Lon: ' + e.lngLat.lng.toFixed(3);
+    jsonAltimetryLocation = getLatLonGridLocation(e.lngLat.lng, e.lngLat.lat);
+    jsonLat = jsonAltimetryLocation[0];
+    jsonLon = jsonAltimetryLocation[1];
+    latitude = jsonAltimetryLocation[2];
+    longitude = jsonAltimetryLocation[3];
+
+    popupText = '<h2 class="center">Altimetry</h2>' +
+        'Lat: ' + jsonLat +
+        '<br>Lon: ' + jsonLon;
 
     marker = new mapboxgl.Popup()
-        .setLngLat(e.lngLat)
+        .setLngLat({ lng: longitude, lat: latitude })
         .setHTML(popupText)
         .addTo(map);
 
-    centerMap(e.lngLat);
+    centerMap({ lng: longitude, lat: latitude });
 }
 
 function centerMap(lngLat) {
