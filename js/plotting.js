@@ -497,8 +497,8 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
     svg.append("text")
         .attr("class", "y label")
         .attr("text-anchor", "end")
-        .attr("y", 45)
-        .attr("x", -130)
+        .attr("y", (MARGINS.left / 2 - 5))
+        .attr("x", (-HEIGHT / 2 + MARGINS.bottom))
         .attr("transform", "rotate(-90)")
         .text("Height (cm)");
 
