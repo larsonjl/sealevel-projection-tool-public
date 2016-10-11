@@ -131,6 +131,7 @@ function showTideGaugeData() {
             scrollPopup.style.transition = "opacity 1s";
             setTimeout(function () {
                 scrollPopup.style.opacity = 0;
+                scrollPopup.style.zIndex = 0;
             }, 3000);
 
         } else {
@@ -143,6 +144,7 @@ function showTideGaugeData() {
             scrollPopup.style.opacity = 1;
             setTimeout(function () {
                 scrollPopup.style.opacity = 0;
+                scrollPopup.style.zIndex = 0;
             }, 3000);
         }
     };
@@ -228,6 +230,7 @@ function selectAltimetry(e) {
             scrollPopup.style.transition = "opacity 1s";
             setTimeout(function () {
                 scrollPopup.style.opacity = 0;
+                scrollPopup.style.zIndex = 0;
             }, 3000);
 
         } else {
@@ -240,6 +243,7 @@ function selectAltimetry(e) {
             scrollPopup.style.opacity = 1;
             setTimeout(function () {
                 scrollPopup.style.opacity = 0;
+                scrollPopup.style.zIndex = 0;
             }, 3000);
         }
     };
