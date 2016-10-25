@@ -439,3 +439,5 @@ div#about-grace-toggle-down { display: inline-block; }
 }
 #show-tide-gauges a.button-inactive { background-color: #FAFAFA; color: #333333; }
 #show-tide-gauges a.button-active { background-color: #3887BE; color: #FAFAFA; }
+
+.mapboxgl-popup-tip { border-top-color: #E0E0E0!important; border-bottom-color: #E0E0E0!important; }

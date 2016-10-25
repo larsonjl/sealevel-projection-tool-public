@@ -135,12 +135,16 @@ function setPopupAndCenter(e) {
     longitude = jsonAltimetryLocation[3];
 
     popupText = "<div class='tide-gauge-popup'><h2 class='center'>Altimetry</h2>" +
-        "Lat: " + jsonLat + "<br>Lon: " + jsonLon + "</div>";
+        "<span class='bold'>Lat:</span> " + jsonLat + "<br><span class='bold'>Lon:</span> " + jsonLon + "</div>";
 
-    marker = new mapboxgl.Popup()
+    marker = new mapboxgl.Popup({anchor: "top-left"})
         .setLngLat({ lng: longitude, lat: latitude })
         .setHTML(popupText)
         .addTo(map);
+
+    if (gauge_marker) {
+        gauge_marker.addTo(map);
+    }
 
     centerMap({ lng: longitude, lat: latitude });
 }
@@ -184,15 +188,19 @@ function showTideGaugeData() {
         if (request.status >= 200 && request.status < 400) {
             // Success!
             data_tidegauge = JSON.parse(request.responseText);
+            console.log(data_tidegauge);
 
             minDate = data_tidegauge.time_yrs[0];
             maxDate = data_tidegauge.time_yrs[data_tidegauge.time_yrs.length - 1];
 
             altimetry_plotted = false;
+            tidegauge_plotted = true;
             hideAltimetryLS();
 
-            displayDataSeries(minDate, maxDate, "tidegauges", "new");
-            displayDataNavbar();
+            selectAltimetry({lngLat:{lng: data_tidegauge.altimetry.lon, lat: data_tidegauge.altimetry.lat}});
+
+            // displayDataSeries(minDate, maxDate, "tidegauges", "new");
+            // displayDataNavbar();
 
             // Show loaded successfully popup:
             scrollPopup = document.getElementById('scroll-popup');
@@ -249,13 +257,14 @@ function selectTideGauge(feature) {
         lat_str = (lat_str).toFixed(6) + "&deg;N";
     }
 
-    gauge_marker = new mapboxgl.Popup()
+    if (gauge_marker) { gauge_marker.remove(); }
+    gauge_marker = new mapboxgl.Popup({anchor: "bottom-right"})
         .setLngLat({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]})
         .setHTML("<div class='tide-gauge-popup'><h2 class='center'>Tide Gauge</h2>" +
             "<div class='center italics'>" + lat_str + ", " + lng_str + "</div>" +
             "<span class='bold'>Site:</span> " + feature.properties.title +
-            "<br><span class='bold'>Code:</span> " + feature.properties.code + "</div>")
-        .addTo(map);
+            "<br><span class='bold'>Code:</span> " + feature.properties.code + "</div>");
+        //.addTo(map);
 
     showTideGaugeData();
 
@@ -546,7 +555,7 @@ function initializeMap() {
 
         map.on('style.load', loadTideGauges);
 
-        map.addControl(new mapboxgl.Navigation());
+        map.addControl(new mapboxgl.NavigationControl());
 
         // Listener: right-click handling:
         map.on('click', function (e) { selectPlotting(e, 'new'); });
