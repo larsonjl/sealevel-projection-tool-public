@@ -138,7 +138,7 @@ Define Content Properties
     margin-bottom: -5px;
 }
 
-#footer-area { width: 100%; padding: 0px; margin: 0px; font-size: 10pt; line-height: 22px; }
+#footer-area { width: 100%; padding: 0px; margin: 0px; font-size: 10pt; font-weight: bold; line-height: 22px; }
 
 #footer-area div.hline { width: auto; margin: 20px; }
 #footer-area a:link, #footer-area a:visited { color: #FFFFFF; text-decoration: none; }
