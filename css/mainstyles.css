@@ -117,28 +117,36 @@ Define Content Properties
     margin: 0px;
     padding: 0px;
     display: inline-block;
-    background-color: #FFFFFF;
     position:relative;
 }
 
 #main-container {
-    min-height: calc( 100vh - 85px);
+    min-height: calc( 100vh - 115px);
     max-width: 1090px;
     width: 100%;
     padding: 0px;
+    background-color: #FFFFFF;
 }
 
 #footer-container {
     width: 100%;
     max-width: 1090px;
-    min-height: 85px;
+    min-height: 120px;
     text-align: center;
     padding: 0px;
+    background-color: #000000;
+    margin-bottom: -5px;
 }
 
 #footer-area { width: 100%; padding: 0px; margin: 0px; font-size: 10pt; line-height: 22px; }
 
 #footer-area div.hline { width: auto; margin: 20px; }
+#footer-area a:link, #footer-area a:visited { color: #FFFFFF; text-decoration: none; }
+#footer-area a:hover, #footer-area a:active { color: #A2A4A3; }
+
+div#footer-left, div#footer-right { display: block; margin: 20px; line-height: 20px; }
+div#footer-right { float: right; text-align: right; }
+div#footer-left { float: left; text-align: left; }
 
 /* Image Container Styling */
 .image-box {
