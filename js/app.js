@@ -1,20 +1,13 @@
 function onPlottingFormChange() {
     "use strict";
-    var boxWidth = document.getElementById("smooth-width").value;
-    boxWidth = (!isNumber(boxWidth) ? 0 : boxWidth);
-    document.getElementById("smooth-width").value = boxWidth;
+    var boxWidth = document.getElementById("smooth-width"),
+        boxWidthValue = boxWidth.value;
+    boxWidthValue = (isNumber(boxWidthValue) ? boxWidthValue : 0);
+    boxWidth.value = boxWidthValue;
 
-    if (plot_num > 0) {
-        if (boxWidth >= 0) {
-            selectPlotting({ "lngLat": { "lng": LNG, "lat": LAT } }, 'change');
-        }
+    if (plot_num > 0 && boxWidthValue >= 0) {
+        selectPlotting({"lngLat":{"lng":LNG,"lat":LAT}}, 'change');
     }
-}
-
-// Scale certain divs on mobile:
-function scaleMapMobile() {
-    "use strict";
-    var i, labels, nums;
 }
 
 // getTimeSeries :: retrieves timeseries data for the location and initializes plots.
@@ -70,7 +63,7 @@ function inputLatLon(e) {
 // Move plots by dragging title bar
 function mouseUpDragging() {
     "use strict";
-    window.removeEventListener('mousemove', divMoveDragging, true);
+    window.removeEventListener('mousemove', divMoveDragging, false);
 }
 
 function mouseDownDragging(e) {
@@ -78,7 +71,7 @@ function mouseDownDragging(e) {
     var div = document.getElementById('chart-container');
     x_pos = e.clientX - div.offsetLeft;
     y_pos = e.clientY - div.offsetTop;
-    window.addEventListener('mousemove', divMoveDragging, true);
+    window.addEventListener('mousemove', divMoveDragging, false);
 }
 
 function divMoveDragging(e) {
@@ -91,14 +84,14 @@ function divMoveDragging(e) {
 // Resize plots by dragging triangle corner
 function mouseUpResize() {
     "use strict";
-    window.removeEventListener('mousemove', divMoveResize, true);
+    window.removeEventListener('mousemove', divMoveResize, false);
 }
 
 function mouseDownResize(e) {
     "use strict";
     var container = document.getElementById('chart-container'),
         chart = document.getElementById('timeseries');
-    window.addEventListener('mousemove', divMoveResize, true);
+    window.addEventListener('mousemove', divMoveResize, false);
 }
 
 function divMoveResize(e) {
@@ -117,6 +110,7 @@ function divMoveResize(e) {
 
 function getWidth() {
     "use strict";
+    // Multiple methods for maximum browser compatibility:
     if (self.innerWidth) {
         return self.innerWidth;
     }
@@ -130,6 +124,7 @@ function getWidth() {
 
 function getHeight() {
     "use strict";
+    // Multiple methods for maximum browser compatibility:
     if (self.innerHeight) {
         return self.innerHeight;
     }
@@ -146,6 +141,7 @@ function minimizePlot() {
     var pageWidth  = getWidth(),
         pageHeight = getHeight();
 
+    // Store container dimensions for when maximized again:
     chart_container_maximize_width = document.getElementById('chart-container').offsetWidth;
     chart_container_maximize_height = document.getElementById('chart-container').offsetHeight;
     chart_container_maximize_left = document.getElementById('chart-container').offsetLeft;
@@ -153,6 +149,7 @@ function minimizePlot() {
     timeseries_maximize_width = document.getElementById('timeseries').offsetWidth;
     timeseries_maximize_height = document.getElementById('timeseries').offsetHeight;
 
+    // Minimize plot and hide unnecessary parts:
     document.getElementById('maximize-plot').style.display = 'block';
     document.getElementById('minimize-plot').style.display = 'none';
     document.getElementById('chart-topbar').style.display = 'none';
@@ -184,16 +181,23 @@ function maximizePlot() {
     document.getElementById('timeseries').style.height = timeseries_maximize_height + 'px';
 }
 
+function showSearchBox() {
+    "use strict";
+    document.getElementById("map-search").style.display = 'inline-block';
+}
+
+function hideSearchBox() {
+    "use strict";
+    document.getElementById("map-search").style.display = 'none';
+}
+
 // loadApp :: Start app
 function loadApp() {
     "use strict";
-    var i, radios = document.forms.PlotOptionsForm,
-        radios_detrend = radios.elements["draw-detrend"],
-        radios_deseason = radios.elements["draw-deseason"],
-        radios_showtrend = radios.elements["draw-trend"];
-
-    scaleMapMobile();
-    window.addEventListener("resize", function () { scaleMapMobile(); scaleTimeseriesMobile(); });
+    var i, plot_form = document.forms.PlotOptionsForm,
+        radios_detrend = plot_form.elements["draw-detrend"],
+        radios_deseason = plot_form.elements["draw-deseason"],
+        radios_showtrend = plot_form.elements["draw-trend"];
 
     // Load Time JSON file:
     getTimeSeries();
@@ -202,17 +206,8 @@ function loadApp() {
     initializeMap();
 
     // Listener: search button
-    document.getElementById("map-search-button").addEventListener("click", function (e) {
-        if (document.getElementById("map-click").style.display == 'none') {
-            document.getElementById("map-click").style.display = 'inline-block';
-        } else {
-            document.getElementById("map-click").style.display = 'none';
-        }
-    });
-
-    document.getElementById("map-click-exit").addEventListener("click", function (e) {
-        document.getElementById("map-click").style.display = 'none';
-    });
+    document.getElementById("map-search-show").addEventListener("click", showSearchBox, false);
+    document.getElementById("map-search-exit").addEventListener("click", hideSearchBox, false);
 
     // Listener: Map Location Form:
     document.getElementById("GetTimeseries").addEventListener("submit", function (e) {inputLatLon(e); });
@@ -233,28 +228,23 @@ function loadApp() {
     });
 
     // Listeners: Detrend, Deseason, Show Trend, Boxcar:
-    for (i = 0; i < radios_detrend.length; i += 1) {
-        radios_detrend[i].addEventListener("click", onPlottingFormChange);
+    for (i = 0; i < radios_detrend.length; i++) {
+        radios_detrend[i].addEventListener("click", onPlottingFormChange, false);
     }
 
-    for (i = 0; i < radios_deseason.length; i += 1) {
-        radios_deseason[i].addEventListener("click", onPlottingFormChange);
+    for (i = 0; i < radios_deseason.length; i++) {
+        radios_deseason[i].addEventListener("click", onPlottingFormChange, false);
     }
 
-    for (i = 0; i < radios_showtrend.length; i += 1) {
-        radios_showtrend[i].addEventListener("click", onPlottingFormChange);
+    for (i = 0; i < radios_showtrend.length; i++) {
+        radios_showtrend[i].addEventListener("click", onPlottingFormChange, false);
     }
 
-    document.getElementById("set-smooth-width").addEventListener("click", onPlottingFormChange);
+    document.getElementById("set-smooth-width").addEventListener("click", onPlottingFormChange, false);
 
     // Plot minimize/maximize listeners:
-    document.getElementById("minimize-plot-img").addEventListener("click", function (e) {
-        minimizePlot();
-    });
-
-    document.getElementById("maximize-plot-img").addEventListener("click", function (e) {
-        maximizePlot();
-    });
+    document.getElementById("minimize-plot-img").addEventListener("click", minimizePlot, false);
+    document.getElementById("maximize-plot-img").addEventListener("click", maximizePlot, false);
 
     // Plot movement listeners
     document.getElementById('chart-topbar').addEventListener('mousedown', mouseDownDragging, false);
@@ -266,7 +256,4 @@ function loadApp() {
 }
 
 // Wait until all content is loaded to do anything:
-document.addEventListener('DOMContentLoaded', function () {
-    "use strict";
-    loadApp();
-}, false);
+document.addEventListener('DOMContentLoaded', loadApp, false);

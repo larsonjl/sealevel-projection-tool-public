@@ -513,12 +513,6 @@ function dataDownloadListener() {
     dataDownloadCancelListener();
 }
 
-function scaleTimeseriesMobile() {
-    "use strict";
-    var timeseriesWidth, LSparamsHeight, dataTimeseriesHeight,
-        dataNavbarHeight, timeseriesHeight, dataTimeseriesTop, dataNavbarTop;
-}
-
 // displayDataSeries :: takes returned data series and plots onto graph.
 function displayDataSeries(min_Date, max_Date, dataset_id, status) {
     "use strict";

@@ -58,8 +58,8 @@
 
                     <!-- <div id="map-solution-label"><h2>Altimetry and Tide Guage Label</h2></div> -->
 
-                    <div id="map-click">
-                        <div id="map-click-exit">-</div>
+                    <div id="map-search">
+                        <div id="map-search-exit">-</div>
                         <div id="click-location">
                             <h2>Location Lookup</h2>
                             <p>Use your mouse to zoom and navigate the map. <span class="bold">Click</span> on the map or <span class="bold">input</span> latitude and longitude coordinates to get a local timeseries.</p>
@@ -71,12 +71,14 @@
                         </div>
                     </div>
 
-                    <div id="map-search-button"><img src="img/ic_search_black_48dp.png"/></div>
+                    <div id="map-search-show"><img src="img/ic_search_black_48dp.png"/></div>
 
                     <nav id="map-style-menu"></nav>
 
                     <div id="map-data-source">
-                        <p class="right small"><span class="bold">Data Sources:</span> Altimetry: <span class="italics">Victor Zlotnicki, Jet Propulsion Lab</span>; Tide Gauges: <span class="italics">Mark Merrifield, Univ. of Hawaii</span>&nbsp;</p>
+                        <span class="bold">Data Sources:</span>&nbsp;<br>
+                        Altimetry: <span class="italics">Victor Zlotnicki, Jet Propulsion Lab</span>&nbsp;<br>
+                        Tide Gauges: <span class="italics">Mark Merrifield, Univ. of Hawaii</span>&nbsp;
                     </div>
 
                     <div id='map-cbar-container'>
@@ -85,21 +87,21 @@
                             <div class="cbar-labels" id="cbar-trend-labels">
                                 <div class="cbar-num" id="cbar-t-l-20"></div><div class="cbar-num" id="cbar-t-l-18"></div><div class="cbar-num" id="cbar-t-l-16"></div><div class="cbar-num" id="cbar-t-l-14"></div><div class="cbar-num" id="cbar-t-l-12"></div><div class="cbar-num" id="cbar-t-l-10"></div><div class="cbar-num" id="cbar-t-l-8"></div><div class="cbar-num" id="cbar-t-l-6"></div><div class="cbar-num" id="cbar-t-l-4"></div><div class="cbar-num" id="cbar-t-l-2"></div><div class="cbar-num" id="cbar-t-l-0"></div>
                             </div>
-                            <div class="center">cm/year</div>
+                            <div class="cbar-units">cm/year</div>
                         </div>
                         <div class="map-colorbar" id="annual-colorbar">
                             <div class="cbar" id="cbar-annual"></div>
                             <div class="cbar-labels" id="cbar-annual-labels">
                                 <div class="cbar-num" id="cbar-a-l-10"></div><div class="cbar-num" id="cbar-a-l-9"></div><div class="cbar-num" id="cbar-a-l-8"></div><div class="cbar-num" id="cbar-a-l-7"></div><div class="cbar-num" id="cbar-a-l-6"></div><div class="cbar-num" id="cbar-a-l-5"></div><div class="cbar-num" id="cbar-a-l-4"></div><div class="cbar-num" id="cbar-a-l-3"></div><div class="cbar-num" id="cbar-a-l-2"></div><div class="cbar-num" id="cbar-a-l-1"></div><div class="cbar-num" id="cbar-a-l-0"></div>
                             </div>
-                            <div class="center">cm</div>
+                            <div class="cbar-units">cm</div>
                         </div>
                         <div class="map-colorbar" id="rms-colorbar">
                             <div class="cbar" id="cbar-rms"></div>
                             <div class="cbar-labels" id="cbar-rms-labels">
                                 <div class="cbar-num" id="cbar-r-l-10"></div><div class="cbar-num" id="cbar-r-l-9"></div><div class="cbar-num" id="cbar-r-l-8"></div><div class="cbar-num" id="cbar-r-l-7"></div><div class="cbar-num" id="cbar-r-l-6"></div><div class="cbar-num" id="cbar-r-l-5"></div><div class="cbar-num" id="cbar-r-l-4"></div><div class="cbar-num" id="cbar-r-l-3"></div><div class="cbar-num" id="cbar-r-l-2"></div><div class="cbar-num" id="cbar-r-l-1"></div><div class="cbar-num" id="cbar-r-l-0"></div>
                             </div>
-                            <div class="center">cm</div>
+                            <div class="cbar-units">cm</div>
                         </div>
                     </div>
 

@@ -116,7 +116,7 @@ div.popup-msg {
 }
 
 /* Style Map Click */
-#map-click {
+#map-search {
     width: 230px;
     padding: 19px;
     position: absolute;
@@ -133,7 +133,7 @@ div.popup-msg {
     z-index: 2;
 }
 
-#map-click-exit {
+#map-search-exit {
     position: absolute;
     top: 0;
     right: 10px;
@@ -145,7 +145,7 @@ div.popup-msg {
     cursor: pointer;
 }
 
-#map-click-exit:hover { color: #000000; }
+#map-search-exit:hover { color: #000000; }
 
 /* Style Map and Colorbar */
 #map-and-cbar {
@@ -405,9 +405,8 @@ div.tooltip {
     display: inline-block;
 }
 
-
 /* Map Style Toggler */
-#map-search-button {
+#map-search-show {
     background: #FAFAFA;
     position: absolute;
     z-index: 1;
@@ -422,21 +421,24 @@ div.tooltip {
     box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
     cursor: pointer;
 }
-#map-search-button:hover { background: #F0F0F0; }
-#map-search-button img{ width: 75%; display: inline; vertical-align: middle; }
+#map-search-show:hover { background: #F0F0F0; }
+#map-search-show img{ width: 75%; display: inline; vertical-align: middle; }
 
 #map-data-source {
     position: absolute;
     bottom: 20px;
     right: 0;
-    height: 20px;
-    line-height: 20px;
+    height: 54px;
+    line-height: 18px;
     background-color: rgba(255,255,255,0.8);
+    font-size: 9pt;
+    text-align: left;
+    padding: 2px 2px 0 4px;
     z-index: 1;
 }
 
 #map-style-menu {
-    background: #fafafa;
+    background: #FAFAFA;
     position: absolute;
     z-index: 1;
     top: 10px;
@@ -464,39 +466,37 @@ div.tooltip {
 }
 
 #map-style-menu a:hover {
-    background-color: #f8f8f8;
+    background-color: #F8F8F8;
     color: #404040;
 }
 
 #map-style-menu a.data-active {
-    background-color: #3887be;
-    color: #fafafa;
+    background-color: #3887BE;
+    color: #FAFAFA;
 }
 
 #map-style-menu a.data-active:hover {
-    background: #3074a4;
+    background: #3074A4;
 }
 
 
-div.map-colorbar { width: 100%; margin: 0; padding: 10px 0; text-align: center;}
+div.map-colorbar { width: 100%; margin: 0; padding: 5px 0; text-align: center;}
 div#rms-colorbar { display: inline-block; }
 div#annual-colorbar, div#trend-colorbar { display: none; }
 
 div.cbar {
-    height: 300px;
-    width: 20px;
-    margin: 15px 0;
+    height: 260px;
+    width: 18px;
+    margin: 13px 0;
     padding: 0;
     border: 0 solid #000000;
-    border-left-width: 1px;
-    border-right-width: 1px;
+    border-width: 0 1px;
+    display: inline-block;
 }
 div#cbar-trend {
-    display: inline-block;
     background: linear-gradient(to top, #67001f, #850c1e, #a3201d, #bd361c, #d2501d, #df6e22, #e88e30, #f0aa49, #f7c670, #fde1a6, #fafafa, #b7edf8, #91d8f8, #74bff9, #5ea6f9, #498dfa, #3172fa, #175be9, #114ac0, #0c3c94, #053061);
 }
 div#cbar-annual, div#cbar-rms {
-    display: inline-block;
     background: linear-gradient(to top, #fafafa, #fde1a6, #f7c670, #f0aa49, #e88e30, #df6e22, #d2501d, #bd361c, #a3201d, #850c1e, #67001f);
 }
 
@@ -511,10 +511,18 @@ div.cbar-labels {
 div.cbar-num {
     margin: 0;
     padding: 0;
-    height: 30px;
-    line-height: 30px;
+    height: 26px;
+    line-height: 26px;
     display: inline-block;
     font-size: 10pt;
+    text-align: center;
+}
+
+div.cbar-units {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: block;
     text-align: center;
 }
 
@@ -740,9 +748,9 @@ div#privacy-policy ol, div#privacy-policy ul {
     .best-fit-title, .best-fit-param { line-height: 15px; height: 15px; }
     #data-timeseries { height: 190px; }
     .mapboxgl-ctrl-attrib { font-size: 7pt!important; }
-    #map-data-source p.small { font-size: 7pt!important; }
+    #map-data-source { font-size: 7pt!important; line-height: 12px; height: 36px; }
     .map-colorbar { padding: 0 0 2px!important; }
-    #map-click { right: 50%; margin-right: -135px; z-index: 3; }
+    #map-search { right: 50%; margin-right: -135px; z-index: 3; }
     #data-navbar { height: 40px; }
     #chart-topbar { display: none; }
     #resize-triangle { display: none; }

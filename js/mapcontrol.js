@@ -404,7 +404,6 @@ function addLayer(name, id) {
     if (name === 'RMS') {
         link.className = 'data-active';
         document.getElementById('rms-colorbar').style.display = 'inline-block';
-        document.getElementById('cbar-bounds').style.display = 'inline-block';
     } else {
         link.className = '';
     }
