@@ -118,7 +118,7 @@ function hideColorbars() {
     document.getElementById('trend-colorbar').style.display = 'none';
     document.getElementById('annual-colorbar').style.display = 'none';
     document.getElementById('rms-colorbar').style.display = 'none';
-    document.getElementById('cbar-bounds').style.display = 'none';
+    document.getElementById('map-meta').style.display = 'none';
 }
 
 function showColorbar(id) {
@@ -129,7 +129,7 @@ function showColorbar(id) {
         changeMapColorbar(activeMap, 5);
 
         document.getElementById('trend-colorbar').style.display = 'inline-block';
-        document.getElementById('cbar-bounds').style.display = 'inline-block';
+        document.getElementById('map-meta').style.display = 'block';
         document.getElementById('colorbar-max-bounds').step = 0.1;
         document.getElementById('colorbar-max-bounds').max = 10.0;
         document.getElementById('colorbar-max-bounds').min = 0.1;
@@ -141,7 +141,7 @@ function showColorbar(id) {
         changeMapColorbar(activeMap, 25);
 
         document.getElementById('annual-colorbar').style.display = 'inline-block';
-        document.getElementById('cbar-bounds').style.display = 'inline-block';
+        document.getElementById('map-meta').style.display = 'block';
         document.getElementById('colorbar-max-bounds').step = 1;
         document.getElementById('colorbar-max-bounds').max = 100;
         document.getElementById('colorbar-max-bounds').min = 1;
@@ -153,7 +153,7 @@ function showColorbar(id) {
         changeMapColorbar(activeMap, 40);
 
         document.getElementById('rms-colorbar').style.display = 'inline-block';
-        document.getElementById('cbar-bounds').style.display = 'inline-block';
+        document.getElementById('map-meta').style.display = 'block';
         document.getElementById('colorbar-max-bounds').step = 1;
         document.getElementById('colorbar-max-bounds').max = 60;
         document.getElementById('colorbar-max-bounds').min = 1;

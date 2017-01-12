@@ -2,7 +2,7 @@
 
 [CCAR's Altimetry Visualization Tool](http://ccar.colorado.edu/altimetry)
 
-Copyright (c) 2016 Mike Croteau.
+Copyright (c) 2016-2017 Mike Croteau.
 
 Released under the [MIT License](LICENSE).
 

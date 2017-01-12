@@ -69,6 +69,10 @@ function getLatLonJSONfilename(lng, lat) {
     var lngSym = 'E', latSym = 'N',
         decimLng, wholeLng, decimLat, wholeLat, jsonLon, jsonLat, filename;
 
+    // Make sure Longitude is between -180 and 180
+    while (lng > 180) { lng -= 360; }
+    while (lng < -180) { lng += 360; }
+
     // Get lat and lon signs, then make positive:
     // if (lng < 0) { signLng = -1; lng = -lng; lngSym = 'W'; }
     // if (lat < 0) { signLat = -1; lat = -lat; latSym = 'S'; }
@@ -83,7 +87,9 @@ function getLatLonJSONfilename(lng, lat) {
 
     // Round lng to nearest location & get lng filename:
     //   -> Decimals: .0833, .2500, .4167, .5833, .7500, .9167
-    if (decimLng >= 0 && decimLng < 0.166667) {
+    if (decimLng === 0) {
+        jsonLon = (wholeLng - 1).toFixed(0) + '9167' + lngSym;
+    } else if (decimLng > 0 && decimLng < 0.166667) {
         jsonLon = wholeLng.toFixed(0) + '0833' + lngSym;
     } else if (decimLng >= 0.166667 && decimLng < 0.333333) {
         jsonLon = wholeLng.toFixed(0) + '2500' + lngSym;
@@ -99,7 +105,9 @@ function getLatLonJSONfilename(lng, lat) {
     while (jsonLon.length < 8) { jsonLon = '0' + jsonLon; }
 
     // Round lat to nearest location & get lat filename:
-    if (decimLat >= 0 && decimLat < 0.166667) {
+    if (decimLat == 0) {
+        jsonLat = (wholeLat - 1).toFixed(0) + '9167' + latSym;
+    } else if (decimLat >= 0 && decimLat < 0.166667) {
         jsonLat = wholeLat.toFixed(0) + '0833' + latSym;
     } else if (decimLat >= 0.166667 && decimLat < 0.333333) {
         jsonLat = wholeLat.toFixed(0) + '2500' + latSym;
@@ -188,7 +196,8 @@ function showTideGaugeData() {
         if (request.status >= 200 && request.status < 400) {
             // Success!
             data_tidegauge = JSON.parse(request.responseText);
-            console.log(data_tidegauge);
+
+            data_tidegauge_header = dataHeaderInfo('tidegauge');
 
             minDate = data_tidegauge.time_yrs[0];
             maxDate = data_tidegauge.time_yrs[data_tidegauge.time_yrs.length - 1];
@@ -203,27 +212,27 @@ function showTideGaugeData() {
             // displayDataNavbar();
 
             // Show loaded successfully popup:
-            scrollPopup = document.getElementById('scroll-popup');
+            /*scrollPopup = document.getElementById('scroll-popup');
             scrollPopup.style.zIndex = 5000;
             scrollPopup.style.opacity = 1;
             scrollPopup.style.transition = "opacity 1s";
             setTimeout(function () {
                 scrollPopup.style.opacity = 0;
                 scrollPopup.style.zIndex = 0;
-            }, 3000);
+            }, 3000);*/
 
         } else {
             // We reached our target server, but it returned an error
             // alert("That location is unavailable. Either it is not in the dataset (such as if it is over land) or there has been an error.");
             // Show loaded successfully popup:
-            scrollPopup = document.getElementById('error-popup');
+            /*scrollPopup = document.getElementById('error-popup');
             scrollPopup.style.zIndex = 5000;
             scrollPopup.style.transition = "opacity 1s";
             scrollPopup.style.opacity = 1;
             setTimeout(function () {
                 scrollPopup.style.opacity = 0;
                 scrollPopup.style.zIndex = 0;
-            }, 3000);
+            }, 3000);*/
         }
     };
     request.onerror = function () {
@@ -273,7 +282,7 @@ function selectTideGauge(feature) {
 
 function selectAltimetry(e) {
     "use strict";
-    var request;
+    var request, lon_range, lat_range, pageWidth;
 
     // Show altimetry:
     minDate = time.time_yrs[0];
@@ -298,11 +307,24 @@ function selectAltimetry(e) {
             // Success!
             data_altimetry = JSON.parse(request.responseText);
 
+            data_altimetry_header = dataHeaderInfo('altimetry');
+
             displayDataSeries(minDate, maxDate, "altimetry", "new");
             displayDataNavbar();
             setPopupAndCenter(e);
 
+            // Move center to the right
+            lat_range = map.getBounds()._ne.lat - map.getBounds()._sw.lat;
+            lon_range = map.getBounds()._ne.lng - map.getBounds()._sw.lng;
+            pageWidth = getWidth();
+            if (pageWidth > 500) {
+                map.jumpTo({ "center": { 'lng': e.lngLat.lng - (0.3*lon_range), 'lat': e.lngLat.lat } });
+            } else {
+                map.jumpTo({ "center": { 'lng': e.lngLat.lng, 'lat': e.lngLat.lat - (0.25*lat_range) } });
+            }
+
             // Show loaded successfully popup:
+            /*
             scrollPopup = document.getElementById('scroll-popup');
             scrollPopup.style.zIndex = 5000;
             scrollPopup.style.opacity = 1;
@@ -310,20 +332,20 @@ function selectAltimetry(e) {
             setTimeout(function () {
                 scrollPopup.style.opacity = 0;
                 scrollPopup.style.zIndex = 0;
-            }, 3000);
+            }, 3000);*/
 
         } else {
             // We reached our target server, but it returned an error
             // alert("That location is unavailable. Either it is not in the dataset (such as if it is over land) or there has been an error.");
             // Show loaded successfully popup:
-            scrollPopup = document.getElementById('error-popup');
+            /*scrollPopup = document.getElementById('error-popup');
             scrollPopup.style.zIndex = 5000;
             scrollPopup.style.transition = "opacity 1s";
             scrollPopup.style.opacity = 1;
             setTimeout(function () {
                 scrollPopup.style.opacity = 0;
                 scrollPopup.style.zIndex = 0;
-            }, 3000);
+            }, 3000);*/
         }
     };
     request.onerror = function () {

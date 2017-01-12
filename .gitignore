@@ -1,2 +1,4 @@
 .DS_Store
 .jslintrc
+js/*-old-ui.js
+index-old-ui.html

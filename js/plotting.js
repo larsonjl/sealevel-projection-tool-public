@@ -320,6 +320,169 @@ function saveImageListener() {
     saveSvgAsPng(document.getElementById(svg_id), imgName, {scale: 2, backgroundColor: "#FFFFFF"});
 }
 
+// dataHeaderInfo :: Writes header information for downloadData function as CSV
+function dataHeaderInfo(dataset) {
+    "use strict";
+    var data_header,
+        jsonAltimetryLocation = getLatLonGridLocation(LNG, LAT),
+        altLat = jsonAltimetryLocation[2],
+        altLon = jsonAltimetryLocation[3];
+
+    if (dataset === "altimetry") {
+        // JPL Altimetry Data
+        data_header = [
+            ["lat", altLat],
+            ["lon", altLon],
+            ["Source", "Victor Zlotnicki (JPL)"],
+            //["Citation", ""]
+        ];
+    } else {
+        // Tide Gauge Data
+        data_header = [
+            ["lat", data_tidegauge.lat],
+            ["lon", data_tidegauge.lon],
+            ["code", data_tidegauge.code],
+            ["location", data_tidegauge.loc],
+            ["Solution", "Mark Merrifield (UHSLC)"],
+            //["Citation", ""]
+        ];
+    }
+    return data_header;
+}
+
+// downloadData :: Captures currently plotted data and writes & downloads as CSV
+function downloadData() {
+    "use strict";
+    var i, time_units, isCMWE, data_units, data_csv_struc, data_string, encoded_uri,
+        len_altimetry = 0, len_tidegauge = 0, len_shorter, len_longer,
+        altLatSign = '', altLonSign = '', altLatStr = '', altLonStr = '',
+        csv_filename, link, csv_content = "data:text/csv;charset=utf-8,";
+
+    time_units = "time";
+    data_units = 'sla (cm)';
+    //data_error_units = 'sla error (mm)';
+
+    // Write Data Portal Header:
+    data_csv_struc = [["CCAR's Altimetry Explorer"]];
+    data_csv_struc.push(["http://ccar.colorado.edu/altimetry/"]);
+
+    // Write Altimetry Header (if applicable):
+    if (altimetry_plotted === true) {
+        len_altimetry = plot_data_altimetry.length;
+
+        data_csv_struc.push(["ALTIMETRY INFORMATION"]);
+        data_csv_struc.push.apply(data_csv_struc, data_altimetry_header);
+        data_csv_struc.push([""]);
+    }
+
+    // Write Tide Gauge Header (if applicable):
+    if (tidegauge_plotted === true) {
+        len_tidegauge = plot_data_tidegauge.length;
+
+        data_csv_struc.push(["TIDEGAUGE INFORMATION"]);
+        data_csv_struc.push.apply(data_csv_struc, data_tidegauge_header);
+        data_csv_struc.push([""]);
+    }
+
+    // Write Extra Header Information:
+    //data_csv_struc.push(["Time Units","Days since 1 January 1985"])
+    data_csv_struc.push([""]);
+
+    // Write timeseries columns:
+    if (altimetry_plotted === true && tidegauge_plotted === true) {
+
+        // Label Columns:
+        data_csv_struc.push(["Altimetry","","","Tide Gauge"])
+        data_csv_struc.push([time_units, data_units, "", time_units, data_units]);
+
+        // Determine lengths of timeseries:
+        len_shorter = (len_altimetry < len_tidegauge ? len_altimetry : len_tidegauge);
+        len_longer  = (len_altimetry < len_tidegauge ? len_tidegauge : len_altimetry);
+
+        // Write both timeseries where lengths are the same:
+        for (i = 0; i < len_shorter; i++) {
+            data_csv_struc.push([
+                plot_data_altimetry[i].x,
+                plot_data_altimetry[i].y,
+                "",
+                plot_data_tidegauge[i].x,
+                plot_data_tidegauge[i].y
+            ]);
+        }
+
+        // Write longer timeseries only, with blanks for shorter timeseries
+        for (i = len_shorter; i < len_longer; i++) {
+            if (len_altimetry < len_tidegauge) {
+                data_csv_struc.push([
+                    "",
+                    "",
+                    "",
+                    plot_data_tidegauge[i].x,
+                    plot_data_tidegauge[i].y
+                ]);
+            } else {
+                data_csv_struc.push([
+                    plot_data_altimetry[i].x,
+                    plot_data_altimetry[i].y
+                ]);
+            }
+        }
+    } else {
+
+        // Label Columns:
+        data_csv_struc.push([time_units, data_units]);
+
+        // Write timeseries:
+        if (altimetry_plotted === true) {
+            for (i = 0; i < len_altimetry; i++) {
+                data_csv_struc.push([
+                    plot_data_altimetry[i].x,
+                    plot_data_altimetry[i].y
+                ]);
+            }
+        } else {
+            for (i = 0; i < len_tidegauge; i++) {
+                data_csv_struc.push([
+                    plot_data_tidegauge[i].x,
+                    plot_data_tidegauge[i].y
+                ]);
+            }
+        }
+    }
+
+    data_csv_struc.forEach(function (infoArray, index) {
+        data_string = infoArray.join(",");
+        csv_content += index < data_csv_struc.length ? data_string + "\n" : data_string;
+    });
+
+    encoded_uri = encodeURI(csv_content);
+    // window.open(encoded_uri, '_blank');
+
+    csv_filename = "CCAR";
+
+    // lat = data_altimetry_header[0][1], lon = data_altimetry_header[1][1]
+    if (altimetry_plotted === true) {
+        altLatSign = (data_altimetry_header[0][1] >= 0 ? 'N' : 'S');
+        altLonSign = (data_altimetry_header[1][1] >= 0 ? 'E' : 'W');
+        altLatStr = Math.abs(data_altimetry_header[0][1]*10000).toFixed(0) + altLatSign;
+        altLonStr = Math.abs(data_altimetry_header[1][1]*10000).toFixed(0) + altLonSign;
+        csv_filename += '_altimetry_' + altLatStr + '_' + altLonStr;
+    }
+
+    if (tidegauge_plotted === true) {
+        csv_filename += "_tidegauge_" + data_tidegauge.code;
+    }
+
+    csv_filename += ".csv";
+
+    link = document.createElement("a");
+    link.setAttribute("href", encoded_uri);
+    link.setAttribute("download", csv_filename);
+    document.body.appendChild(link);
+    link.click();
+}
+
+/*
 // dataDownloadListener :: When the "Get Data" button is clicked, download the data CSV.
 function dataDownloadListener() {
     "use strict";
@@ -331,50 +494,48 @@ function dataDownloadListener() {
     // var fileName = 'CSV/' + jsonFilename.substr(5,jsonFilename.length-10) + '.csv';
     window.open(fileName, '_self');
 }
+*/
+
+// dataDownloadDialogListener :: Listen for Download Data button click, launch dialog
+function dataDownloadDialogListener() {
+    document.getElementById("download-dialog").style.display = "block";
+}
+
+// dataDownloadDialogListener :: Listen for Download Data button click, launch dialog
+function dataDownloadCancelListener() {
+    document.getElementById("download-dialog").style.display = "none";
+}
+
+// dataDownloadListener :: Initializes d/l when "Download Now" button clicked
+function dataDownloadListener() {
+    "use strict";
+    downloadData();
+    dataDownloadCancelListener();
+}
 
 function scaleTimeseriesMobile() {
     "use strict";
     var timeseriesWidth, LSparamsHeight, dataTimeseriesHeight,
         dataNavbarHeight, timeseriesHeight, dataTimeseriesTop, dataNavbarTop;
-
-    // Scale timeseries:
-    timeseriesWidth = 800;
-    if (document.documentElement.clientWidth < 820) {
-        timeseriesWidth = document.documentElement.clientWidth - 20;
-    }
-    document.getElementById('timeseries').style.width = String(timeseriesWidth) + 'px';
-
-    LSparamsHeight = document.getElementById('LS-params').clientHeight + 2;
-    dataTimeseriesHeight = parseInt(0.5 * timeseriesWidth, 10);
-    dataNavbarHeight = parseInt(0.125 * timeseriesWidth, 10);
-    timeseriesHeight = dataTimeseriesHeight + dataNavbarHeight + LSparamsHeight;
-
-    document.getElementById('timeseries').style.height = String(timeseriesHeight) + 'px';
-
-    document.getElementById('data-timeseries').style.height = String(dataTimeseriesHeight) + 'px';
-    document.getElementById('data-navbar').style.height = String(dataNavbarHeight) + 'px';
-
-    dataTimeseriesTop = String(LSparamsHeight) + 'px';
-    dataNavbarTop = String(LSparamsHeight + dataTimeseriesHeight) + 'px';
-    document.getElementById('data-timeseries').style.top = dataTimeseriesTop;
-    document.getElementById('data-navbar').style.top = dataNavbarTop;
 }
 
 // displayDataSeries :: takes returned data series and plots onto graph.
 function displayDataSeries(min_Date, max_Date, dataset_id, status) {
     "use strict";
-    var drawDetrend, drawTrend, plot_units, plotting_altimetry, plotting_timegauge,
+    var drawDetrend, drawTrend, plot_units, plotting_altimetry, plotting_tidegauge,
         lineData_al, lineData_tg, lineLSdata_al, lineLSdata_tg, svg,
         vis, yMinMax, yMin, yMax, yScale, xAxis, yAxis, lineFunc, divTooltip, divTooltip0,
         divTooltip1, minDate_al = 10000, maxDate_al = 0, minDate_tg = 10000, maxDate_tg = 0,
         yMin_al = 0, yMax_al = 0, yMin_tg = 0, yMax_tg = 0, data_entries = [], data_colors = [],
-        jsonAltimetryLocation, jsonLat, jsonLon;
+        jsonAltimetryLocation, jsonLat, jsonLon, attr_text, i;
 
     if (dataset_id === "altimetry") {
         altimetry_plotted = true;
     } else if (dataset_id === "tidegauges") {
         tidegauge_plotted = true;
     }
+
+    maximizePlot();
 
     /*
     if (status === "change") {
@@ -414,10 +575,10 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
 
     if (tidegauge_plotted === true) {
         // Get data in a structure ready for plotting, including LS information:
-        plotting_timegauge = prepDataForPlotting(data_tidegauge, plot_units, min_Date, max_Date, "tidegauges");
+        plotting_tidegauge = prepDataForPlotting(data_tidegauge, plot_units, min_Date, max_Date, "tidegauges");
 
-        lineData_tg = plotting_timegauge[0];
-        lineLSdata_tg = plotting_timegauge[1];
+        lineData_tg = plotting_tidegauge[0];
+        lineLSdata_tg = plotting_tidegauge[1];
 
         if (lineData_tg.length > 0) {
             minDate_tg = Math.floor(d3.min(lineData_tg, function (d) { return d.x; }));
@@ -585,9 +746,13 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
 
     if (plot_num > 0) {
         document.getElementById("save-button").removeEventListener("click", saveImageListener);
+        document.getElementById("data-dialog-button").removeEventListener("click", dataDownloadDialogListener);
+        document.getElementById("data-cancel-button").removeEventListener("click", dataDownloadCancelListener);
         document.getElementById("data-button").removeEventListener("click", dataDownloadListener);
     }
     document.getElementById("save-button").addEventListener("click", saveImageListener);
+    document.getElementById("data-dialog-button").addEventListener("click", dataDownloadDialogListener);
+    document.getElementById("data-cancel-button").addEventListener("click", dataDownloadCancelListener);
     document.getElementById("data-button").addEventListener("click", dataDownloadListener);
 
     if (altimetry_plotted === true && lineData_al.length > 0) {
@@ -611,9 +776,40 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
     drawLegend(data_entries, data_colors);
     drawTitle();
 
-    scaleTimeseriesMobile();
+    plot_data_altimetry = lineData_al;
+    plot_data_tidegauge = lineData_tg;
 
-    // }
+    // Add attribution box to bottom left
+    attr_text = [];
+    if (altimetry_plotted === true) {
+        attr_text.push("Altimetry: Victor Zlotnicki, JPL");
+    }
+    if (tidegauge_plotted === true) {
+        attr_text.push("Tide Gauges: Mark Merrifield, UHSLC");
+    }
+    attr_text.push("Plot: http://ccar.colorado.edu/altimetry/");
+
+    svg.append("rect")
+        .attr("x", 560)
+        .attr("y", (attr_text.length == 2 ? 334 : 321))
+        .attr("width", 220)
+        .attr("height", (attr_text.length == 2 ? 26 : 39))
+        .attr("fill", "#F0F0F0")
+        .attr("stroke-width", 1)
+        .attr("stroke", "black");
+
+    for (i=0; i < attr_text.length; i++) {
+        svg.append("text")
+            .attr("x", 777)
+            .attr("y", (attr_text.length == 2 ? 344 : 331) + 13*i)
+            .attr("text-anchor", "end")
+            .style("font-size", "11px")
+            .style("text-decoration", "none")
+            .style("background-color", "#FAFAFA")
+            .style("font-family", "Arial")
+            .text(attr_text[i]);
+    }
+
 }
 
 // displayDataNavbar :: plots timeseries data onto Navbar and initializes navbar brush.
