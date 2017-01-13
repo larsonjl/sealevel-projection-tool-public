@@ -66,7 +66,7 @@
                             <form id="GetTimeseries">
                                 <div class="click-latlon-div"> Lat. [Deg]: </div><div class="click-latlonfield-div"><input type="text" id="click-lat"></div><br>
                                 <div class="click-latlon-div"> Lon. [Deg]: </div><div class="click-latlonfield-div"><input type="text" id="click-lon"></div><br>
-                                <input id="timeseries-button" type="submit" value="Get Timeseries">
+                                <input class="form-button" id="timeseries-button" type="submit" value="Get Timeseries">
                             </form>
                         </div>
                     </div>
@@ -114,8 +114,7 @@
 
                     <div id="map-div">
                         <div id='show-tide-gauges'><a id='show-tide-gauges-button' class='button-inactive' href='#'>Show Tide Gauges</a></div>
-                        <!--<div id="scroll-popup" class="popup-msg success-msg">Location data loaded.<br>Scroll down to see local timeseries.</div>
-                        <div id="error-popup" class="popup-msg error-msg">That location is unavailable.<br>Either it is not in the dataset or there has been an error.</div>-->
+                        <div id="error-popup" class="popup-msg error-msg">That location is unavailable.<br>Either it is not in the dataset or there has been an error.</div>
                     </div>
 
                 </div>
@@ -155,20 +154,20 @@
                         </div>
                     </form>
                     <div class="hline"></div>
-                    <button id="save-button" type="button"><img src="img/ic_image_grey600_48dp.png"/><span id="save-button-text">Save Image</span></button>
-                    <button id="data-dialog-button" type="button"><img src="img/ic_file_download_grey600_48dp.png"/><span id="download-button-text">Get Data</span></button>
+                    <button class="form-button" id="save-button" type="button"><img src="img/ic_image_grey600_48dp.png"/><span id="save-button-text">Save Image</span></button>
+                    <button class="form-button" id="data-dialog-button" type="button"><img src="img/ic_file_download_grey600_48dp.png"/><span id="download-button-text">Get Data</span></button>
                 </div><!--
              --><div id="timeseries">
                     <div id="LS-params">
-                        <div class="best-fit-title">Trend:</div><div class="best-fit-param" id="LS-altimetry-trend"></div><div class="best-fit-param" id="LS-tidegauge-trend"></div><br>
-                        <div class="best-fit-title">Annual Amplitude:</div><div class="best-fit-param" id="LS-altimetry-annual"></div><div class="best-fit-param" id="LS-tidegauge-annual"></div><br>
-                        <div class="best-fit-title">Semi-Annual Amp.:</div><div class="best-fit-param" id="LS-altimetry-semiann"></div><div class="best-fit-param" id="LS-tidegauge-semiann"></div>
+                        <div class="best-fit-title">Trend:</div><div class="best-fit-param LS-altimetry" id="LS-altimetry-trend"></div><div class="best-fit-param LS-tidegauge" id="LS-tidegauge-trend"></div><br>
+                        <div class="best-fit-title">Annual Amplitude:</div><div class="best-fit-param LS-altimetry" id="LS-altimetry-annual"></div><div class="best-fit-param LS-tidegauge" id="LS-tidegauge-annual"></div><br>
+                        <div class="best-fit-title">Semi-Annual Amp.:</div><div class="best-fit-param LS-altimetry" id="LS-altimetry-semiann"></div><div class="best-fit-param LS-tidegauge" id="LS-tidegauge-semiann"></div>
                     </div>
                     <div id="data-timeseries"></div>
                     <div id="data-navbar"></div>
                     <canvas width="960" height="500" style="display:none"></canvas>
                     <div class="tooltip" id="plot-tooltip" style="opacity: 0;">
-                      <div id="tooltip-info-0"></div><div id="tooltip-info-1"></div>
+                      <div class="tooltip-info" id="tooltip-info-0"></div><div class="tooltip-info" id="tooltip-info-1"></div>
                     </div>
                 </div>
                 <div id="resize-triangle"></div>
@@ -187,8 +186,8 @@
                 If you would like to use the unaltered timeseries for the location selected, reset the settings back to their initial state.
             </p>
             <p class="center">
-                <button id="data-button" type="button"><img src="img/ic_file_download_grey600_48dp.png"/> Download Now</button><br>
-                <button id="data-cancel-button" type="button">Cancel</button>
+                <button class="form-button" id="data-button" type="button"><img src="img/ic_file_download_grey600_48dp.png"/> Download</button>
+                <button class="form-button" id="data-cancel-button" type="button">Cancel</button>
             </p>
         </div>
 

@@ -1,54 +1,14 @@
 /* Altimetry Visualization Tool Page-Specific Extra Stylesheet */
 /* CU Colors [ Black:#000000, Gold:#CFB87C, Dark Gray:#565A5C, Light Gray:#A2A4A3 ] */
 
-/* Navigation Bar Links in Menu */
-#menulinks-map {
-    position: fixed;
-    top: 43px;
-    right: 0;
-    width: 320px;
-	border: 0;
-	line-height: 30px;
-    font-size: 24pt;
-	background-color: #000000;
-	text-align:center;
-    z-index: 10;
-}
-
-/* Navbar Link List Style */
-#menulinks-map ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	text-align:center;
-	margin-left: auto;
-	margin-right: auto;
-	border:1px solid #FFFFFF;
-    border-right-width: 0;
-    border-top-width: 0;
-}
-
-#menulinks-map ul li {
-    display:inline-block;
-	border: 0;
-	margin: 0;
-    width: 100%;
-	overflow: hidden;
-	text-align:center;
-}
-
-#menulinks-map ul li a.navbar {
-    background-color: #000000;
-    color: #FAFAFA;
-}
-#menulinks-map ul li a.navbar:hover {
-    background-color: #FAFAFA;
-    color: #000000;
-}
-
 /* Mapping Things */
-#map-container { text-align: left; width:100%; margin: 0; padding: 0; }
+#map-container {
+    text-align: left;
+    width:100%;
+    margin: 0;
+    padding: 0;
+}
+
 #chart-container {
     text-align: center;
     display: none;
@@ -62,6 +22,7 @@
     box-shadow: 0 0 5px 1px rgba(0,0,0,0.5);
     border: 2px solid #E0E0E0;
 }
+
 #chart-container h2 { font-size: 12pt; }
 #about-container, #contact-container { min-height: 65vh; }
 
@@ -178,6 +139,7 @@ div.popup-msg {
     z-index: 1;
     background-color: #FAFAFA;
 }
+
 #map-solution-label h2 {
     color: #000000;
 }
@@ -312,7 +274,13 @@ div.tooltip {
     line-height: 14px;
 }
 
-#tooltip-info-0, #tooltip-info-1 { margin: 0; padding: 0; text-align: left; display: inline-block; }
+.tooltip-info {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    display: inline-block;
+}
+
 #tooltip-info-0 { width: 120px; }
 #tooltip-info-1 { width: 110px; }
 
@@ -325,6 +293,7 @@ div.tooltip {
     vertical-align: bottom;
     width: 150px;
 }
+
 .best-fit-param {
     text-align: left;
     color: #162252;
@@ -334,8 +303,9 @@ div.tooltip {
     margin: 0 30px 0 0;
     width: 100px;
 }
-#LS-altimetry-trend, #LS-altimetry-annual, #LS-altimetry-semiann { color: #377eb8; }
-#LS-tidegauge-trend, #LS-tidegauge-annual, #LS-tidegauge-semiann { color: #d95f02; }
+
+.LS-altimetry { color: #377eb8; }
+.LS-tidegauge { color: #d95f02; }
 
 .resize path {
     fill: #666;
@@ -344,30 +314,53 @@ div.tooltip {
     stroke-width: 1.5px;
 }
 
-#timeseries-button, #save-button, #data-button, #data-dialog-button {
-    padding: 5px; text-align: left; border: 1px outset #DDDDDD; border-radius: 4px;
-    margin: 0 0 4px; line-height: 16px; vertical-align: middle; background-color: #EEEEEE;
+.form-button {
+    width: 100px;
+    padding: 5px;
+    text-align: center;
+    border: 1px outset #DDDDDD;
+    border-radius: 4px;
+    margin: 4px 0 0;
+    line-height: 16px;
+    vertical-align: middle;
+    background-color: #EEEEEE;
 }
-#timeseries-button, #data-button { width: 150px; }
-#save-button, #data-dialog-button { width: 100px; }
-#smooth-width { width: 64px; }
-#set-smooth-width {
-    width: 32px; border: 1px outset #DDDDDD; border-radius: 4px; margin: 0; margin-left: 2px;
-    vertical-align: middle; background-color: #EEEEEE; display: inline-block; text-align: center; }
-#timeseries-button { margin: 4px 0 0; text-align: center; }
-#timeseries-button img, #save-button img, #data-button img, #data-dialog-button img { height: 16px; vertical-align: bottom; margin-right: 18px;}
-#save-button img, #data-dialog-button img { margin-right: 5px; }
 
-#timeseries-button:hover, #save-button:hover, #data-button:hover, #data-dialog-button:hover, #set-smooth-width:hover {
-    background-color: #FFFFFF;
-}
-#timeseries-button:active, #save-button:active, #data-button:active, #data-dialog-button:active, #set-smooth-width:active {
+.form-button:hover { background-color: #FFFFFF; }
+
+.form-button:active {
     background-color: #FFFFFF;
     border: 1px inset #DDDDDD;
 }
 
+.form-button img {
+    height: 16px;
+    vertical-align: bottom;
+    margin-right: 5px;
+}
+
+#smooth-width { width: 64px; }
+#set-smooth-width {
+    width: 32px;
+    border: 1px outset #DDDDDD;
+    border-radius: 4px;
+    margin: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    background-color: #EEEEEE;
+    display: inline-block;
+    text-align: center;
+}
+
 /* About Page Settings */
-#contact-fyi { width: 80%; max-width: 750px; display:block; margin: 0 auto 20px; padding: 20px; }
+#contact-fyi {
+    width: 80%;
+    max-width: 750px;
+    display:block;
+    margin: 0 auto 20px;
+    padding: 20px;
+}
+
 .bio {
     width: 80%;
     max-width: 750px;
@@ -380,10 +373,26 @@ div.tooltip {
     display: block;
     text-align: left;
 }
+
 .bio h3 { font-size: 11pt; }
-.bio-pic { width: 20%; height: auto; margin-right: 20px; display: block; float: left; }
+
+.bio-pic {
+    width: 20%;
+    height: auto;
+    margin-right: 20px;
+    display: block;
+    float: left;
+}
+
 .bio-pic img { width: 100%; }
-.bio-text { width: 70%; max-width: 550px; height: auto; display: block; float: left; }
+
+.bio-text {
+    width: 70%;
+    max-width: 550px;
+    height: auto;
+    display: block;
+    float: left;
+}
 
 #newsletter-container {
     overflow: hidden;
@@ -421,6 +430,7 @@ div.tooltip {
     box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
     cursor: pointer;
 }
+
 #map-search-show:hover { background: #F0F0F0; }
 #map-search-show img{ width: 75%; display: inline; vertical-align: middle; }
 
@@ -479,10 +489,13 @@ div.tooltip {
     background: #3074A4;
 }
 
-
-div.map-colorbar { width: 100%; margin: 0; padding: 5px 0; text-align: center;}
-div#rms-colorbar { display: inline-block; }
-div#annual-colorbar, div#trend-colorbar { display: none; }
+div.map-colorbar {
+    width: 100%;
+    margin: 0;
+    padding: 5px 0;
+    text-align: center;
+    display: none;
+}
 
 div.cbar {
     height: 260px;

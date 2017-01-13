@@ -225,14 +225,14 @@ function showTideGaugeData() {
             // We reached our target server, but it returned an error
             // alert("That location is unavailable. Either it is not in the dataset (such as if it is over land) or there has been an error.");
             // Show loaded successfully popup:
-            /*scrollPopup = document.getElementById('error-popup');
+            scrollPopup = document.getElementById('error-popup');
             scrollPopup.style.zIndex = 5000;
             scrollPopup.style.transition = "opacity 1s";
             scrollPopup.style.opacity = 1;
             setTimeout(function () {
                 scrollPopup.style.opacity = 0;
                 scrollPopup.style.zIndex = 0;
-            }, 3000);*/
+            }, 3000);
         }
     };
     request.onerror = function () {
@@ -338,14 +338,14 @@ function selectAltimetry(e) {
             // We reached our target server, but it returned an error
             // alert("That location is unavailable. Either it is not in the dataset (such as if it is over land) or there has been an error.");
             // Show loaded successfully popup:
-            /*scrollPopup = document.getElementById('error-popup');
+            scrollPopup = document.getElementById('error-popup');
             scrollPopup.style.zIndex = 5000;
             scrollPopup.style.transition = "opacity 1s";
             scrollPopup.style.opacity = 1;
             setTimeout(function () {
                 scrollPopup.style.opacity = 0;
                 scrollPopup.style.zIndex = 0;
-            }, 3000);*/
+            }, 3000);
         }
     };
     request.onerror = function () {
