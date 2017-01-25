@@ -132,9 +132,9 @@ function getColorbarStops(type, min, max) {
             iter_size = (max - min) / 10.0;
             for (i = 0; i <= 10; i += 1) {
                 cbar.push(cbar_val);
-                tick_string = String((cbar_val*10).toFixed(0));
-                if (tick_string === "-0") {
-                    tick_string = "0";
+                tick_string = String((cbar_val*10).toFixed(1));
+                if (tick_string === "-0.0") {
+                    tick_string = "0.0";
                 }
                 document.getElementById('cbar-rw-l-' + String(i)).innerHTML = tick_string;
                 cbar_val += iter_size;
@@ -147,9 +147,9 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String((cbar_val*10).toFixed(0));
-                    if (tick_string === "-0") {
-                        tick_string = "0";
+                    tick_string = String((cbar_val*10).toFixed(1));
+                    if (tick_string === "-0.0") {
+                        tick_string = "0.0";
                     }
                     document.getElementById('cbar-rwb-l-' + String(i)).textContent = tick_string;
                 }
@@ -163,9 +163,9 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String((cbar_val*10).toFixed(0));
-                    if (tick_string === "-0") {
-                        tick_string = "0";
+                    tick_string = String((cbar_val*10).toFixed(1));
+                    if (tick_string === "-0.0") {
+                        tick_string = "0.0";
                     }
                     document.getElementById('cbar-pla-l-' + String(i)).textContent = tick_string;
                 }
@@ -179,9 +179,9 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String((cbar_val*10).toFixed(0));
-                    if (tick_string === "-0") {
-                        tick_string = "0";
+                    tick_string = String((cbar_val*10).toFixed(1));
+                    if (tick_string === "-0.0") {
+                        tick_string = "0.0";
                     }
                     document.getElementById('cbar-spe-l-' + String(i)).textContent = tick_string;
                 }
@@ -195,9 +195,9 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String((cbar_val*10).toFixed(0));
-                    if (tick_string === "-0") {
-                        tick_string = "0";
+                    tick_string = String((cbar_val*10).toFixed(1));
+                    if (tick_string === "-0.0") {
+                        tick_string = "0.0";
                     }
                     document.getElementById('cbar-vir-l-' + String(i)).textContent = tick_string;
                 }
@@ -211,9 +211,9 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String((cbar_val*10).toFixed(0));
-                    if (tick_string === "-0") {
-                        tick_string = "0";
+                    tick_string = String((cbar_val*10).toFixed(1));
+                    if (tick_string === "-0.0") {
+                        tick_string = "0.0";
                     }
                     document.getElementById('cbar-vir-l-' + String(i)).textContent = tick_string;
                 }

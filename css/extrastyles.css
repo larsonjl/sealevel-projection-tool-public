@@ -627,7 +627,7 @@ div#cbar-spectral {
 }
 
 div.cbar-labels {
-    width: 20px;
+    width: 35px;
     margin: 0 auto 0 0;
     padding: 0;
     display: inline-block;
@@ -637,7 +637,7 @@ div.cbar-labels {
 div.cbar-num {
     margin: 0;
     padding: 0;
-    width: 26px;
+    width: 35px;
     height: 26px;
     line-height: 26px;
     display: inline-block;
