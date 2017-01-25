@@ -45,7 +45,55 @@ function setupColorbar(type, cbar) {
             [cbar[19], '#850c1e'],
             [cbar[20], '#67001f']
         ];
-    } else { // Viridis is default
+    } else if (type === 'plasma') { // Matplotlib's Plasma Colorbar
+        stops = [
+            [cbar[0],  '#0d0887'],
+            [cbar[1],  '#2a0593'],
+            [cbar[2],  '#41049d'],
+            [cbar[3],  '#5601a4'],
+            [cbar[4],  '#6a00a8'],
+            [cbar[5],  '#7e03a8'],
+            [cbar[6],  '#8f0da4'],
+            [cbar[7],  '#a11b9b'],
+            [cbar[8],  '#b12a90'],
+            [cbar[9],  '#bf3984'],
+            [cbar[10], '#cc4778'],
+            [cbar[11], '#d6556d'],
+            [cbar[12], '#e16462'],
+            [cbar[13], '#ea7457'],
+            [cbar[14], '#f2844b'],
+            [cbar[15], '#f89540'],
+            [cbar[16], '#fca636'],
+            [cbar[17], '#feba2c'],
+            [cbar[18], '#fcce25'],
+            [cbar[19], '#f7e425'],
+            [cbar[20], '#f0f921']
+        ];
+    } else if (type === 'spectral') { // Matplotlib's Spectral Colorbar
+        stops = [
+            [cbar[0],  '#5e4fa2'],
+            [cbar[1],  '#486cb0'],
+            [cbar[2],  '#3288bd'],
+            [cbar[3],  '#4ca5b1'],
+            [cbar[4],  '#66c2a5'],
+            [cbar[5],  '#89d0a5'],
+            [cbar[6],  '#abdda4'],
+            [cbar[7],  '#c9e99e'],
+            [cbar[8],  '#e6f598'],
+            [cbar[9],  '#f3faac'],
+            [cbar[10], '#ffffbf'],
+            [cbar[11], '#fff0a5'],
+            [cbar[12], '#fee08b'],
+            [cbar[13], '#fec776'],
+            [cbar[14], '#fdae61'],
+            [cbar[15], '#f98e52'],
+            [cbar[16], '#f46d43'],
+            [cbar[17], '#e55649'],
+            [cbar[18], '#d53e4f'],
+            [cbar[19], '#ba2049'],
+            [cbar[20], '#9e0142']
+        ];
+    } else { // Matplotlib's Viridis is default
         stops = [
             [cbar[0],  '#440154'],
             [cbar[1],  '#471365'],
@@ -108,6 +156,38 @@ function getColorbarStops(type, min, max) {
                 cbar_val += iter_size;
             }
             stops = setupColorbar('rwb', cbar);
+            break;
+        case 'plasma':
+            // Matplotlib's Plasma Colorbar
+            iter_size = (max - min) / 20.0;
+            for (i = 0; i <= 20; i += 1) {
+                cbar.push(cbar_val);
+                if (i % 2 === 0) {
+                    tick_string = String((cbar_val*10).toFixed(0));
+                    if (tick_string === "-0") {
+                        tick_string = "0";
+                    }
+                    document.getElementById('cbar-pla-l-' + String(i)).textContent = tick_string;
+                }
+                cbar_val += iter_size;
+            }
+            stops = setupColorbar('plasma', cbar);
+            break;
+        case 'spectral':
+            // Matplotlib's Spectral Colorbar
+            iter_size = (max - min) / 20.0;
+            for (i = 0; i <= 20; i += 1) {
+                cbar.push(cbar_val);
+                if (i % 2 === 0) {
+                    tick_string = String((cbar_val*10).toFixed(0));
+                    if (tick_string === "-0") {
+                        tick_string = "0";
+                    }
+                    document.getElementById('cbar-spe-l-' + String(i)).textContent = tick_string;
+                }
+                cbar_val += iter_size;
+            }
+            stops = setupColorbar('spectral', cbar);
             break;
         case 'viridis':
             // Matplotlib's Viridis Colorbar
@@ -204,6 +284,8 @@ function hideColorbars() {
     document.getElementById('map-cbar-container').style.display = 'none';
     document.getElementById('rw-colorbar').style.display = 'none';
     document.getElementById('rwb-colorbar').style.display = 'none';
+    document.getElementById('plasma-colorbar').style.display = 'none';
+    document.getElementById('spectral-colorbar').style.display = 'none';
     document.getElementById('viridis-colorbar').style.display = 'none';
 }
 

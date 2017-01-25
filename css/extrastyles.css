@@ -619,6 +619,12 @@ div#cbar-rwb {
 div#cbar-viridis {
     background: linear-gradient(to top, #440154, #471365, #482475, #463480, #414487, #3b528b, #355f8d, #2f6c8e, #2a788e, #25848e, #21918c, #1e9c89, #22a884, #2fb47c, #44bf70, #5ec962, #7ad151, #9bd93c, #bddf26, #dfe318, #fde725);
 }
+div#cbar-plasma {
+    background: linear-gradient(to top, #0d0887, #2a0593, #41049d, #5601a4, #6a00a8, #7e03a8, #8f0da4, #a11b9b, #b12a90, #bf3984, #cc4778, #d6556d, #e16462, #ea7457, #f2844b, #f89540, #fca636, #feba2c, #fcce25, #f7e425, #f0f921);
+}
+div#cbar-spectral {
+    background: linear-gradient(to top, #5e4fa2, #486cb0, #3288bd, #4ca5b1, #66c2a5, #89d0a5, #abdda4, #c9e99e, #e6f598, #f3faac, #ffffbf, #fff0a5, #fee08b, #fec776, #fdae61, #f98e52, #f46d43, #e55649, #d53e4f, #ba2049, #9e0142);
+}
 
 div.cbar-labels {
     width: 20px;
