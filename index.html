@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CCAR's Altimetry Explorer</title>
-    <base href="http://ccar.colorado.edu/altimetry/"/>
+    <title>CCAR's Sea Level Explorer</title>
+    <!-- <base href="http://ccar.colorado.edu/altimetry/"/> -->
 
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
-    <meta name="keywords" content="JPL, Geodesy, Altimetry, CCAR, Croteau, Nerem"/>
-    <meta name="description" content="CCAR's JPL Altimetry Visualization Tool."/>
+    <meta name="keywords" content="CCAR, UHSLC, JPL, Geodesy, Altimetry, Tide Gauge, Croteau, Nerem"/>
+    <meta name="description" content="CCAR's Sea Level Explorer."/>
     <meta name="author" content="Michael J. Croteau"/>
     <meta charset='utf-8'/>
 
@@ -14,18 +14,18 @@
     <link rel="stylesheet" type="text/css" href="css/mainstyles.css"/>
     <link rel="stylesheet" type="text/css" href="css/extrastyles.css"/>
 
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.28.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.28.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.css' rel='stylesheet' />
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjs/2.6.0/math.min.js'></script>
-    <script>
+    <!--<script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
         ga('create', 'UA-51905010-3', 'auto');
         ga('send', 'pageview');
-    </script>
+    </script>-->
 </head>
 
 <body>
@@ -37,14 +37,14 @@
     <div id="menu-container">
         <header>
             <div id="menuhead-map">
-                <div id="menucontentname"><h1 class="top" id="mvt-title">CCAR's Altimetry Explorer</h1></div>
+                <div id="menucontentname"><h1 class="top" id="mvt-title">CCAR's Sea Level Explorer</h1></div>
                 <div id="menucontenttitle"><h2 class="top"><a href="/">Colorado Center for Astrodynamics Research</a> | <a href="https://www.colorado.edu">CU Boulder</a></h2></div>
             </div>
             <div id="menulinks">
                 <ul>
                     <li><a class="navbar" href="">Main</a></li>
-                    <li><a class="navbar" href="about.html">About</a></li><!--
-                    <li><a class="navbar" href="contact.html">Contact</a></li> -->
+                    <li><a class="navbar" href="about.html">About</a></li>
+                    <li><a class="navbar" href="contact.html">Contact</a></li>
                 </ul>
             </div>
         </header>
@@ -56,65 +56,114 @@
             <div id='map-area'>
                 <div id="map-and-cbar">
 
-                    <!-- <div id="map-solution-label"><h2>Altimetry and Tide Guage Label</h2></div> -->
-
-                    <div id="map-search">
-                        <div id="map-search-exit">-</div>
-                        <div id="click-location">
-                            <h2>Location Lookup</h2>
-                            <p>Use your mouse to zoom and navigate the map. <span class="bold">Click</span> on the map or <span class="bold">input</span> latitude and longitude coordinates to get a local timeseries.</p>
-                            <form id="GetTimeseries">
-                                <div class="click-latlon-div"> Lat. [Deg]: </div><div class="click-latlonfield-div"><input type="text" id="click-lat"></div><br>
-                                <div class="click-latlon-div"> Lon. [Deg]: </div><div class="click-latlonfield-div"><input type="text" id="click-lon"></div><br>
-                                <input class="form-button" id="timeseries-button" type="submit" value="Get Timeseries">
-                            </form>
-                        </div>
-                    </div>
-
-                    <div id="map-search-show"><img src="img/ic_search_black_48dp.png"/></div>
-
-                    <nav id="map-style-menu"></nav>
-
-                    <div id="map-data-source">
-                        <span class="bold">Data Sources:</span>&nbsp;<br>
-                        Altimetry: <span class="italics">Victor Zlotnicki, Jet Propulsion Lab</span>&nbsp;<br>
-                        Tide Gauges: <span class="italics">Mark Merrifield, Univ. of Hawaii</span>&nbsp;
-                    </div>
-
                     <div id='map-cbar-container'>
-                        <div class="map-colorbar" id="trend-colorbar">
-                            <div class="cbar" id="cbar-trend"></div>
-                            <div class="cbar-labels" id="cbar-trend-labels">
-                                <div class="cbar-num" id="cbar-t-l-20"></div><div class="cbar-num" id="cbar-t-l-18"></div><div class="cbar-num" id="cbar-t-l-16"></div><div class="cbar-num" id="cbar-t-l-14"></div><div class="cbar-num" id="cbar-t-l-12"></div><div class="cbar-num" id="cbar-t-l-10"></div><div class="cbar-num" id="cbar-t-l-8"></div><div class="cbar-num" id="cbar-t-l-6"></div><div class="cbar-num" id="cbar-t-l-4"></div><div class="cbar-num" id="cbar-t-l-2"></div><div class="cbar-num" id="cbar-t-l-0"></div>
+                        <div class="map-colorbar" id="viridis-colorbar">
+                            <div class="cbar" id="cbar-viridis"></div>
+                            <div class="cbar-labels" id="cbar-viridis-labels">
+                                <div class="cbar-num" id="cbar-vir-l-20"></div><div class="cbar-num" id="cbar-vir-l-18"></div><div class="cbar-num" id="cbar-vir-l-16"></div><div class="cbar-num" id="cbar-vir-l-14"></div><div class="cbar-num" id="cbar-vir-l-12"></div><div class="cbar-num" id="cbar-vir-l-10"></div><div class="cbar-num" id="cbar-vir-l-8"></div><div class="cbar-num" id="cbar-vir-l-6"></div><div class="cbar-num" id="cbar-vir-l-4"></div><div class="cbar-num" id="cbar-vir-l-2"></div><div class="cbar-num" id="cbar-vir-l-0"></div>
                             </div>
-                            <div class="cbar-units">cm/year</div>
                         </div>
-                        <div class="map-colorbar" id="annual-colorbar">
-                            <div class="cbar" id="cbar-annual"></div>
-                            <div class="cbar-labels" id="cbar-annual-labels">
-                                <div class="cbar-num" id="cbar-a-l-10"></div><div class="cbar-num" id="cbar-a-l-9"></div><div class="cbar-num" id="cbar-a-l-8"></div><div class="cbar-num" id="cbar-a-l-7"></div><div class="cbar-num" id="cbar-a-l-6"></div><div class="cbar-num" id="cbar-a-l-5"></div><div class="cbar-num" id="cbar-a-l-4"></div><div class="cbar-num" id="cbar-a-l-3"></div><div class="cbar-num" id="cbar-a-l-2"></div><div class="cbar-num" id="cbar-a-l-1"></div><div class="cbar-num" id="cbar-a-l-0"></div>
+                        <div class="map-colorbar" id="rwb-colorbar">
+                            <div class="cbar" id="cbar-rwb"></div>
+                            <div class="cbar-labels" id="cbar-rwb-labels">
+                                <div class="cbar-num" id="cbar-rwb-l-20"></div><div class="cbar-num" id="cbar-rwb-l-18"></div><div class="cbar-num" id="cbar-rwb-l-16"></div><div class="cbar-num" id="cbar-rwb-l-14"></div><div class="cbar-num" id="cbar-rwb-l-12"></div><div class="cbar-num" id="cbar-rwb-l-10"></div><div class="cbar-num" id="cbar-rwb-l-8"></div><div class="cbar-num" id="cbar-rwb-l-6"></div><div class="cbar-num" id="cbar-rwb-l-4"></div><div class="cbar-num" id="cbar-rwb-l-2"></div><div class="cbar-num" id="cbar-rwb-l-0"></div>
                             </div>
-                            <div class="cbar-units">cm</div>
                         </div>
-                        <div class="map-colorbar" id="rms-colorbar">
-                            <div class="cbar" id="cbar-rms"></div>
-                            <div class="cbar-labels" id="cbar-rms-labels">
-                                <div class="cbar-num" id="cbar-r-l-10"></div><div class="cbar-num" id="cbar-r-l-9"></div><div class="cbar-num" id="cbar-r-l-8"></div><div class="cbar-num" id="cbar-r-l-7"></div><div class="cbar-num" id="cbar-r-l-6"></div><div class="cbar-num" id="cbar-r-l-5"></div><div class="cbar-num" id="cbar-r-l-4"></div><div class="cbar-num" id="cbar-r-l-3"></div><div class="cbar-num" id="cbar-r-l-2"></div><div class="cbar-num" id="cbar-r-l-1"></div><div class="cbar-num" id="cbar-r-l-0"></div>
+                        <div class="map-colorbar" id="rw-colorbar">
+                            <div class="cbar" id="cbar-rw"></div>
+                            <div class="cbar-labels" id="cbar-rw-labels">
+                                <div class="cbar-num" id="cbar-rw-l-10"></div><div class="cbar-num" id="cbar-rw-l-9"></div><div class="cbar-num" id="cbar-rw-l-8"></div><div class="cbar-num" id="cbar-rw-l-7"></div><div class="cbar-num" id="cbar-rw-l-6"></div><div class="cbar-num" id="cbar-rw-l-5"></div><div class="cbar-num" id="cbar-rw-l-4"></div><div class="cbar-num" id="cbar-rw-l-3"></div><div class="cbar-num" id="cbar-rw-l-2"></div><div class="cbar-num" id="cbar-rw-l-1"></div><div class="cbar-num" id="cbar-rw-l-0"></div>
                             </div>
-                            <div class="cbar-units">cm</div>
                         </div>
-                    </div>
-
-                    <div id='map-meta'>
-                        <div id="cbar-bounds">
-                            Colorbar Max: <span id="cbar-max-set">40</span>
-                            <input type="range" min="1" max="60" value="40" step="1" id="colorbar-max-bounds" onchange="updateColorbarMap(this.value);" oninput="updateColorbarText(this.value);"/>
-                        </div>
+                        <div id="cbar-units">mm</div>
                     </div>
 
                     <div id="map-div">
-                        <div id='show-tide-gauges'><a id='show-tide-gauges-button' class='button-inactive' href='#'>Show Tide Gauges</a></div>
                         <div id="error-popup" class="popup-msg error-msg">That location is unavailable.<br>Either it is not in the dataset or there has been an error.</div>
+                    </div>
+
+                    <div id="sidebar">
+                        <div class="sidebar-menu">
+                            <img id="sidebar-menu-button" src="img/ic_menu_white_48dp.png"/>
+                        </div>
+
+                        <div id="sidebar-contents">
+                            <div class="sidebar-header" id="sidebar-location-lookup">
+                                <div class="sidebar-header-select">
+                                    <img id="sidebar-location-lookup-active" src="img/ic_chevron_down_gray333_48dp.png"/>
+                                    <img id="sidebar-location-lookup-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
+                                </div>
+                                <h2>Location Lookup</h2>
+                            </div>
+                            <div class="sidebar-section" id="map-search">
+                                <div id="click-location">
+                                    <p>Use your mouse to zoom and navigate the map. <span class="bold">Click</span> on the map or <span class="bold">input</span> latitude and longitude coordinates to get a local timeseries.</p>
+                                    <form id="GetTimeseries">
+                                        <div class="click-latlon-div"> Lat. [Deg]: </div><div class="click-latlonfield-div"><input type="text" id="click-lat"></div><br>
+                                        <div class="click-latlon-div"> Lon. [Deg]: </div><div class="click-latlonfield-div"><input type="text" id="click-lon"></div><br>
+                                        <input class="form-button" id="timeseries-button" type="submit" value="Get Timeseries">
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="sidebar-header" id="sidebar-map-settings">
+                                <div class="sidebar-header-select">
+                                    <img id="sidebar-map-settings-active" src="img/ic_chevron_down_gray333_48dp.png"/>
+                                    <img id="sidebar-map-settings-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
+                                </div>
+                                <h2>Map Settings</h2>
+                            </div>
+                            <div class="sidebar-section" id="sidebar-map">
+                                <div class="sidebar-area">
+                                    <span class="bold">Show Tide Gauges</span> &nbsp; <input id="show-tide-gauges-checkbox" type="checkbox" checked>
+                                </div>
+                                <div class="sidebar-area">
+                                    <span class="bold">Choose Map</span>
+                                    <div class="center">
+                                        <ul id="map-style-menu"></ul>
+                                    </div>
+                                </div>
+                                <div class="sidebar-area">
+                                    <span class="bold">Colormap</span>
+                                    <div class="center">
+                                        <select id="sidebar-select-colormap">
+                                            <optgroup label="Linear Maps">
+                                                <option value="viridis" selected>Viridis</option>
+                                                <option value="rw">Red-White</option>
+                                            </optgroup>
+                                            <optgroup label="Diverging Maps">
+                                                <option value="rwb">Red-White-Blue</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="sidebar-area">
+                                    <span class="bold">Colorbar Max: <span id="cbar-max-set">40</span></span>
+                                    <div class="center">
+                                        <input type="range" min="1" max="60" value="40" step="1" id="colorbar-max-bounds" onchange="updateColorbarMap(this.value);" oninput="updateColorbarText(this.value);"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sidebar-header" id="sidebar-plot-settings">
+                                <div class="sidebar-header-select">
+                                    <img id="sidebar-plot-settings-active" src="img/ic_chevron_down_gray333_48dp.png"/>
+                                    <img id="sidebar-plot-settings-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
+                                </div>
+                                <h2>Plot Settings</h2>
+                            </div>
+                            <div class="sidebar-section" id="sidebar-plot">
+                                <div class="sidebar-area">
+                                    coming soon...
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="map-data-source">
+                            <span class="bold">Data Sources:</span>&nbsp;<br>
+                            Altimetry: <span class="italics">Victor Zlotnicki, Jet Propulsion Lab</span>&nbsp;<br>
+                            Tide Gauges: <span class="italics">Mark Merrifield, Univ. of Hawaii</span>&nbsp;
+                        </div>
                     </div>
 
                 </div>
@@ -195,13 +244,11 @@
 
     <div class='content-container' id="footer-container">
         <div id="footer-area">
-            <a href="/altimetry/">Home</a> &nbsp; | &nbsp;
-            <a href="/altimetry/privacy.html">Privacy Policy</a> &nbsp; | &nbsp;
-            <a href="/altimetry/contact.html">Contact</a>
-            <br>
             <a href="/" target="_blank">CCAR</a> &nbsp; | &nbsp;
             <a href="http://www.jpl.nasa.gov/" target="_blank">JPL</a> &nbsp; | &nbsp;
-            <a href="http://uhslc.soest.hawaii.edu/" target="_blank">UHSLC</a>
+            <a href="http://uhslc.soest.hawaii.edu/" target="_blank">UHSLC</a> &nbsp; | &nbsp;
+            <a href="privacy.html">Privacy Policy</a>
+            <br>
         </div>
     </div>
 

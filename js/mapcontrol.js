@@ -127,10 +127,114 @@ function getLatLonJSONfilename(lng, lat) {
     return filename;
 }
 
+function getAltimetryLocationBox(jsonLat, jsonLon) {
+    "use strict";
+    // {"type":"Feature","properties":{"mscn_id":1},"geometry":{"type":"Polygon","coordinates":[[[-72.972973,77.500000],[-68.108108,77.500000],[-68.108108,78.500000],[-72.972973,78.500000],[-72.972973,77.500000]]]}}
+    var coordinates, minLat, maxLat, minLon, maxLon,
+        latParts = jsonLat.split("."),
+        latWholeStr = latParts[0],
+        latDecimStr = latParts[1].split("°")[0],
+        latSignStr = latParts[1].split("°")[1],
+        latSign = (latSignStr == "S") ? -1 : 1,
+        lonParts = jsonLon.split("."),
+        lonWholeStr = lonParts[0],
+        lonDecimStr = lonParts[1].split("°")[0],
+        lonSignStr = lonParts[1].split("°")[1],
+        lonSign = (lonSignStr == "W") ? -1 : 1;
+
+    switch (latDecimStr) {
+        case "0833":
+            minLat = latSign * Number(latWholeStr + ".000000");
+            maxLat = latSign * Number(latWholeStr + ".166667");
+            break;
+        case "2500":
+            minLat = latSign * Number(latWholeStr + ".166667");
+            maxLat = latSign * Number(latWholeStr + ".333333");
+            break;
+        case "4167":
+            minLat = latSign * Number(latWholeStr + ".333333");
+            maxLat = latSign * Number(latWholeStr + ".500000");
+            break;
+        case "5833":
+            minLat = latSign * Number(latWholeStr + ".500000");
+            maxLat = latSign * Number(latWholeStr + ".666667");
+            break;
+        case "7500":
+            minLat = latSign * Number(latWholeStr + ".666667");
+            maxLat = latSign * Number(latWholeStr + ".833333");
+            break;
+        case "9167":
+            minLat = latSign * Number(latWholeStr + ".833333");
+            maxLat = latSign * (Number(latWholeStr + ".000000") + 1.0);
+            break;
+    }
+    minLat = String(minLat);
+    maxLat = String(maxLat);
+
+    switch (lonDecimStr) {
+        case "0833":
+            minLon = lonSign * Number(lonWholeStr + ".000000");
+            maxLon = lonSign * Number(lonWholeStr + ".166667");
+            break;
+        case "2500":
+            minLon = lonSign * Number(lonWholeStr + ".166667");
+            maxLon = lonSign * Number(lonWholeStr + ".333333");
+            break;
+        case "4167":
+            minLon = lonSign * Number(lonWholeStr + ".333333");
+            maxLon = lonSign * Number(lonWholeStr + ".500000");
+            break;
+        case "5833":
+            minLon = lonSign * Number(lonWholeStr + ".500000");
+            maxLon = lonSign * Number(lonWholeStr + ".666667");
+            break;
+        case "7500":
+            minLon = lonSign * Number(lonWholeStr + ".666667");
+            maxLon = lonSign * Number(lonWholeStr + ".833333");
+            break;
+        case "9167":
+            minLon = lonSign * Number(lonWholeStr + ".833333");
+            maxLon = lonSign * (Number(lonWholeStr + ".000000") + 1.0);
+            break;
+    }
+    minLon = minLon;
+    maxLon = maxLon;
+
+    coordinates = [[minLon, minLat], [minLon, maxLat], [maxLon, maxLat],
+        [maxLon, minLat], [minLon, minLat]];
+    return coordinates;
+}
+
+function outlineAltimetry(coords) {
+    "use strict";
+    map.addLayer({
+        'id': 'altimetry-location-box',
+        'type': 'fill',
+        'source': {
+            'type': 'geojson',
+            'data': {
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Polygon',
+                    'coordinates': [ coords ]
+                }
+            }
+        },
+        'layout': {},
+        'paint': {
+            'fill-color': '#ff1493',
+            'fill-opacity': 0.5,
+            'fill-antialias': true,
+            'fill-outline-color': '#ff1493'
+        }
+    });
+    altimetry_outlined = true;
+}
+
 // setPopupAndCenter :: When a new plot is requested, reset the Map Popup.
 function setPopupAndCenter(e) {
     "use strict";
-    var popupText, jsonAltimetryLocation, jsonLat, jsonLon, latitude, longitude;
+    var popupText, jsonAltimetryLocation, jsonLat, jsonLon, latitude, longitude, geojson;
 
     if (marker) {
         marker.remove();
@@ -142,11 +246,22 @@ function setPopupAndCenter(e) {
     latitude = jsonAltimetryLocation[2];
     longitude = jsonAltimetryLocation[3];
 
-    popupText = "<div class='tide-gauge-popup'><h2 class='center'>Altimetry</h2>" +
+    geojson = getAltimetryLocationBox(jsonLat, jsonLon);
+
+    if (altimetry_outlined === true) {
+        map.removeLayer('altimetry-location-box');
+        map.removeSource('altimetry-location-box');
+        outlineAltimetry(geojson);
+    } else {
+        outlineAltimetry(geojson);
+    }
+
+
+    popupText = "<div class='altimetry-popup'><h2 class='center'>Altimetry</h2>" +
         "<span class='bold'>Lat:</span> " + jsonLat + "<br><span class='bold'>Lon:</span> " + jsonLon + "</div>";
 
     marker = new mapboxgl.Popup({anchor: "top-left"})
-        .setLngLat({ lng: longitude, lat: latitude })
+        .setLngLat({ lng: (longitude + 0.08333), lat: (latitude - 0.08333) })
         .setHTML(popupText)
         .addTo(map);
 
@@ -159,8 +274,8 @@ function setPopupAndCenter(e) {
 
 function centerMap(lngLat) {
     "use strict";
-    if (map.getZoom() < 3) {
-        map.jumpTo({ "center": lngLat, "zoom": 3 });
+    if (map.getZoom() < 5.5) {
+        map.jumpTo({ "center": lngLat, "zoom": 5.5 });
     } else {
         map.jumpTo({ "center": lngLat });
     }
@@ -188,7 +303,7 @@ function disableAllLayers() {
 
 function showTideGaugeData() {
     "use strict";
-    var tideGaugeFile = 'http://ccar.colorado.edu/altimetry/api/v1/tidegauges/JSON/' + tideGaugeCode + '.json';
+    var tideGaugeFile = 'api/v1/tidegauges/JSON/' + tideGaugeCode + '.json';
     var request = new XMLHttpRequest();
     request.open('GET', tideGaugeFile, true);
     request.onload = function () {
@@ -267,7 +382,7 @@ function selectTideGauge(feature) {
     }
 
     if (gauge_marker) { gauge_marker.remove(); }
-    gauge_marker = new mapboxgl.Popup({anchor: "bottom-right"})
+    gauge_marker = new mapboxgl.Popup({anchor: "top-right"})
         .setLngLat({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]})
         .setHTML("<div class='tide-gauge-popup'><h2 class='center'>Tide Gauge</h2>" +
             "<div class='center italics'>" + lat_str + ", " + lng_str + "</div>" +
@@ -297,7 +412,7 @@ function selectAltimetry(e) {
     // Define filename to get:
     jsonFilename = getLatLonJSONfilename(e.lngLat.lng, e.lngLat.lat);
 
-    jsonFilename = '/altimetry/' + jsonFilename;
+    //jsonFilename = '/altimetry/' + jsonFilename;
 
     request = new XMLHttpRequest();
     request.open('GET', jsonFilename, true);
@@ -318,7 +433,7 @@ function selectAltimetry(e) {
             lon_range = map.getBounds()._ne.lng - map.getBounds()._sw.lng;
             pageWidth = getWidth();
             if (pageWidth > 500) {
-                map.jumpTo({ "center": { 'lng': e.lngLat.lng - (0.3*lon_range), 'lat': e.lngLat.lat } });
+                map.jumpTo({ "center": { 'lng': e.lngLat.lng - (0.15*lon_range), 'lat': e.lngLat.lat + (0.3*lat_range) } });
             } else {
                 map.jumpTo({ "center": { 'lng': e.lngLat.lng, 'lat': e.lngLat.lat - (0.25*lat_range) } });
             }
@@ -383,11 +498,14 @@ function switchMapLayer(this_id) {
     disableAllLayers();
 
     if (visibility_fine === 'visible') {
+        // If the selected map was the one that had been visible, mark it as
+        // invisible and do not show any colormaps.
         document.getElementById(this_id).className = '';
         map.setLayoutProperty(fine_id, 'visibility', 'none');
         map.setLayoutProperty(coarse_id, 'visibility', 'none');
         hideColorbars();
     } else {
+        // If the selected map was not visible, mark it as visible and show it.
         document.getElementById(this_id).className = 'data-active';
         map.setLayoutProperty(fine_id, 'visibility', 'visible');
         map.setLayoutProperty(coarse_id, 'visibility', 'visible');
@@ -397,13 +515,14 @@ function switchMapLayer(this_id) {
 
 function addLayer(name, id) {
     "use strict";
-    var link, layers;
+    var link, li, layers;
 
     link = document.createElement('a');
     link.href = '#';
     if (name === 'RMS') {
         link.className = 'data-active';
-        document.getElementById('rms-colorbar').style.display = 'inline-block';
+        document.getElementById(activeColormap + '-colorbar').style.display = 'inline-block';
+        document.getElementById('map-cbar-container').style.display = 'block';
     } else {
         link.className = '';
     }
@@ -417,8 +536,10 @@ function addLayer(name, id) {
         switchMapLayer(this.id);
     };
 
+    li = document.createElement('li');
+    li.appendChild(link);
     layers = document.getElementById('map-style-menu');
-    layers.appendChild(link);
+    layers.appendChild(li);
 }
 
 function addTrendAnnualRMSmap() {
@@ -555,7 +676,7 @@ function addTrendAnnualRMSmap() {
 // initializeMap :: loads background and interactive maps and starts page listeners.
 function initializeMap() {
     "use strict";
-    default_stops = getColorbarStops('rms', 40);
+    default_stops = getColorbarStops(activeColormap, 0, 40);
 
     // Initialize Mapbox Interactive Map:
     mapboxgl.accessToken = 'pk.eyJ1IjoiY3JvdGVhdW1qIiwiYSI6ImNpam44Y215dTAwZDB0aG01emxvNm1pYzAifQ.vKk11AiB-97jJiL9joJAgw';
@@ -566,17 +687,21 @@ function initializeMap() {
         map = new mapboxgl.Map({
             container: 'map-div',
             style: 'mapbox://styles/croteaumj/cirqkdgcn0000vnnm5nf5yxj6',
-            center: [0, 20],
+            center: [40, 20],
             zoom: 1.0,
             maxZoom: 7,
-            minZoom: 1.0
+            minZoom: 1.0,
+            attributionControl: false
         });
 
         map.on('style.load', addTrendAnnualRMSmap);
 
         map.on('style.load', loadTideGauges);
 
-        map.addControl(new mapboxgl.NavigationControl());
+        map.on('style.load', addTideGauges);
+
+        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        map.addControl(new mapboxgl.AttributionControl(), 'bottom-left');
 
         // Listener: right-click handling:
         map.on('click', function (e) { selectPlotting(e, 'new'); });

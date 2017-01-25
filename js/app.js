@@ -15,7 +15,7 @@ function getTimeSeries() {
     "use strict";
     // Get file:
     var req = new XMLHttpRequest();
-    req.open('GET', '/altimetry/v2/JSON/time.json', true);
+    req.open('GET', 'v2/JSON/time.json', true);
     req.onload = function () {
         if (req.status >= 200 && req.status < 400) { // Success!
             time = JSON.parse(req.responseText);
@@ -157,8 +157,8 @@ function minimizePlot() {
     document.getElementById('resize-triangle').style.display = 'none';
     document.getElementById('LS-params').style.display = 'none';
     document.getElementById('data-navbar').style.display = 'none';
-    document.getElementById('chart-container').style.top = (pageHeight - 170) + 'px';
-    document.getElementById('chart-container').style.left = (pageWidth - 120) + 'px';
+    document.getElementById('chart-container').style.top = (pageHeight - 125) + 'px';
+    document.getElementById('chart-container').style.left = '10px';
     document.getElementById('chart-container').style.width = '105px';
     document.getElementById('timeseries').style.width = '100px';
     document.getElementById('timeseries').style.height = '50px';
@@ -181,14 +181,91 @@ function maximizePlot() {
     document.getElementById('timeseries').style.height = timeseries_maximize_height + 'px';
 }
 
-function showSearchBox() {
+function viewSidebar() {
     "use strict";
-    document.getElementById("map-search").style.display = 'inline-block';
+    if (sidebar_collapsed === false) {
+        document.getElementById("sidebar-contents").style.display = 'none';
+        document.getElementById("map-data-source").style.display = 'none';
+        document.getElementById("sidebar").style.width = '34px';
+        document.getElementById("map-cbar-container").style.right = "38px";
+        sidebar_collapsed = true;
+    } else {
+        document.getElementById("sidebar-contents").style.display = 'block';
+        document.getElementById("map-data-source").style.display = 'block';
+        document.getElementById("sidebar").style.width = '270px';
+        document.getElementById("map-cbar-container").style.right = "274px";
+        sidebar_collapsed = false;
+    }
 }
 
-function hideSearchBox() {
+function viewLocationLookup() {
     "use strict";
-    document.getElementById("map-search").style.display = 'none';
+    var sidebar_area = document.getElementById("map-search");
+    if (sidebar_area.style.display !== 'block') {
+        sidebar_area.style.display = 'block';
+        document.getElementById("sidebar-location-lookup-active").style.display = 'block';
+        document.getElementById("sidebar-location-lookup-hidden").style.display = 'none';
+    } else {
+        sidebar_area.style.display = 'none';
+        document.getElementById("sidebar-location-lookup-active").style.display = 'none';
+        document.getElementById("sidebar-location-lookup-hidden").style.display = 'block';
+    }
+}
+
+function viewMapSettings() {
+    "use strict";
+    var sidebar_area = document.getElementById("sidebar-map");
+    if (sidebar_area.style.display === 'none') {
+        sidebar_area.style.display = 'block';
+        document.getElementById("sidebar-map-settings-active").style.display = 'block';
+        document.getElementById("sidebar-map-settings-hidden").style.display = 'none';
+    } else {
+        sidebar_area.style.display = 'none';
+        document.getElementById("sidebar-map-settings-active").style.display = 'none';
+        document.getElementById("sidebar-map-settings-hidden").style.display = 'block';
+    }
+}
+
+function viewPlotSettings() {
+    "use strict";
+    var sidebar_area = document.getElementById("sidebar-plot");
+    if (sidebar_area.style.display !== 'block') {
+        sidebar_area.style.display = 'block';
+        document.getElementById("sidebar-plot-settings-active").style.display = 'block';
+        document.getElementById("sidebar-plot-settings-hidden").style.display = 'none';
+        document.getElementById("sidebar-contents").style.background = '#FFFFFF';
+        document.getElementById("sidebar-plot-settings").style.borderWidth = '1px 0 0';
+    } else {
+        sidebar_area.style.display = 'none';
+        document.getElementById("sidebar-plot-settings-active").style.display = 'none';
+        document.getElementById("sidebar-plot-settings-hidden").style.display = 'block';
+        document.getElementById("sidebar-contents").style.background = '#FAFAFA';
+        document.getElementById("sidebar-plot-settings").style.borderWidth = '1px 0';
+    }
+}
+
+function toggleTideGauges() {
+    "use strict";
+    if (document.getElementById('show-tide-gauges-checkbox').checked === true) {
+        addTideGauges();
+    } else {
+        removeTideGauges();
+    }
+}
+
+function setActiveColormap() {
+    "use strict";
+    var min, max = Number(document.getElementById('cbar-max-set').textContent);
+    activeColormap = document.getElementById("sidebar-select-colormap").value;
+    updateColorbarMap(Number(document.getElementById("colorbar-max-bounds").value));
+    switch (activeMap){
+        case 'trend':
+            min = -max;
+            break;
+        default:
+            min = 0;
+    }
+    changeMapColorbar(activeMap, activeColormap, min, max);
 }
 
 // loadApp :: Start app
@@ -205,27 +282,28 @@ function loadApp() {
     // Initialize map:
     initializeMap();
 
-    // Listener: search button
-    document.getElementById("map-search-show").addEventListener("click", showSearchBox, false);
-    document.getElementById("map-search-exit").addEventListener("click", hideSearchBox, false);
+    // Listener: Sidebar Menu
+    document.getElementById("sidebar-menu-button").addEventListener("click", viewSidebar, false);
+    document.getElementById("sidebar-location-lookup").addEventListener("click", viewLocationLookup, false);
+    document.getElementById("sidebar-map-settings").addEventListener("click", viewMapSettings, false);
+    document.getElementById("sidebar-plot-settings").addEventListener("click", viewPlotSettings, false);
+
+    document.getElementById("sidebar-select-colormap").addEventListener("change", setActiveColormap, false);
+    document.getElementById('show-tide-gauges-checkbox').addEventListener("change", toggleTideGauges, false);
 
     // Listener: Map Location Form:
     document.getElementById("GetTimeseries").addEventListener("submit", function (e) {inputLatLon(e); });
 
     // Toggle tide gauges:
-    document.getElementById('show-tide-gauges-button').addEventListener("click", function (e) {
+    /*document.getElementById('show-tide-gauges-checkbox').addEventListener("change", function (e) {
         e.preventDefault();
         e.stopPropagation();
-        if (document.getElementById('show-tide-gauges-button').className === 'button-inactive') {
-            document.getElementById('show-tide-gauges-button').className = 'button-active';
-            document.getElementById('show-tide-gauges-button').textContent = "Remove Tide Gauges";
+        if (document.getElementById('show-tide-gauges-checkbox').checked === true) {
             addTideGauges();
         } else {
-            document.getElementById('show-tide-gauges-button').className = 'button-inactive';
-            document.getElementById('show-tide-gauges-button').textContent = "Show Tide Gauges";
             removeTideGauges();
         }
-    });
+    });*/
 
     // Listeners: Detrend, Deseason, Show Trend, Boxcar:
     for (i = 0; i < radios_detrend.length; i++) {
