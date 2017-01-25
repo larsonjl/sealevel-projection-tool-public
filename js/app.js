@@ -198,6 +198,11 @@ function viewSidebar() {
     }
 }
 
+function viewHelp() {
+    "use strict";
+    alert("This feature is in development and will be available soon.")
+}
+
 function viewLocationLookup() {
     "use strict";
     var sidebar_area = document.getElementById("map-search");
@@ -284,6 +289,7 @@ function loadApp() {
 
     // Listener: Sidebar Menu
     document.getElementById("sidebar-menu-button").addEventListener("click", viewSidebar, false);
+    document.getElementById("sidebar-help-button").addEventListener("click", viewHelp, false);
     document.getElementById("sidebar-location-lookup").addEventListener("click", viewLocationLookup, false);
     document.getElementById("sidebar-map-settings").addEventListener("click", viewMapSettings, false);
     document.getElementById("sidebar-plot-settings").addEventListener("click", viewPlotSettings, false);
