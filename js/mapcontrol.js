@@ -257,7 +257,7 @@ function setPopupAndCenter(e) {
     }
 
 
-    popupText = "<div class='altimetry-popup'><h2 class='center'>Altimetry</h2>" +
+    popupText = "<div class='altimetry-popup'><h2>Altimetry</h2>" +
         "<span class='bold'>Lat:</span> " + jsonLat + "<br><span class='bold'>Lon:</span> " + jsonLon + "</div>";
 
     marker = new mapboxgl.Popup({anchor: "top-left"})
@@ -384,9 +384,9 @@ function selectTideGauge(feature) {
     if (gauge_marker) { gauge_marker.remove(); }
     gauge_marker = new mapboxgl.Popup({anchor: "top-right"})
         .setLngLat({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]})
-        .setHTML("<div class='tide-gauge-popup'><h2 class='center'>Tide Gauge</h2>" +
-            "<div class='center italics'>" + lat_str + ", " + lng_str + "</div>" +
-            "<span class='bold'>Site:</span> " + feature.properties.title +
+        .setHTML("<div class='tide-gauge-popup'><h2>Tide Gauge</h2>" +
+            "<span class='italics'>" + lat_str + ", " + lng_str + "</span>" +
+            "<br><span class='bold'>Site:</span> " + feature.properties.title +
             "<br><span class='bold'>Code:</span> " + feature.properties.code + "</div>");
         //.addTo(map);
 

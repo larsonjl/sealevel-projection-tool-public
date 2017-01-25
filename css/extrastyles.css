@@ -713,6 +713,7 @@ div.altimetry-popup {
     padding: 5px;
     border: 3px solid #E0E0E0;
 }
+.altimetry-popup h2, .tide-gauge-popup h2 { text-align: center; margin: 5px 0; }
 
 .mapboxgl-popup-tip { border-top-color: #E0E0E0!important; border-bottom-color: #E0E0E0!important; }
 
