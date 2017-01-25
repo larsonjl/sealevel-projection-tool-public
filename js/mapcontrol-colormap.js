@@ -84,9 +84,9 @@ function getColorbarStops(type, min, max) {
             iter_size = (max - min) / 10.0;
             for (i = 0; i <= 10; i += 1) {
                 cbar.push(cbar_val);
-                tick_string = String(cbar_val.toFixed(1));
-                if (tick_string === "-0.0") {
-                    tick_string = "0.0";
+                tick_string = String((cbar_val*10).toFixed(0));
+                if (tick_string === "-0") {
+                    tick_string = "0";
                 }
                 document.getElementById('cbar-rw-l-' + String(i)).innerHTML = tick_string;
                 cbar_val += iter_size;
@@ -99,9 +99,9 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String(cbar_val.toFixed(1));
-                    if (tick_string === "-0.0") {
-                        tick_string = "0.0";
+                    tick_string = String((cbar_val*10).toFixed(0));
+                    if (tick_string === "-0") {
+                        tick_string = "0";
                     }
                     document.getElementById('cbar-rwb-l-' + String(i)).textContent = tick_string;
                 }
@@ -115,9 +115,9 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String(cbar_val.toFixed(1));
-                    if (tick_string === "-0.0") {
-                        tick_string = "0.0";
+                    tick_string = String((cbar_val*10).toFixed(0));
+                    if (tick_string === "-0") {
+                        tick_string = "0";
                     }
                     document.getElementById('cbar-vir-l-' + String(i)).textContent = tick_string;
                 }
@@ -131,9 +131,9 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String(cbar_val.toFixed(1));
-                    if (tick_string === "-0.0") {
-                        tick_string = "0.0";
+                    tick_string = String((cbar_val*10).toFixed(0));
+                    if (tick_string === "-0") {
+                        tick_string = "0";
                     }
                     document.getElementById('cbar-vir-l-' + String(i)).textContent = tick_string;
                 }
@@ -171,7 +171,7 @@ function changeMapColorbar(map_type, cbar, map_min, map_max) {
             document.getElementById('cbar-units').textContent = 'mm';
     }
 
-    cbar_stops = getColorbarStops(cbar, map_min, map_max);
+    cbar_stops = getColorbarStops(cbar, map_min/10, map_max/10);
 
     map.setPaintProperty(id + '-coarse', 'fill-color', { property: units, stops: cbar_stops });
     map.setPaintProperty(id + '-fine', 'fill-color', { property: units, stops: cbar_stops });
@@ -211,30 +211,33 @@ function showColorbar(id) {
     "use strict";
     if (id === 'alti-trend') {
         activeMap = 'trend';
-        changeMapColorbar(activeMap, activeColormap, -5, 5);
+        changeMapColorbar(activeMap, activeColormap, -15, 15) // -5, 5);
 
-        document.getElementById('colorbar-max-bounds').step = 0.1;
-        document.getElementById('colorbar-max-bounds').max = 10.0;
-        document.getElementById('colorbar-max-bounds').min = 0.1;
-        document.getElementById('colorbar-max-bounds').value = 5;
-        document.getElementById('cbar-max-set').innerHTML = 5;
+        document.getElementById('colorbar-max-bounds').step = 1;  // 0.1;
+        document.getElementById('colorbar-max-bounds').max = 50; // 10.0;
+        document.getElementById('colorbar-max-bounds').min = 1;   // 0.1;
+        document.getElementById('colorbar-max-bounds').value = 15; // 5
+        document.getElementById('cbar-max-set').innerHTML = 15; // 5
+        document.getElementById('cbar-units-set').textContent = 'mm/year'; // 'cm/year';
     } else if (id === 'alti-annual') {
         activeMap = 'annual';
-        changeMapColorbar(activeMap, activeColormap, 0, 25);
+        changeMapColorbar(activeMap, activeColormap, 0, 250) // 25);
 
-        document.getElementById('colorbar-max-bounds').step = 1;
-        document.getElementById('colorbar-max-bounds').max = 100;
-        document.getElementById('colorbar-max-bounds').min = 1;
-        document.getElementById('colorbar-max-bounds').value = 25;
-        document.getElementById('cbar-max-set').innerHTML = 25;
+        document.getElementById('colorbar-max-bounds').step = 5;
+        document.getElementById('colorbar-max-bounds').max = 500; // 100;
+        document.getElementById('colorbar-max-bounds').min = 5;
+        document.getElementById('colorbar-max-bounds').value = 250; // 25;
+        document.getElementById('cbar-max-set').innerHTML = 250; // 25;
+        document.getElementById('cbar-units-set').textContent = 'mm'; // 'cm';
     } else if (id === 'alti-rms') {
         activeMap = 'rms';
-        changeMapColorbar(activeMap, activeColormap, 0, 40);
+        changeMapColorbar(activeMap, activeColormap, 0, 350); // 40);
 
-        document.getElementById('colorbar-max-bounds').step = 1;
-        document.getElementById('colorbar-max-bounds').max = 60;
-        document.getElementById('colorbar-max-bounds').min = 1;
-        document.getElementById('colorbar-max-bounds').value = 40;
-        document.getElementById('cbar-max-set').innerHTML = 40;
+        document.getElementById('colorbar-max-bounds').step = 5;
+        document.getElementById('colorbar-max-bounds').max = 600; // 60;
+        document.getElementById('colorbar-max-bounds').min = 5;
+        document.getElementById('colorbar-max-bounds').value = 350; // 40;
+        document.getElementById('cbar-max-set').innerHTML = 350; // 40;
+        document.getElementById('cbar-units-set').textContent = 'mm'; // 'cm';
     }
 }

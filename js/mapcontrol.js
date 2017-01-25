@@ -676,7 +676,7 @@ function addTrendAnnualRMSmap() {
 // initializeMap :: loads background and interactive maps and starts page listeners.
 function initializeMap() {
     "use strict";
-    default_stops = getColorbarStops(activeColormap, 0, 40);
+    default_stops = getColorbarStops(activeColormap, 0, 35);
 
     // Initialize Mapbox Interactive Map:
     mapboxgl.accessToken = 'pk.eyJ1IjoiY3JvdGVhdW1qIiwiYSI6ImNpam44Y215dTAwZDB0aG01emxvNm1pYzAifQ.vKk11AiB-97jJiL9joJAgw';

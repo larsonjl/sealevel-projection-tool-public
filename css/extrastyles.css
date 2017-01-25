@@ -110,7 +110,7 @@ div.popup-msg {
     display: inline-block;
     border: 0;
     text-align: left;
-    background-color: #ABCDEF;
+    background-color: #FAFAFA;
 }
 
 #map-div {
@@ -626,6 +626,7 @@ div.cbar-labels {
 div.cbar-num {
     margin: 0;
     padding: 0;
+    width: 26px;
     height: 26px;
     line-height: 26px;
     display: inline-block;

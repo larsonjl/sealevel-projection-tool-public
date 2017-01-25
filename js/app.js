@@ -294,17 +294,6 @@ function loadApp() {
     // Listener: Map Location Form:
     document.getElementById("GetTimeseries").addEventListener("submit", function (e) {inputLatLon(e); });
 
-    // Toggle tide gauges:
-    /*document.getElementById('show-tide-gauges-checkbox').addEventListener("change", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (document.getElementById('show-tide-gauges-checkbox').checked === true) {
-            addTideGauges();
-        } else {
-            removeTideGauges();
-        }
-    });*/
-
     // Listeners: Detrend, Deseason, Show Trend, Boxcar:
     for (i = 0; i < radios_detrend.length; i++) {
         radios_detrend[i].addEventListener("click", onPlottingFormChange, false);
