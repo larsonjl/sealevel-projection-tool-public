@@ -11,12 +11,13 @@ function loadTideGauges() {
         "type": "circle",
         "source": "tide_gauges",
         "paint": {
-            "circle-radius": 4,
-            "circle-color": "#000000",
-            'circle-opacity': 0.5
-        },
-        'layout': {
-            'visibility': 'none'
+            "circle-radius": 3,
+            "circle-color": {
+                property: 'r',
+                stops: default_stops
+            },
+            'circle-stroke-width': 1,
+            'circle-stroke-color': '#FFFFFF'
         }
     });
 
@@ -25,11 +26,15 @@ function loadTideGauges() {
         "type": "circle",
         "source": "tide_gauges",
         "paint": {
-            "circle-radius": 6,
-            "circle-color": "#000000",
-            "circle-opacity": 1
+            "circle-radius": 5,
+            "circle-color": {
+                property: 'r',
+                stops: default_stops
+            },
+            'circle-stroke-width': 1,
+            'circle-stroke-color': '#FFFFFF'
         },
-        "layout": {},
+        "layout": {'visibility':'visible'},
         "filter": ["==", "name", ""]
     });
 

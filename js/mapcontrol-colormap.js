@@ -132,7 +132,7 @@ function getColorbarStops(type, min, max) {
             iter_size = (max - min) / 10.0;
             for (i = 0; i <= 10; i += 1) {
                 cbar.push(cbar_val);
-                tick_string = String((cbar_val*10).toFixed(1));
+                tick_string = String(cbar_val.toFixed(1));
                 if (tick_string === "-0.0") {
                     tick_string = "0.0";
                 }
@@ -147,7 +147,7 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String((cbar_val*10).toFixed(1));
+                    tick_string = String(cbar_val.toFixed(1));
                     if (tick_string === "-0.0") {
                         tick_string = "0.0";
                     }
@@ -163,7 +163,7 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String((cbar_val*10).toFixed(1));
+                    tick_string = String(cbar_val.toFixed(1));
                     if (tick_string === "-0.0") {
                         tick_string = "0.0";
                     }
@@ -179,7 +179,7 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String((cbar_val*10).toFixed(1));
+                    tick_string = String(cbar_val.toFixed(1));
                     if (tick_string === "-0.0") {
                         tick_string = "0.0";
                     }
@@ -195,7 +195,7 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String((cbar_val*10).toFixed(1));
+                    tick_string = String(cbar_val.toFixed(1));
                     if (tick_string === "-0.0") {
                         tick_string = "0.0";
                     }
@@ -211,7 +211,7 @@ function getColorbarStops(type, min, max) {
             for (i = 0; i <= 20; i += 1) {
                 cbar.push(cbar_val);
                 if (i % 2 === 0) {
-                    tick_string = String((cbar_val*10).toFixed(1));
+                    tick_string = String(cbar_val.toFixed(1));
                     if (tick_string === "-0.0") {
                         tick_string = "0.0";
                     }
@@ -236,25 +236,27 @@ function changeMapColorbar(map_type, cbar, map_min, map_max) {
     switch (map_type) {
         case 'trend':
             units = 't';
-            document.getElementById('cbar-units').textContent = 'mm/yr';
+            document.getElementById('cbar-units').textContent = 'cm/yr';
             break;
         case 'annual':
             units = 'a';
-            document.getElementById('cbar-units').textContent = 'mm';
+            document.getElementById('cbar-units').textContent = 'cm';
             break;
         case 'rms':
             units = 'r';
-            document.getElementById('cbar-units').textContent = 'mm';
+            document.getElementById('cbar-units').textContent = 'cm';
             break;
         default:
             units = 'r';
-            document.getElementById('cbar-units').textContent = 'mm';
+            document.getElementById('cbar-units').textContent = 'cm';
     }
 
-    cbar_stops = getColorbarStops(cbar, map_min/10, map_max/10);
+    cbar_stops = getColorbarStops(cbar, map_min, map_max);
 
     map.setPaintProperty(id + '-coarse', 'fill-color', { property: units, stops: cbar_stops });
     map.setPaintProperty(id + '-fine', 'fill-color', { property: units, stops: cbar_stops });
+    map.setPaintProperty('gauges', 'circle-color', { property: units, stops: cbar_stops });
+    map.setPaintProperty('gauges-hover', 'circle-color', { property: units, stops: cbar_stops });
 
     document.getElementById(activeColormap + '-colorbar').style.display = 'inline-block';
     document.getElementById('map-cbar-container').style.display = 'block';
@@ -293,33 +295,33 @@ function showColorbar(id) {
     "use strict";
     if (id === 'alti-trend') {
         activeMap = 'trend';
-        changeMapColorbar(activeMap, activeColormap, -15, 15) // -5, 5);
+        changeMapColorbar(activeMap, activeColormap, -1.5, 1.5)
 
-        document.getElementById('colorbar-max-bounds').step = 1;  // 0.1;
-        document.getElementById('colorbar-max-bounds').max = 50; // 10.0;
-        document.getElementById('colorbar-max-bounds').min = 1;   // 0.1;
-        document.getElementById('colorbar-max-bounds').value = 15; // 5
-        document.getElementById('cbar-max-set').innerHTML = 15; // 5
-        document.getElementById('cbar-units-set').textContent = 'mm/year'; // 'cm/year';
+        document.getElementById('colorbar-max-bounds').step = 0.1;
+        document.getElementById('colorbar-max-bounds').max = 10.0;
+        document.getElementById('colorbar-max-bounds').min = 0.1;
+        document.getElementById('colorbar-max-bounds').value = 1.5;
+        document.getElementById('cbar-max-set').innerHTML = 1.5;
+        document.getElementById('cbar-units-set').textContent = 'cm/yr';
     } else if (id === 'alti-annual') {
         activeMap = 'annual';
-        changeMapColorbar(activeMap, activeColormap, 0, 250) // 25);
+        changeMapColorbar(activeMap, activeColormap, 0, 25)
 
         document.getElementById('colorbar-max-bounds').step = 5;
-        document.getElementById('colorbar-max-bounds').max = 500; // 100;
+        document.getElementById('colorbar-max-bounds').max = 100;
         document.getElementById('colorbar-max-bounds').min = 5;
-        document.getElementById('colorbar-max-bounds').value = 250; // 25;
-        document.getElementById('cbar-max-set').innerHTML = 250; // 25;
-        document.getElementById('cbar-units-set').textContent = 'mm'; // 'cm';
+        document.getElementById('colorbar-max-bounds').value = 25;
+        document.getElementById('cbar-max-set').innerHTML = 25;
+        document.getElementById('cbar-units-set').textContent = 'cm';
     } else if (id === 'alti-rms') {
         activeMap = 'rms';
-        changeMapColorbar(activeMap, activeColormap, 0, 350); // 40);
+        changeMapColorbar(activeMap, activeColormap, 0, 35);
 
         document.getElementById('colorbar-max-bounds').step = 5;
-        document.getElementById('colorbar-max-bounds').max = 600; // 60;
+        document.getElementById('colorbar-max-bounds').max = 60;
         document.getElementById('colorbar-max-bounds').min = 5;
-        document.getElementById('colorbar-max-bounds').value = 350; // 40;
-        document.getElementById('cbar-max-set').innerHTML = 350; // 40;
-        document.getElementById('cbar-units-set').textContent = 'mm'; // 'cm';
+        document.getElementById('colorbar-max-bounds').value = 35;
+        document.getElementById('cbar-max-set').innerHTML = 35;
+        document.getElementById('cbar-units-set').textContent = 'cm';
     }
 }

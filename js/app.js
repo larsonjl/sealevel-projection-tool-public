@@ -263,14 +263,14 @@ function setActiveColormap() {
     var min, max = Number(document.getElementById('cbar-max-set').textContent);
     activeColormap = document.getElementById("sidebar-select-colormap").value;
     updateColorbarMap(Number(document.getElementById("colorbar-max-bounds").value));
-    switch (activeMap){
+    /*switch (activeMap){
         case 'trend':
             min = -max;
             break;
         default:
             min = 0;
     }
-    changeMapColorbar(activeMap, activeColormap, min, max);
+    changeMapColorbar(activeMap, activeColormap, min, max);*/
 }
 
 // loadApp :: Start app

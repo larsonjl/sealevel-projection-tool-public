@@ -207,27 +207,30 @@ function getAltimetryLocationBox(jsonLat, jsonLon) {
 
 function outlineAltimetry(coords) {
     "use strict";
+    console.log(coords);
     map.addLayer({
         'id': 'altimetry-location-box',
-        'type': 'fill',
+        'type': 'line',
         'source': {
             'type': 'geojson',
             'data': {
                 'type': 'Feature',
+                'properties': {},
                 'geometry': {
-                    'type': 'Polygon',
-                    'coordinates': [ coords ]
+                    'type': 'LineString',
+                    'coordinates': coords
                 }
             }
         },
-        'layout': {},
+        'layout': {
+            'line-join': 'bevel',
+            'line-cap': 'square'
+        },
         'paint': {
-            'fill-color': '#ff1493',
-            'fill-opacity': 0.5,
-            'fill-antialias': true,
-            'fill-outline-color': '#ff1493'
+            'line-color': '#FFF',
+            'line-width': 2
         }
-    });
+    },'gauges');
     altimetry_outlined = true;
 }
 
