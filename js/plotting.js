@@ -21,19 +21,29 @@ function drawTitle() {
     "use strict"
     var titleText = '', jsonAltimetryLocation, jsonLat, jsonLon;
 
-    if (altimetry_plotted === true) {
+    if (difference_plotted === true) {
         jsonAltimetryLocation = getLatLonGridLocation(LNG, LAT),
         jsonLat = jsonAltimetryLocation[0],
         jsonLon = jsonAltimetryLocation[1];
-        titleText += 'Altimetry (' + jsonLat + ', ' + jsonLon + ')';
+        titleText = 'Altimetry (' + jsonLat + ', ' + jsonLon +
+            ') minus Tide Gauge (' + tideGaugeName + ')';
+    } else {
+        if (altimetry_plotted === true) {
+            jsonAltimetryLocation = getLatLonGridLocation(LNG, LAT),
+            jsonLat = jsonAltimetryLocation[0],
+            jsonLon = jsonAltimetryLocation[1];
+            titleText += 'Altimetry (' + jsonLat + ', ' + jsonLon + ')';
+        }
+
+        if (altimetry_plotted === true && tidegauge_plotted === true) {
+            titleText += ' vs. ';
+        }
+
+        if (tidegauge_plotted === true) {
+            titleText += 'Tide Gauge (' + tideGaugeName + ')';
+        }
     }
 
-    if (altimetry_plotted === true && tidegauge_plotted === true) {
-        titleText += ' vs. ';
-    }
-    if (tidegauge_plotted === true) {
-        titleText += 'Tide Gauge ("' + tideGaugeCode + '")';
-    }
 
     d3.select("svg").append("text")
         .attr("x", (WIDTH / 2))
@@ -183,6 +193,17 @@ function setLeastSquaresDisplay(trend, annual, semiann, plot_units, dataset_id) 
             document.getElementById("LS-tidegauge-semiann").innerHTML = semiann.toFixed(2) + ' ' + plot_units;
         }
         showTideGaugeLS();
+    } else if (dataset_id === "difference") {
+        document.getElementById("LS-tidegauge-trend").innerHTML = trend.toFixed(2) + ' ' + plot_units + '/yr';
+        if (annual >= 9999.0) {
+            document.getElementById("LS-tidegauge-annual").innerHTML = 'N/A';
+            document.getElementById("LS-tidegauge-semiann").innerHTML = 'N/A';
+        } else {
+            document.getElementById("LS-tidegauge-annual").innerHTML = annual.toFixed(2) + ' ' + plot_units;
+            document.getElementById("LS-tidegauge-semiann").innerHTML = semiann.toFixed(2) + ' ' + plot_units;
+        }
+        hideAltimetryLS();
+        showTideGaugeLS();
     }
     document.getElementById("LS-params").style.display = 'block';
 }
@@ -210,9 +231,13 @@ function prepDataForPlotting(data, plot_units, min_Date, max_Date, dataset_id) {
         }
     } else if (dataset_id === "tidegauges") {
         for (i = 0; i < data.time_yrs.length; i += 1) {
-            data_sla_trim.push(data.sl_dt[i] / 10.0); // Convert mm to cm
-            time_yrs_trim.push(data.time_yrs[i]);
-            time_dys_trim.push(data.time_dys[i]);
+            if (data.sl_dt[i] > 9999.0) {
+                dataMissing += 1;
+            } else {
+                data_sla_trim.push(data.sl_dt[i]); // Convert mm to cm
+                time_yrs_trim.push(data.time_yrs[i]);
+                time_dys_trim.push(data.time_dys[i]);
+            }
         }
     }
 
@@ -288,6 +313,116 @@ function prepDataForPlotting(data, plot_units, min_Date, max_Date, dataset_id) {
     return [lineData, lineLSdata];
 }
 
+function differenceDataForPlotting(data_al, data_tg, plot_units, min_Date, max_Date) {
+    "use strict";
+    var i, N_times,
+        drawDetrend = checkDetrend(),
+        drawDeseason = checkDeseason(),
+        dataMissing = 0,
+        data_trim = [],
+        time_yrs_trim = [],
+        time_dys_trim = [],
+        x_LS = [],
+        y_LS = [],
+        x_LS_plot = [],
+        sum_y = 0,
+        mean_y,
+        y_demean = [],
+        LSreturn,
+        fit_params,
+        y_trend,
+        y_seasons,
+        trend,
+        annual,
+        semiann,
+        y_plot,
+        smootherWidth,
+        dt,
+        y_plotting,
+        lineData = [],
+        lineLSdata = [];
+
+    N_times = (time.time_yrs.length <= data_tg.time_yrs.length) ? time.time_yrs.length : data_tg.time_yrs.length;
+    for (i = 0; i < N_times; i += 1) {
+        if (data_al.sla[i] > 9999.0 || data_tg.sl_dt[i] > 9999.0) {
+            dataMissing += 1;
+        } else {
+            data_trim.push(data_tg.sl_dt[i] - data_al.sla[i]);
+            time_yrs_trim.push(time.time_yrs[i]);
+            time_dys_trim.push(time.time_dys[i]);
+        }
+    }
+
+    // Set up LS data arrays:
+    for (i = 0; i < time_yrs_trim.length; i += 1) {
+        if ((min_Date === 0 || time_yrs_trim[i] >= min_Date) && (max_Date === 0 || time_yrs_trim[i] <= max_Date)) {
+            x_LS.push(time_dys_trim[i]);
+            y_LS.push(data_trim[i]);
+            x_LS_plot.push(time_yrs_trim[i]);
+        }
+    }
+
+    if (x_LS.length === 0) {
+        return [[],[]];
+    }
+
+    // Demean timeseries:
+    for (i = 0; i < y_LS.length; i += 1) {
+        sum_y += y_LS[i];
+    }
+    mean_y = sum_y / y_LS.length;
+    for (i = 0; i < y_LS.length; i += 1) {
+        y_demean.push(y_LS[i] - mean_y);
+    }
+    y_LS = [];
+    y_LS = y_demean;
+
+    // Calculate Best Fit information:
+    LSreturn   = leastSquares(x_LS, y_LS);
+    // y_star     = LSreturn[0];
+    fit_params = LSreturn[1];
+    y_trend    = LSreturn[2];
+    y_seasons  = LSreturn[3];
+    trend      = fit_params[1] * 365.25; // per day -> per yr, m -> cm
+    annual     = fit_params[2];          // m -> cm
+    semiann    = fit_params[3];          // m -> cm
+
+    // Check if LS estimated seasonal signals:
+    if (fit_params[2] === 9999.9999) {
+        drawDeseason = 0;
+    }
+
+    y_plot = y_LS;
+    if (drawDetrend === 1) { y_plot = math.subtract(y_plot, y_trend); }
+    if (drawDeseason === 1) { y_plot = math.subtract(y_plot, y_seasons); }
+
+    // Fill out LS Parameters display:
+    setLeastSquaresDisplay(trend, annual, semiann, plot_units, "difference");
+
+    // Get boxcar smoother width:
+    smootherWidth = Number(document.getElementById('smooth-width').value);
+
+    // Get data ready for plotting (Smooth if activated):
+    if (smootherWidth > 0) {
+        dt = time_dys_trim[1] - time_dys_trim[0];
+        if (dataMissing > 0) {
+            y_plotting = boxcar(x_LS, y_plot, smootherWidth);
+        } else {
+            y_plotting = boxcar2(x_LS, y_plot, dt, smootherWidth);
+        }
+    } else {
+        y_plotting = y_plot;
+    }
+
+    // Define data in matrices for plotting:
+    for (i = 0; i < x_LS.length; i += 1) {
+        lineData.push({x: x_LS_plot[i], y: y_plotting[i]}); // m -> cm
+        lineLSdata.push({x: x_LS_plot[i], y: y_trend[i]});  // m -> cm
+    }
+
+    return [lineData, lineLSdata];
+}
+
 // getYbounds :: Determine y-axis bounds for plot.
 function getYbounds(lineData) {
     "use strict";
@@ -343,7 +478,7 @@ function dataHeaderInfo(dataset) {
             ["lon", data_tidegauge.lon],
             ["code", data_tidegauge.code],
             ["location", data_tidegauge.loc],
-            ["Solution", "Mark Merrifield (UHSLC)"],
+            ["Source", "Mark Merrifield (UHSLC)"],
             //["Citation", ""]
         ];
     }
@@ -385,7 +520,6 @@ function downloadData() {
     }
 
     // Write Extra Header Information:
-    //data_csv_struc.push(["Time Units","Days since 1 January 1985"])
     data_csv_struc.push([""]);
 
     // Write timeseries columns:
@@ -482,20 +616,6 @@ function downloadData() {
     link.click();
 }
 
-/*
-// dataDownloadListener :: When the "Get Data" button is clicked, download the data CSV.
-function dataDownloadListener() {
-    "use strict";
-    var i0, i1, fileName;
-
-    i0 = jsonFilename.indexOf('JSON');
-    i1 = jsonFilename.indexOf('.json');
-    fileName = 'v2/CSV/'.concat(jsonFilename.substring(i0 + 5, i1), '.csv');
-    // var fileName = 'CSV/' + jsonFilename.substr(5,jsonFilename.length-10) + '.csv';
-    window.open(fileName, '_self');
-}
-*/
-
 // dataDownloadDialogListener :: Listen for Download Data button click, launch dialog
 function dataDownloadDialogListener() {
     document.getElementById("download-dialog").style.display = "block";
@@ -513,6 +633,198 @@ function dataDownloadListener() {
     dataDownloadCancelListener();
 }
 
+function displayDifference(min_Date, max_Date, status) {
+    "use strict";
+    var i, drawDetrend, drawTrend, plot_units, plotting_dif, lineData, lineLSdata,
+        yMinMax, yMin, yMax, svg, vis, yScale, xAxis, yAxis, lineFunc, divTooltip,
+        divTooltip0, divTooltip1, data_entries = ['Tide Gauge - Altimetry'],
+        data_colors = [plotColors(0)], attr_text;
+
+    // Setup & Bookkeeping:
+    drawDetrend = checkDetrend();
+    drawTrend = checkTrend();
+    plot_units = 'cm';
+
+    altimetry_plotted = true;
+    tidegauge_plotted = true;
+
+    if (plot_num > 0) {
+        d3.select("#" + svg_id).remove();
+        document.getElementById('data-timeseries').innerHTML = "";
+    }
+
+    maximizePlot();
+
+    plotting_dif = differenceDataForPlotting(data_altimetry, data_tidegauge, plot_units, min_Date, max_Date);
+    lineData = plotting_dif[0];
+    lineLSdata = plotting_dif[1];
+
+    // Setup plotting bounds:
+    if (min_Date) {
+        minDate = min_Date;
+    } else {
+        minDate = Math.floor(d3.min(lineData, function (d) { return d.x; }));
+    }
+
+    if (max_Date) {
+        maxDate = max_Date;
+    } else {
+        maxDate = Math.ceil(d3.max(lineData, function (d) { return d.x; }));
+    }
+
+    yMinMax = getYbounds(lineData);
+    yMin = yMinMax[0];
+    yMax = yMinMax[1];
+
+    // Define plotting area:
+    plot_num += 1;
+    svg_id = "svg-timeseries-" + plot_num;
+    svg = d3.select("#data-timeseries")
+        .append("div")
+        .classed("svg-container", true)
+        .append("svg")
+        .attr("id", svg_id)
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", "0 0 800 400")
+        .classed("svg-content-responsive", true);
+
+    vis = d3.select('#' + svg_id);
+
+    xScale = d3.scale.linear()
+        .range([MARGINS.left, WIDTH - MARGINS.right])
+        .domain([minDate, maxDate]);
+    yScale = d3.scale.linear()
+        .range([HEIGHT + MARGINS.bottom, MARGINS.top + MARGINS.bottom])
+        .domain([yMin, yMax]);
+
+    xAxis = d3.svg.axis()
+          .scale(xScale)
+          .orient("bottom")
+          .innerTickSize(- HEIGHT + MARGINS.top)
+          .outerTickSize(0)
+          .tickPadding(4)
+          .tickFormat(d3.format("d"));
+
+    yAxis = d3.svg.axis()
+          .scale(yScale)
+          .orient("left")
+          .innerTickSize(-WIDTH + MARGINS.right + MARGINS.left)
+          .outerTickSize(0)
+          .tickPadding(8);
+
+    // Draw plotting area
+    vis.append('svg:g').attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + (HEIGHT + MARGINS.bottom) + ')')
+        .call(xAxis);
+
+    svg.append("text")
+        .attr("class", "x label").attr("text-anchor", "end")
+        .attr("x", 455).attr("y", 392).text("Year");
+
+    vis.append('svg:g').attr('class', 'y axis')
+        .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+        .call(yAxis);
+
+    svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", (MARGINS.left / 2 - 5))
+        .attr("x", (-HEIGHT / 2 + MARGINS.bottom))
+        .attr("transform", "rotate(-90)")
+        .text("Height (cm)");
+
+    // Define plot line:
+    lineFunc = d3.svg.line()
+        .x(function (d) { return xScale(d.x); })
+        .y(function (d) { return yScale(d.y); })
+        .interpolate('linear');
+
+    // Add the scatterplot
+    divTooltip  = d3.select("#plot-tooltip");   // Define handle on tooltip
+    divTooltip0 = d3.select("#tooltip-info-0"); // Define handle on tooltip
+    divTooltip1 = d3.select("#tooltip-info-1"); // Define handle on tooltip
+    svg.selectAll("dot")
+        .data(lineData)
+        .enter().append("circle")
+        .attr("r", 1.5)
+        .style("stroke", plotColors(1)).style("stroke-width", 1)
+        .style("fill", plotColors(1))
+        .attr("cx", function (d) { return xScale(d.x); })
+        .attr("cy", function (d) { return yScale(d.y); })
+        .attr("text", function (d) { return yScale(d.y); })
+        .on("mouseover", function (d) {
+            // Show the tooltip when hovering over a datapoint
+            divTooltip.transition().duration(200).style("opacity", 0.95);
+            divTooltip.style("background-color", plotColors(1,"light"));
+            divTooltip0.html('<span class="bold">SSH:</span> ' + d.y.toFixed(3) + ' ' + plot_units);
+            divTooltip1.html('<span class="bold">Date:</span> ' + convertDecimalDate(d.x.toFixed(3)));
+        })
+        .on("mouseout", function () {
+            divTooltip.transition()
+                .duration(2000)
+                .style("opacity", 0);
+        });
+
+    // If any radio buttons are "On", add to plot:
+    if (drawTrend === 1 && drawDetrend === 0) {
+        vis.append('svg:path')
+            .attr('d', lineFunc(lineLSdata))
+            .attr('stroke', plotColors(2)).attr('stroke-width', 2)
+            .attr('fill', 'none')
+            .style("stroke-dasharray", ("5, 5"));
+    }
+
+    if (plot_num > 0) {
+        document.getElementById("save-button").removeEventListener("click", saveImageListener);
+        document.getElementById("data-dialog-button").removeEventListener("click", dataDownloadDialogListener);
+        document.getElementById("data-cancel-button").removeEventListener("click", dataDownloadCancelListener);
+        document.getElementById("data-button").removeEventListener("click", dataDownloadListener);
+    }
+    document.getElementById("save-button").addEventListener("click", saveImageListener);
+    document.getElementById("data-dialog-button").addEventListener("click", dataDownloadDialogListener);
+    document.getElementById("data-cancel-button").addEventListener("click", dataDownloadCancelListener);
+    document.getElementById("data-button").addEventListener("click", dataDownloadListener);
+
+    /*
+    if (drawTrend === 1 && drawDetrend === 0) {
+        data_entries.push('Trend');
+        data_colors.push(plotColors(2));
+    }
+    drawLegend(data_entries, data_colors);
+    */
+    drawTitle();
+
+    plot_data_difference = lineData;
+
+    // Add attribution box to bottom left
+    attr_text = [
+        "Altimetry: Victor Zlotnicki, JPL",
+        "Tide Gauges: Mark Merrifield, UHSLC",
+        "Plot: http://ccar.colorado.edu/altimetry/"
+    ];
+
+    svg.append("rect")
+        .attr("x", 560)
+        .attr("y", 321)
+        .attr("width", 220)
+        .attr("height", 39)
+        .attr("fill", "#F0F0F0")
+        .attr("stroke-width", 1)
+        .attr("stroke", "black");
+
+    for (i=0; i < attr_text.length; i++) {
+        svg.append("text")
+            .attr("x", 777)
+            .attr("y", 331 + 13*i)
+            .attr("text-anchor", "end")
+            .style("font-size", "11px")
+            .style("text-decoration", "none")
+            .style("background-color", "#FAFAFA")
+            .style("font-family", "Arial")
+            .text(attr_text[i]);
+    }
+}
+
 // displayDataSeries :: takes returned data series and plots onto graph.
 function displayDataSeries(min_Date, max_Date, dataset_id, status) {
     "use strict";
@@ -521,7 +833,7 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
         vis, yMinMax, yMin, yMax, yScale, xAxis, yAxis, lineFunc, divTooltip, divTooltip0,
         divTooltip1, minDate_al = 10000, maxDate_al = 0, minDate_tg = 10000, maxDate_tg = 0,
         yMin_al = 0, yMax_al = 0, yMin_tg = 0, yMax_tg = 0, data_entries = [], data_colors = [],
-        jsonAltimetryLocation, jsonLat, jsonLon, attr_text, i;
+        attr_text, i;
 
     if (dataset_id === "altimetry") {
         altimetry_plotted = true;
@@ -529,18 +841,7 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
         tidegauge_plotted = true;
     }
 
-    maximizePlot();
-
-    /*
-    if (status === "change") {
-        console.log('A change plot listener was clicked. Coming soon...');
-        console.log(dataset_id);
-
-    } else {
-    */
-
     // Setup & Bookkeeping:
-    document.getElementById("chart-container").style.display = 'inline-block';
     drawDetrend = checkDetrend();
     drawTrend = checkTrend();
     plot_units = 'cm';
@@ -549,6 +850,8 @@ function displayDataSeries(min_Date, max_Date, dataset_id, status) {
         d3.select("#" + svg_id).remove();
         document.getElementById('data-timeseries').innerHTML = "";
     }
+
+    maximizePlot();
 
     if (altimetry_plotted === true) {
         // Get data in a structure ready for plotting, including LS information:
@@ -812,7 +1115,8 @@ function displayDataNavbar() {
     var i, lineData_al = [], lineData_tg = [], svg, navChart, navXScale, navYScale,
         xAxis, viewport, ext, leftHandle, leftHandleGrip1, leftHandleGrip2,
         rightHandle, rightHandleGrip1, rightHandleGrip2, zoom, overlay, vis,
-        minMaxY = [], minMaxX = [];
+        minMaxY = [], minMaxX = [], sum_al = 0, N_sum_al = 0, mean_al, mean_tg,
+        sum_tg = 0, N_sum_tg = 0;
 
     d3.select("#svg-navbar").remove();
     if (plot_num > 0) {
@@ -823,13 +1127,29 @@ function displayDataNavbar() {
     if (altimetry_plotted === true) {
         for (i = 0; i < time.time_yrs.length; i += 1) {
             if (data_altimetry.sla[i] < 9999.0) {
-                lineData_al.push({ x: time.time_yrs[i], y: data_altimetry.sla[i] });
+                sum_al += data_altimetry.sla[i];
+                N_sum_al += 1;
+            }
+        }
+        mean_al = sum_al / N_sum_al;
+        for (i = 0; i < time.time_yrs.length; i += 1) {
+            if (data_altimetry.sla[i] < 9999.0) {
+                lineData_al.push({ x: time.time_yrs[i], y: data_altimetry.sla[i] - mean_al });
             }
         }
     }
     if (tidegauge_plotted === true) {
         for (i = 0; i < data_tidegauge.time_yrs.length; i += 1) {
-            lineData_tg.push({ x: data_tidegauge.time_yrs[i], y: data_tidegauge.sl_dt[i] / 10.0 }); // convert mm to cm
+            if (data_tidegauge.sl_dt[i] < 9999.0) {
+                sum_tg += data_tidegauge.sl_dt[i];
+                N_sum_tg += 1;
+            }
+        }
+        mean_tg = sum_tg / N_sum_tg;
+        for (i = 0; i < data_tidegauge.time_yrs.length; i += 1) {
+            if (data_tidegauge.sl_dt[i] < 9999.0) {
+                lineData_tg.push({ x: data_tidegauge.time_yrs[i], y: data_tidegauge.sl_dt[i] - mean_tg }); // convert mm to cm
+            }
         }
     }
 
@@ -982,32 +1302,12 @@ function displayDataNavbar() {
 
     zoom = d3.behavior.zoom()
         .x(xScale);
-        /*.on('zoom', function () {
-            if (xScale.domain()[0] < minDate) {
-                x = zoom.translate()[0] - xScale(minDate) + xScale.range()[0];
-                zoom.translate([x, 0]);
-            } else if (xScale.domain()[1] > maxDate) {
-                x = zoom.translate()[0] - xScale(maxDate) + xScale.range()[1];
-                zoom.translate([x, 0]);
-            }
-            redrawChart();
-            updateViewportFromChart();
-        }); */
-
-    /*
-    overlay = d3.svg.area()
-        .x(function (d) { return xScale(d.x); })
-        .y0(0)
-        .y1(HEIGHT);
-
-    vis = d3.select('#' + svg_id);
-    vis.append('path')
-        .attr('class', 'overlay')
-        .attr('d', overlay(data))
-        .call(zoom);
-    */
 
     viewport.on("brushend", function () {
-        displayDataSeries(viewport.extent()[0], viewport.extent()[1], [], "change");
+        if (difference_plotted === true ){
+            displayDifference(viewport.extent()[0], viewport.extent()[1], "change");
+        } else {
+            displayDataSeries(viewport.extent()[0], viewport.extent()[1], [], "change");
+        }
     });
 }

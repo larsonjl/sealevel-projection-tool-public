@@ -326,23 +326,8 @@ function showTideGaugeData() {
 
             selectAltimetry({lngLat:{lng: data_tidegauge.altimetry.lon, lat: data_tidegauge.altimetry.lat}});
 
-            // displayDataSeries(minDate, maxDate, "tidegauges", "new");
-            // displayDataNavbar();
-
-            // Show loaded successfully popup:
-            /*scrollPopup = document.getElementById('scroll-popup');
-            scrollPopup.style.zIndex = 5000;
-            scrollPopup.style.opacity = 1;
-            scrollPopup.style.transition = "opacity 1s";
-            setTimeout(function () {
-                scrollPopup.style.opacity = 0;
-                scrollPopup.style.zIndex = 0;
-            }, 3000);*/
-
         } else {
             // We reached our target server, but it returned an error
-            // alert("That location is unavailable. Either it is not in the dataset (such as if it is over land) or there has been an error.");
-            // Show loaded successfully popup:
             scrollPopup = document.getElementById('error-popup');
             scrollPopup.style.zIndex = 5000;
             scrollPopup.style.transition = "opacity 1s";
@@ -367,6 +352,7 @@ function selectTideGauge(feature) {
     var lng_str = feature.geometry.coordinates[0];
     var lat_str = feature.geometry.coordinates[1];
     tideGaugeCode = feature.properties.code;
+    tideGaugeName = feature.properties.title;
 
     if (lng_str < 0) {
         lng_str = (-lng_str).toFixed(6) + "&deg;W";
@@ -427,9 +413,15 @@ function selectAltimetry(e) {
 
             data_altimetry_header = dataHeaderInfo('altimetry');
 
-            displayDataSeries(minDate, maxDate, "altimetry", "new");
-            displayDataNavbar();
-            setPopupAndCenter(e);
+            if (difference_plotted === true) {
+                displayDifference(minDate, maxDate, "new");
+                displayDataNavbar();
+                setPopupAndCenter(e);
+            } else {
+                displayDataSeries(minDate, maxDate, "altimetry", "new");
+                displayDataNavbar();
+                setPopupAndCenter(e);
+            }
 
             // Move center to the right
             lat_range = map.getBounds()._ne.lat - map.getBounds()._sw.lat;
@@ -441,21 +433,8 @@ function selectAltimetry(e) {
                 map.jumpTo({ "center": { 'lng': e.lngLat.lng, 'lat': e.lngLat.lat - (0.25*lat_range) } });
             }
 
-            // Show loaded successfully popup:
-            /*
-            scrollPopup = document.getElementById('scroll-popup');
-            scrollPopup.style.zIndex = 5000;
-            scrollPopup.style.opacity = 1;
-            scrollPopup.style.transition = "opacity 1s";
-            setTimeout(function () {
-                scrollPopup.style.opacity = 0;
-                scrollPopup.style.zIndex = 0;
-            }, 3000);*/
-
         } else {
             // We reached our target server, but it returned an error
-            // alert("That location is unavailable. Either it is not in the dataset (such as if it is over land) or there has been an error.");
-            // Show loaded successfully popup:
             scrollPopup = document.getElementById('error-popup');
             scrollPopup.style.zIndex = 5000;
             scrollPopup.style.transition = "opacity 1s";
@@ -476,7 +455,11 @@ function selectAltimetry(e) {
 function selectPlotting(e, status) {
     "use strict";
     if (status === "change") {
-        displayDataSeries(minDate, maxDate, "", "change");
+        if (difference_plotted === true) {
+            displayDifference(minDate, maxDate, "change");
+        } else {
+            displayDataSeries(minDate, maxDate, "", "change");
+        }
     } else if (status === "new") {
         // There was a new click on the map. Plot new data!
         var features = map.queryRenderedFeatures(e.point, { layers: ['gauges'] });
@@ -485,8 +468,12 @@ function selectPlotting(e, status) {
             // Show tide gauge:
             selectTideGauge(features[0]);
         } else {
-            // Show altimetry:
-            selectAltimetry(e);
+            if (difference_plotted === true) {
+                alert('Your plotting mode is set to difference Altimetry and Tide Gauge data. Please select a tide gauge or switch your plotting mode.');
+            } else {
+                // Show altimetry:
+                selectAltimetry(e);
+            }
         }
     }
 }
@@ -671,9 +658,9 @@ function addTrendAnnualRMSmap() {
     }, 'Land-Mask');
 
     // Add layers
+    addLayer('RMS',    'alti-rms');
     addLayer('Trend',  'alti-trend');
     addLayer('Annual', 'alti-annual');
-    addLayer('RMS',    'alti-rms');
 }
 
 // initializeMap :: loads background and interactive maps and starts page listeners.

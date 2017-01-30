@@ -128,35 +128,30 @@
                             </div>
                             <div class="sidebar-section" id="sidebar-map">
                                 <div class="sidebar-area">
-                                    <span class="bold">Show Tide Gauges</span> &nbsp; <input id="show-tide-gauges-checkbox" type="checkbox" checked>
+                                    <span class="bold">Show Tide Gauges</span>
+                                    <input id="show-tide-gauges-checkbox" type="checkbox" checked>
                                 </div>
                                 <div class="sidebar-area">
                                     <span class="bold">Choose Map</span>
-                                    <div class="center">
-                                        <ul id="map-style-menu"></ul>
-                                    </div>
+                                    <ul id="map-style-menu"></ul>
                                 </div>
                                 <div class="sidebar-area">
                                     <span class="bold">Colormap</span>
-                                    <div class="center">
-                                        <select id="sidebar-select-colormap">
-                                            <optgroup label="Linear Maps">
-                                                <option value="viridis" selected>Viridis</option>
-                                                <option value="plasma">Plasma</option>
-                                                <option value="rw">Red-White</option>
-                                            </optgroup>
-                                            <optgroup label="Diverging Maps">
-                                                <option value="rwb">Red-White-Blue</option>
-                                                <option value="spectral">Spectral</option>
-                                            </optgroup>
-                                        </select>
-                                    </div>
+                                    <select id="sidebar-select-colormap">
+                                        <optgroup label="Linear Maps">
+                                            <option value="viridis" selected>Viridis</option>
+                                            <option value="plasma">Plasma</option>
+                                            <option value="rw">Red-White</option>
+                                        </optgroup>
+                                        <optgroup label="Diverging Maps">
+                                            <option value="rwb">Red-White-Blue</option>
+                                            <option value="spectral">Spectral</option>
+                                        </optgroup>
+                                    </select>
                                 </div>
                                 <div class="sidebar-area">
                                     <span class="bold">Colorbar Max: <span id="cbar-max-set">35</span> <span id="cbar-units-set">cm</span></span>
-                                    <div class="center">
-                                        <input type="range" min="1" max="60" value="35" step="1" id="colorbar-max-bounds" onchange="updateColorbarMap(this.value);" oninput="updateColorbarText(this.value);"/>
-                                    </div>
+                                    <input type="range" min="1" max="60" value="35" step="1" id="colorbar-max-bounds" onchange="updateColorbarMap(this.value);" oninput="updateColorbarText(this.value);"/>
                                 </div>
                             </div>
 
@@ -169,7 +164,9 @@
                             </div>
                             <div class="sidebar-section" id="sidebar-plot">
                                 <div class="sidebar-area">
-                                    coming soon...
+                                    <div class="left"><span class="bold">Plotting Mode:</span></div>
+                                    <input type="radio" id="plot-mode-compare" name="sidebar-plot-mode" value="comparison" checked> Compare Altimetry &amp; Tide Gauge<br>
+                                    <input type="radio" id="plot-mode-difference" name="sidebar-plot-mode" value="difference"> Difference Altimetry &amp; Tide Gauge<br>
                                 </div>
                             </div>
                         </div>

@@ -180,7 +180,7 @@ div.popup-msg {
     border-bottom: 1px solid #555555;
     color: #333333;
     height: calc( 100% - 90px );
-    background-color: #FAFAFA;
+    background-color: #FFFFFF;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -208,14 +208,13 @@ div.popup-msg {
 .sidebar-header-select img { height: 100%; width: 100%; }
 
 img#sidebar-location-lookup-active, img#sidebar-map-settings-hidden,
-img#sidebar-plot-settings-active { display: none; }
-#sidebar-plot-settings{ border-width: 1px 0; }
-#map-search, #sidebar-plot { display: none; }
+img#sidebar-plot-settings-hidden { display: none; }
+#map-search { display: none; }
 
 .sidebar-section {
     width: auto;
     margin: 0;
-    padding: 5px 10px;
+    padding: 0 10px;
     background-color: #FFFFFF;
     border: 0 solid #E0E0E0;
     border-width: 1px 0 0;
@@ -225,20 +224,24 @@ img#sidebar-plot-settings-active { display: none; }
 
 .sidebar-area {
     width: auto;
-    margin: 10px 0;
+    padding: 10px 0;
+    font-size: 11pt;
+    border: 0 solid #E0E0E0;
+    border-bottom-width: 1px;
 }
+.sidebar-area:last-of-type { border-bottom-width: 0; }
 
 ul#map-style-menu {
     list-style-type: none;
-    line-height: 21px;
-    max-width:244px;
-    min-height: 21px;
+    line-height: 19px;
+    max-width:183px;
+    min-height: 19px;
     font-size: 11pt;
     text-align: center;
     font-family: 'Open Sans', sans-serif;
-    margin: 0;
+    margin: 5px auto 0;
     padding: 0;
-    display: inline-block;
+    display: block;
     border: 0 solid #999999;
     border-left-width: 1px;
     border-top-width: 1px;
@@ -248,7 +251,7 @@ ul#map-style-menu li {
     float:left;
     margin: 0;
     width: 60px;
-    height: 20px;
+    height: 18px;
     border: 0 solid #999999;
     border-left-width: 0;
     border-width: 0 1px 1px 0;
@@ -259,16 +262,16 @@ ul#map-style-menu a {
     display: table-cell;
     vertical-align: middle;
     margin: 0;
-    padding: 0;
+    padding: 3px 0 0;
     width: 60px;
-    line-height: 20px;
-    height: 20px;
+    line-height: 15px;
+    height: 15px;
     text-decoration: none;
     text-align: center;
 }
 
 ul#map-style-menu a:hover {
-    background-color: #F8F8F8;
+    background-color: #E0E0E0;
     color: #404040;
 }
 
@@ -287,11 +290,17 @@ input#show-tide-gauges-checkbox {
     margin: 0;
     padding: 0;
     vertical-align: bottom;
+    float: right;
+}
+
+#sidebar-select-colormap {
+    width: 150px;
+    float: right;
 }
 
 #colorbar-max-bounds {
-    margin: auto 2px;
-    display: inline-block;
+    margin: 2px auto 0;
+    display: block;
     vertical-align: middle;
     width: 200px;
     border: 0px solid #555555;

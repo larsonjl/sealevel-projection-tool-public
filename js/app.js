@@ -234,7 +234,7 @@ function viewMapSettings() {
 function viewPlotSettings() {
     "use strict";
     var sidebar_area = document.getElementById("sidebar-plot");
-    if (sidebar_area.style.display !== 'block') {
+    if (sidebar_area.style.display === 'none') {
         sidebar_area.style.display = 'block';
         document.getElementById("sidebar-plot-settings-active").style.display = 'block';
         document.getElementById("sidebar-plot-settings-hidden").style.display = 'none';
@@ -263,14 +263,21 @@ function setActiveColormap() {
     var min, max = Number(document.getElementById('cbar-max-set').textContent);
     activeColormap = document.getElementById("sidebar-select-colormap").value;
     updateColorbarMap(Number(document.getElementById("colorbar-max-bounds").value));
-    /*switch (activeMap){
-        case 'trend':
-            min = -max;
-            break;
-        default:
-            min = 0;
+}
+
+function setPlottingMode(mode) {
+    "use strict";
+    if (mode === 'compare') {
+        difference_plotted = false;
+        if (tidegauge_plotted === true) {
+            selectPlotting({"lngLat":{"lng":LNG,"lat":LAT}}, 'change');
+        }
+    } else {
+        difference_plotted = true;
+        if (tidegauge_plotted === true) {
+            selectPlotting({"lngLat":{"lng":LNG,"lat":LAT}}, 'change');
+        }
     }
-    changeMapColorbar(activeMap, activeColormap, min, max);*/
 }
 
 // loadApp :: Start app
@@ -296,6 +303,9 @@ function loadApp() {
 
     document.getElementById("sidebar-select-colormap").addEventListener("change", setActiveColormap, false);
     document.getElementById('show-tide-gauges-checkbox').addEventListener("change", toggleTideGauges, false);
+
+    document.getElementById('plot-mode-compare').addEventListener("click", function (e) {setPlottingMode('compare')});
+    document.getElementById('plot-mode-difference').addEventListener("click", function (e) {setPlottingMode('difference')});
 
     // Listener: Map Location Form:
     document.getElementById("GetTimeseries").addEventListener("submit", function (e) {inputLatLon(e); });
