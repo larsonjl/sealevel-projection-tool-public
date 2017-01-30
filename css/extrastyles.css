@@ -107,8 +107,8 @@ div.popup-msg {
     width: 100%;
     padding: 0;
     margin: 0;
-    display: inline-block;
     border: 0;
+    display: block;
     text-align: left;
     background-color: #FAFAFA;
 }
@@ -179,7 +179,7 @@ div.popup-msg {
 #sidebar-contents {
     border-bottom: 1px solid #555555;
     color: #333333;
-    height: calc( 100% - 90px );
+    height: calc( 100% - 88px );
     background-color: #FFFFFF;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -608,8 +608,9 @@ div.tooltip {
     bottom: 0;
     left: 0;
     right: 0;
-    height:41px;
+    height:39px;
     font-size: 8pt;
+    line-height: 13px;
     text-align: left;
     padding: 5px;
     z-index: 1;
