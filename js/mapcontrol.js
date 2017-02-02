@@ -123,7 +123,7 @@ function getLatLonJSONfilename(lng, lat) {
     while (jsonLat.length < 7) { jsonLat = '0' + jsonLat; }
 
     // Concatenate file extension:
-    filename = 'v2/JSON/'.concat(jsonLat, '/', jsonLon, '.json');
+    filename = 'api/v2/altimetry/'.concat(jsonLat, '/', jsonLon, '.json');
     return filename;
 }
 
@@ -207,7 +207,6 @@ function getAltimetryLocationBox(jsonLat, jsonLon) {
 
 function outlineAltimetry(coords) {
     "use strict";
-    console.log(coords);
     map.addLayer({
         'id': 'altimetry-location-box',
         'type': 'line',
@@ -306,7 +305,7 @@ function disableAllLayers() {
 
 function showTideGaugeData() {
     "use strict";
-    var tideGaugeFile = 'api/v1/tidegauges/JSON/' + tideGaugeCode + '.json';
+    var tideGaugeFile = 'api/v2/tidegauges/' + tideGaugeCode + '.json';
     var request = new XMLHttpRequest();
     request.open('GET', tideGaugeFile, true);
     request.onload = function () {
@@ -550,7 +549,7 @@ function addTrendAnnualRMSmap() {
     map.addLayer({
         'id': 'alti-trend-fine',
         'source': 'alti-fine',
-        'source-layer': 'jpl_altimetry_grid_1_allgeojson',
+        'source-layer': 'jpl_altimetry_grid_1geojson',
         'minzoom': zoomThreshold,
         'type': 'fill',
         'layout': {
@@ -587,7 +586,7 @@ function addTrendAnnualRMSmap() {
     map.addLayer({
         'id': 'alti-annual-fine',
         'source': 'alti-fine',
-        'source-layer': 'jpl_altimetry_grid_1_allgeojson',
+        'source-layer': 'jpl_altimetry_grid_1geojson',
         'minzoom': zoomThreshold,
         'type': 'fill',
         'layout': {
@@ -624,7 +623,7 @@ function addTrendAnnualRMSmap() {
     map.addLayer({
         'id': 'alti-rms-fine',
         'source': 'alti-fine',
-        'source-layer': 'jpl_altimetry_grid_1_allgeojson',
+        'source-layer': 'jpl_altimetry_grid_1geojson',
         'minzoom': zoomThreshold,
         'type': 'fill',
         'layout': {
