@@ -1,4 +1,4 @@
-Scenario,component,meta,rawFile,referenceName,webTitle,variableName,data
+Scenario,component,meta,rawFile,referenceName,webTitle,variableName
 rcp85,greenSmb,high,ipcc_h.nc,gsh1,IPCC AR5,greensmb_h
 rcp85,greenSmb,medium,ipcc_m.nc,gsm1,IPCC AR5,greensmb_m
 rcp85,greenSmb,low,ipcc_l.nc,gsl1,IPCC AR5,greensmb_l
