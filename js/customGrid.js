@@ -107,3 +107,14 @@ function constructQueryArray(){
     }
 	return queryString
 };
+
+// On 'make projection' click, query data and display
+$('#runProject').click(function(){
+    queryString = constructQueryArray()
+    $.get("http://127.0.0.1:5000/myAPI?datastring=" + queryString, function(data, status){
+        changeGridDat(data);
+        map.getSource('twoDegreeData').setData(twoDegGrid);
+        map.getSource('oneDegreeData').setData(oneDegGrid);
+        loadCustomLayers();
+    });
+});
