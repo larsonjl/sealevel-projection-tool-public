@@ -69,6 +69,7 @@ div.popup-msg {
     cursor: nwse-resize;
 }
 
+
 /* Style Map Click */
 /* #map-search {
     width: 230px;
@@ -811,6 +812,34 @@ div#privacy-policy ol, div#privacy-policy ul {
 #minimize-plot-img:hover, #maximize-plot-img:hover {
     opacity: 1;
     border-color: #000000;
+}
+
+#projectionMenu select{
+	width:85%;
+	position:relative;
+	margin-bottom: 5px;
+    margin-top: 5px;
+	margin-left: 15px;
+	font-family: Helvetica;
+}
+
+#projectionMenu button{
+	width:85%;
+	position: relative;
+    margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 15px;
+	font-family: Helvetica;
+    font-size: 16px;
+}
+
+#projectionMenu p{
+	position:relative;
+	margin-left: 15px;
+	margin-bottom: 0px;
+	margin-top: 5px;
+	font-family: Helvetica;
+	font-size: 16px;
 }
 
 @media screen and (max-width: 900px) {
