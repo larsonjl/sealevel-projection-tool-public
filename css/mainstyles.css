@@ -19,8 +19,7 @@ h2 { margin:  5px 10px; font-size: 14pt; }
 h3 { margin:  3px 0px; font-size: 13pt; width: 100%; text-align: left; color: #000000; }
 p {
     font-size: 13pt;
-    font-family: Georgia, Times, 'Times New Roman', serif;
-    line-height: 16pt;
+    font-family: Arial,sans-serif;
 }
 
 /* Link Styles */
@@ -44,7 +43,7 @@ Define general div properties
 ---------------------------*/
 
 /* Horizontal Line */
-div.hline { height: 1px; margin: 20px 0px; width: 100%; background-color: #DDDDDD; }
+div.hline { height: 1px; margin: 6px 0px; width: 100%; background-color: #DDDDDD; }
 
 /* Primary page foreground and background */
 #background { position: fixed; width: 100%; top: 0px; bottom: 0px; z-index: 1; background-color: #999999; }
@@ -113,13 +112,6 @@ Define Content Properties
     z-index: 2;
 }
 
-#main-container, #footer-container {
-    margin: 0px;
-    padding: 0px;
-    display: inline-block;
-    position:relative;
-}
-
 #main-container {
     width: 100%;
     padding: 0px;
@@ -128,14 +120,21 @@ Define Content Properties
 
 #footer-container {
     width: 100%;
-    height: 50px;
+    height: 30px;
     text-align: center;
     padding: 0px;
     background-color: #000000;
-    margin: -3px 0;
+    margin: 0;
 }
 
-#footer-area { width: 100%; padding: 0px; margin: 5px 0px; font-size: 9pt; font-weight: bold; line-height: 20px; }
+#footer-area {
+    width: 100%;
+    padding: 5px 0;
+    margin: 0;
+    font-size: 9pt;
+    font-weight: bold;
+    line-height: 20px;
+}
 
 #footer-area div.hline { width: auto; margin: 20px; }
 #footer-area a:link, #footer-area a:visited { color: #FFFFFF; text-decoration: none; }

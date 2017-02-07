@@ -140,12 +140,12 @@ function leastSquares(x, y) {
     rhos = correlations(covari);
 
     calc_seasons = true;
-    for (i = 0; i < rhos.length; i += 1) {
+    /*for (i = 0; i < rhos.length; i += 1) {
         if (Math.abs(rhos[i]) > 0.1) {
             calc_seasons = false;
             break;
         }
-    }
+    }*/
 
     if (calc_seasons) {
         // H = H_full;
