@@ -662,38 +662,192 @@ function addTrendAnnualRMSmap() {
     addLayer('Annual', 'alti-annual');
 }
 
+function updateMapYear(year){
+    map.base_layers = $.extend(true, {}, map.style._layers)
+    for (layers in map.base_layers){
+        if (layers!=='background' && layers!=='water'){
+            map.setLayoutProperty(layers, 'visibility', 'none')}
+    }
+    var layerOneDict = {2025:"oneDeg2025", 2050:"oneDeg2050",2075:"oneDeg2075", 2100:"oneDeg2100"}
+    var layerTWoDict = {2025:"twoDeg2025", 2050:"twoDeg2050",2075:"twoDeg2075", 2100:"twoDeg2100"}
+
+
+    map.setLayoutProperty(layerOneDict[year], 'visibility', 'visible')
+    map.setLayoutProperty(layerTWoDict[year], 'visibility', 'visible')
+
+}
+
+// Add sources for both grids
+function initializeTiles(){
+    map.addSource("twoDegreeData", {
+        "type":"geojson",
+        "data": twoDegGrid
+            });
+
+    map.addSource("oneDegreeData", {
+            "type": "geojson",
+            "data": oneDegGrid
+                });
+}
+
+function loadCustomLayers(){
+    if (map.getLayer('oneDeg2025') !== undefined){
+        map.removeLayer('oneDeg2025')
+        map.removeLayer('twoDeg2025')
+        map.removeLayer('oneDeg2050')
+        map.removeLayer('twoDeg2050')
+        map.removeLayer('oneDeg2075')
+        map.removeLayer('twoDeg2075')
+        map.removeLayer('oneDeg2100')
+        map.removeLayer('twoDeg2100')
+    }
+
+    map.addLayer({
+            "id": "oneDeg2025",
+            "type": "fill",
+            "source": "oneDegreeData",
+            "layout": {
+                    'visibility': 'none'
+            },
+            'minzoom': 3,
+            "paint": {
+                "fill-color": {
+                    property: 'sl2025',
+                    stops: getColorbarStops('viridis', dMin, dMax)
+                    }, 'fill-opacity': 1.0}
+            }, 'water');
+
+        map.addLayer({
+                "id": "twoDeg2025",
+                "type": "fill",
+                "source": "twoDegreeData",
+                'maxzoom': 3,
+                "layout": {
+                        'visibility': 'none'
+                },
+                "paint": {
+                    "fill-color": {
+                    type:'exponential',
+                    property: 'sl2025',
+                    stops: getColorbarStops('viridis', dMin, dMax)
+                    }, 'fill-opacity': 1.0}
+            }, 'water');
+
+        map.addLayer({
+                "id": "oneDeg2050",
+                "type": "fill",
+                "source": "oneDegreeData",
+                "layout": {
+                        'visibility': 'none'
+                },
+                'minzoom': 3,
+                "paint": {
+                    "fill-color": {
+                        property: 'sl2050',
+                        stops: getColorbarStops('viridis', dMin, dMax)
+                        }, 'fill-opacity': 1.0}
+                }, 'water');
+
+            map.addLayer({
+                    "id": "twoDeg2050",
+                    "type": "fill",
+                    "source": "twoDegreeData",
+                    'maxzoom': 3,
+                    "layout": {
+                            'visibility': 'none'
+                    },
+                    "paint": {
+                        "fill-color": {
+                        type:'exponential',
+                            property: 'sl2050',
+                            stops: getColorbarStops('viridis', dMin, dMax)
+                            }, 'fill-opacity': 1.0}
+                }, 'water');
+
+            map.addLayer({
+                    "id": "oneDeg2075",
+                    "type": "fill",
+                    "source": "oneDegreeData",
+                    "layout": {
+                            'visibility': 'none'
+                    },
+                    'minzoom': 3,
+                    "paint": {
+                        "fill-color": {
+                            property: 'sl2075',
+                            stops: getColorbarStops('viridis', dMin, dMax)
+                            }, 'fill-opacity': 1.0}
+                    }, 'water');
+
+                map.addLayer({
+                        "id": "twoDeg2075",
+                        "type": "fill",
+                        "source": "twoDegreeData",
+                        'maxzoom': 3,
+                        "layout": {
+                                'visibility': 'none'
+                        },
+                        "paint": {
+                            "fill-color": {
+                                type:'exponential',
+                                property: 'sl2075',
+                                stops: getColorbarStops('viridis', dMin, dMax)
+                                }, 'fill-opacity': 1.0}
+                    }, 'water');
+
+                map.addLayer({
+                        "id": "oneDeg2100",
+                        "type": "fill",
+                        "source": "oneDegreeData",
+                        "layout": {
+                                'visibility': 'visible'
+                        },
+                        'minzoom': 3,
+                        "paint": {
+                            "fill-color": {
+                                property: 'sl2100',
+                                stops: getColorbarStops('viridis', dMin, dMax)
+                                }, 'fill-opacity': 1.0}
+                        }, 'water');
+
+                    map.addLayer({
+                            "id": "twoDeg2100",
+                            "type": "fill",
+                            "source": "twoDegreeData",
+                            'maxzoom': 3,
+                            "layout": {
+                                    'visibility': 'visible'
+                            },
+                            "paint": {
+                                "fill-color": {
+                                    type:'exponential',
+                                    property: 'sl2100',
+                                    stops: getColorbarStops('viridis', dMin, dMax)
+                                    }, 'fill-opacity': 1.0}
+                        }, 'water');
+
+}
+
+
 // initializeMap :: loads background and interactive maps and starts page listeners.
 function initializeMap() {
     "use strict";
-    default_stops = getColorbarStops(activeColormap, 0, 35);
-
     // Initialize Mapbox Interactive Map:
-    mapboxgl.accessToken = 'pk.eyJ1IjoiY3JvdGVhdW1qIiwiYSI6ImNpam44Y215dTAwZDB0aG01emxvNm1pYzAifQ.vKk11AiB-97jJiL9joJAgw';
+    mapboxgl.accessToken = 'pk.eyJ1IjoiamxhcnNvbjYzMCIsImEiOiJjaXh3ZWMxcDcwMDI1MndyeTM0cGt4NzNqIn0.7_AO6fr8Cwl7x-XSPylN-w';
 
     if (!mapboxgl.supported()) {
         alert('Your browser does not support Mapbox GL. Please try a different browser, or make sure that you have WebGL enabled on your current browser.');
     } else {
         map = new mapboxgl.Map({
+            version: 6,
             container: 'map-div',
-            style: 'mapbox://styles/croteaumj/cirqkdgcn0000vnnm5nf5yxj6',
-            center: [40, 20],
-            zoom: 1.0,
-            maxZoom: 7,
-            minZoom: 1.0,
-            attributionControl: false
-        });
+            style: 'mapbox://styles/jlarson630/ciyg1s0l9000p2spg93h1qdyv',
+            center: [-88.137, 35.13],
+            zoom: 1,
+            maxZoom: 3,
+            minZoom: 1.0
+        })};
+        var nav = new mapboxgl.NavigationControl();
+        map.addControl(nav, 'top-left')
 
-        map.on('style.load', addTrendAnnualRMSmap);
-
-        map.on('style.load', loadTideGauges);
-
-        map.on('style.load', addTideGauges);
-
-        map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-        map.addControl(new mapboxgl.AttributionControl(), 'bottom-left');
-
-        // Listener: right-click handling:
-        map.on('click', function (e) { selectPlotting(e, 'new'); });
-
-    } // End IF/ELSE mapboxgl supported.
 }
