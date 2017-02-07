@@ -284,16 +284,15 @@ function setPlottingMode(mode) {
 // loadApp :: Start app
 function loadApp() {
     "use strict";
-    var i, plot_form = document.forms.PlotOptionsForm,
-        radios_detrend = plot_form.elements["draw-detrend"],
-        radios_deseason = plot_form.elements["draw-deseason"],
-        radios_showtrend = plot_form.elements["draw-trend"];
 
     // Load Time JSON file:
-    getTimeSeries();
 
     // Initialize map:
     initializeMap();
+
+    // Construct geojson files
+    makeOneDegGrid();
+    makeTwoDegGrid();
 
     // Listener: Sidebar Menu
     document.getElementById("sidebar-menu-button").addEventListener("click", viewSidebar, false);
@@ -303,39 +302,25 @@ function loadApp() {
     document.getElementById("sidebar-plot-settings").addEventListener("click", viewPlotSettings, false);
 
     document.getElementById("sidebar-select-colormap").addEventListener("change", setActiveColormap, false);
-    document.getElementById('show-tide-gauges-checkbox').addEventListener("change", toggleTideGauges, false);
-
-    document.getElementById('plot-mode-compare').addEventListener("click", function (e) {setPlottingMode('compare')});
-    document.getElementById('plot-mode-difference').addEventListener("click", function (e) {setPlottingMode('difference')});
 
     // Listener: Map Location Form:
-    document.getElementById("GetTimeseries").addEventListener("submit", function (e) {inputLatLon(e); });
+    // document.getElementById("GetTimeseries").addEventListener("submit", function (e) {inputLatLon(e); });
 
     // Listeners: Detrend, Deseason, Show Trend, Boxcar:
-    for (i = 0; i < radios_detrend.length; i++) {
-        radios_detrend[i].addEventListener("click", onPlottingFormChange, false);
-    }
-
-    for (i = 0; i < radios_deseason.length; i++) {
-        radios_deseason[i].addEventListener("click", onPlottingFormChange, false);
-    }
-
-    for (i = 0; i < radios_showtrend.length; i++) {
-        radios_showtrend[i].addEventListener("click", onPlottingFormChange, false);
-    }
-
-    document.getElementById("set-smooth-width").addEventListener("click", onPlottingFormChange, false);
+    map.on('load', initializeTiles)
+    // document.getElementById("set-smooth-width").addEventListener("click", onPlottingFormChange, false);
+    map.on('load', loadCustomLayers)
 
     // Plot minimize/maximize listeners:
-    document.getElementById("minimize-plot-img").addEventListener("click", minimizePlot, false);
-    document.getElementById("maximize-plot-img").addEventListener("click", maximizePlot, false);
+    // document.getElementById("minimize-plot-img").addEventListener("click", minimizePlot, false);
+    // document.getElementById("maximize-plot-img").addEventListener("click", maximizePlot, false);
 
     // Plot movement listeners
-    document.getElementById('chart-topbar').addEventListener('mousedown', mouseDownDragging, false);
-    window.addEventListener('mouseup', mouseUpDragging, false);
+    // document.getElementById('chart-topbar').addEventListener('mousedown', mouseDownDragging, false);
+    // window.addEventListener('mouseup', mouseUpDragging, false);
 
-    document.getElementById('resize-triangle').addEventListener('mousedown', mouseDownResize, false);
-    window.addEventListener('mouseup', mouseUpResize, false);
+    // document.getElementById('resize-triangle').addEventListener('mousedown', mouseDownResize, false);
+    // window.addEventListener('mouseup', mouseUpResize, false);
 
 }
 
