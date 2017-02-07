@@ -5,7 +5,6 @@
 import json
 import numpy as np
 import pandas as pd
-# TODO: create option for no data
 
 projectMeta = pd.read_csv('referenceFile.csv')
 dataOut = {}
@@ -26,8 +25,6 @@ for scenarios in set(projectMeta['Scenario']):
                 dataSlimmestest = dataSlimmest[dataSlimmest['meta'] == outcomes]
                 dataOut['RCP'][scenarios][components][titles][outcomes]['ref'] = \
                     dataSlimmestest.referenceName.values[0]
-                
-    
 
 with open('referenceFile.js', 'w') as outfile:
     outfile.write('var sidebar = ')
