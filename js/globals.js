@@ -1,5 +1,9 @@
 // Initialize global variables:
 var map,
+    oneDegGrid, 
+    twoDegGrid, 
+    dataMax,
+    dataMin, 
     time,
     dMax=0,
     dMin=0,
