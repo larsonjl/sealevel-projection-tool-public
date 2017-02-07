@@ -31,8 +31,8 @@
     <div id="menu-container">
         <header>
             <div id="menuhead-map">
-                <div id="menucontentname"><h1 class="top" id="mvt-title">CCAR's Sea Level Explorer</h1></div>
-                <div id="menucontenttitle"><h2 class="top"><a href="/">Colorado Center for Astrodynamics Research</a> | <a href="https://www.colorado.edu">CU Boulder</a></h2></div>
+                <div id="menucontentname"><h1 class="top" id="mvt-title">Sea Level Projection Intercomparison Project </h1></div>
+                <div id="menucontenttitle"><h2 class="top"><a href="/"><a href="https://www.colorado.edu">University of Colorado Boulder</a></h2></div>
             </div>
             <div id="menulinks">
                 <ul>
@@ -100,16 +100,51 @@
                                     <img id="sidebar-location-lookup-active" src="img/ic_chevron_down_gray333_48dp.png"/>
                                     <img id="sidebar-location-lookup-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
                                 </div>
-                                <h2>Location Lookup</h2>
+                                <h2>Projection Settings</h2>
                             </div>
                             <div class="sidebar-section" id="map-search">
                                 <div id="click-location">
-                                    <p>Use your mouse to zoom and navigate the map. <span class="bold">Click</span> on the map or <span class="bold">input</span> latitude and longitude coordinates to get a local timeseries.</p>
-                                    <form id="GetTimeseries">
-                                        <div class="click-latlon-div"> Lat. [Deg]: </div><div class="click-latlonfield-div"><input type="text" id="click-lat"></div><br>
-                                        <div class="click-latlon-div"> Lon. [Deg]: </div><div class="click-latlonfield-div"><input type="text" id="click-lon"></div><br>
-                                        <input class="form-button" id="timeseries-button" type="submit" value="Get Timeseries">
-                                    </form>
+                                    <div id="projectionMenu">
+                                        <p>RCP Scenario</p>
+                                        <select id="rcpMenu">
+                                            <option value="default">-- select one -- </option>
+                                            <option value="rcp26">RCP2.6</option>
+                                            <option value="rcp45">RCP4.5</option>
+                                            <option value="rcp85">RCP8.5</option>
+                                        </select>
+
+                                        <p>Greenland SMB</p>
+                                        <select id="gsmbMenu">
+                                            <option value=""> None </option>
+                                        </select>
+
+                                        <p>Greenland Dynamic</p>
+                                        <select id="gdynMenu">
+                                            <option value=""> None </option>
+                                        </select>
+
+                                        <p>Antarctica SMB</p>
+                                        <select id="asmbMenu">
+                                            <option value="">None</option>
+                                        </select>
+
+                                        <p>Antarctica Dynamic</p>
+                                        <select id="adynMenu">
+                                            <option value="">None</option>
+                                        </select>
+
+                                        <p>Ocean Dynamics</p>
+                                        <select id="thermoMenu">
+                                            <option value="">None </option>
+                                        </select>
+
+                                        <p>Mountain Glaciers</p>
+                                        <select id="glacierMenu">
+                                            <option value="">None </option>
+                                        </select>
+
+                                        <button id="runProject" type="button">Calculate Projection</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -121,14 +156,6 @@
                                 <h2>Map Settings</h2>
                             </div>
                             <div class="sidebar-section" id="sidebar-map">
-                                <div class="sidebar-area">
-                                    <span class="bold">Show Tide Gauges</span>
-                                    <input id="show-tide-gauges-checkbox" type="checkbox" checked>
-                                </div>
-                                <div class="sidebar-area">
-                                    <span class="bold">Choose Map</span>
-                                    <ul id="map-style-menu"></ul>
-                                </div>
                                 <div class="sidebar-area">
                                     <span class="bold">Colormap</span>
                                     <select id="sidebar-select-colormap">
@@ -159,16 +186,16 @@
                             <div class="sidebar-section" id="sidebar-plot">
                                 <div class="sidebar-area">
                                     <div class="left"><span class="bold">Plotting Mode:</span></div>
-                                    <input type="radio" id="plot-mode-compare" name="sidebar-plot-mode" value="comparison" checked> Compare Altimetry &amp; Tide Gauge<br>
-                                    <input type="radio" id="plot-mode-difference" name="sidebar-plot-mode" value="difference"> Difference Altimetry &amp; Tide Gauge<br>
+                                    <input type="radio" id="plot-mode-compare" name="sidebar-plot-mode" value="comparison" checked> N/A <br>
+                                    <input type="radio" id="plot-mode-difference" name="sidebar-plot-mode" value="difference"> N/A <br>
                                 </div>
                             </div>
                         </div>
 
                         <div id="map-data-source">
                             <span class="bold">Data Sources:</span>&nbsp;<br>
-                            Altimetry: <span class="italics">Victor Zlotnicki, Jet Propulsion Lab</span>&nbsp;<br>
-                            Tide Gauges: <span class="italics">Mark Merrifield, Univ. of Hawaii</span>&nbsp;
+                            <span class="italics">N/A</span>&nbsp;<br>
+                            <span class="italics">N/A</span>&nbsp;
                         </div>
                     </div>
 
@@ -228,31 +255,11 @@
                 <div id="resize-triangle"></div>
             </div>
         </div>
-
-        <div id="download-dialog">
-            <h2 class="center">Altimetry and Tide Gauge Data Download</h2>
-            <p>
-                Data downloaded from this portal corresponds exactly to what is shown in the plot on this site.
-            </p>
-            <p>
-                Any changes you have made to the data (ex: de-seasoning, changing the time window, etc.) are included in the downloaded data.
-            </p>
-            <p>
-                If you would like to use the unaltered timeseries for the location selected, reset the settings back to their initial state.
-            </p>
-            <p class="center">
-                <button class="form-button" id="data-button" type="button"><img src="img/ic_file_download_grey600_48dp.png"/> Download</button>
-                <button class="form-button" id="data-cancel-button" type="button">Cancel</button>
-            </p>
-        </div>
-
     </div>
 
     <div class='content-container' id="footer-container">
         <div id="footer-area">
             <a href="/" target="_blank">CCAR</a> &nbsp; | &nbsp;
-            <a href="http://www.jpl.nasa.gov/" target="_blank">JPL</a> &nbsp; | &nbsp;
-            <a href="http://uhslc.soest.hawaii.edu/" target="_blank">UHSLC</a> &nbsp; | &nbsp;
             <a href="privacy.html">Privacy Policy</a>
             <br>
         </div>
@@ -260,16 +267,19 @@
 
 </div><!-- End of #foreground -->
 
-<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script src="js/saveSvgAsPng.js"></script>
 <script type="text/javascript" src="js/globals.js"></script>
-<script type="text/javascript" src="js/hawaii_tide_gauges.geojson"></script>
+<script type="text/javascript" src="js/oneDegreeMask.json"></script>
+<script type="text/javascript" src="js/twoDegreeMask.json"></script>
+<script type="text/javascript" src="js/referenceFile.js"></script>
+<script type="text/javascript" src="js/makeGrid.js"></script>
+<script type="text/javascript" src="js/sidebar.js"></script>
 <script type="text/javascript" src="js/tidegauges.js"></script>
 <script type="text/javascript" src="js/statistics.js"></script>
 <script type="text/javascript" src="js/plotting.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="js/mapcontrol-colormap.js"></script>
 <script type="text/javascript" src="js/mapcontrol.js"></script>
+
 
 </body>
 </html>
