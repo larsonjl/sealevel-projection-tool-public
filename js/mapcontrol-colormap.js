@@ -1,7 +1,8 @@
-function updateColorbarText(max) {
+function updateYearText(max) {
     "use strict";
-    document.getElementById('cbar-max-set').innerHTML = max;
+    document.getElementById('year-set').innerHTML = max;
 }
+
 
 function setupColorbar(type, cbar) {
     "use strict";
@@ -95,6 +96,7 @@ function setupColorbar(type, cbar) {
         ];
     } else { // Matplotlib's Viridis is default
         stops = [
+            [-500, '#d3d3d3'],
             [cbar[0],  '#440154'],
             [cbar[1],  '#471365'],
             [cbar[2],  '#482475'],
