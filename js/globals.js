@@ -1,6 +1,8 @@
 // Initialize global variables:
 var map,
     time,
+    dMax=0,
+    dMin=0,
     marker,
     gauge_marker,
     jsonFilename,
