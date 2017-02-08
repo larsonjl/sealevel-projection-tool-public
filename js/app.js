@@ -312,15 +312,15 @@ function loadApp() {
     map.on('load', loadCustomLayers)
 
     // Plot minimize/maximize listeners:
-    // document.getElementById("minimize-plot-img").addEventListener("click", minimizePlot, false);
-    // document.getElementById("maximize-plot-img").addEventListener("click", maximizePlot, false);
+    document.getElementById("minimize-plot-img").addEventListener("click", minimizePlot, false);
+    document.getElementById("maximize-plot-img").addEventListener("click", maximizePlot, false);
 
     // Plot movement listeners
-    // document.getElementById('chart-topbar').addEventListener('mousedown', mouseDownDragging, false);
-    // window.addEventListener('mouseup', mouseUpDragging, false);
+    document.getElementById('chart-topbar').addEventListener('mousedown', mouseDownDragging, false);
+    window.addEventListener('mouseup', mouseUpDragging, false);
 
-    // document.getElementById('resize-triangle').addEventListener('mousedown', mouseDownResize, false);
-    // window.addEventListener('mouseup', mouseUpResize, false);
+    document.getElementById('resize-triangle').addEventListener('mousedown', mouseDownResize, false);
+    window.addEventListener('mouseup', mouseUpResize, false);
 
 }
 
