@@ -116,5 +116,6 @@ $('#runProject').click(function(){
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
         loadCustomLayers();
+				maximizePlot();
     });
 });
