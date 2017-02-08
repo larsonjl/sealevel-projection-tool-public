@@ -22,6 +22,31 @@ div.popup-msg {
 .success-msg { background-color: #DFF2BF; color: #4F8A10; border: 1px solid #4F8A10; }
 .error-msg { background-color: #FFBABA; color: #D8000C; border: 1px solid #D8000C; }
 
+/* Fill plot styles */
+.fillgsmb {
+  fill: '#e41a1c';
+}
+
+.fillgdyn {
+  fill: '#377eb8';
+}
+
+.fillodyn {
+  fill: '#4daf4a';
+}
+
+.filladyn {
+  fill: '#984ea3';
+}
+
+.fillasmb{
+  fill: '#ff7f00';
+}
+
+.fillglac{
+  fill: '#ffff33';
+}
+
 /* Style Areas */
 #map-area { width: 100%; padding: 0px; margin: 0px auto; text-align: center; }
 
