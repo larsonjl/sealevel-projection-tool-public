@@ -382,7 +382,7 @@ img#coast-tip { height: 16px; width: 16px; display: inline-block; padding-top: 2
     display: inline-block;
     position: relative;
 }
-#LS-params {
+#SL-params {
     width: 100%;
     border: 0 solid #DDDDDD;
     border-bottom-width: 1px;
@@ -453,7 +453,7 @@ div.tooltip {
 #tooltip-info-0 { width: 120px; }
 #tooltip-info-1 { width: 110px; }
 
-.best-fit-title {
+.tot-proj-title {
     margin: 0 10px 0 0;
     font-weight: bold;
     text-align: right;
@@ -860,9 +860,9 @@ div#privacy-policy ol, div#privacy-policy ul {
     }
     #chart-options div.left { margin: 5px 0; }
     #timeseries { width: 360px; height: 280px; }
-    #LS-params { font-size: 8pt; }
-    .best-fit-title, .best-fit-param { line-height: 15px; height: 15px; }
-    .best-fit-title { margin: 0 5px 0 0; width: 100px; }
+    #SL-params { font-size: 8pt; }
+    .tot-proj-title, .best-fit-param { line-height: 15px; height: 15px; }
+    .tot-proj-title { margin: 0 5px 0 0; width: 100px; }
     .best-fit-param { width: 50px; }
     #data-timeseries { height: 180px; }
     #data-navbar { top: 240px; }
@@ -884,7 +884,7 @@ div#privacy-policy ol, div#privacy-policy ul {
         font-size: 7pt;
     }
     #timeseries { width: calc( 100% - 105px); height: 290px; }
-    .best-fit-title, .best-fit-param { line-height: 15px; height: 15px; }
+    .tot-proj-title, .best-fit-param { line-height: 15px; height: 15px; }
     #data-timeseries { height: 190px; }
     .mapboxgl-ctrl-attrib { font-size: 7pt!important; }
     .map-colorbar { padding: 0 0 2px!important; }

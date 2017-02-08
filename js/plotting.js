@@ -205,7 +205,7 @@ function setLeastSquaresDisplay(trend, annual, semiann, plot_units, dataset_id) 
         hideAltimetryLS();
         showTideGaugeLS();
     }
-    document.getElementById("LS-params").style.display = 'block';
+    document.getElementById("SL-params").style.display = 'block';
 }
 
 // prepDataForPlotting :: Process data for plotting (trim invalids; LS fit; deseason; smooth; and format).

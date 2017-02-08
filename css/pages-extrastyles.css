@@ -105,7 +105,7 @@ img#coast-tip { height: 16px; width: 16px; display: inline-block; padding-top: 2
     width: 800px; height: 520px; margin: 10px; padding: 0px; text-align: center; vertical-align: top;
     background-color: #FFFFFF; border: 0px; display: inline-block; position: relative;
 }
-#LS-params {
+#SL-params {
     border: 1px solid #DDDDDD;
     float: left;
     padding: 9px;
@@ -156,7 +156,7 @@ div.tooltip {
 #tooltip-info-0 { width: 120px; }
 #tooltip-info-1 { width: 110px; }
 
-.best-fit-title {
+.tot-proj-title {
     margin: 0px 10px 0px 30px;
     font-weight: bold;
     text-align: right;

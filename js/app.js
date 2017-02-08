@@ -156,7 +156,7 @@ function minimizePlot() {
     document.getElementById('chart-topbar').style.display = 'none';
     document.getElementById('chart-options').style.display = 'none';
     document.getElementById('resize-triangle').style.display = 'none';
-    document.getElementById('LS-params').style.display = 'none';
+    document.getElementById('SL-params').style.display = 'none';
     document.getElementById('data-navbar').style.display = 'none';
     document.getElementById('chart-container').style.top = (pageHeight - 125) + 'px';
     document.getElementById('chart-container').style.left = '10px';
@@ -173,7 +173,7 @@ function maximizePlot() {
     document.getElementById('chart-topbar').style.display = 'block';
     document.getElementById('chart-options').style.display = 'inline-block';
     document.getElementById('resize-triangle').style.display = 'block';
-    document.getElementById('LS-params').style.display = 'block';
+    document.getElementById('SL-params').style.display = 'block';
     document.getElementById('data-navbar').style.display = 'block';
     document.getElementById('chart-container').style.left = chart_container_maximize_left + 'px';
     document.getElementById('chart-container').style.top = chart_container_maximize_top + 'px';
@@ -307,9 +307,9 @@ function loadApp() {
     // document.getElementById("GetTimeseries").addEventListener("submit", function (e) {inputLatLon(e); });
 
     // Listeners: Detrend, Deseason, Show Trend, Boxcar:
-    map.on('load', initializeTiles)
+    map.on('load', initializeTiles);
     // document.getElementById("set-smooth-width").addEventListener("click", onPlottingFormChange, false);
-    map.on('load', loadCustomLayers)
+    map.on('load', loadCustomLayers);
 
     // Plot minimize/maximize listeners:
     document.getElementById("minimize-plot-img").addEventListener("click", minimizePlot, false);
