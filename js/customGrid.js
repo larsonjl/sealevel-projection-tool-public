@@ -59,34 +59,28 @@ function makeOneDegGrid() {
 };
 
 // Change geojson data values to queried data
-function changeGridDat(queriedData){
+function changeGridDat(queriedData, cbarLims){
 	var scaleBy = 10 //mm to cm
-	dMax = scaleBy * queriedData[1]
-	dMin = scaleBy * queriedData[0]
-
-	// Scale colorbars for better vis...arbitrary for now
-	if (dMin < - 2) {
-		dMin = - 2
-	}
-	dMax = dMax - 0.5
+	dMax = cbarLims[1] * scaleBy + 5
+	dMin = cbarLims[0] * scaleBy
 
 	// Loop through features, assign data to proper grid cells and properties
-	var i = 2
+	var i = 0
 	var oneDegFeatures = oneDegGrid['features']
 	var twoDegFeatures = twoDegGrid['features']
 
 	for (features in oneDegFeatures){
-		oneDegGrid['features'][features].properties.sl2025 = scaleBy * queriedData[i]
-		oneDegGrid['features'][features].properties.sl2050 = scaleBy * queriedData[i + 53584]
-		oneDegGrid['features'][features].properties.sl2075 = scaleBy * queriedData[i + 2 * 53584]
-		oneDegGrid['features'][features].properties.sl2100 = scaleBy * queriedData[i + 3 * 53584]
+		oneDegGrid['features'][features].properties.sl2025 = scaleBy * queriedData[0][i]
+		oneDegGrid['features'][features].properties.sl2050 = scaleBy * queriedData[1][i]
+		oneDegGrid['features'][features].properties.sl2075 = scaleBy * queriedData[2][i]
+		oneDegGrid['features'][features].properties.sl2100 = scaleBy * queriedData[3][i]
 		i+=1
 	}
 	for (features in twoDegFeatures){
-		twoDegGrid['features'][features].properties.sl2025 = scaleBy * queriedData[i]
-		twoDegGrid['features'][features].properties.sl2050 = scaleBy * queriedData[i +  53584]
-		twoDegGrid['features'][features].properties.sl2075 = scaleBy * queriedData[i + 2 * 53584]
-		twoDegGrid['features'][features].properties.sl2100 = scaleBy * queriedData[i + 3 * 53584]
+		twoDegGrid['features'][features].properties.sl2025 = scaleBy * queriedData[0][i]
+		twoDegGrid['features'][features].properties.sl2050 = scaleBy * queriedData[1][i]
+		twoDegGrid['features'][features].properties.sl2075 = scaleBy * queriedData[2][i]
+		twoDegGrid['features'][features].properties.sl2100 = scaleBy * queriedData[3][i]
 		i+=1
 		}
 
@@ -107,12 +101,13 @@ function constructQueryArray(){
     }
 	return queryString
 };
-
+var datasetIn
 // On 'make projection' click, query data and display
 $('#runProject').click(function(){
     queryString = constructQueryArray()
     $.get("http://127.0.0.1:5000/myAPI?datastring=" + queryString, function(data, status){
-        changeGridDat(data);
+				datasetIn = data
+				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
         loadCustomLayers();
