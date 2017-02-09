@@ -47,7 +47,7 @@ function plotFillProjection(projTimeSeries){
 
    yScale = d3.scale.linear()
        .range([HEIGHT + MARGINS.bottom, MARGINS.top + MARGINS.bottom])
-       .domain([0, 5]);
+       .domain([0, 1.5]);
 
    xAxis = d3.svg.axis()
          .scale(xScale)
@@ -86,7 +86,7 @@ function plotFillProjection(projTimeSeries){
          .attr("y", (MARGINS.left / 2 - 5))
          .attr("x", (-HEIGHT / 2 + MARGINS.bottom))
          .attr("transform", "rotate(-90)")
-         .text("Height (cm)");
+         .text("Height (m)");
 
     // Construct x dimension for plot
     var timeYear = new Array(94)
@@ -106,8 +106,8 @@ function plotFillProjection(projTimeSeries){
                         .interpolate("basis")
                         .x0( function(d) { return xScale(timeYear[d])} )
                         .x1( function(d) { return xScale(timeYear[d])} )
-                        .y0( function(d) { return yScale(scaleBy * runningSum[d])} )
-                        .y1( function(d) { return yScale(scaleBy * (runningSum[d] + projTimeSeries[variables][d]))});
+                        .y0( function(d) { return yScale(runningSum[d])} )
+                        .y1( function(d) { return yScale((runningSum[d] + projTimeSeries[variables][d]))});
 
           vis.append('svg:path')
              .datum(indx)
