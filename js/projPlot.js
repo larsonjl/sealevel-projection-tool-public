@@ -47,7 +47,7 @@ function plotFillProjection(projTimeSeries){
 
    yScale = d3.scale.linear()
        .range([HEIGHT + MARGINS.bottom, MARGINS.top + MARGINS.bottom])
-       .domain([0, 1.5]);
+       .domain([0, 1]);
 
    xAxis = d3.svg.axis()
          .scale(xScale)

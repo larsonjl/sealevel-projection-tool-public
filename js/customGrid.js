@@ -101,12 +101,11 @@ function constructQueryArray(){
     }
 	return queryString
 };
-var datasetIn
+
 // On 'make projection' click, query data and display
 $('#runProject').click(function(){
     queryString = constructQueryArray()
     $.get("http://127.0.0.1:5000/myAPI?datastring=" + queryString, function(data, status){
-				datasetIn = data
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
