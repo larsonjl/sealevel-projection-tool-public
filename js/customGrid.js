@@ -57,10 +57,10 @@ function makeOneDegGrid() {
 			}
 	}
 };
-
+var scaleBy
 // Change geojson data values to queried data
 function changeGridDat(queriedData, cbarLims){
-	var scaleBy = 10 //mm to cm
+	scaleBy = 10 //mm to cm
 	dMax = cbarLims[1] * scaleBy + 5
 	dMin = cbarLims[0] * scaleBy
 
@@ -112,5 +112,7 @@ $('#runProject').click(function(){
         map.getSource('oneDegreeData').setData(oneDegGrid);
         loadCustomLayers();
 				maximizePlot();
+				plotFillProjection(data['timeSeries']);
+
     });
 });
