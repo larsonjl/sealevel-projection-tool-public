@@ -4,6 +4,7 @@ from flask.json import JSONEncoder
 import pickle
 import numpy as np
 
+
 # Class for json print so no spaces after comma
 class MiniJSONEncoder(JSONEncoder):
     """Minify JSON output."""
@@ -12,29 +13,26 @@ class MiniJSONEncoder(JSONEncoder):
 
 # TODO: cos latitude weighting for GMSL
 
+
 # Takes in request string, does addition
 def createDatasetMultiYear(requestString):
     params = requestString.split('_')
     rcpScen = params[0]
     dOut = np.zeros((4, 53584))
-    
+
     tsData = {}
     # References [18,44,69,93] refer to 2025, 2050, 2075, 2100
     for datasets in params[2::]:
-        dOut += projDict[0][rcpScen][datasets][[18,44,69,93], :]
-        tsData[datasets] = (projDict[1][rcpScen][datasets]).astype('float16').tolist()
+        dOut += projDict[0][rcpScen][datasets][[18, 44, 69, 93], :]
+        tsData[datasets] = (projDict[1][rcpScen][datasets]) \
+                                    .astype('float16').tolist()
     dOut = dOut.astype('float16')
-    # meta data for plotting
-    
-    dMin = np.float16(np.min(dOut[dOut>-10]))
+    dMin = np.float16(np.min(dOut[dOut > -10]))
     dMax = np.float16(np.max(dOut))
-    
-    output = {'cLims':[int(dMin), int(dMax)], 'gridData': dOut.tolist(), 
+    output = {'cLims': [float(dMin), float(dMax)], 'gridData': dOut.tolist(),
               'timeSeries': tsData}
 
-    
     return output
-    
 
 
 # Load projection data into memory
@@ -45,6 +43,7 @@ projDict = pickle.load(open('dataForWebsite.pkl', "rb"))
 app = Flask(__name__)
 app.json_encoder = MiniJSONEncoder
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
+
 
 @app.route('/myAPI')
 def api_hello():
