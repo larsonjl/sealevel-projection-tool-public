@@ -29,10 +29,13 @@ def grid2db(ncfile, variable):
     numpy array (type: 16byte float)
     '''
     # Load in requested variable
+    print(ncfile)
     dFile = Dataset(ncfile)
     varGrid = dFile.variables[variable][:]
     
-    # Need to take care of switching from 0-360 to -180 to 180
+    tsMean = np.nanmean(varGrid, axis=(1,2)).data.astype('float16')
+    
+    # Needed to take care of switching from 0-360 to -180 to 180
     a = varGrid[:, :, 0:180]
     b = varGrid[:, :, 180:360]
     varGrid = np.dstack((b, a))
@@ -53,7 +56,7 @@ def grid2db(ncfile, variable):
     dataOut = np.hstack((oneDegGridOut, twoDegGridOut))
     dataOut[dataOut == np.inf] = -999
 
-    return dataOut
+    return dataOut, tsMean
 
 
 def referenceFile2Pickles():
@@ -61,18 +64,23 @@ def referenceFile2Pickles():
     files in our database to generate a dictionary that contains
     all of the projections, already masked, with a mask value of
     -999.  This dictionary is pickled and will be loaded into memory
-    when our server is initiated.'''
+    when our server is initiated. Another dictionary is included which
+    calculates the global mean value at every time step.'''
+    
+
     masterDict = {'rcp85': {}, 'rcp45': {}, 'rcp26': {}}
+    masterDictTS = {'rcp85': {}, 'rcp45': {}, 'rcp26': {}}
     refFile = pd.read_csv('./referenceFiles/dataReferenceFile.csv')
     for indx in refFile.index:
         dFile = refFile.iloc[indx]
         dataSetString = './' + dFile.Scenario + '/' + dFile.component +\
                         '/' + dFile.meta + '/' + dFile.rawFile
-        dataArray = grid2db(dataSetString, dFile.variableName)
+        dataArray, tsMean = grid2db(dataSetString, dFile.variableName)
         masterDict[dFile.Scenario][dFile.referenceName] = dataArray
+        masterDictTS[dFile.Scenario][dFile.referenceName] = tsMean
 
     masterDictOut = open('dataForWebsite.pkl', 'wb')
-    pickle.dump(masterDict, masterDictOut)
+    pickle.dump([masterDict, masterDictTS], masterDictOut)
     masterDictOut.close()
 
 referenceFile2Pickles()
