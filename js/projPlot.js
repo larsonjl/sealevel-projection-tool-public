@@ -43,7 +43,7 @@ function plotFillProjection(projTimeSeries){
 
    xScale = d3.scale.linear()
        .range([MARGINS.left, WIDTH - MARGINS.right])
-       .domain([2006, 2100]);
+       .domain([2007, 2100]);
 
    yScale = d3.scale.linear()
        .range([HEIGHT + MARGINS.bottom, MARGINS.top + MARGINS.bottom])
@@ -93,7 +93,7 @@ function plotFillProjection(projTimeSeries){
     var area
 
     for (var i=0; i<timeYear.length; ++i){
-      timeYear[i] = 2006 + i
+      timeYear[i] = 2007 + i
     };
 
     var indx = d3.range(timeYear.length );
@@ -104,9 +104,9 @@ function plotFillProjection(projTimeSeries){
 
           area = d3.svg.area()
                         .interpolate("basis")
-                        .x0( function(d) { return xScale(timeYear[d])} )
-                        .x1( function(d) { return xScale(timeYear[d])} )
-                        .y0( function(d) { return yScale(runningSum[d])} )
+                        .x0( function(d) { return xScale(timeYear[d])})
+                        .x1( function(d) { return xScale(timeYear[d])})
+                        .y0( function(d) { return yScale(runningSum[d])})
                         .y1( function(d) { return yScale((runningSum[d] + projTimeSeries[variables][d]))});
 
           vis.append('svg:path')
@@ -121,5 +121,19 @@ function plotFillProjection(projTimeSeries){
           };
           plot_num+=1
     }
+
+    var line = d3.svg.line()
+        .x(function(d) { return xScale(timeYear[d])})
+        .y(function(d) { return yScale(runningSum[d])})
+
+    vis.append("path")
+      .datum(indx)
+      .attr("fill", "none")
+      .attr("stroke", "black")
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .attr("stroke-width", 1.5)
+      .attr("d", line);
+
     drawTitle();
 }
