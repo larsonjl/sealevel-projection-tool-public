@@ -321,3 +321,35 @@ a.navbar:hover, a.navbar:active { background-color: #bb9a44; }
 @media screen and (max-width: 350px) {
     div#menulinks a.navbar { font-size: 7pt; }
 }
+
+/* Fill plot styles */
+.darea {
+    fill: lightsteelblue;
+    stroke-width: 0;
+}
+
+.fillgsmb {
+  fill: #e41a1c;
+  stroke-width: 0;
+}
+
+.fillgdyn {
+  fill: #377eb8;
+  stroke-width: 0;
+}
+
+.fillodyn {
+  fill: #4daf4a;
+}
+
+.filladyn {
+  fill: #984ea3;
+}
+
+.fillasmb{
+  fill: #ff7f00;
+}
+
+.fillglac{
+  fill: #ffff33;
+}
