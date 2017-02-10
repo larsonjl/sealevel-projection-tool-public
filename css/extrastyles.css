@@ -372,7 +372,7 @@ img#coast-tip { height: 16px; width: 16px; display: inline-block; padding-top: 2
 #chart-options div.hline { margin: 5px 0; }
 #timeseries {
 	width: 600px;
-    height: 435px;
+    height: 360px;
     padding: 0;
     margin: 5px 5px 5px 0;
     border: 0;
@@ -403,7 +403,7 @@ img#coast-tip { height: 16px; width: 16px; display: inline-block; padding-top: 2
 }
 #data-navbar {
     width: 100%;
-    height: 80px;
+    height: 0px;
     margin: 0 auto;
     display: block;
     float: left;

@@ -42,7 +42,7 @@ function plotFillProjection(projTimeSeries){
       .append("svg")
       .attr("id", svg_id)
       .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 750 400")
+      .attr("viewBox", "0 0 750 450")
       .classed("svg-content-responsive", true);
 
    xScale = d3.scale.linear()
