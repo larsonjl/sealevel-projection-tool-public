@@ -27,22 +27,26 @@ function saveImageListener() {
 
 function plotFillProjection(projTimeSeries){
   var fillStyles  = {'gs':'fillgsmb', 'gd':'fillgdyn', 'th':'fillodyn', 'ad':'filladyn', 'as':'fillasmb', 'gl':'fillglac'}
+  var fillNames  = {'gs':'Greenland SMB', 'gd':'Greenland Dyn.', 'th':'Ocean Dynamics', 'ad':'Antarctic Dyn.', 'as':'Antarctic SMB', 'gl':'Mountain Glaciers'}
 
    // Define plotting area
    plot_num = 1;
    svg_id = "svg-timeseries-" + plot_num;
+
+   // clear previous plot
+   d3.selectAll("svg > *").remove();
+
    svg = d3.select("#data-timeseries")
       .append("div")
       .classed("svg-container", true)
       .append("svg")
       .attr("id", svg_id)
       .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 800 400")
+      .attr("viewBox", "0 0 750 400")
       .classed("svg-content-responsive", true);
 
-
    xScale = d3.scale.linear()
-       .range([MARGINS.left, WIDTH - MARGINS.right])
+       .range([MARGINS.left, WIDTH - MARGINS.right - 200])
        .domain([2007, 2100]);
 
    yScale = d3.scale.linear()
@@ -60,7 +64,7 @@ function plotFillProjection(projTimeSeries){
    yAxis = d3.svg.axis()
          .scale(yScale)
          .orient("left")
-         .innerTickSize(-WIDTH + MARGINS.right + MARGINS.left)
+         .innerTickSize(-WIDTH + MARGINS.right + MARGINS.left + 200)
          .outerTickSize(0)
          .tickPadding(8);
 
@@ -73,20 +77,41 @@ function plotFillProjection(projTimeSeries){
 
      svg.append("text")
          .attr("class", "x label").attr("text-anchor", "end")
-         .attr("x", 455).attr("y", 392).text("Year");
+         .attr('font-size', 16)
+         .attr("x", 330).attr("y", 400).text("Year");
 
      vis.append('svg:g').attr('class', 'y axis')
          .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
          .call(yAxis);
 
-
      svg.append("text")
          .attr("class", "y label")
          .attr("text-anchor", "end")
-         .attr("y", (MARGINS.left / 2 - 5))
+         .attr("y", (MARGINS.left / 2 - 15))
          .attr("x", (-HEIGHT / 2 + MARGINS.bottom))
+         .attr('font-size', 16)
          .attr("transform", "rotate(-90)")
          .text("Height (m)");
+
+    // Initialize legend
+    var legend = vis.append("g")
+      .attr("class", "legend")
+      .attr("x", 600)
+      .attr("y", 100)
+      .attr("height", 100)
+      .attr("width", 100);
+
+  legend.append("rect")
+       .attr("x", 600)
+       .attr("y", 120)
+       .attr("width", 15)
+       .attr("height", 2)
+       .attr("style", 'black');
+
+   legend.append("text")
+      .attr("x", 625)
+      .attr("y", 120 + 5)
+      .text("Projection Total");
 
     // Construct x dimension for plot
     var timeYear = new Array(94)
@@ -99,6 +124,8 @@ function plotFillProjection(projTimeSeries){
     var indx = d3.range(timeYear.length );
 
     var runningSum = new Array(94).fill(0);
+
+    var legendMover = 0;
 
     for (variables in projTimeSeries){
 
@@ -114,6 +141,19 @@ function plotFillProjection(projTimeSeries){
              .attr('class', fillStyles[variables[0]+variables[1]])
              .attr('d', area)
 
+          // Add legend element
+          legend.append("rect")
+               .attr("x", 600)
+               .attr("y", 150 + legendMover)
+               .attr("width", 15)
+               .attr("height", 15)
+               .attr("class", fillStyles[variables[0]+variables[1]]);
+
+           legend.append("text")
+              .attr("x", 625)
+              .attr("y", 163 + legendMover)
+              .text(fillNames[variables[0]+variables[1]]);
+          legendMover += 40
           // Update running sum
 
           for (var i=0; i<runningSum.length; ++i){
@@ -132,8 +172,8 @@ function plotFillProjection(projTimeSeries){
       .attr("stroke", "black")
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
-      .attr("stroke-width", 1.5)
+      .attr("stroke-width", 2.5)
       .attr("d", line);
 
-    drawTitle();
+
 }
