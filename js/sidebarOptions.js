@@ -38,8 +38,8 @@ $(document).ready(function() {
             $("#gdynMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'greenDyn'));
             $("#adynMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'antDyn'));
             $("#asmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'antSmb'));
-            $("#thermoMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'glacier'));
-            $("#glacierMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'thermo'));
+            $("#thermoMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'thermo'));
+            $("#glacierMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'glacier'));
 
         }
     });
