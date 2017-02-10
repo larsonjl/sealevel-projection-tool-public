@@ -412,7 +412,7 @@ img#coast-tip { height: 16px; width: 16px; display: inline-block; padding-top: 2
 #svgdataurl, #pngdataurl { display: none; }
 .axis path, .axis line{ fill: none; stroke: black; }
 .line { fill: none; stroke: blue; stroke-width: 2px; }
-.tick text { font-size: 12px; }
+.tick text { font-size: 16px; }
 .tick line{ opacity: 0.2; }
 
 /* Plot Resize Brush */
