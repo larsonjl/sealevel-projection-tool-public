@@ -105,7 +105,7 @@ function divMoveResize(e) {
     chart.style.width = x_size + 'px';
     container.style.width = (125 + x_size) + 'px';
     document.getElementById('data-timeseries').style.height = (x_size/2) + 'px';
-    document.getElementById('data-navbar').style.height = y_nav + 'px';
+    // document.getElementById('data-navbar').style.height = y_nav + 'px';
     chart.style.height = (x_size/2 + y_nav + 65) + 'px';
 }
 
@@ -154,10 +154,10 @@ function minimizePlot() {
     document.getElementById('maximize-plot').style.display = 'block';
     document.getElementById('minimize-plot').style.display = 'none';
     document.getElementById('chart-topbar').style.display = 'none';
-    document.getElementById('chart-options').style.display = 'none';
+    // document.getElementById('chart-options').style.display = 'none';
     document.getElementById('resize-triangle').style.display = 'none';
-    document.getElementById('SL-params').style.display = 'none';
-    document.getElementById('data-navbar').style.display = 'none';
+    // document.getElementById('SL-params').style.display = 'none';
+    // document.getElementById('data-navbar').style.display = 'none';
     document.getElementById('chart-container').style.top = (pageHeight - 125) + 'px';
     document.getElementById('chart-container').style.left = '10px';
     document.getElementById('chart-container').style.width = '105px';
@@ -171,10 +171,10 @@ function maximizePlot() {
     document.getElementById('maximize-plot').style.display = 'none';
     document.getElementById('minimize-plot').style.display = 'block';
     document.getElementById('chart-topbar').style.display = 'block';
-    document.getElementById('chart-options').style.display = 'inline-block';
+    // document.getElementById('chart-options').style.display = 'inline-block';
     document.getElementById('resize-triangle').style.display = 'block';
-    document.getElementById('SL-params').style.display = 'block';
-    document.getElementById('data-navbar').style.display = 'block';
+    // document.getElementById('SL-params').style.display = 'block';
+    // document.getElementById('data-navbar').style.display = 'block';
     document.getElementById('chart-container').style.left = chart_container_maximize_left + 'px';
     document.getElementById('chart-container').style.top = chart_container_maximize_top + 'px';
     document.getElementById('chart-container').style.width = chart_container_maximize_width + 'px';
