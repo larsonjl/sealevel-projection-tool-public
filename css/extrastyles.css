@@ -367,11 +367,10 @@ img#coast-tip { height: 16px; width: 16px; display: inline-block; padding-top: 2
     font-size: 10pt;
     vertical-align: top;
     display: inline-block;
-    border: 1px solid #E0E0E0;
 }
-#chart-options div.hline { margin: 5px 0; }
+
 #timeseries {
-	width: 600px;
+	width: 700px;
     height: 360px;
     padding: 0;
     margin: 5px 5px 5px 0;
