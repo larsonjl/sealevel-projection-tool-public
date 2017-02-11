@@ -70,8 +70,9 @@ function setupColorbar(type, cbar) {
             [cbar[19], '#f7e425'],
             [cbar[20], '#f0f921']
         ];
-    } else if (type === 'spectral') { // Matplotlib's Spectral Colorbar
+    } else { // Matplotlib's Spectral Colorbar
         stops = [
+            [-500, '#d3d3d3'],
             [cbar[0],  '#5e4fa2'],
             [cbar[1],  '#486cb0'],
             [cbar[2],  '#3288bd'],
@@ -94,7 +95,7 @@ function setupColorbar(type, cbar) {
             [cbar[19], '#ba2049'],
             [cbar[20], '#9e0142']
         ];
-    } else { // Matplotlib's Viridis is default
+    } /*else { // Matplotlib's Viridis is default
         stops = [
             [-500, '#d3d3d3'],
             [cbar[0],  '#440154'],
@@ -118,8 +119,8 @@ function setupColorbar(type, cbar) {
             [cbar[18], '#bddf26'],
             [cbar[19], '#dfe318'],
             [cbar[20], '#fde725']
-        ];
-    }
+        ];}*/
+
 
     return stops;
 }
@@ -207,21 +208,23 @@ function getColorbarStops(type, min, max) {
             }
             stops = setupColorbar('viridis', cbar);
             break;
+
         default:
-            // Default to Viridis
-            iter_size = (max - min) / 20.0;
-            for (i = 0; i <= 20; i += 1) {
-                cbar.push(cbar_val);
-                if (i % 2 === 0) {
-                    tick_string = String(cbar_val.toFixed(1));
-                    if (tick_string === "-0.0") {
-                        tick_string = "0.0";
-                    }
-                    document.getElementById('cbar-vir-l-' + String(i)).textContent = tick_string;
-                }
-                cbar_val += iter_size;
-            }
-            stops = setupColorbar('viridis', cbar);
+          // Matplotlib's Spectral Colorbar
+          iter_size = (max - min) / 20.0;
+          for (i = 0; i <= 20; i += 1) {
+              cbar.push(cbar_val);
+              if (i % 2 === 0) {
+                  tick_string = String(cbar_val.toFixed(1));
+                  if (tick_string === "-0.0") {
+                      tick_string = "0.0";
+                  }
+                  document.getElementById('cbar-spe-l-' + String(i)).textContent = tick_string;
+              }
+              cbar_val += iter_size;
+          }
+          stops = setupColorbar('spectral', cbar);
+
     }
 
     return stops;
