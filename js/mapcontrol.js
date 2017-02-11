@@ -713,7 +713,7 @@ function loadCustomLayers(){
             "paint": {
                 "fill-color": {
                     property: 'sl2025',
-                    stops: getColorbarStops('viridis', dMin, dMax)
+                    stops: getColorbarStops('spectral', dMin, dMax)
                     }, 'fill-opacity': 1.0}
             }, 'water');
 
@@ -729,7 +729,7 @@ function loadCustomLayers(){
                     "fill-color": {
                     type:'exponential',
                     property: 'sl2025',
-                    stops: getColorbarStops('viridis', dMin, dMax)
+                    stops: getColorbarStops('spectral', dMin, dMax)
                     }, 'fill-opacity': 1.0}
             }, 'water');
 
@@ -744,7 +744,7 @@ function loadCustomLayers(){
                 "paint": {
                     "fill-color": {
                         property: 'sl2050',
-                        stops: getColorbarStops('viridis', dMin, dMax)
+                        stops: getColorbarStops('spectral', dMin, dMax)
                         }, 'fill-opacity': 1.0}
                 }, 'water');
 
@@ -760,7 +760,7 @@ function loadCustomLayers(){
                         "fill-color": {
                         type:'exponential',
                             property: 'sl2050',
-                            stops: getColorbarStops('viridis', dMin, dMax)
+                            stops: getColorbarStops('spectral', dMin, dMax)
                             }, 'fill-opacity': 1.0}
                 }, 'water');
 
@@ -775,7 +775,7 @@ function loadCustomLayers(){
                     "paint": {
                         "fill-color": {
                             property: 'sl2075',
-                            stops: getColorbarStops('viridis', dMin, dMax)
+                            stops: getColorbarStops('spectral', dMin, dMax)
                             }, 'fill-opacity': 1.0}
                     }, 'water');
 
@@ -791,7 +791,7 @@ function loadCustomLayers(){
                             "fill-color": {
                                 type:'exponential',
                                 property: 'sl2075',
-                                stops: getColorbarStops('viridis', dMin, dMax)
+                                stops: getColorbarStops('spectral', dMin, dMax)
                                 }, 'fill-opacity': 1.0}
                     }, 'water');
 
@@ -806,7 +806,7 @@ function loadCustomLayers(){
                         "paint": {
                             "fill-color": {
                                 property: 'sl2100',
-                                stops: getColorbarStops('viridis', dMin, dMax)
+                                stops: getColorbarStops('spectral', dMin, dMax)
                                 }, 'fill-opacity': 1.0}
                         }, 'water');
 
@@ -822,7 +822,7 @@ function loadCustomLayers(){
                                 "fill-color": {
                                     type:'exponential',
                                     property: 'sl2100',
-                                    stops: getColorbarStops('viridis', dMin, dMax)
+                                    stops: getColorbarStops('spectral', dMin, dMax)
                                     }, 'fill-opacity': 1.0}
                         }, 'water');
 
