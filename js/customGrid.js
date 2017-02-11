@@ -61,8 +61,8 @@ var scaleBy
 // Change geojson data values to queried data
 function changeGridDat(queriedData, cbarLims){
 	scaleBy = 10 //mm to cm
-	dMax = cbarLims[1] * scaleBy + 5
-	dMin = cbarLims[0] * scaleBy
+	dMax = cbarLims[1] * scaleBy
+	dMin = -5
 
 	// Loop through features, assign data to proper grid cells and properties
 	var i = 0
@@ -84,7 +84,7 @@ function changeGridDat(queriedData, cbarLims){
 		i+=1
 		}
 
-	document.getElementById(activeColormap + '-colorbar').style.display = 'inline-block';
+	document.getElementById('spectral' + '-colorbar').style.display = 'inline-block';
 	document.getElementById('map-cbar-container').style.display = 'block';
 };
 
