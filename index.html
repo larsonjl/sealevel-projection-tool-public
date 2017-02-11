@@ -159,7 +159,7 @@
                                     <span class="bold">Colormap</span>
                                     <select id="sidebar-select-colormap">
                                         <optgroup label="Linear Maps">
-                                            <option value="viridis" selected>Viridis</option>
+                                            <option value="spectral" selected>Spectral</option>
                                             <!--
                                             <option value="plasma">Plasma</option>
                                             <option value="rw">Red-White</option>
@@ -217,24 +217,11 @@
             <div id="chart-area">
 
                 <div id="chart-topbar">CU Sea Level Projection Project</div>
-
-                <div id="chart-options">
-                    <!-- <h2>Plot Options</h2> -->
-
-                    <form id="PlotOptionsForm" onsubmit="return false;">
-                        <h2>Plot Settings</h2>
-                    </form>
-                    <div class="hline"></div>
+                <!-- <div id="chart-options">
                     <button class="form-button" id="save-button" type="button"><img src="img/ic_image_grey600_48dp.png"/><span id="save-button-text">Save Image</span></button>
-                    <button class="form-button" id="data-dialog-button" type="button"><img src="img/ic_file_download_grey600_48dp.png"/><span id="download-button-text">Get Data</span></button>
-                </div><!--
-             --><div id="timeseries">
-                    <div id="SL-params">
-                        <div class="tot-proj-title"></div><div class="best-fit-param LS-altimetry" id="LS-altimetry-trend"></div><div class="best-fit-param LS-tidegauge" id="LS-tidegauge-trend"></div><br>
-                    </div>
+                </div> -->
+             <div id="timeseries">
                     <div id="data-timeseries"></div>
-                    <div id="data-navbar"></div>
-                    <canvas width="960" height="360" style="display:none"></canvas>
                     <div class="tooltip" id="plot-tooltip" style="opacity: 0;">
                       <div class="tooltip-info" id="tooltip-info-0"></div><div class="tooltip-info" id="tooltip-info-1"></div>
                     </div>
