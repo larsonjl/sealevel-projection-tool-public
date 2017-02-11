@@ -42,16 +42,24 @@ function plotFillProjection(projTimeSeries){
       .append("svg")
       .attr("id", svg_id)
       .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 750 450")
+      .attr("viewBox", "0 0 775 450")
       .classed("svg-content-responsive", true);
 
    xScale = d3.scale.linear()
        .range([MARGINS.left, WIDTH - MARGINS.right - 200])
        .domain([2007, 2100]);
 
+   // Find yLim
+   var yLimMax = 0;
+   for (variables in projTimeSeries){
+     yLimMax += projTimeSeries[variables][93]
+   }
+   yLimMax = yLimMax + 0.05 * yLimMax
+
+
    yScale = d3.scale.linear()
        .range([HEIGHT + MARGINS.bottom, MARGINS.top + MARGINS.bottom])
-       .domain([0, 1]);
+       .domain([0, yLimMax]);
 
    xAxis = d3.svg.axis()
          .scale(xScale)
@@ -78,7 +86,7 @@ function plotFillProjection(projTimeSeries){
      svg.append("text")
          .attr("class", "x label").attr("text-anchor", "end")
          .attr('font-size', 16)
-         .attr("x", 330).attr("y", 400).text("Year");
+         .attr("x", 325).attr("y", 395).text("Year");
 
      vis.append('svg:g').attr('class', 'y axis')
          .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
@@ -87,7 +95,7 @@ function plotFillProjection(projTimeSeries){
      svg.append("text")
          .attr("class", "y label")
          .attr("text-anchor", "end")
-         .attr("y", (MARGINS.left / 2 - 15))
+         .attr("y", (MARGINS.left / 2 - 25))
          .attr("x", (-HEIGHT / 2 + MARGINS.bottom))
          .attr('font-size', 16)
          .attr("transform", "rotate(-90)")
