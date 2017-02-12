@@ -103,10 +103,10 @@ function divMoveResize(e) {
     y_size = 0.725 * x_size;
     y_nav = y_size * 80 / 600;
     chart.style.width = x_size + 'px';
-    container.style.width = (125 + x_size) + 'px';
+    container.style.width = (x_size) + 'px';
     document.getElementById('data-timeseries').style.height = (x_size/2) + 'px';
     // document.getElementById('data-navbar').style.height = y_nav + 'px';
-    chart.style.height = (x_size/2 + y_nav + 65) + 'px';
+    chart.style.height = (x_size/2 + 10) + 'px';
 }
 
 function getWidth() {
