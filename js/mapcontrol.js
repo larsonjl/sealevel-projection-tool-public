@@ -1,3 +1,36 @@
+function queryTimeseries(e, queryString){
+	var lngSym = 'E', latSym = 'N', lat, lng, decimLat, wholeLat, wholeLon, latitude, longitude, decimLat, decimLng
+
+	lat = e.lngLat.lat
+	lng = e.lngLat.lng
+
+	// Get lat and lon signs, then make positive:
+	if (lng < 0) { lng = -lng; lngSym = 'W'; }
+	if (lat < 0) { lat = -lat; latSym = 'S'; }
+
+	decimLng = lng % 1.0;
+	wholeLng = lng - decimLng;
+	decimLat = lat % 1.0;
+	wholeLat = lat - decimLat;
+
+	if (decimLat > 0.5){
+		wholeLat += 1
+	}
+	if (decimLng > 0.5){
+		wholeLng += 1
+	}
+
+	if (lngSym === 'W') { wholeLng = - wholeLng; }
+	if (latSym === 'S') { wholeLat = - wholeLat; }
+
+	queryString = wholeLat + '_' + wholeLng + '_' + queryString
+
+    $.get("http://127.0.0.1:5000/myAPI?latlonloc=" + queryString  , function(data, status){
+		plotFillProjection(data)
+  });
+}
+
+
 function getLatLonGridLocation(lng, lat) {
     "use strict";
     var lngSym = 'E', latSym = 'N', latitude, longitude,
@@ -453,6 +486,7 @@ function selectAltimetry(e) {
 // selectPlotting :: get page click and grabs time series.
 function selectPlotting(e, status) {
     "use strict";
+    console.log(e.lngLat.lng)
     if (status === "change") {
         if (difference_plotted === true) {
             displayDifference(minDate, maxDate, "change");
@@ -849,5 +883,6 @@ function initializeMap() {
         })};
         var nav = new mapboxgl.NavigationControl();
         map.addControl(nav, 'top-left')
+        map.on('click', function (e) { queryTimeseries(e, constructQueryArray());});
 
 }
