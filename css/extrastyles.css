@@ -16,6 +16,13 @@
     border: 2px solid #E0E0E0;
 }
 
+
+/* Mapping Things */
+#slider-container {
+    text-align: center;
+    z-index: 3;
+}
+
 #chart-container h2 { font-size: 12pt; }
 #about-container, #contact-container { min-height: 65vh; }
 
@@ -304,7 +311,6 @@ input#show-tide-gauges-checkbox {
     display: block;
     vertical-align: middle;
     width: 200px;
-    border: 0px solid #555555;
 }
 
 /* -------- */

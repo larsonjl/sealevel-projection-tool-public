@@ -35,7 +35,7 @@ function plotFillProjection(projTimeSeries){
 
    // clear previous plot
    d3.selectAll("svg > *").remove();
-
+   // d3.select("svg-timeseries-" + plot_num).remove();
    svg = d3.select("#data-timeseries")
       .append("div")
       .classed("svg-container", true)
@@ -49,17 +49,38 @@ function plotFillProjection(projTimeSeries){
        .range([MARGINS.left, WIDTH - MARGINS.right - 200])
        .domain([2007, 2100]);
 
-   // Find yLim
-   var yLimMax = 0;
+   // Find yLims...Redo smarter at a latter date
+   var temphi = new Array(94).fill(0);
+   var templo = new Array(94).fill(0);
+
    for (variables in projTimeSeries){
-     yLimMax += projTimeSeries[variables][93]
-   }
-   yLimMax = yLimMax + 0.05 * yLimMax
+	   	for (var i=0; i<temphi.length; ++i){
+	   		if (projTimeSeries[variables][i] >= 0) {
+	   			temphi[i] += projTimeSeries[variables][i]
+	   		}
+	   		else {
+	   			templo[i] += projTimeSeries[variables][i]
+	   		}
+   	}
+}
+
+	var yLimMax = 0;
+	var yLimMin = 0;
+
+	for (i=0; i<temphi.length; i++){
+		if (temphi[i] > yLimMax){
+			yLimMax = temphi[i]
+		};
+		if (templo[i] < yLimMin){
+			yLimMin = templo[i]
+		};
+	};
+
 
 
    yScale = d3.scale.linear()
        .range([HEIGHT + MARGINS.bottom, MARGINS.top + MARGINS.bottom])
-       .domain([0, yLimMax]);
+       .domain([yLimMin, yLimMax]);
 
    xAxis = d3.svg.axis()
          .scale(xScale)
@@ -83,7 +104,7 @@ function plotFillProjection(projTimeSeries){
          .attr('transform', 'translate(0,' + (HEIGHT + MARGINS.bottom) + ')')
          .call(xAxis);
 
-     svg.append("text")
+     vis.append("text")
          .attr("class", "x label").attr("text-anchor", "end")
          .attr('font-size', 16)
          .attr("x", 325).attr("y", 395).text("Year");
@@ -92,10 +113,10 @@ function plotFillProjection(projTimeSeries){
          .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
          .call(yAxis);
 
-     svg.append("text")
+     vis.append("text")
          .attr("class", "y label")
          .attr("text-anchor", "end")
-         .attr("y", (MARGINS.left / 2 - 25))
+         .attr("y", (MARGINS.left / 2 - 15))
          .attr("x", (-HEIGHT / 2 + MARGINS.bottom))
          .attr('font-size', 16)
          .attr("transform", "rotate(-90)")
@@ -130,24 +151,47 @@ function plotFillProjection(projTimeSeries){
     };
 
     var indx = d3.range(timeYear.length );
-
-    var runningSum = new Array(94).fill(0);
+	var runningTot = new Array(94).fill(0);
+    var runningHigh = new Array(94).fill(0);
+	var runningLow = new Array(94).fill(0);
 
     var legendMover = 0;
 
     for (variables in projTimeSeries){
+		var temphi = new Array(94).fill(0);
+		var templo = new Array(94).fill(0);
+		for (var i=0; i<runningTot.length; ++i){
+			if (projTimeSeries[variables][i] >= 0) {
+				temphi[i] = projTimeSeries[variables][i]
+			}
+			else {
+				templo[i] = projTimeSeries[variables][i]
+			}
+		}
 
-          area = d3.svg.area()
-                        .interpolate("basis")
-                        .x0( function(d) { return xScale(timeYear[d])})
-                        .x1( function(d) { return xScale(timeYear[d])})
-                        .y0( function(d) { return yScale(runningSum[d])})
-                        .y1( function(d) { return yScale((runningSum[d] + projTimeSeries[variables][d]))});
+		area = d3.svg.area()
+	            .interpolate("basis")
+	            .x0( function(d) { return xScale(timeYear[d])})
+	            .x1( function(d) { return xScale(timeYear[d])})
+	            .y0( function(d) { return yScale(runningHigh[d])})
+	            .y1( function(d) { return yScale((runningHigh[d] + temphi[d]))});
 
-          vis.append('svg:path')
-             .datum(indx)
-             .attr('class', fillStyles[variables[0]+variables[1]])
-             .attr('d', area)
+		area2 = d3.svg.area()
+				.interpolate("basis")
+				.x0( function(d) { return xScale(timeYear[d])})
+				.x1( function(d) { return xScale(timeYear[d])})
+				.y0( function(d) { return yScale(runningLow[d])})
+				.y1( function(d) { return yScale((runningLow[d] + templo[d]))});
+
+        vis.append('svg:path')
+         .datum(indx)
+         .attr('class', fillStyles[variables[0]+variables[1]])
+         .attr('d', area)
+
+		 vis.append('svg:path')
+          .datum(indx)
+          .attr('class', fillStyles[variables[0]+variables[1]])
+          .attr('d', area2)
 
           // Add legend element
           legend.append("rect")
@@ -164,15 +208,18 @@ function plotFillProjection(projTimeSeries){
           legendMover += 40
           // Update running sum
 
-          for (var i=0; i<runningSum.length; ++i){
-            runningSum[i] += projTimeSeries[variables][i]
+          for (var i=0; i<runningTot.length; ++i){
+            runningLow[i] += templo[i]
+			runningHigh[i] += temphi[i]
+			runningTot[i] += (templo[i] + temphi[i])
           };
+
           plot_num+=1
     }
 
     var line = d3.svg.line()
         .x(function(d) { return xScale(timeYear[d])})
-        .y(function(d) { return yScale(runningSum[d])})
+        .y(function(d) { return yScale(runningTot[d])})
 
     vis.append("path")
       .datum(indx)
@@ -182,6 +229,4 @@ function plotFillProjection(projTimeSeries){
       .attr("stroke-linecap", "round")
       .attr("stroke-width", 2.5)
       .attr("d", line);
-
-
 }

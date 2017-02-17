@@ -61,8 +61,8 @@ var scaleBy
 // Change geojson data values to queried data
 function changeGridDat(queriedData, cbarLims){
 	scaleBy = 10 //mm to cm
-	dMax = cbarLims[1] * scaleBy
-	dMin = -5
+	dMax = cbarLims[1] * scaleBy + 5
+	dMin = cbarLims[0] * scaleBy
 
 	// Loop through features, assign data to proper grid cells and properties
 	var i = 0
@@ -101,11 +101,11 @@ function constructQueryArray(){
     }
 	return queryString
 };
-
 // On 'make projection' click, query data and display
 $('#runProject').click(function(){
     queryString = constructQueryArray()
     $.get("http://127.0.0.1:5000/myAPI?datastring=" + queryString, function(data, status){
+				datasetIn = data
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
