@@ -26,7 +26,7 @@ function queryTimeseries(e, queryString){
 	queryString = wholeLat + '_' + wholeLng + '_' + queryString
 
     $.get("http://127.0.0.1:5000/myAPI?latlonloc=" + queryString  , function(data, status){
-		plotFillProjection(data)
+		plotFillProjection(data, "Sea level projection for " + wholeLng + 'E'+ ', ' + wholeLat + 'N')
   });
 }
 
@@ -876,6 +876,7 @@ function initializeMap() {
             version: 6,
             container: 'map-div',
             style: 'mapbox://styles/jlarson630/ciyg1s0l9000p2spg93h1qdyv',
+			//style: 'mapbox://styles/mapbox/satellite-v9',
             center: [-88.137, 35.13],
             zoom: 1,
             maxZoom: 3,

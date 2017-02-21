@@ -111,7 +111,7 @@ $('#runProject').click(function(){
         map.getSource('oneDegreeData').setData(oneDegGrid);
         loadCustomLayers();
 				maximizePlot();
-				plotFillProjection(data['timeSeries']);
+				plotFillProjection(data['timeSeries'], 'Global Mean Projection');
 
     });
 });

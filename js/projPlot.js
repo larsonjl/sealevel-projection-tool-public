@@ -25,7 +25,7 @@ function saveImageListener() {
     saveSvgAsPng(document.getElementById(svg_id), imgName, {scale: 2, backgroundColor: "#FFFFFF"});
 }
 
-function plotFillProjection(projTimeSeries){
+function plotFillProjection(projTimeSeries, plot_title){
   var fillStyles  = {'gs':'fillgsmb', 'gd':'fillgdyn', 'th':'fillodyn', 'ad':'filladyn', 'as':'fillasmb', 'gl':'fillglac'}
   var fillNames  = {'gs':'Greenland SMB', 'gd':'Greenland Dyn.', 'th':'Ocean Dynamics', 'ad':'Antarctic Dyn.', 'as':'Antarctic SMB', 'gl':'Mountain Glaciers'}
 
@@ -121,6 +121,13 @@ function plotFillProjection(projTimeSeries){
          .attr('font-size', 16)
          .attr("transform", "rotate(-90)")
          .text("Height (m)");
+	// title
+	 vis.append("text")
+	    .attr("x", 325)
+	    .attr("y", (MARGINS.left / 2))
+	    .attr("text-anchor", "middle")
+	    .style("font-size", "16px")
+	    .text(plot_title);
 
     // Initialize legend
     var legend = vis.append("g")
@@ -229,4 +236,5 @@ function plotFillProjection(projTimeSeries){
       .attr("stroke-linecap", "round")
       .attr("stroke-width", 2.5)
       .attr("d", line);
+
 }
