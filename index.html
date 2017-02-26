@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<!--
+TODO:
+- Re-order sidebar contents
+-
+-->
+
+
 <html>
 <head>
     <title>CU Sea Level Projection Project</title>
@@ -26,7 +33,6 @@
 <div id='background'></div>
 
 <div id="foreground">
-
     <div id="menu-container">
         <header>
             <div id="menuhead-map">
@@ -43,7 +49,6 @@
         </header>
     </div>
     <div id='main-container'>
-
         <div class='content-container' id="map-container">
             <div id='map-area'>
                 <div id="map-and-cbar">
@@ -80,21 +85,41 @@
                         </div>
                         <div id="cbar-units">cm</div>
                     </div>
-                    <div id="map-div">
-                    </div>
+                    <div id="map-div"></div>
                     <div id="sidebar">
                         <div class="sidebar-menu">
                             <img id="sidebar-menu-button" src="img/ic_menu_white_48dp.png"/>
                             <img id="sidebar-help-button" src="img/ic_help_white_48dp.png"/>
                         </div>
                         <div id="sidebar-contents">
+							<div class="sidebar-header" id="sidebar-basic-settings">
+								<div class="sidebar-header-select">
+									<img id="sidebar-basic-settings-active" src="img/ic_chevron_down_gray333_48dp.png"/>
+									<img id="sidebar-basic-settings-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
+								</div>
+								<h2>Basic Projection</h2>
+							</div>
+							<div class="sidebar-section" id="sidebar-basic">
+								<div class="sidebar-area">
+									<div id="projectionMenu">
+										<p>Analysis Mode</p>
+										<select id="analysis-mode-menu">
+											<option value="default">-- select one -- </option>
+											<option value="basicproj">View Projection</option>
+											<option value="compproj">Compare Projections</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
                             <div class="sidebar-header" id="sidebar-location-lookup">
                                 <div class="sidebar-header-select">
                                     <img id="sidebar-location-lookup-active" src="img/ic_chevron_down_gray333_48dp.png"/>
                                     <img id="sidebar-location-lookup-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
                                 </div>
-                                <h2>Projection Settings</h2>
+                                <h2>Advanced Projection</h2>
                             </div>
+
                             <div class="sidebar-section" id="map-search">
                                 <div id="click-location">
                                     <div id="projectionMenu">
@@ -148,6 +173,7 @@
                                 </div>
                                 <h2>Map Settings</h2>
                             </div>
+
                             <div class="sidebar-section" id="sidebar-map">
                                 <div class="sidebar-area">
                                     <span class="bold">Colormap</span>
@@ -170,21 +196,6 @@
                                 </div>
                             </div>
 
-                            <div class="sidebar-header" id="sidebar-plot-settings">
-                                <div class="sidebar-header-select">
-                                    <img id="sidebar-plot-settings-active" src="img/ic_chevron_down_gray333_48dp.png"/>
-                                    <img id="sidebar-plot-settings-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
-                                </div>
-
-                                <h2>Plot Settings</h2>
-                            </div>
-                            <div class="sidebar-section" id="sidebar-plot">
-                                <div class="sidebar-area">
-                                    <div class="left"><span class="bold">Plotting Mode:</span></div>
-                                    <input type="radio" id="plot-mode-compare" name="sidebar-plot-mode" value="comparison" checked> N/A <br>
-                                    <input type="radio" id="plot-mode-difference" name="sidebar-plot-mode" value="difference"> N/A <br>
-                                </div>
-                            </div>
                         </div>
 
                         <div id="map-data-source">

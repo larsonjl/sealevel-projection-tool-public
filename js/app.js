@@ -218,6 +218,20 @@ function viewLocationLookup() {
     }
 }
 
+function viewBasicSettings() {
+    "use strict";
+    var sidebar_area = document.getElementById("sidebar-basic");
+    if (sidebar_area.style.display !== 'block') {
+        sidebar_area.style.display = 'block';
+        document.getElementById("sidebar-basic-settings-active").style.display = 'block';
+        document.getElementById("sidebar-basic-settings-hidden").style.display = 'none';
+    } else {
+        sidebar_area.style.display = 'none';
+        document.getElementById("sidebar-basic-settings-active").style.display = 'none';
+        document.getElementById("sidebar-basic-settings-hidden").style.display = 'block';
+    }
+}
+
 function viewMapSettings() {
     "use strict";
     var sidebar_area = document.getElementById("sidebar-map");
@@ -298,6 +312,8 @@ function loadApp() {
     document.getElementById("sidebar-menu-button").addEventListener("click", viewSidebar, false);
     document.getElementById("sidebar-help-button").addEventListener("click", viewHelp, false);
     document.getElementById("sidebar-location-lookup").addEventListener("click", viewLocationLookup, false);
+	document.getElementById("sidebar-basic-settings").addEventListener("click", viewBasicSettings, false);
+
     document.getElementById("sidebar-map-settings").addEventListener("click", viewMapSettings, false);
     document.getElementById("sidebar-plot-settings").addEventListener("click", viewPlotSettings, false);
 
