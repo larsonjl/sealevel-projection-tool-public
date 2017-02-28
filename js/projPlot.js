@@ -42,7 +42,7 @@ function plotFillProjection(projTimeSeries, plot_title){
       .append("svg")
       .attr("id", svg_id)
       .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 775 450")
+      .attr("viewBox", "0 0 775 400")
       .classed("svg-content-responsive", true);
 
    xScale = d3.scale.linear()
@@ -121,6 +121,7 @@ function plotFillProjection(projTimeSeries, plot_title){
          .attr('font-size', 16)
          .attr("transform", "rotate(-90)")
          .text("Height (m)");
+
 	// title
 	 vis.append("text")
 	    .attr("x", 325)
