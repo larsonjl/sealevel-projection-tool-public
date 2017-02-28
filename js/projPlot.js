@@ -37,7 +37,6 @@ function plotFillProjection(projTimeSeries, plot_title){
    d3.selectAll("svg > *").remove();
    // d3.select("svg-timeseries-" + plot_num).remove();
    svg = d3.select("#data-timeseries")
-      .append("div")
       .classed("svg-container", true)
       .append("svg")
       .attr("id", svg_id)
@@ -125,7 +124,7 @@ function plotFillProjection(projTimeSeries, plot_title){
 	// title
 	 vis.append("text")
 	    .attr("x", 325)
-	    .attr("y", (MARGINS.left / 2))
+	    .attr("y", (MARGINS.left / 2 - 10))
 	    .attr("text-anchor", "middle")
 	    .style("font-size", "16px")
 	    .text(plot_title);
@@ -225,6 +224,7 @@ function plotFillProjection(projTimeSeries, plot_title){
           plot_num+=1
     }
 
+	// Create total projection line
     var line = d3.svg.line()
         .x(function(d) { return xScale(timeYear[d])})
         .y(function(d) { return yScale(runningTot[d])})
@@ -238,4 +238,18 @@ function plotFillProjection(projTimeSeries, plot_title){
       .attr("stroke-width", 2.5)
       .attr("d", line);
 
+	  // Text for projection Total
+	  totChange = runningTot[runningTot.length-1] - runningTot[0]
+	  totChange = totChange.toString().slice(0,4)
+
+	  vis.append("text")
+	   .attr("y", (MARGINS.left / 2 +15))
+	   .attr("x", (MARGINS.top + 100))
+	   .attr("text-anchor", "middle")
+	   .style("font-size", "14px")
+	   .style("font-weight", "bold")
+	   .text("Change by 2100: " + totChange + "m");
+
+
 }
+var totChange
