@@ -315,7 +315,7 @@ function loadApp() {
 	document.getElementById("sidebar-basic-settings").addEventListener("click", viewBasicSettings, false);
 
     document.getElementById("sidebar-map-settings").addEventListener("click", viewMapSettings, false);
-    document.getElementById("sidebar-plot-settings").addEventListener("click", viewPlotSettings, false);
+    // document.getElementById("sidebar-plot-settings").addEventListener("click", viewPlotSettings, false);
 
     document.getElementById("sidebar-select-colormap").addEventListener("change", setActiveColormap, false);
 

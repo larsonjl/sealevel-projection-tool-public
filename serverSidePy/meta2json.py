@@ -9,6 +9,7 @@ import pandas as pd
 projectMeta = pd.read_csv('referenceFile.csv')
 dataOut = {}
 dataOut['RCP'] = {}
+metaList = ['low', 'medium', 'high']
 
 for scenarios in set(projectMeta['Scenario']):
     dataSlim = projectMeta[projectMeta['Scenario'] == scenarios]
@@ -19,11 +20,11 @@ for scenarios in set(projectMeta['Scenario']):
         for titles in set(dataSlimmer['webTitle']):
             dataSlimmest = dataSlimmer[dataSlim['webTitle'] == titles]
             dataOut['RCP'][scenarios][components][titles] = {}
-            for outcomes in set(dataSlimmest['meta']):
-                dataOut['RCP'][scenarios][components][titles][outcomes] = {}
+            for himedlo in metaList:
+                dataOut['RCP'][scenarios][components][titles][himedlo] = {}
 
-                dataSlimmestest = dataSlimmest[dataSlimmest['meta'] == outcomes]
-                dataOut['RCP'][scenarios][components][titles][outcomes]['ref'] = \
+                dataSlimmestest = dataSlimmest[dataSlimmest['meta'] == himedlo]
+                dataOut['RCP'][scenarios][components][titles][himedlo]['ref'] = \
                     dataSlimmestest.referenceName.values[0]
 
 with open('referenceFile.js', 'w') as outfile:
