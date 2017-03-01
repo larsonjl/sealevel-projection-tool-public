@@ -6,7 +6,7 @@ $(document).ready(function() {
     $("#thermoMenu").attr("disabled", "disabled");
     $("#glacierMenu").attr("disabled", "disabled");
 
-    $("#rcpMenu").change(function() {
+    $('input[type=radio][name=rcpMenuSelect]').change(function() {
         var val = $(this).val();
         if (val == "default"){
             $("#gsmbMenu").attr("disabled", "disabled").html("<option value='none'>None</option>");
@@ -24,7 +24,7 @@ $(document).ready(function() {
             $("#asmbMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
             $("#thermoMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
             $("#glacierMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
-
+			rcpMenu = 'rcp26'
         } else if (val == "rcp45") {
             $("#gsmbMenu").removeAttr('disabled').html("<option value='none'>None</option>");
             $("#gdynMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
@@ -32,7 +32,7 @@ $(document).ready(function() {
             $("#asmbMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
             $("#thermoMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
             $("#glacierMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
-
+			rcpMenu = 'rcp45'
         } else if (val == "rcp85") {
             $("#gsmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'greenSmb'));
             $("#gdynMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'greenDyn'));
@@ -40,6 +40,7 @@ $(document).ready(function() {
             $("#asmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'antSmb'));
             $("#thermoMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'thermo'));
             $("#glacierMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'glacier'));
+			rcpMenu = 'rcp85'
 
         }
     });

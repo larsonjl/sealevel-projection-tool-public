@@ -129,13 +129,12 @@ TODO:
                                 <div id="click-location">
                                     <div id="projectionMenu">
                                         <p>RCP Scenario</p>
-                                        <select id="rcpMenu">
-                                            <option value="default">-- select one -- </option>
-                                            <option value="rcp26">RCP2.6</option>
-                                            <option value="rcp45">RCP4.5</option>
-                                            <option value="rcp85">RCP8.5</option>
-                                        </select>
-
+											<form action="" id="rcpRadioSelect">
+												<input type="radio" name='rcpMenuSelect' value="rcp26"> 2.6
+												<input type="radio" name='rcpMenuSelect' value="rcp45"> 4.5
+												<input type="radio" name='rcpMenuSelect' value="rcp85"> 8.5
+											</form>
+											
                                         <p>Greenland SMB</p>
                                         <select id="gsmbMenu">
                                             <option value=""> None </option>
