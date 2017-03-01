@@ -91,19 +91,25 @@ function changeGridDat(queriedData, cbarLims){
 
 // Constructs string that is sent to the server based on user selections
 function constructQueryArray(){
-   databaseString = [gsmbMenu.value, gdynMenu.value,
-                     adynMenu.value, asmbMenu.value, thermoMenu.value,
-                     glacierMenu.value]
-    queryString = rcpMenu.value + '_' + '60'
-    for (elements in databaseString){
-        if (databaseString[elements]!=='none'){
-            queryString+= ('_' + databaseString[elements])
-        }
-    }
+	if (defaultMap = 'true'){
+		queryString = defaultQueryString
+	}
+	else{
+	   databaseString = [gsmbMenu.value, gdynMenu.value,
+	                     adynMenu.value, asmbMenu.value, thermoMenu.value,
+	                     glacierMenu.value]
+	    queryString = rcpMenu.valueOf() + '_' + '60'
+	    for (elements in databaseString){
+	        if (databaseString[elements]!=='none'){
+	            queryString+= ('_' + databaseString[elements])
+	        }
+	    }
+	}
 	return queryString
 };
 // On 'make projection' click, query data and display
 $('#runProject').click(function(){
+	defaultMap = 'false';
     queryString = constructQueryArray()
     $.get("http://127.0.0.1:5000/myAPI?datastring=" + queryString, function(data, status){
 				datasetIn = data
@@ -111,8 +117,23 @@ $('#runProject').click(function(){
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
         loadCustomLayers();
-				maximizePlot();
-				plotFillProjection(data['timeSeries'], 'Global Mean Projection');
+		maximizePlot();
+		plotFillProjection(data['timeSeries'], 'Global Mean Projection');
 
     });
 });
+
+
+function loadDefaultMap(){
+	$.get("http://127.0.0.1:5000/myAPI?datastring=" + defaultQueryString, function(data, status){
+				datasetIn = data
+				changeGridDat(data['gridData'], data['cLims']);
+        map.getSource('twoDegreeData').setData(twoDegGrid);
+        map.getSource('oneDegreeData').setData(oneDegGrid);
+        loadCustomLayers();
+		plotFillProjection(data['timeSeries'], 'Global Mean Projection');
+		maximizePlot();
+		minimizePlot();
+
+    });
+}

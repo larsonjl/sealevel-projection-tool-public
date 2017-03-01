@@ -345,6 +345,9 @@ function loadApp() {
 
     window.addEventListener('mouseup', mouseUpResize, false);
 
+
+	// Create default map
+	map.on('load', loadDefaultMap);
 }
 
 // Wait until all content is loaded to do anything:
