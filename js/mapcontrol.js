@@ -706,9 +706,15 @@ function addTrendAnnualRMSmap() {
 
 function increaseMapYear(){
 	var currentYear = document.getElementById('year-selected').innerHTML
+	document.getElementById('year-select-lower').style.color = '#E0E0E0'
+	document.getElementById('year-select-higher').style.color = '#E0E0E0'
+
 	if (currentYear<2100){
 		document.getElementById('year-selected').innerHTML = Number(currentYear) + 25;
 		updateMapYear(Number(currentYear) + 25)
+		if (Number(currentYear) + 25 >= 2100){
+			document.getElementById('year-select-higher').style.color = '#000000'
+		}
 	}
 }
 
@@ -717,6 +723,13 @@ function decreaseMapYear(){
 	if (currentYear>2025){
 		document.getElementById('year-selected').innerHTML = Number(currentYear) - 25;
 		updateMapYear(Number(currentYear) - 25)
+
+		document.getElementById('year-select-lower').style.color = '#E0E0E0'
+		document.getElementById('year-select-higher').style.color = '#E0E0E0'
+
+		if (Number(currentYear) - 25 <= 2025){
+			document.getElementById('year-select-lower').style.color = '#000000'
+		}
 	}
 }
 

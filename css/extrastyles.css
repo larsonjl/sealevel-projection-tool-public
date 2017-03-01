@@ -52,6 +52,7 @@
 	position: relative;
 	float: left;
 	padding: 2px;
+	color:  #000000;
 }
 
 #year-select-lower:hover{
@@ -60,7 +61,7 @@
 }
 
 #year-select-higher:hover{
-	color: #FAFAFA;
+	color:  #000000;
 	cursor: pointer;
 }
 
@@ -247,6 +248,13 @@ div.popup-msg {
     background-color: #FFFFFF;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+#rcpRadioSelect {
+	font-size: 12pt;
+	display: inline;
+	float: center;
+
 }
 
 .sidebar-header {
@@ -918,6 +926,7 @@ div#privacy-policy ol, div#privacy-policy ul {
 	margin-top: 5px;
 	font-family: Helvetica;
 	font-size: 16px;
+	font-weight: bold;
 }
 
 @media screen and (max-width: 900px) {
