@@ -222,12 +222,12 @@ function plotFillProjection(projTimeSeries, plot_title){
 	      };
 
 	      plot_num+=1
-	}
+	};
 
 	// Create total projection line
 	var line = d3.svg.line()
 		.x(function(d) { return xScale(timeYear[d])})
-		.y(function(d) { return yScale(runningTot[d])})
+		.y(function(d) { return yScale(runningTot[d])});
 
 	vis.append("path")
 		.datum(indx)
@@ -240,7 +240,10 @@ function plotFillProjection(projTimeSeries, plot_title){
 
 	// Text for projection Total
 	var totChange = runningTot[runningTot.length-1] - runningTot[0]
-	totChange = totChange.toString().slice(0,5)
+	if (totChange < 0){
+		totChange = totChange.toString().slice(0,5)}
+	else {
+		totChange = totChange.toString().slice(0,4)}
 
 	vis.append("text")
 		.attr("y", (MARGINS.left / 2 +15))
@@ -253,7 +256,7 @@ function plotFillProjection(projTimeSeries, plot_title){
 	var zeroX = new Array(tsLen).fill(0);
 	var xaxLine = d3.svg.line()
 	   .x(function(d) { return xScale(timeYear[d])})
-	   .y(function(d) { return yScale(zeroX[d])})
+	   .y(function(d) { return yScale(zeroX[d])});
 
 	vis.append("path")
 		.datum(indx)
