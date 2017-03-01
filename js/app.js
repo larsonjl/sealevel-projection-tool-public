@@ -189,12 +189,15 @@ function viewSidebar() {
         document.getElementById("map-data-source").style.display = 'none';
         document.getElementById("sidebar").style.width = '34px';
         document.getElementById("map-cbar-container").style.right = "38px";
+		document.getElementById("year-select-container").style.right = "38px";
         sidebar_collapsed = true;
     } else {
         document.getElementById("sidebar-contents").style.display = 'block';
         document.getElementById("map-data-source").style.display = 'block';
         document.getElementById("sidebar").style.width = '270px';
         document.getElementById("map-cbar-container").style.right = "274px";
+		document.getElementById("year-select-container").style.right = "274px";
+
         sidebar_collapsed = false;
     }
 }
@@ -336,6 +339,10 @@ function loadApp() {
     window.addEventListener('mouseup', mouseUpDragging, false);
 
     document.getElementById('resize-triangle').addEventListener('mousedown', mouseDownResize, false);
+
+	document.getElementById('year-select-lower').addEventListener('click', decreaseMapYear, false);
+	document.getElementById('year-select-higher').addEventListener('click',  increaseMapYear, false);
+
     window.addEventListener('mouseup', mouseUpResize, false);
 
 }

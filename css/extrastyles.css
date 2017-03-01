@@ -16,6 +16,62 @@
     border: 2px solid #E0E0E0;
 }
 
+#year-select-container {
+	margin: 0;
+	display: none;
+	padding: 0 5px;
+	width: 105px;
+	vertical-align: middle;
+	position: absolute;
+	right: 274px;
+	top: 0;
+	font-size: 14pt;
+	background-color: #000000;
+	opacity: 0.75;
+	color: #E0E0E0;
+	z-index: 3;
+}
+
+
+#year-select-labels{
+	font-size: 10pt;
+}
+
+#year-select-lower{
+	font-size: 16pt;
+	vertical-align: middle;
+	position: relative;
+	float: left;
+	padding: 2px;
+
+}
+
+#year-select-higher{
+	font-size: 16pt;
+	vertical-align: middle;
+	position: relative;
+	float: left;
+	padding: 2px;
+}
+
+#year-select-lower:hover{
+	color: #FAFAFA;
+	cursor: pointer;
+}
+
+#year-select-higher:hover{
+	color: #FAFAFA;
+	cursor: pointer;
+}
+
+#year-selected{
+	font-size: 16pt;
+	vertical-align: middle;
+	position: relative;
+	float: left;
+	padding: 2px;
+
+}
 
 /* Mapping Things */
 #slider-container {
@@ -314,7 +370,7 @@ input#show-tide-gauges-checkbox {
     margin: 2px auto 0;
     display: block;
     vertical-align: middle;
-    width: 200px;
+    width: 150px;
 }
 
 /* -------- */

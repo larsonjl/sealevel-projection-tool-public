@@ -4,6 +4,14 @@ function queryTimeseries(e, queryString){
 	lat = e.lngLat.lat
 	lng = e.lngLat.lng
 
+	while (lng > 180){
+		lng = lng - 360
+	}
+
+	while (lng < -180){
+		lng = lng + 360
+	}
+
 	// Get lat and lon signs, then make positive:
 	if (lng < 0) { lng = -lng; lngSym = 'W'; }
 	if (lat < 0) { lat = -lat; latSym = 'S'; }
@@ -696,6 +704,23 @@ function addTrendAnnualRMSmap() {
     addLayer('Annual', 'alti-annual');
 }
 
+function increaseMapYear(){
+	var currentYear = document.getElementById('year-selected').innerHTML
+	if (currentYear<2100){
+		document.getElementById('year-selected').innerHTML = Number(currentYear) + 25;
+		updateMapYear(Number(currentYear) + 25)
+	}
+}
+
+function decreaseMapYear(){
+	var currentYear = document.getElementById('year-selected').innerHTML
+	if (currentYear>2025){
+		document.getElementById('year-selected').innerHTML = Number(currentYear) - 25;
+		updateMapYear(Number(currentYear) - 25)
+	}
+}
+
+
 function updateMapYear(year){
     map.base_layers = $.extend(true, {}, map.style._layers)
     for (layers in map.base_layers){
@@ -708,7 +733,6 @@ function updateMapYear(year){
 
     map.setLayoutProperty(layerOneDict[year], 'visibility', 'visible')
     map.setLayoutProperty(layerTWoDict[year], 'visibility', 'visible')
-
 }
 
 // Add sources for both grids

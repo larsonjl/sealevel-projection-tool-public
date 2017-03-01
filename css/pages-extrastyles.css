@@ -86,6 +86,7 @@ div.popup-msg {
     line-height: 20px; display: block; text-align: left; float: left;
 }
 #map-cbar-container { width:100%; max-width: 620px; margin: 0 auto; padding: 0px; text-align: center; display: block; }
+#year-select-container { width:100%; max-width: 620px; margin: 0 auto; padding: 0px; text-align: center; display: block; }
 #map-cbar { height: 70px; width: 620px; }
 #cbar-max-set { color: #565A5C; }
 #GetTimeseries { text-align: center; line-height: 22px; }

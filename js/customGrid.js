@@ -86,6 +86,7 @@ function changeGridDat(queriedData, cbarLims){
 
 	document.getElementById('spectral' + '-colorbar').style.display = 'inline-block';
 	document.getElementById('map-cbar-container').style.display = 'block';
+	document.getElementById('year-select-container').style.display = 'block';
 };
 
 // Constructs string that is sent to the server based on user selections

@@ -52,6 +52,11 @@ TODO:
         <div class='content-container' id="map-container">
             <div id='map-area'>
                 <div id="map-and-cbar">
+					<div id='year-select-container'>
+						<div id='year-select-lower'>&#8592;</div>
+						<div id='year-selected'> 2100 </div>
+						<div id='year-select-higher'>&#8594;</div>
+					</div>
                     <div id='map-cbar-container'>
                         <div class="map-colorbar" id="viridis-colorbar">
                             <div class="cbar" id="cbar-viridis"></div>
@@ -189,10 +194,6 @@ TODO:
                                         </optgroup>
                                     </select>
                                 </div>
-                                <div class="sidebar-area">
-                                    <span class="bold">Display Year: <span id="year-set">2100</span> </span>
-                                    <input type="range" min="2025" max="2100" value="2100" step="25" id="colorbar-max-bounds" onchange="updateMapYear(this.value);" oninput="updateYearText(this.value);"/>
-                                </div>
                             </div>
 
                         </div>
@@ -205,7 +206,6 @@ TODO:
                 </div>
             </div>
         </div>
-
 
         <div class='content-container' id="chart-container">
             <div id="maximize-plot">
