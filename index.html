@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-<!--
-TODO:
-- Re-order sidebar contents
--
--->
-
-
 <html>
 <head>
     <title>CU Sea Level Projection Project</title>
@@ -36,7 +29,7 @@ TODO:
     <div id="menu-container">
         <header>
             <div id="menuhead-map">
-                <div id="menucontentname"><h1 class="top" id="mvt-title">Sea Level Projection Intercomparison Tool </h1></div>
+                <div id="menucontentname"><h1 class="top" id="mvt-title">CU Sea Level Projection Tool </h1></div>
                 <div id="menucontenttitle"><h2 class="top"><a href="/"><a href="https://www.colorado.edu">University of Colorado Boulder</a></h2></div>
             </div>
             <div id="menulinks">
@@ -103,16 +96,24 @@ TODO:
 									<img id="sidebar-basic-settings-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
 								</div>
 								<h2>Basic Projection</h2>
+
 							</div>
 							<div class="sidebar-section" id="sidebar-basic">
 								<div class="sidebar-area">
+								    By 2100 carbon emissions will be... <br>
+									<form action="" id="rcpRadioSelect">
+										<input type="radio" name='rcpBasicSelect' value="rcp26"> Severely Reduced<br>
+										<input type="radio" name='rcpBasicSelect' value="rcp45"> Moderately Reduced<br>
+										<input type="radio" name='rcpBasicSelect' value="rcp85"> Same as Present<br>
+									</form>
 									<div id="projectionMenu">
-										<p>Analysis Mode</p>
-										<select id="analysis-mode-menu">
+										<p>Choose a model</p>
+										<select id="basicProjectionSelect">
 											<option value="default">-- select one -- </option>
-											<option value="basicproj">View Projection</option>
-											<option value="compproj">Compare Projections</option>
+											<option value="ipcc">International Panel for Climate Change (2013)</option>
 										</select>
+									<button id="runBasicProject" type="button">Calculate Projection</button>
+
 									</div>
 								</div>
 							</div>
@@ -129,28 +130,29 @@ TODO:
                                 <div id="click-location">
                                     <div id="projectionMenu">
                                         <p>RCP Scenario</p>
-											<form action="" id="rcpRadioSelect">
-												<input type="radio" name='rcpMenuSelect' value="rcp26"> 2.6
-												<input type="radio" name='rcpMenuSelect' value="rcp45"> 4.5
-												<input type="radio" name='rcpMenuSelect' value="rcp85"> 8.5
-											</form>
-											
-                                        <p>Greenland SMB</p>
+										<form action="" id="rcpRadioSelect">
+											<input type="radio" name='rcpMenuSelect' value="rcp26"> 2.6
+											<input type="radio" name='rcpMenuSelect' value="rcp45"> 4.5
+											<input type="radio" name='rcpMenuSelect' value="rcp85"> 8.5
+										</form>
+
+                                        <p>Greenland Surface Mass Balance</p>
                                         <select id="gsmbMenu">
                                             <option value=""> None </option>
                                         </select>
 
-                                        <p>Greenland Dynamic</p>
+                                        <p>Greenland Dynamic (Ice discharge)</p>
                                         <select id="gdynMenu">
                                             <option value=""> None </option>
                                         </select>
 
-                                        <p>Antarctica SMB</p>
+                                        <p>Antarctica Surface Mass Balance</p>
                                         <select id="asmbMenu">
                                             <option value="">None</option>
                                         </select>
 
-                                        <p>Antarctica Dynamic</p>
+                                        <p>Antarctica Dynamic (Ice Discharge)</p>
+
                                         <select id="adynMenu">
                                             <option value="">None</option>
                                         </select>
@@ -217,7 +219,7 @@ TODO:
 
             <div id="chart-area">
 
-                <div id="chart-topbar">CU Sea Level Projection Intercomparison Tool</div>
+                <div id="chart-topbar">CU Sea Level Projection Tool</div>
                 <!-- <div id="chart-options">
                     <button class="form-button" id="save-button" type="button"><img src="img/ic_image_grey600_48dp.png"/><span id="save-button-text">Save Image</span></button>
                 </div> -->
