@@ -1,9 +1,12 @@
-#!flask/bin/python
+#!/usr/bin/python3
 from flask import Flask, request, jsonify
 from flask.json import JSONEncoder
 import pickle
 import numpy as np
+import os
 
+dataFile = os.path.join(os.path.dirname(__file__), 'dataForWebsite.pkl')
+gridFile = os.path.join(os.path.dirname(__file__), 'maskRef.pkl')
 
 # Class for json print so no spaces after comma
 class MiniJSONEncoder(JSONEncoder):
@@ -34,7 +37,6 @@ def createDatasetMultiYear(requestString):
     # dMax = np.float16(np.max(dOut))
     output = {'cLims': [float(dMin), float(dMax)], 'gridData': dOut.tolist(),
               'timeSeries': tsData}
-
     return output
 
 
@@ -44,6 +46,7 @@ def getGridCell(lat, lon):
     indxLat = np.argmin(np.abs((latRefs - lat)))
     indxLon = np.argmin(np.abs(lonRefs - lon))
     return gridRef[indxLat, indxLon]
+
 
 def getLocationData(requestString):
     params = requestString.split('_')
@@ -62,8 +65,8 @@ def getLocationData(requestString):
 
 
 # Load projection data into memory
-projDict = pickle.load(open('dataForWebsite.pkl', "rb"))
-gridRef = pickle.load(open('maskRef.pkl', "rb"))
+projDict = pickle.load(open(dataFile, "rb"))
+gridRef = pickle.load(open(gridFile, "rb"))
 
 # Load grid cell reference file into memory
 
@@ -74,7 +77,7 @@ app.json_encoder = MiniJSONEncoder
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 
-@app.route('/myAPI')
+@app.route('/')
 def api_hello():
     if 'datastring' in request.args:
         return jsonify(createDatasetMultiYear(request.args['datastring']))
