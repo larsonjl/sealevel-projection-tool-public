@@ -1,6 +1,2 @@
-.DS_Store
-.jslintrc
-js/*-old-ui.js
-index-old-ui.html
-api
-v2
+/serverSidePy/data
+/serverSidePy/dataForWebsite.pkl
