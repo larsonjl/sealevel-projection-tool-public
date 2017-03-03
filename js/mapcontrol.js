@@ -33,7 +33,7 @@ function queryTimeseries(e, queryString){
 
 	queryString = wholeLat + '_' + wholeLng + '_' + queryString
 
-    $.get("http://127.0.0.1:5000/projection_api?latlonloc=" + queryString  , function(data, status){
+    $.get("http://sealevel.colorado.edu/projection_api?latlonloc=" + queryString  , function(data, status){
 		plotFillProjection(data, "Sea level projection for " + wholeLng + 'E'+ ', ' + wholeLat + 'N')
   });
 }
