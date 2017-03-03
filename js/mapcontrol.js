@@ -33,7 +33,7 @@ function queryTimeseries(e, queryString){
 
 	queryString = wholeLat + '_' + wholeLng + '_' + queryString
 
-    $.get("http://127.0.0.1:5000/myAPI?latlonloc=" + queryString  , function(data, status){
+    $.get("http://127.0.0.1:5000/projection_api?latlonloc=" + queryString  , function(data, status){
 		plotFillProjection(data, "Sea level projection for " + wholeLng + 'E'+ ', ' + wholeLat + 'N')
   });
 }
@@ -759,6 +759,12 @@ function initializeTiles(){
             "type": "geojson",
             "data": oneDegGrid
                 });
+
+	map.addSource("coastLine", {
+            "type": "geojson",
+            "data": oneDegGrid
+                });
+
 }
 
 function loadCustomLayers(){
@@ -916,7 +922,7 @@ function initializeMap() {
 			//style: 'mapbox://styles/mapbox/satellite-v9',
             center: [-88.137, 35.13],
             zoom: 1,
-            maxZoom: 3,
+            maxZoom: 5,
             minZoom: 1.0
         })};
         var nav = new mapboxgl.NavigationControl();
