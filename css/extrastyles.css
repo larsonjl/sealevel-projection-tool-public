@@ -20,7 +20,7 @@
 	margin: 0;
 	display: none;
 	padding: 0 5px;
-	width: 105px;
+	width: 165px;
 	vertical-align: middle;
 	position: absolute;
 	right: 274px;
@@ -74,6 +74,22 @@
 
 }
 
+#year-name{
+	font-size: 16pt;
+	vertical-align: middle;
+	position: relative;
+	float: left;
+	padding: 2px;
+}
+
+
+#projection-name{
+	font-size: 10pt;
+}
+
+#projection-name-val{
+	font-size: 10pt;
+}
 /* Mapping Things */
 #slider-container {
     text-align: center;

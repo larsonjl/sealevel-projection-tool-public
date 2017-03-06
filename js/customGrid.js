@@ -107,6 +107,8 @@ function constructQueryArray(){
 	}
 	return queryString
 };
+
+
 // On 'make projection' click, query data and display
 $('#runProject').click(function(){
 	defaultMap = 'false';
@@ -119,7 +121,7 @@ $('#runProject').click(function(){
         loadCustomLayers();
 		maximizePlot();
 		plotFillProjection(data['timeSeries'], 'Global Mean Projection');
-
+		changeProjectionName();
     });
 });
 
@@ -136,4 +138,9 @@ function loadDefaultMap(){
 		minimizePlot();
 
     });
+}
+
+
+function changeProjectionName(){
+	document.getElementById('projection-name-val').innerHTML = rcpMenu + ' custom'
 }

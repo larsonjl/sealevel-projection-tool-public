@@ -317,10 +317,10 @@ function loadApp() {
     document.getElementById("sidebar-location-lookup").addEventListener("click", viewLocationLookup, false);
 	document.getElementById("sidebar-basic-settings").addEventListener("click", viewBasicSettings, false);
 
-    document.getElementById("sidebar-map-settings").addEventListener("click", viewMapSettings, false);
+    // document.getElementById("sidebar-map-settings").addEventListener("click", viewMapSettings, false);
     // document.getElementById("sidebar-plot-settings").addEventListener("click", viewPlotSettings, false);
 
-    document.getElementById("sidebar-select-colormap").addEventListener("change", setActiveColormap, false);
+    // document.getElementById("sidebar-select-colormap").addEventListener("change", setActiveColormap, false);
 
     // Listener: Map Location Form:
     // document.getElementById("GetTimeseries").addEventListener("submit", function (e) {inputLatLon(e); });
