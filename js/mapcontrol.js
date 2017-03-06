@@ -33,7 +33,7 @@ function queryTimeseries(e, queryString){
 
 	queryString = wholeLat + '_' + wholeLng + '_' + queryString
 
-    $.get("http://sealevel.colorado.edu/projection_api?latlonloc=" + queryString  , function(data, status){
+    $.get(apiLoc + "/projection_api?latlonloc=" + queryString  , function(data, status){
 		plotFillProjection(data, "Sea level projection for " + wholeLng + 'E'+ ', ' + wholeLat + 'N')
   });
 }
@@ -904,7 +904,6 @@ function loadCustomLayers(){
                         }, 'water');
 
 }
-
 
 // initializeMap :: loads background and interactive maps and starts page listeners.
 function initializeMap() {

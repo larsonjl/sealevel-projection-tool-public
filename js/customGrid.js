@@ -111,7 +111,7 @@ function constructQueryArray(){
 $('#runProject').click(function(){
 	defaultMap = 'false';
     queryString = constructQueryArray()
-    $.get("http://sealevel.colorado.edu/projection_api?datastring=" + queryString, function(data, status){
+    $.get(apiLoc + "/projection_api?datastring=" + queryString, function(data, status){
 				datasetIn = data
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
@@ -125,7 +125,7 @@ $('#runProject').click(function(){
 
 
 function loadDefaultMap(){
-	$.get("http://sealevel.colorado.edu/projection_api/?datastring=" + defaultQueryString, function(data, status){
+	$.get(apiLoc + "/projection_api?datastring=" + defaultQueryString, function(data, status){
 				datasetIn = data
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
