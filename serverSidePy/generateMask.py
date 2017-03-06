@@ -16,7 +16,7 @@ import pickle
 map = Basemap(projection='merc', resolution='c', area_thresh=1000.)
 
 # Create 2 degree grid (same as website)
-mask2deg = np.zeros((90*18))
+mask2deg = np.zeros((90*180))
 mask1deg = np.zeros((180*360))
 
 i = 0
