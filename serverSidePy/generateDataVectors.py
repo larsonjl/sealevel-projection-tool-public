@@ -15,7 +15,7 @@ import pandas as pd
 import pickle
 import scipy.ndimage
 
-bothMasks = pickle.load(open('./referenceFiles/webGridMasks.pkl', "rb"))
+bothMasks = pickle.load(open('webGridMasks.pkl', "rb"))
 oneDegreeMask = np.array(bothMasks['oneDeg']).astype(bool)
 twoDegreeMask = np.array(bothMasks['twoDeg']).astype(bool)
 
@@ -72,10 +72,10 @@ def referenceFile2Pickles():
 
     masterDict = {'rcp85': {}, 'rcp45': {}, 'rcp26': {}}
     masterDictTS = {'rcp85': {}, 'rcp45': {}, 'rcp26': {}}
-    refFile = pd.read_csv('./referenceFiles/dataReferenceFile.csv')
+    refFile = pd.read_csv('referenceFile.csv')
     for indx in refFile.index:
         dFile = refFile.iloc[indx]
-        dataSetString = './' + dFile.Scenario + '/' + dFile.component +\
+        dataSetString = './data/' + dFile.Scenario + '/' + dFile.component +\
                         '/' + dFile.meta + '/' + dFile.rawFile
         dataArray, tsMean = grid2db(dataSetString, dFile.variableName)
         masterDict[dFile.Scenario][dFile.referenceName] = dataArray
