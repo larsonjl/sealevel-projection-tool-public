@@ -733,13 +733,16 @@ function decreaseMapYear(){
 	}
 }
 
-
 function updateMapYear(year){
-    map.base_layers = $.extend(true, {}, map.style._layers)
-    for (layers in map.base_layers){
-        if (layers!=='background' && layers!=='water'){
-            map.setLayoutProperty(layers, 'visibility', 'none')}
-    }
+	map.setLayoutProperty('oneDeg2025', 'visibility', 'none')
+	map.setLayoutProperty('oneDeg2050', 'visibility', 'none')
+	map.setLayoutProperty('oneDeg2075', 'visibility', 'none')
+	map.setLayoutProperty('oneDeg2100', 'visibility', 'none')
+	map.setLayoutProperty('twoDeg2025', 'visibility', 'none')
+	map.setLayoutProperty('twoDeg2050', 'visibility', 'none')
+	map.setLayoutProperty('twoDeg2075', 'visibility', 'none')
+	map.setLayoutProperty('twoDeg2100', 'visibility', 'none')
+
     var layerOneDict = {2025:"oneDeg2025", 2050:"oneDeg2050",2075:"oneDeg2075", 2100:"oneDeg2100"}
     var layerTWoDict = {2025:"twoDeg2025", 2050:"twoDeg2050",2075:"twoDeg2075", 2100:"twoDeg2100"}
 
@@ -747,6 +750,8 @@ function updateMapYear(year){
     map.setLayoutProperty(layerOneDict[year], 'visibility', 'visible')
     map.setLayoutProperty(layerTWoDict[year], 'visibility', 'visible')
 }
+
+
 
 // Add sources for both grids
 function initializeTiles(){
@@ -759,12 +764,6 @@ function initializeTiles(){
             "type": "geojson",
             "data": oneDegGrid
                 });
-
-	map.addSource("coastLine", {
-            "type": "geojson",
-            "data": oneDegGrid
-                });
-
 }
 
 function loadCustomLayers(){
