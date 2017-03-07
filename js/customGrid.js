@@ -125,6 +125,9 @@ $('#runProject').click(function(){
     });
 });
 
+function removeLoadMenu(){
+	document.getElementById('load-menu').style.display = 'none'
+}
 
 function loadDefaultMap(){
 	$.get(apiLoc + "/projection_api?datastring=" + defaultQueryString, function(data, status){
@@ -136,10 +139,18 @@ function loadDefaultMap(){
 		plotFillProjection(data['timeSeries'], 'Global Mean Projection');
 		maximizePlot();
 		minimizePlot();
-
     });
+	// map.getLayer('oneDeg2100').on("tileload", removeLoadMenu())
 }
 
+function loadWaiter() {
+  if (!$("#main-container").size()) {
+	window.requestAnimationFrame(loadWaiter);
+  		}else {
+	 removeLoadMenu();
+	 console.log("Content loaded")
+   }
+};
 
 function changeProjectionName(){
 	document.getElementById('projection-name-val').innerHTML = rcpMenu + ' custom'

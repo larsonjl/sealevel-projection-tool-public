@@ -345,7 +345,6 @@ function loadApp() {
 
     window.addEventListener('mouseup', mouseUpResize, false);
 
-
 	// Create default map
 	map.on('load', loadDefaultMap);
 }

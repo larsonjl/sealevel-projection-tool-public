@@ -397,6 +397,26 @@ input#show-tide-gauges-checkbox {
     width: 150px;
 }
 
+#load-menu{
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	opacity: 75%;
+	position: relative;
+	z-index: 3;
+}
+
+#load-menu-text{
+	padding: 0;
+	margin: 0;
+	position: relative;
+	z-index: 3;
+	font-size:60px
+}
+
+
 /* -------- */
 
 #map-meta {
