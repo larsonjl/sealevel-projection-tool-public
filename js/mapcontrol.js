@@ -917,10 +917,10 @@ function initializeMap() {
         map = new mapboxgl.Map({
             version: 6,
             container: 'map-div',
-            style: 'mapbox://styles/jlarson630/ciyg1s0l9000p2spg93h1qdyv',
+            style: 'mapbox://styles/jlarson630/cj001rqfr008v2so5auc9dggx',
 			//style: 'mapbox://styles/mapbox/satellite-v9',
             center: [-88.137, 35.13],
-            zoom: 1,
+            zoom: 2,
             maxZoom: 5,
             minZoom: 1.0
         })};
