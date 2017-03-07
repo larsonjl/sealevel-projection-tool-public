@@ -6,7 +6,7 @@ import numpy as np
 import os
 
 dataFile = os.path.join(os.path.dirname(__file__), 'dataForWebsite.pkl')
-gridFile = os.path.join(os.path.dirname(__file__), 'webGridMasks.pkl')
+gridFile = os.path.join(os.path.dirname(__file__), 'maskRef.pkl')
 
 # Class for json print so no spaces after comma
 class MiniJSONEncoder(JSONEncoder):
