@@ -1,28 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CCAR's Altimetry Explorer</title>
-    <!-- <base href="http://ccar.colorado.edu/altimetry/"/> -->
+    <title>CU Sea Level Projection Project </title>
 
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
-    <meta name="keywords" content="JPL, Geodesy, Altimetry, CCAR, Croteau, Nerem"/>
-    <meta name="description" content="CCAR's JPL Altimetry Visualization Tool."/>
-    <meta name="author" content="Michael J. Croteau"/>
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <meta name="keywords" content="CCAR, Sea, Level, Projection, Colorado, Inundation, Rise, Geodesy, Larson, Nerem"/>
+    <meta name="description" content="Colorado Sea Level Projection Project."/>
+    <meta name="author" content="Jacob Larson and Michael Croteau"/>
     <meta charset='utf-8'/>
 
     <link rel="icon" href="http://ccar.colorado.edu/images/culogo_sm.jpg" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="css/pages-mainstyles.css"/>
-    <link rel="stylesheet" type="text/css" href="css/pages-extrastyles.css"/>
-
+    <link rel="stylesheet" type="text/css" href="css/mainstyles.css"/>
+    <link rel="stylesheet" type="text/css" href="css/extrastyles.css"/>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjs/2.6.0/math.min.js'></script>
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-51905010-3', 'auto');
-        ga('send', 'pageview');
-    </script>
 </head>
 
 <body>
@@ -31,35 +21,31 @@
 
 <div id="foreground">
 
-    <div id="menu-container">
-        <header>
-            <div id="menuhead">
-                <div id="menucontentname"><h1 class="top">CCAR's Altimetry Explorer</h1></div>
-                <div id="menucontenttitle"><h2 class="top"><a href="/">Colorado Center for Astrodynamics Research</a> | <a href="https://www.colorado.edu">CU Boulder</a></h2></div>
-            </div>
-            <div id="menulinks"><ul>
-                    <li><a class="navbar" href="index.html">Main</a></li>
-                    <li><a class="navbar" href="about.html">About</a></li>
-                    <li><a class="navbar" href="contact.html">Contact</a></li>
-            </ul></div>
-        </header>
-    </div>
+	<div id="menu-container">
+		<header>
+			<div id="menuhead-map">
+				<div id="menucontentname"><h1 class="top" id="mvt-title">CU Sea Level Projection Tool </h1></div>
+				<div id="menucontenttitle"><h2 class="top"><a href="/"><a href="https://www.colorado.edu">University of Colorado Boulder</a></h2></div>
+			</div>
+			<div id="menulinks">
+				<ul>
+					<li><a class="navbar" href="index.html">Main</a></li>
+					<li><a class="navbar" href="about.html">About</a></li>
+					<li><a class="navbar" href="contact.html">Contact</a></li>
+				</ul>
+			</div>
+		</header>
+	</div>
 
     <div id='main-container'>
 
-        <div class='content-container'><h1>About the Altimetry Visualization Tool</h1></div>
+        <div class='content-container'><h1>About the Projection Project</h1></div>
 
         <div class='content-container' id='about-container'>
 
             <div class="left-section">
 
                 <!-- About GRACE -->
-                <h2 class="about-toggle-header left" id="about-grace">Coming soon... <div class="about-toggle-down" id="about-alti-toggle-down"></div><div class="about-toggle-up" id="about-alti-toggle-up"></div></h2>
-                <div class="about-details" id="about-alti-details">
-
-                    <p class="left">Under construction...</p>
-
-                </div>
 
             </div><!--
 
@@ -71,39 +57,18 @@
 
     </div>
 
-    <div class='content-container' id="footer-container">
-        <div id="footer-area">
-            <div id="footer-left">
-                <a href="">Altimetry Explorer</a><br>
-                <a href="/" target="_blank">Colorado Center for Astrodynamics Research</a><br>
-                <a href="http://www.jpl.nasa.gov/" target="_blank">Jet Propulsion Lab</a><br>
-                <a href="http://uhslc.soest.hawaii.edu/" target="_blank">U. of Hawaii Sea Level Center</a>
-            </div>
-            <div id="footer-right">
-                <a href="privacy.html">Privacy Policy</a><br>
-                <a href="contact.html">Contact</a>
-            </div>
-        </div>
-    </div>
+	<div class='content-container' id="footer-container">
+		<div id="footer-area">
+			<a href="/" target="_blank">CCAR</a> &nbsp; | &nbsp;
+			<a href="privacy.html">Privacy Policy</a>
+			<br>
+		</div>
+	</div>
 
 </div><!-- End of #foreground -->
 
 <script type="text/javascript">
 
-window.addEventListener("DOMContentLoaded", function() {
-    // About ALTI dialog
-    document.getElementById('about-alti-toggle-down').onclick = function () {
-        document.getElementById('about-alti-details').style.display = 'none';
-        document.getElementById('about-alti-toggle-up').style.display = 'inline-block';
-        document.getElementById('about-alti-toggle-down').style.display = 'none';
-    }
-    document.getElementById('about-alti-toggle-up').onclick = function () {
-        document.getElementById('about-alti-details').style.display = 'block';
-        document.getElementById('about-alti-toggle-up').style.display = 'none';
-        document.getElementById('about-alti-toggle-down').style.display = 'inline-block';
-    }
-
-});
 
 </script>
 
