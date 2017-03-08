@@ -60,7 +60,7 @@ function makeOneDegGrid() {
 var scaleBy
 // Change geojson data values to queried data
 function changeGridDat(queriedData, cbarLims){
-	scaleBy = 10 //mm to cm
+	scaleBy = (1/100.) //mm to cm
 	dMax = cbarLims[1] * scaleBy + 5
 	dMin = cbarLims[0] * scaleBy
 
@@ -133,7 +133,6 @@ function removeLoadMenu(){
 
 function loadDefaultMap(){
 	$.get(apiLoc + "/projection_api?datastring=" + defaultQueryString, function(data, status){
-				datasetIn = data
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);

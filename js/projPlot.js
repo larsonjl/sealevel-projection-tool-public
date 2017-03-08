@@ -34,6 +34,9 @@ function plotFillProjection(projTimeSeries, plot_title){
 	plot_num = 1;
 	svg_id = "svg-timeseries-" + plot_num;
 
+	//scale mm to m
+	scaleBy = (1./1000.)
+
 	// clear previous plot
 	d3.selectAll("svg > *").remove();
 	// d3.select("svg-timeseries-" + plot_num).remove();
@@ -56,10 +59,10 @@ function plotFillProjection(projTimeSeries, plot_title){
 	for (variables in projTimeSeries){
 	   	for (var i=0; i<temphi.length; ++i){
 	   		if (projTimeSeries[variables][i] >= 0) {
-	   			temphi[i] += projTimeSeries[variables][i]
+	   			temphi[i] += scaleBy * projTimeSeries[variables][i]
 	   		}
 	   		else {
-	   			templo[i] += projTimeSeries[variables][i]
+	   			templo[i] += scaleBy * projTimeSeries[variables][i]
 	   		}
 		}
 	}
@@ -169,10 +172,10 @@ function plotFillProjection(projTimeSeries, plot_title){
 		var templo = new Array(tsLen).fill(0);
 		for (var i=0; i<runningTot.length; ++i){
 			if (projTimeSeries[variables][i] >= 0) {
-				temphi[i] = projTimeSeries[variables][i]
+				temphi[i] = scaleBy * projTimeSeries[variables][i]
 			}
 			else {
-				templo[i] = projTimeSeries[variables][i]
+				templo[i] = scaleBy * projTimeSeries[variables][i]
 			}
 		}
 

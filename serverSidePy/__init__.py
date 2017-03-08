@@ -19,18 +19,18 @@ class MiniJSONEncoder(JSONEncoder):
 
 # Takes in request string, does addition
 def createDatasetMultiYear(requestString):
+    scaleBy = 1000 # m to mm
     params = requestString.split('_')
     rcpScen = params[0]
     dOut = np.zeros((4, 53584))
     tsData = {}
     # References [18,44,69,93] refer to 2025, 2050, 2075, 2100  8
     for datasets in params[2::]:
-        dOut += projDict[0][rcpScen][datasets][[10, 35, 60, 85], :]
-        tsData[datasets] = (projDict[1][rcpScen][datasets]) \
-                            .astype('float16').tolist()
-    dOut = dOut.astype('float16')
-    dMean = np.mean(dOut[dOut>-10])
-    dStd = np.std(dOut[dOut>-10])
+        dOut += scaleBy * projDict[0][rcpScen][datasets][[10, 35, 60, 85], :]
+        tsData[datasets] = np.around(scaleBy * (projDict[1][rcpScen][datasets]), decimals=2).tolist()
+    dOut = np.around(dOut, decimals=2)
+    dMean = np.mean(dOut[dOut>-99999])
+    dStd = np.std(dOut[dOut>-99999])
     dMin = np.float16(dMean - 2*dStd)
     dMax = np.float16(dMean + dStd)
     # dMin = np.float16(np.min(dOut[dOut > -10]))  # min not masked value
@@ -49,6 +49,7 @@ def getGridCell(lat, lon):
 
 
 def getLocationData(requestString):
+    scaleBy = 1000 # m to mm
     params = requestString.split('_')
     lat = params[0]
     lon = params[1]
@@ -59,8 +60,8 @@ def getLocationData(requestString):
     else:
         dOut = {}
         for datasets in params[4::]:
-            dOut[datasets] = (projDict[0][rcpScen][datasets][:, cellNum]
-                              .astype('float16')).tolist()
+            dOut[datasets] = (np.around(scaleBy * projDict[0][rcpScen][datasets][:, cellNum]
+                              .astype('float16'), decimals=4)).tolist()
         return dOut
 
 
