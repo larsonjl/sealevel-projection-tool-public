@@ -91,14 +91,14 @@ function changeGridDat(queriedData, cbarLims){
 
 // Constructs string that is sent to the server based on user selections
 function constructQueryArray(){
-	if (defaultMap = 'true'){
+	if (defaultMap == 'true'){
 		queryString = defaultQueryString
 	}
 	else{
 	   databaseString = [gsmbMenu.value, gdynMenu.value,
 	                     adynMenu.value, asmbMenu.value, thermoMenu.value,
 	                     glacierMenu.value]
-	    queryString = rcpMenu.valueOf() + '_' + '60'
+	    queryString = document.querySelector('input[name="rcpMenuSelect"]:checked').value + '_' + '60'
 	    for (elements in databaseString){
 	        if (databaseString[elements]!=='none'){
 	            queryString+= ('_' + databaseString[elements])
@@ -112,13 +112,15 @@ function constructQueryArray(){
 // On 'make projection' click, query data and display
 $('#runProject').click(function(){
 	defaultMap = 'false';
-    queryString = constructQueryArray()
+    queryString = constructQueryArray();
     $.get(apiLoc + "/projection_api?datastring=" + queryString, function(data, status){
 				datasetIn = data
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
+		var currentYear = document.getElementById('year-selected').innerHTML
         loadCustomLayers();
+		updateMapYear(Number(currentYear));
 		maximizePlot();
 		plotFillProjection(data['timeSeries'], 'Global Mean Projection');
 		changeProjectionName();

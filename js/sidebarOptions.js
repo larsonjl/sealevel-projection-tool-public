@@ -1,11 +1,11 @@
 $(document).ready(function() {
-    $("#gsmbMenu").attr("disabled", "disabled");
-    $("#gdynMenu").attr("disabled", "disabled");
-    $("#adynMenu").attr("disabled", "disabled");
-    $("#asmbMenu").attr("disabled", "disabled");
-    $("#thermoMenu").attr("disabled", "disabled");
-    $("#glacierMenu").attr("disabled", "disabled");
-
+	$("#gsmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'greenSmb'));
+	$("#gdynMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'greenDyn'));
+	$("#adynMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'antDyn'));
+	$("#asmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'antSmb'));
+	$("#thermoMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'thermo'));
+	$("#glacierMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'glacier'));
+	
     $('input[type=radio][name=rcpMenuSelect]').change(function() {
         var val = $(this).val();
         if (val == "default"){
@@ -40,8 +40,6 @@ $(document).ready(function() {
             $("#asmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'antSmb'));
             $("#thermoMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'thermo'));
             $("#glacierMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'glacier'));
-			rcpMenu = 'rcp85'
-
         }
     });
 });
