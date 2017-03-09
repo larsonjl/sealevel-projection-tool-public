@@ -137,9 +137,21 @@ function loadDefaultMap(){
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
         loadCustomLayers();
-		plotFillProjection(data['timeSeries'], 'Global Mean Projection');
-		maximizePlot();
-		minimizePlot();
+		//If selected land... else...
+		if (data['timeSeries'].hasOwnProperty('locTS')){
+			scrollPopup = document.getElementById('error-popup');
+            scrollPopup.style.zIndex = 5000;
+            scrollPopup.style.transition = "opacity 1s";
+            scrollPopup.style.opacity = 1;
+            setTimeout(function () {
+                scrollPopup.style.opacity = 0;
+                scrollPopup.style.zIndex = 0;
+            }, 3000);
+		}
+		else{
+			plotFillProjection(data['timeSeries'], 'Global Mean Projection');
+			maximizePlot();
+			minimizePlot();}
     });
 	// map.getLayer('oneDeg2100').on("tileload", removeLoadMenu())
 }

@@ -34,7 +34,21 @@ function queryTimeseries(e, queryString){
 	queryString = wholeLat + '_' + wholeLng + '_' + queryString
 
     $.get(apiLoc + "/projection_api?latlonloc=" + queryString  , function(data, status){
-		plotFillProjection(data, "Sea level projection for " + wholeLng + 'E'+ ', ' + wholeLat + 'N')
+		//If selected land... else...
+		if (data.hasOwnProperty('locTS')){
+			scrollPopup = document.getElementById('error-popup');
+			scrollPopup.style.zIndex = 5000;
+			scrollPopup.style.transition = "opacity 1s";
+			scrollPopup.style.opacity = 1;
+			setTimeout(function () {
+				scrollPopup.style.opacity = 0;
+				scrollPopup.style.zIndex = 0;
+			}, 3000);
+		}
+		else{
+			plotFillProjection(data, "Sea level projection for " + wholeLng + 'E'+ ', ' + wholeLat + 'N')
+			maximizePlot();
+			}
   });
 }
 
