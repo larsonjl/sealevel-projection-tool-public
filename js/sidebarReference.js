@@ -1,81 +1,161 @@
 var sidebar = {
   "RCP": {
-    "rcp26": {
+    "rcp85": {
       "greenSmb": {
         "IPCC AR5": {
-          "medium": {
+          "Median": {
             "ref": "gsm1"
           },
-          "low": {
+          "Lower Bound (p=0.05)": {
             "ref": "gsl1"
           },
-          "high": {
+          "Upper Bound (p=0.95)": {
             "ref": "gsh1"
-          }
-        }
-      },
-      "antSmb": {
-        "IPCC AR5": {
-          "medium": {
-            "ref": "asm1"
-          },
-          "low": {
-            "ref": "asl1"
-          },
-          "high": {
-            "ref": "ash1"
-          }
-        }
-      },
-      "greenDyn": {
-        "IPCC AR5": {
-          "medium": {
-            "ref": "gdm1"
-          },
-          "low": {
-            "ref": "gdl1"
-          },
-          "high": {
-            "ref": "gdh1"
           }
         }
       },
       "glacier": {
         "IPCC AR5": {
-          "medium": {
+          "Median": {
             "ref": "glm1"
           },
-          "low": {
+          "Lower Bound (p=0.05)": {
             "ref": "gll1"
           },
-          "high": {
+          "Upper Bound (p=0.95)": {
             "ref": "glh1"
+          }
+        }
+      },
+      "antSmb": {
+        "IPCC AR5": {
+          "Median": {
+            "ref": "asm1"
+          },
+          "Lower Bound (p=0.05)": {
+            "ref": "asl1"
+          },
+          "Upper Bound (p=0.95)": {
+            "ref": "ash1"
           }
         }
       },
       "antDyn": {
         "IPCC AR5": {
-          "medium": {
+          "Median": {
             "ref": "adm1"
           },
-          "low": {
+          "Lower Bound (p=0.05)": {
             "ref": "adl1"
           },
-          "high": {
+          "Upper Bound (p=0.95)": {
             "ref": "adh1"
           }
         }
       },
       "thermo": {
         "IPCC AR5": {
-          "medium": {
+          "Median": {
             "ref": "thm1"
           },
-          "low": {
+          "Lower Bound (p=0.05)": {
             "ref": "thl1"
           },
-          "high": {
+          "Upper Bound (p=0.95)": {
             "ref": "thh1"
+          }
+        }
+      },
+      "greenDyn": {
+        "IPCC AR5": {
+          "Median": {
+            "ref": "gdm1"
+          },
+          "Lower Bound (p=0.05)": {
+            "ref": "gdl1"
+          },
+          "Upper Bound (p=0.95)": {
+            "ref": "gdh1"
+          }
+        }
+      }
+    },
+    "rcp26": {
+      "greenSmb": {
+        "IPCC AR5": {
+          "Median": {
+            "ref": "gsm1"
+          },
+          "Lower Bound (p=0.05)": {
+            "ref": "gsl1"
+          },
+          "Upper Bound (p=0.95)": {
+            "ref": "gsh1"
+          }
+        }
+      },
+      "glacier": {
+        "IPCC AR5": {
+          "Median": {
+            "ref": "glm1"
+          },
+          "Lower Bound (p=0.05)": {
+            "ref": "gll1"
+          },
+          "Upper Bound (p=0.95)": {
+            "ref": "glh1"
+          }
+        }
+      },
+      "antSmb": {
+        "IPCC AR5": {
+          "Median": {
+            "ref": "asm1"
+          },
+          "Lower Bound (p=0.05)": {
+            "ref": "asl1"
+          },
+          "Upper Bound (p=0.95)": {
+            "ref": "ash1"
+          }
+        }
+      },
+      "antDyn": {
+        "IPCC AR5": {
+          "Median": {
+            "ref": "adm1"
+          },
+          "Lower Bound (p=0.05)": {
+            "ref": "adl1"
+          },
+          "Upper Bound (p=0.95)": {
+            "ref": "adh1"
+          }
+        }
+      },
+      "thermo": {
+        "IPCC AR5": {
+          "Median": {
+            "ref": "thm1"
+          },
+          "Lower Bound (p=0.05)": {
+            "ref": "thl1"
+          },
+          "Upper Bound (p=0.95)": {
+            "ref": "thh1"
+          }
+        }
+      },
+      "greenDyn": {
+        "IPCC AR5": {
+          "Median": {
+            "ref": "gdm1"
+          },
+          "Lower Bound (p=0.05)": {
+            "ref": "gdl1"
+          },
+          "Upper Bound (p=0.95)": {
+            "ref": "gdh1"
           }
         }
       }
@@ -83,159 +163,79 @@ var sidebar = {
     "rcp45": {
       "greenSmb": {
         "IPCC AR5": {
-          "medium": {
+          "Median": {
             "ref": "gsm1"
           },
-          "low": {
+          "Lower Bound (p=0.05)": {
             "ref": "gsl1"
           },
-          "high": {
+          "Upper Bound (p=0.95)": {
             "ref": "gsh1"
-          }
-        }
-      },
-      "antSmb": {
-        "IPCC AR5": {
-          "medium": {
-            "ref": "asm1"
-          },
-          "low": {
-            "ref": "asl1"
-          },
-          "high": {
-            "ref": "ash1"
-          }
-        }
-      },
-      "greenDyn": {
-        "IPCC AR5": {
-          "medium": {
-            "ref": "gdm1"
-          },
-          "low": {
-            "ref": "gdl1"
-          },
-          "high": {
-            "ref": "gdh1"
           }
         }
       },
       "glacier": {
         "IPCC AR5": {
-          "medium": {
+          "Median": {
             "ref": "glm1"
           },
-          "low": {
+          "Lower Bound (p=0.05)": {
             "ref": "gll1"
           },
-          "high": {
+          "Upper Bound (p=0.95)": {
             "ref": "glh1"
+          }
+        }
+      },
+      "antSmb": {
+        "IPCC AR5": {
+          "Median": {
+            "ref": "asm1"
+          },
+          "Lower Bound (p=0.05)": {
+            "ref": "asl1"
+          },
+          "Upper Bound (p=0.95)": {
+            "ref": "ash1"
           }
         }
       },
       "antDyn": {
         "IPCC AR5": {
-          "medium": {
+          "Median": {
             "ref": "adm1"
           },
-          "low": {
+          "Lower Bound (p=0.05)": {
             "ref": "adl1"
           },
-          "high": {
+          "Upper Bound (p=0.95)": {
             "ref": "adh1"
           }
         }
       },
       "thermo": {
         "IPCC AR5": {
-          "medium": {
+          "Median": {
             "ref": "thm1"
           },
-          "low": {
+          "Lower Bound (p=0.05)": {
             "ref": "thl1"
           },
-          "high": {
+          "Upper Bound (p=0.95)": {
             "ref": "thh1"
-          }
-        }
-      }
-    },
-    "rcp85": {
-      "greenSmb": {
-        "IPCC AR5": {
-          "medium": {
-            "ref": "gsm1"
-          },
-          "low": {
-            "ref": "gsl1"
-          },
-          "high": {
-            "ref": "gsh1"
-          }
-        }
-      },
-      "antSmb": {
-        "IPCC AR5": {
-          "medium": {
-            "ref": "asm1"
-          },
-          "low": {
-            "ref": "asl1"
-          },
-          "high": {
-            "ref": "ash1"
           }
         }
       },
       "greenDyn": {
         "IPCC AR5": {
-          "medium": {
+          "Median": {
             "ref": "gdm1"
           },
-          "low": {
+          "Lower Bound (p=0.05)": {
             "ref": "gdl1"
           },
-          "high": {
+          "Upper Bound (p=0.95)": {
             "ref": "gdh1"
-          }
-        }
-      },
-      "glacier": {
-        "IPCC AR5": {
-          "medium": {
-            "ref": "glm1"
-          },
-          "low": {
-            "ref": "gll1"
-          },
-          "high": {
-            "ref": "glh1"
-          }
-        }
-      },
-      "antDyn": {
-        "IPCC AR5": {
-          "medium": {
-            "ref": "adm1"
-          },
-          "low": {
-            "ref": "adl1"
-          },
-          "high": {
-            "ref": "adh1"
-          }
-        }
-      },
-      "thermo": {
-        "IPCC AR5": {
-          "medium": {
-            "ref": "thm1"
-          },
-          "low": {
-            "ref": "thl1"
-          },
-          "high": {
-            "ref": "thh1"
           }
         }
       }
