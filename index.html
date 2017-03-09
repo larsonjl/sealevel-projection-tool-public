@@ -48,10 +48,17 @@
 					<div id='year-select-container'>
 						<div id='projection-name'> Current Projection:</div>
 						<div id='projection-name-val'>RCP8.5 IPCC AR5 (Median)</div>
-						<div id='year-name'> Year: </div>
+						<div id='year-select-slider'>
+					   		<input type="range" min="2025" max="2100" value="2100" step="25" id="colorbar-max-bounds" onchange="updateMapYear(this.value);"/>
+						</div>
+						<div id='year-num-container'>2025</div>
+						<div id='year-num-container'>2050</div>
+						<div id='year-num-container'>2075</div>
+						<div id='year-num-container'>2100</div>
+						<!--<div id='year-name'> Year: </div>
 						<div id='year-select-lower'>&#8592;</div>
 						<div id='year-selected'> 2100 </div>
-						<div id='year-select-higher'>&#8594;</div>
+						<div id='year-select-higher'>&#8594;</div> -->
 					</div>
                     <div id='map-cbar-container'>
                         <div class="map-colorbar" id="viridis-colorbar">
@@ -138,9 +145,9 @@
                                     <div id="projectionMenu">
                                         <p>RCP Scenario</p>
 										<div  id="rcpRadioSelect">
-											<input type="radio" name='rcpMenuSelect' value="rcp26"> 2.6
-											<input type="radio" name='rcpMenuSelect' value="rcp45"> 4.5
-											<input type="radio" name='rcpMenuSelect' value="rcp85" checked="checked"> 8.5
+											<input type="radio" id='r1' name='rcpMenuSelect' value="rcp26"> 2.6
+											<input type="radio" id='r2' name='rcpMenuSelect' value="rcp45"> 4.5
+											<input type="radio" id='r3' name='rcpMenuSelect' value="rcp85" checked="checked"> 8.5
 										</div>
 
                                         <p>Greenland Surface Mass Balance</p>

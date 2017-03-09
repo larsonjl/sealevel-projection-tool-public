@@ -19,8 +19,8 @@
 #year-select-container {
 	margin: 0;
 	display: none;
-	padding: 0 5px;
-	width: 165px;
+	padding: 5px 5px;
+	width: 180px;
 	vertical-align: middle;
 	position: absolute;
 	right: 274px;
@@ -32,9 +32,21 @@
 	z-index: 3;
 }
 
+#year-select-slider{
+	padding: 4px;
+}
 
 #year-select-labels{
-	font-size: 10pt;
+	font-size: 12.5pt;
+}
+
+#year-num-container{
+	font-size: 12pt;
+	width: 45px;
+	position: relative;
+	float: left;
+	text-align: center;
+	vertical-align: middle;
 }
 
 #year-select-lower{
@@ -148,25 +160,6 @@ div.popup-msg {
     z-index: 1;
     cursor: nwse-resize;
 }
-
-
-/* Style Map Click */
-/* #map-search {
-    width: 230px;
-    padding: 19px;
-    position: absolute;
-	top: 10px;
-	right: 50px;
-	margin: 0;
-    margin-left:-135px;
-    text-align: left;
-    vertical-align: top;
-    background-color: #F6F6F6;
-    border: 1px solid #DDDDDD;
-    border-radius: 8px;
-    display: none;
-    z-index: 2;
-} */
 
 #map-search-exit {
     position: absolute;
@@ -394,7 +387,7 @@ input#show-tide-gauges-checkbox {
     margin: 2px auto 0;
     display: block;
     vertical-align: middle;
-    width: 150px;
+    width: 145px;
 }
 
 #load-menu{

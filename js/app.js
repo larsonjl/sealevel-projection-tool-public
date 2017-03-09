@@ -267,15 +267,6 @@ function viewPlotSettings() {
     }
 }
 
-function toggleTideGauges() {
-    "use strict";
-    if (document.getElementById('show-tide-gauges-checkbox').checked === true) {
-        addTideGauges();
-    } else {
-        removeTideGauges();
-    }
-}
-
 function setActiveColormap() {
     "use strict";
     var min, max = Number(document.getElementById('cbar-max-set').textContent);
@@ -340,8 +331,8 @@ function loadApp() {
 
     document.getElementById('resize-triangle').addEventListener('mousedown', mouseDownResize, false);
 
-	document.getElementById('year-select-lower').addEventListener('click', decreaseMapYear, false);
-	document.getElementById('year-select-higher').addEventListener('click',  increaseMapYear, false);
+	// document.getElementById('year-select-lower').addEventListener('click', decreaseMapYear, false);
+	// document.getElementById('year-select-higher').addEventListener('click',  increaseMapYear, false);
 
     window.addEventListener('mouseup', mouseUpResize, false);
 

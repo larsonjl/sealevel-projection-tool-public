@@ -118,18 +118,14 @@ $('#runProject').click(function(){
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
-		var currentYear = document.getElementById('year-selected').innerHTML
+		var currentYear = document.getElementById('colorbar-max-bounds').value
         loadCustomLayers();
 		updateMapYear(Number(currentYear));
-		maximizePlot();
 		plotFillProjection(data['timeSeries'], 'Global Mean Projection');
+		maximizePlot();
 		changeProjectionName();
     });
 });
-
-function removeLoadMenu(){
-	document.getElementById('load-menu').style.display = 'none'
-}
 
 function loadDefaultMap(){
 	$.get(apiLoc + "/projection_api?datastring=" + defaultQueryString, function(data, status){
@@ -145,15 +141,7 @@ function loadDefaultMap(){
 	// map.getLayer('oneDeg2100').on("tileload", removeLoadMenu())
 }
 
-function loadWaiter() {
-  if (!$("#main-container").size()) {
-	window.requestAnimationFrame(loadWaiter);
-  		}else {
-	 removeLoadMenu();
-	 console.log("Content loaded")
-   }
-};
-
 function changeProjectionName(){
-	document.getElementById('projection-name-val').innerHTML = rcpMenu + ' custom'
+	var rcpScen = document.querySelector('input[name="rcpMenuSelect"]:checked').value;
+	document.getElementById('projection-name-val').innerHTML = rcpScen + ' custom'
 }
