@@ -5,7 +5,7 @@ $(document).ready(function() {
 	$("#asmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'antSmb'));
 	$("#thermoMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'thermo'));
 	$("#glacierMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'glacier'));
-	
+
     $('input[type=radio][name=rcpMenuSelect]').change(function() {
         var val = $(this).val();
         if (val == "default"){
@@ -18,21 +18,19 @@ $(document).ready(function() {
         }
 
         else if (val == "rcp26") {
-            $("#gsmbMenu").removeAttr('disabled').html("<option value='none'>None</option>");
-            $("#gdynMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
-            $("#adynMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
-            $("#asmbMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
-            $("#thermoMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
-            $("#glacierMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
-			rcpMenu = 'rcp26'
+			$("#gsmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp26', 'greenSmb'));
+            $("#gdynMenu").removeAttr('disabled').html(getHtmlOptions('rcp26', 'greenDyn'));
+            $("#adynMenu").removeAttr('disabled').html(getHtmlOptions('rcp26', 'antDyn'));
+            $("#asmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp26', 'antSmb'));
+            $("#thermoMenu").removeAttr('disabled').html(getHtmlOptions('rcp26', 'thermo'));
+            $("#glacierMenu").removeAttr('disabled').html(getHtmlOptions('rcp26', 'glacier'));
         } else if (val == "rcp45") {
-            $("#gsmbMenu").removeAttr('disabled').html("<option value='none'>None</option>");
-            $("#gdynMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
-            $("#adynMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
-            $("#asmbMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
-            $("#thermoMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
-            $("#glacierMenu").removeAttr('disabled').html("<option value='none'>None</option><option value='gripcc'>IPCC AR5 RCP2.6</option>");
-			rcpMenu = 'rcp45'
+			$("#gsmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp45', 'greenSmb'));
+            $("#gdynMenu").removeAttr('disabled').html(getHtmlOptions('rcp45', 'greenDyn'));
+            $("#adynMenu").removeAttr('disabled').html(getHtmlOptions('rcp45', 'antDyn'));
+            $("#asmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp45', 'antSmb'));
+            $("#thermoMenu").removeAttr('disabled').html(getHtmlOptions('rcp45', 'thermo'));
+            $("#glacierMenu").removeAttr('disabled').html(getHtmlOptions('rcp45', 'glacier'));
         } else if (val == "rcp85") {
             $("#gsmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'greenSmb'));
             $("#gdynMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'greenDyn'));
