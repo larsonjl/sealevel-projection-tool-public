@@ -121,7 +121,7 @@ $('#runProject').click(function(){
 		var currentYear = document.getElementById('colorbar-max-bounds').value
         loadCustomLayers();
 		updateMapYear(Number(currentYear));
-		plotFillProjection(data['timeSeries'], 'Global Mean Projection');
+		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
 		maximizePlot();
 		changeProjectionName();
     });
@@ -135,7 +135,7 @@ function loadDefaultMap(){
         loadCustomLayers();
 		//If selected land... else...
 
-			plotFillProjection(data['timeSeries'], 'Global Mean Projection');
+			plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
 			maximizePlot();
     });
 	// map.getLayer('oneDeg2100').on("tileload", removeLoadMenu())
