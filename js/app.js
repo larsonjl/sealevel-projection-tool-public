@@ -305,7 +305,7 @@ function loadApp() {
     // Listener: Sidebar Menu
     document.getElementById("sidebar-menu-button").addEventListener("click", viewSidebar, false);
     document.getElementById("sidebar-help-button").addEventListener("click", viewHelp, false);
-	document.getElementById("sidebar-question-button").addEventListener("click", viewRcpExplain, false);
+	// document.getElementById("sidebar-question-button").addEventListener("click", viewRcpExplain, false);
 
     document.getElementById("sidebar-location-lookup").addEventListener("click", viewLocationLookup, false);
 	document.getElementById("sidebar-basic-settings").addEventListener("click", viewBasicSettings, false);
