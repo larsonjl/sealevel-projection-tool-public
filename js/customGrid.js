@@ -57,6 +57,7 @@ function makeOneDegGrid() {
 			}
 	}
 };
+
 var scaleBy
 // Change geojson data values to queried data
 function changeGridDat(queriedData, cbarLims){
@@ -98,7 +99,7 @@ function constructQueryArray(){
 	   databaseString = [gsmbMenu.value, gdynMenu.value,
 	                     adynMenu.value, asmbMenu.value, thermoMenu.value,
 	                     glacierMenu.value]
-	    queryString = document.querySelector('input[name="rcpMenuSelect"]:checked').value + '_' + '60'
+	    queryString = '_' + '60'
 	    for (elements in databaseString){
 	        if (databaseString[elements]!=='none'){
 	            queryString+= ('_' + databaseString[elements])
@@ -109,11 +110,44 @@ function constructQueryArray(){
 };
 
 
+function loadDefaultMap(){
+	$.get(apiLoc + "/projection_api?datastring=rcp85" + defaultQueryString, function(data, status){
+				changeGridDat(data['gridData'], data['cLims']);
+        map.getSource('twoDegreeData').setData(twoDegGrid);
+        map.getSource('oneDegreeData').setData(oneDegGrid);
+        loadCustomLayers();
+		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
+		maximizePlot();
+		rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
+    });
+}
+
+function loadBasicProjection(rcpScenario){
+	$.get(apiLoc + "/projection_api?datastring=" +rcpScenario + defaultQueryString, function(data, status){
+				changeGridDat(data['gridData'], data['cLims']);
+        map.getSource('twoDegreeData').setData(twoDegGrid);
+        map.getSource('oneDegreeData').setData(oneDegGrid);
+        loadCustomLayers();
+		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
+		maximizePlot();
+    });
+}
+
+function changeProjectionName(){
+	var rcpScen = document.querySelector('input[name="rcpMenuSelect"]:checked').value;
+	document.getElementById('projection-name-val').innerHTML = rcpScen + ' custom'
+}
+
+function changeBasicProjectionName(){
+	var rcpScen = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
+	document.getElementById('projection-name-val').innerHTML = rcpScen.toUpperCase() + ' IPCC AR5 (Median)'
+}
+
 // On 'make projection' click, query data and display
 $('#runProject').click(function(){
 	defaultMap = 'false';
     queryString = constructQueryArray();
-    $.get(apiLoc + "/projection_api?datastring=" + queryString, function(data, status){
+    $.get(apiLoc + "/projection_api?datastring=" + rcpScenario + queryString, function(data, status){
 				datasetIn = data
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
@@ -124,24 +158,16 @@ $('#runProject').click(function(){
 		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
 		maximizePlot();
 		changeProjectionName();
+		rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
     });
 });
 
-function loadDefaultMap(){
-	$.get(apiLoc + "/projection_api?datastring=" + defaultQueryString, function(data, status){
-				changeGridDat(data['gridData'], data['cLims']);
-        map.getSource('twoDegreeData').setData(twoDegGrid);
-        map.getSource('oneDegreeData').setData(oneDegGrid);
-        loadCustomLayers();
-		//If selected land... else...
-
-			plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
-			maximizePlot();
-    });
-	// map.getLayer('oneDeg2100').on("tileload", removeLoadMenu())
-}
-
-function changeProjectionName(){
-	var rcpScen = document.querySelector('input[name="rcpMenuSelect"]:checked').value;
-	document.getElementById('projection-name-val').innerHTML = rcpScen + ' custom'
-}
+// On 'make basic projection' click, query data and display
+$('#runBasicProject').click(function(){
+	defaultMap = 'true';
+	var rcpScen = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
+	loadBasicProjection(rcpScen)
+	changeBasicProjectionName()
+	rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
+	queryString = defaultQueryString
+});

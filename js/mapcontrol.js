@@ -31,7 +31,7 @@ function queryTimeseries(e, queryString){
 	if (lngSym === 'W') { wholeLng = - wholeLng; }
 	if (latSym === 'S') { wholeLat = - wholeLat; }
 
-	queryString = wholeLat + '_' + wholeLng + '_' + queryString
+	queryString = wholeLat + '_' + wholeLng + '_' + rcpScenario + queryString
 
     $.get(apiLoc + "/projection_api?latlonloc=" + queryString  , function(data, status){
 		//If selected land... else...
@@ -755,16 +755,14 @@ function updateMapYear(year){
 	map.setLayoutProperty('twoDeg2050', 'visibility', 'none')
 	map.setLayoutProperty('twoDeg2075', 'visibility', 'none')
 	map.setLayoutProperty('twoDeg2100', 'visibility', 'none')
-
     var layerOneDict = {2025:"oneDeg2025", 2050:"oneDeg2050",2075:"oneDeg2075", 2100:"oneDeg2100"}
     var layerTWoDict = {2025:"twoDeg2025", 2050:"twoDeg2050",2075:"twoDeg2075", 2100:"twoDeg2100"}
-
-
     map.setLayoutProperty(layerOneDict[year], 'visibility', 'visible')
     map.setLayoutProperty(layerTWoDict[year], 'visibility', 'visible')
+	maximizePlot();
+	minimizePlot();
+
 }
-
-
 
 // Add sources for both grids
 function initializeTiles(){

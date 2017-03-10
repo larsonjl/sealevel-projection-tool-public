@@ -53,3 +53,22 @@ function getHtmlOptions(rcp, component){
     }
     return outString
 }
+
+// When basic setting clicked, changes advanced too
+ $(document).ready(function() {
+    $(':radio[value=rcp85]').change(function(){
+        $(':radio[value=rcp85]').prop('checked',true);
+    });
+ });
+
+ $(document).ready(function() {
+    $(':radio[value=rcp45]').change(function(){
+        $(':radio[value=rcp45]').prop('checked',true);
+    });
+ });
+
+ $(document).ready(function() {
+   $(':radio[value=rcp26]').change(function(){
+        $(':radio[value=rcp26]').prop('checked',true);
+    });
+ });
