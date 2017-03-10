@@ -337,7 +337,7 @@ function centerMap(lngLat) {
         map.jumpTo({ "center": lngLat });
     }
 }
-
+/*
 function disableAllLayers() {
     "use strict";
     var i, x;
@@ -437,7 +437,6 @@ function selectTideGauge(feature) {
 
     centerMap({lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1]});
 }
-
 function selectAltimetry(e) {
     "use strict";
     var request, lon_range, lat_range, pageWidth;
@@ -746,7 +745,7 @@ function decreaseMapYear(){
 		}
 	}
 }
-
+*/
 function updateMapYear(year){
 	map.setLayoutProperty('oneDeg2025', 'visibility', 'none')
 	map.setLayoutProperty('oneDeg2050', 'visibility', 'none')
