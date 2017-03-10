@@ -128,6 +128,8 @@ function loadBasicProjection(rcpScenario){
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
         loadCustomLayers();
+		var currentYear = document.getElementById('colorbar-max-bounds').value;
+		updateMapYear(Number(currentYear));
 		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
 		maximizePlot();
     });
@@ -165,9 +167,10 @@ $('#runProject').click(function(){
 // On 'make basic projection' click, query data and display
 $('#runBasicProject').click(function(){
 	defaultMap = 'true';
+	var currentYear = document.getElementById('colorbar-max-bounds').value
 	var rcpScen = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-	loadBasicProjection(rcpScen)
-	changeBasicProjectionName()
+	loadBasicProjection(rcpScen);
+	changeBasicProjectionName();
 	rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-	queryString = defaultQueryString
+	queryString = defaultQueryString;
 });
