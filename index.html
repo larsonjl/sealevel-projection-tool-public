@@ -109,26 +109,23 @@
 									<img id="sidebar-basic-settings-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
 								</div>
 								<h2>Basic Projection</h2>
-
 							</div>
 							<div class="sidebar-section" id="sidebar-basic">
 								<div class="sidebar-area">
-									Feature coming soon...Please select advanced projection
-									<!--
-								    By 2100 carbon emissions will be... <br>
-									<form action="" id="rcpRadioSelect">
-										<input type="radio" name='rcpBasicSelect' value="rcp26"> Severely Reduced<br>
-										<input type="radio" name='rcpBasicSelect' value="rcp45"> Moderately Reduced<br>
-										<input type="radio" name='rcpBasicSelect' value="rcp85"> Same as Present<br>
-									</form>
-									<div id="projectionMenu">
-										<p>Choose a model</p>
-										<select id="basicProjectionSelect">
-											<option value="default">-- select one -- </option>
-											<option value="ipcc">International Panel for Climate Change (2013)</option>
-										</select>
-									<button id="runBasicProject" type="button">Calculate Projection</button>
-									</div>-->
+										<div id="projectionMenu">
+											<div id="co2-header">
+												<p>Carbon Emissions Scenario<img id="sidebar-question-button" src="img/ic_help_black_48dp.png"/></p>
+											</div>
+											Future sea level change depends on current and future carbon emissions.  Choose a 21st century carbon emission scenario.
+											<div  id="rcpBasicRadioSelect">
+												<input type="radio" id='r1' name='rcpBasicSelect' value="rcp26"> Drastic CO2 cuts <br>
+												<input type="radio" id='r2' name='rcpBasicSelect' value="rcp45"> Moderate CO2 cuts<br>
+												<input type="radio" id='r3' name='rcpBasicSelect' value="rcp85" checked="checked"> No CO2 cuts (Current path)<br>
+											</div>
+
+											<button id="runBasicProject" type="button">Calculate Projection</button>
+
+										</div>
 								</div>
 							</div>
 
@@ -137,7 +134,7 @@
                                     <img id="sidebar-location-lookup-active" src="img/ic_chevron_down_gray333_48dp.png"/>
                                     <img id="sidebar-location-lookup-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
                                 </div>
-                                <h2>Advanced Projection</h2>
+                                <h2>Custom Projection</h2>
                             </div>
 
                             <div class="sidebar-section" id="map-search">

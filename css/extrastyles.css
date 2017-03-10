@@ -220,6 +220,7 @@ div.popup-msg {
     margin: 0;
     padding: 0;
 }
+
 #sidebar-menu-button {
     width: 32px;
     height: 32px;
@@ -237,6 +238,7 @@ div.popup-msg {
     opacity: 1;
 }
 
+
 #sidebar-help-button {
     width: 32px;
     height: 32px;
@@ -246,9 +248,34 @@ div.popup-msg {
     float: left;
     display: block;
 }
+
 #sidebar-help-button:hover {
     opacity: 1;
 }
+
+#sidebar-question-button {
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+    cursor: pointer;
+    opacity: 0.5;
+    display: inline-block;
+	vertical-align: middle;
+
+}
+
+#sidebar-question-button:hover {
+    opacity: 1;
+}
+
+#co2-header{
+	display: table-cell;
+      vertical-align: middle;
+      padding: 5px 5px 0px 5px;
+	  border: 0px;
+	  margin-top: 0px;
+	 float: left;
+  }
 
 #sidebar-contents {
     border-bottom: 1px solid #555555;
@@ -265,6 +292,13 @@ div.popup-msg {
 	float: center;
 
 }
+
+#rcpBasicRadioSelect {
+	font-size: 10pt;
+	margin-top:5px;
+
+}
+
 
 .sidebar-header {
     width: auto;
@@ -309,7 +343,7 @@ img#sidebar-plot-settings-active, img#sidebar-plot-settings-hidden { display: no
 
 .sidebar-area {
     width: auto;
-    padding: 10px 0;
+    padding: 0px 0;
     font-size: 11pt;
     border: 0 solid #E0E0E0;
     border-bottom-width: 1px;
@@ -390,26 +424,37 @@ input#show-tide-gauges-checkbox {
     width: 145px;
 }
 
-#load-menu{
-	text-align: center;
-	width: 100%;
-	height: 100%;
-	padding: 0;
-	margin: 0;
-	opacity: 75%;
-	position: relative;
-	z-index: 3;
+#projectionMenu select{
+	align: center;
+	width:85%;
+	position:relative;
+	margin-bottom: 0px;
+    margin-top: 0px;
+	margin-left: 5px;
+	font-family: Helvetica;
+	display: inline;
+
 }
 
-#load-menu-text{
-	padding: 0;
-	margin: 0;
+#projectionMenu button{
+	width:85%;
 	position: relative;
-	z-index: 3;
-	font-size:60px
+    margin-top: 10px;
+	margin-bottom: 15px;
+	margin-left: 15px;
+	font-family: Helvetica;
+    font-size: 16px;
 }
 
-
+#projectionMenu p{
+	position:relative;
+	margin-left: 0px;
+	margin-bottom: 0px;
+	margin-top: 5px;
+	font-family: Helvetica;
+	font-size: 14px;
+	font-weight: bold;
+}
 /* -------- */
 
 #map-meta {
@@ -448,10 +493,9 @@ input#show-tide-gauges-checkbox {
 #cbar-max-set { color: #CFB87C; }
 #GetTimeseries { text-align: center; line-height: 22px; }
 #click-location p {
-    padding: 0;
+    padding-top: 10px;
     margin: 4px 0;
-    text-align: justify;
-    font-size: 12pt;
+    font-size: 10pt;
 }
 .click-latlon-div { text-align: left; font-weight: bold; display: inline-block; width: 90px; }
 .click-latlonfield-div { font-weight: bold; display: inline-block; width: 140px; text-align: right; }
@@ -929,37 +973,7 @@ div#privacy-policy ol, div#privacy-policy ul {
     border-color: #000000;
 }
 
-#projectionMenu select{
-	align: center;
-	width:85%;
-	position:relative;
-	margin-bottom: 0px;
-    margin-top: 5px;
-	margin-left: 5px;
-	font-family: Helvetica;
-	display: inline;
 
-}
-
-#projectionMenu button{
-	width:85%;
-	position: relative;
-    margin-top: 10px;
-	margin-bottom: 15px;
-	margin-left: 15px;
-	font-family: Helvetica;
-    font-size: 16px;
-}
-
-#projectionMenu p{
-	position:relative;
-	margin-left: 0px;
-	margin-bottom: 0px;
-	margin-top: 15px;
-	font-family: Helvetica;
-	font-size: 14px;
-	font-weight: bold;
-}
 
 .loader {
     border: 16px solid #f3f3f3; /* Light grey */
