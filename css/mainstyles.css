@@ -59,6 +59,7 @@ div.hline { height: 1px; margin: 6px 0px; width: 100%; background-color: #DDDDDD
     width: calc( 100% - 100px );
 	height: 100%;
     padding: 40px;
+	padding-top:5px;
     background-color: #FFFFFF;
     display: inline-block;
     vertical-align: top;
@@ -205,7 +206,7 @@ header { background-color: #000000; margin: 0px; border: 0px; }
 
 #menulinks ul li {
     display:inline-block;
-    float: left;
+    float: center;
     border: 0;
     margin: 0;
     overflow: hidden;
