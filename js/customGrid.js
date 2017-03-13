@@ -61,7 +61,7 @@ function makeOneDegGrid() {
 var scaleBy
 // Change geojson data values to queried data
 function changeGridDat(queriedData, cbarLims){
-	scaleBy = (1/100.) //mm to cm
+	scaleBy = (1/10.) //mm to cm
 	dMax = cbarLims[1] * scaleBy + 5
 	dMin = cbarLims[0] * scaleBy
 
