@@ -107,4 +107,4 @@ def constructGridReference():
     dictOut = open('maskRef.pkl', 'wb')
     pickle.dump(gridRef, dictOut)
 constructGridReference()
-# referenceFile2Pickles()
+referenceFile2Pickles()
