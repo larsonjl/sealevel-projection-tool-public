@@ -802,7 +802,7 @@ function loadCustomLayers(){
                     property: 'sl2025',
                     stops: getColorbarStops('spectral', dMin, dMax)
                     }, 'fill-opacity': 1.0}
-            }, 'water');
+            }, 'landcover');
 
         map.addLayer({
                 "id": "twoDeg2025",
@@ -818,7 +818,7 @@ function loadCustomLayers(){
                     property: 'sl2025',
                     stops: getColorbarStops('spectral', dMin, dMax)
                     }, 'fill-opacity': 1.0}
-            }, 'water');
+            }, 'landcover');
 
         map.addLayer({
                 "id": "oneDeg2050",
@@ -833,7 +833,7 @@ function loadCustomLayers(){
                         property: 'sl2050',
                         stops: getColorbarStops('spectral', dMin, dMax)
                         }, 'fill-opacity': 1.0}
-                }, 'water');
+                }, 'landcover');
 
             map.addLayer({
                     "id": "twoDeg2050",
@@ -849,7 +849,7 @@ function loadCustomLayers(){
                             property: 'sl2050',
                             stops: getColorbarStops('spectral', dMin, dMax)
                             }, 'fill-opacity': 1.0}
-                }, 'water');
+                }, 'landcover');
 
             map.addLayer({
                     "id": "oneDeg2075",
@@ -864,7 +864,7 @@ function loadCustomLayers(){
                             property: 'sl2075',
                             stops: getColorbarStops('spectral', dMin, dMax)
                             }, 'fill-opacity': 1.0}
-                    }, 'water');
+                    }, 'landcover');
 
                 map.addLayer({
                         "id": "twoDeg2075",
@@ -880,7 +880,7 @@ function loadCustomLayers(){
                                 property: 'sl2075',
                                 stops: getColorbarStops('spectral', dMin, dMax)
                                 }, 'fill-opacity': 1.0}
-                    }, 'water');
+                    }, 'landcover');
 
                 map.addLayer({
                         "id": "oneDeg2100",
@@ -895,7 +895,7 @@ function loadCustomLayers(){
                                 property: 'sl2100',
                                 stops: getColorbarStops('spectral', dMin, dMax)
                                 }, 'fill-opacity': 1.0}
-                        }, 'water');
+                        }, 'landcover');
 
                     map.addLayer({
                             "id": "twoDeg2100",
@@ -911,7 +911,7 @@ function loadCustomLayers(){
                                     property: 'sl2100',
                                     stops: getColorbarStops('spectral', dMin, dMax)
                                     }, 'fill-opacity': 1.0}
-                        }, 'water');
+                        }, 'landcover');
 
 }
 
@@ -927,7 +927,7 @@ function initializeMap() {
         map = new mapboxgl.Map({
             version: 6,
             container: 'map-div',
-            style: 'mapbox://styles/jlarson630/cj001rqfr008v2so5auc9dggx',
+            style: 'mapbox://styles/jlarson630/cj0be6ppp001y2snxtd6slir6',
 			//style: 'mapbox://styles/mapbox/satellite-v9',
             center: [-88.137, 35.13],
             zoom: 2,
