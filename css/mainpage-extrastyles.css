@@ -1,6 +1,21 @@
 /* Altimetry Visualization Tool Page-Specific Extra Stylesheet */
 /* CU Colors [ Black:#000000, Gold:#CFB87C, Dark Gray:#565A5C, Light Gray:#A2A4A3 ] */
 
+/*Enter site box*/
+#goto-tool a:link, #goto-tool a:visited {
+    background-color: #f44336;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+
+#goto-tool a:hover, #goto-tool a:active {
+    background-color: red;
+}
+
 /* Mapping Things */
 #chart-container {
     text-align: center;
