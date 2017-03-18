@@ -2,23 +2,18 @@
 <html>
 <head>
     <title>CU Sea Level Projection Project</title>
-
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
     <meta name="keywords" content="CCAR, Sea, Level, Projection, Colorado, Inundation, Rise, Geodesy, Larson, Nerem"/>
     <meta name="description" content="Colorado Sea Level Projection Project."/>
     <meta name="author" content="Jacob Larson and Michael Croteau"/>
     <meta charset='utf-8'/>
-
     <link rel="icon" href="http://ccar.colorado.edu/images/culogo_sm.jpg" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="css/mainstyles.css"/>
-    <link rel="stylesheet" type="text/css" href="css/extrastyles.css"/>
-
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.css' rel='stylesheet' />
-
+	<link rel="stylesheet" type="text/css" href="css/mainpage-styles.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mainpage-extrastyles.css"/>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjs/2.6.0/math.min.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
 </head>
 
 <body>
@@ -26,41 +21,33 @@
 <div id='background'></div>
 
 <div id="foreground">
-    <div id="menu-container">
-        <header>
-            <div id="menuhead-map">
-                <div id="menucontentname"><h1 class="top" id="mvt-title">CU Sea Level Projection Tool (Beta Mode)</h1></div>
-                <div id="menucontenttitle"><h2 class="top"><a href="/"><a href="https://www.colorado.edu">University of Colorado Boulder</a></h2></div>
-            </div>
-            <div id="menulinks">
-                <ul>
-					<li><a class="navbar" href="index.html">Main</a></li>
-                    <li><a class="navbar" href="about.html">About the Project</a></li>
-					<li><a class="navbar" href="about-sl.html">About Sea Level Projections</a></li>
-                    <li><a class="navbar" href="contact.html">Contact</a></li>
 
-                </ul>
-            </div>
-        </header>
-    </div>
     <div id='main-container'>
         <div class='content-container' id="map-container">
             <div id='map-area'>
                 <div id="map-and-cbar">
+					<div id='map-title-container'>
+						CU Sea Level Projection Project
+					</div>
 					<div id='year-select-container'>
-						<div id='projection-name'> Current Projection:</div>
-						<div id='projection-name-val'>RCP8.5 IPCC AR5 (Median)</div>
-						<div id='year-select-slider'>
-					   		<input type="range" min="2025" max="2100" value="2100" step="25" id="colorbar-max-bounds" onchange="updateMapYear(this.value);"/>
+						<div class = 'map-control-box'>
+							<p id='projection-name-val' title="See menu to right to change projection"><b>Current Projection:</b> RCP8.5 IPCC AR5 (Median)</p>
+							<p><b>Map Display Year <img id="sidebar-question-button" src="img/ic_help_black_48dp.png"/>:</b>
+								<select id="display-year" onchange="updateMapYear()">
+									<option value="2025">2025 </option>
+									<option value="2050">2050 </option>
+									<option value="2075">2075 </option>
+									<option value="2100" selected="selected">2100 </option>
+								</select><br>
+							</p>
+							<p id='project-mode'>
+								<b>Projection Mode<img id="sidebar-question-button" src="img/ic_help_black_48dp.png"/>:</b>
+								<div>
+									<input type="radio" id='sl1' name='sl-opt' value="rel"> Relative Sea Level <br>
+									<input type="radio" id='sl2' name='sl-opt' value="abs" selected="selected"> Absolute Sea Level
+								</div>
+							</p>
 						</div>
-						<div id='year-num-container'>2025</div>
-						<div id='year-num-container'>2050</div>
-						<div id='year-num-container'>2075</div>
-						<div id='year-num-container'>2100</div>
-						<!--<div id='year-name'> Year: </div>
-						<div id='year-select-lower'>&#8592;</div>
-						<div id='year-selected'> 2100 </div>
-						<div id='year-select-higher'>&#8594;</div> -->
 					</div>
                     <div id='map-cbar-container'>
                         <div class="map-colorbar" id="viridis-colorbar">
@@ -124,9 +111,7 @@
 												<input type="radio" id='r2' name='rcpBasicSelect' value="rcp45"> Moderate CO2 cuts<br>
 												<input type="radio" id='r3' name='rcpBasicSelect' value="rcp85" checked="checked"> No CO2 cuts (Current path)<br>
 											</div>
-
 											<button id="runBasicProject" type="button">Calculate Projection</button>
-
 										</div>
 								</div>
 							</div>
@@ -184,32 +169,6 @@
                                     </div>
                                 </div>
                             </div>
-							<!--
-                            <div class="sidebar-header" id="sidebar-map-settings">
-                                <div class="sidebar-header-select">
-                                    <img id="sidebar-map-settings-active" src="img/ic_chevron_down_gray333_48dp.png"/>
-                                    <img id="sidebar-map-settings-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
-                                </div>
-                                <h2>Map Settings</h2>
-                            </div>
-                            <div class="sidebar-section" id="sidebar-map">
-                                <div class="sidebar-area">
-                                    <span class="bold">Colormap</span>
-                                    <select id="sidebar-select-colormap">
-                                        <optgroup label="Linear Maps">
-                                            <option value="spectral" selected>Spectral</option>
-
-                                            <option value="plasma">Plasma</option>
-                                            <option value="rw">Red-White</option>
-                                        </optgroup>
-                                        <optgroup label="Diverging Maps">
-                                            <option value="rwb">Red-White-Blue</option>
-                                            <option value="spectral">Spectral</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                            </div> -->
-
                         </div>
 
                         <div id="map-data-source">
@@ -247,12 +206,23 @@
         </div>
     </div>
 
+
     <div class='content-container' id="footer-container">
         <div id="footer-area">
-			<a href="http://sealevel.colorado.edu/" target="_blank">CU Sea Level Research Group</a> &nbsp; | &nbsp;
-            <a href="privacy.html">Privacy Policy</a>
-            <br>
-        </div>
+			<div id="footer-left">
+				<a href="http://sealevel.colorado.edu/" target="_blank">CU Sea Level Research Group</a> &nbsp; | &nbsp;
+				<a href="about.html">About the Project</a> &nbsp; | &nbsp;
+				<a href="about-sl.html">About Sea Level Projections</a>&nbsp; | &nbsp;
+				<a href="contact.html">Contact</a>&nbsp; | &nbsp;
+				<a href="privacy.html">Privacy Policy</a> &nbsp; | &nbsp;
+			</div>
+			<div id="footer-right">
+				<a href="https://www.mapbox.com/map-feedback/">© Mapbox | </a>
+				<a href="http://www.openstreetmap.org/copyright">© OpenStreetMap | </a>
+				<a href="https://www.mapbox.com/map-feedback/" target="_blank"><strong>Improve this map</strong></a>
+			</div>
+
+		</div>
     </div>
 
 </div><!-- End of #foreground -->
@@ -261,6 +231,7 @@
 <script type="text/javascript" src="js/globals.js"></script>
 <script type="text/javascript" src="js/oneDegreeMask.json"></script>
 <script type="text/javascript" src="js/twoDegreeMask.json"></script>
+<script type="text/javascript" src="js/coastScatter.json"></script>
 <script type="text/javascript" src="js/sidebarReference.js"></script>
 <script type="text/javascript" src="js/customGrid.js"></script>
 <script type="text/javascript" src="js/sidebarOptions.js"></script>
