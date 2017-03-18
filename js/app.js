@@ -1,3 +1,34 @@
+// On 'make projection' click, query data and display
+$('#runProject').click(function(){
+	defaultMap = 'false';
+    queryString = constructQueryArray();
+    $.get(apiLoc + "/projection_api?datastring=" + rcpScenario + queryString, function(data, status){
+				datasetIn = data
+				changeGridDat(data['gridData'], data['cLims']);
+        map.getSource('twoDegreeData').setData(twoDegGrid);
+        map.getSource('oneDegreeData').setData(oneDegGrid);
+		var currentYear = document.getElementById('display-year').value
+        loadCustomLayers();
+		updateMapYear();
+		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
+		maximizePlot();
+		changeProjectionName();
+		rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
+    });
+});
+
+// On 'make basic projection' click, query data and display
+$('#runBasicProject').click(function(){
+	defaultMap = 'true';
+	var currentYear = document.getElementById('display-year').value
+	var rcpScen = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
+	loadBasicProjection(rcpScen);
+	changeBasicProjectionName();
+	rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
+	queryString = defaultQueryString;
+});
+
+
 function onPlottingFormChange() {
     "use strict";
     var boxWidth = document.getElementById("smooth-width"),
@@ -271,7 +302,7 @@ function setActiveColormap() {
     "use strict";
     var min, max = Number(document.getElementById('cbar-max-set').textContent);
     activeColormap = document.getElementById("sidebar-select-colormap").value;
-    updateColorbarMap(Number(document.getElementById("colorbar-max-bounds").value));
+    updateColorbarMap(Number(document.getElementById("display-year").value));
 }
 
 function setPlottingMode(mode) {

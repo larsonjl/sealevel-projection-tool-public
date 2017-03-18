@@ -1,24 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CU Sea Level Projection Project</title>
+    <title>CU Sea Level Projection Project </title>
 
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
     <meta name="keywords" content="CCAR, Sea, Level, Projection, Colorado, Inundation, Rise, Geodesy, Larson, Nerem"/>
     <meta name="description" content="Colorado Sea Level Projection Project."/>
     <meta name="author" content="Jacob Larson and Michael Croteau"/>
     <meta charset='utf-8'/>
 
     <link rel="icon" href="http://ccar.colorado.edu/images/culogo_sm.jpg" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="css/mainstyles.css"/>
-    <link rel="stylesheet" type="text/css" href="css/extrastyles.css"/>
-
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.css' rel='stylesheet' />
-
+    <link rel="stylesheet" type="text/css" href="css/mainpage-styles.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mainpage-extrastyles.css"/>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjs/2.6.0/math.min.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
 </head>
 
 <body>
@@ -26,251 +20,49 @@
 <div id='background'></div>
 
 <div id="foreground">
-    <div id="menu-container">
-        <header>
-            <div id="menuhead-map">
-                <div id="menucontentname"><h1 class="top" id="mvt-title">CU Sea Level Projection Tool (Beta Mode)</h1></div>
-                <div id="menucontenttitle"><h2 class="top"><a href="/"><a href="https://www.colorado.edu">University of Colorado Boulder</a></h2></div>
-            </div>
-            <div id="menulinks">
-                <ul>
-					<li><a class="navbar" href="index.html">Main</a></li>
+	<div id="menu-container">
+		<header>
+			<div id="menuhead-landing">
+				<div id="menucontentname-landing"><h1 class="top" id="mvt-title">CU Sea Level Projection Tool</h1></div>
+				<div id="menucontenttitle-landing"><h2 class="top"><a href="/"><a href="https://www.colorado.edu">University of Colorado Boulder</a></h2></div>
+			</div>
+			<div id="menulinks">
+
+				<ul>
+					<div>
+					<li><a class="navbar" href="index.html">Home </a></li>
+					<li><a class="navbar" href="app.html">App</a></li>
                     <li><a class="navbar" href="about.html">About the Project</a></li>
 					<li><a class="navbar" href="about-sl.html">About Sea Level Projections</a></li>
                     <li><a class="navbar" href="contact.html">Contact</a></li>
+				</div>
+				</ul>
+			</div>
+		</header>
+	</div>
 
-                </ul>
-            </div>
-        </header>
-    </div>
     <div id='main-container'>
-        <div class='content-container' id="map-container">
-            <div id='map-area'>
-                <div id="map-and-cbar">
-					<div id='year-select-container'>
-						<div id='projection-name'> Current Projection:</div>
-						<div id='projection-name-val'>RCP8.5 IPCC AR5 (Median)</div>
-						<div id='year-select-slider'>
-					   		<input type="range" min="2025" max="2100" value="2100" step="25" id="colorbar-max-bounds" onchange="updateMapYear(this.value);"/>
-						</div>
-						<div id='year-num-container'>2025</div>
-						<div id='year-num-container'>2050</div>
-						<div id='year-num-container'>2075</div>
-						<div id='year-num-container'>2100</div>
-						<!--<div id='year-name'> Year: </div>
-						<div id='year-select-lower'>&#8592;</div>
-						<div id='year-selected'> 2100 </div>
-						<div id='year-select-higher'>&#8594;</div> -->
-					</div>
-                    <div id='map-cbar-container'>
-                        <div class="map-colorbar" id="viridis-colorbar">
-                            <div class="cbar" id="cbar-viridis"></div>
-                            <div class="cbar-labels" id="cbar-viridis-labels">
-                                <div class="cbar-num" id="cbar-vir-l-20"></div><div class="cbar-num" id="cbar-vir-l-18"></div><div class="cbar-num" id="cbar-vir-l-16"></div><div class="cbar-num" id="cbar-vir-l-14"></div><div class="cbar-num" id="cbar-vir-l-12"></div><div class="cbar-num" id="cbar-vir-l-10"></div><div class="cbar-num" id="cbar-vir-l-8"></div><div class="cbar-num" id="cbar-vir-l-6"></div><div class="cbar-num" id="cbar-vir-l-4"></div><div class="cbar-num" id="cbar-vir-l-2"></div><div class="cbar-num" id="cbar-vir-l-0"></div>
-                            </div>
-                        </div>
-                        <div class="map-colorbar" id="plasma-colorbar">
-                            <div class="cbar" id="cbar-plasma"></div>
-                            <div class="cbar-labels" id="cbar-plasma-labels">
-                                <div class="cbar-num" id="cbar-pla-l-20"></div><div class="cbar-num" id="cbar-pla-l-18"></div><div class="cbar-num" id="cbar-pla-l-16"></div><div class="cbar-num" id="cbar-pla-l-14"></div><div class="cbar-num" id="cbar-pla-l-12"></div><div class="cbar-num" id="cbar-pla-l-10"></div><div class="cbar-num" id="cbar-pla-l-8"></div><div class="cbar-num" id="cbar-pla-l-6"></div><div class="cbar-num" id="cbar-pla-l-4"></div><div class="cbar-num" id="cbar-pla-l-2"></div><div class="cbar-num" id="cbar-pla-l-0"></div>
-                            </div>
-                        </div>
-                        <div class="map-colorbar" id="spectral-colorbar">
-                            <div class="cbar" id="cbar-spectral"></div>
-                            <div class="cbar-labels" id="cbar-spectral-labels">
-                                <div class="cbar-num" id="cbar-spe-l-20"></div><div class="cbar-num" id="cbar-spe-l-18"></div><div class="cbar-num" id="cbar-spe-l-16"></div><div class="cbar-num" id="cbar-spe-l-14"></div><div class="cbar-num" id="cbar-spe-l-12"></div><div class="cbar-num" id="cbar-spe-l-10"></div><div class="cbar-num" id="cbar-spe-l-8"></div><div class="cbar-num" id="cbar-spe-l-6"></div><div class="cbar-num" id="cbar-spe-l-4"></div><div class="cbar-num" id="cbar-spe-l-2"></div><div class="cbar-num" id="cbar-spe-l-0"></div>
-                            </div>
-                        </div>
-                        <div class="map-colorbar" id="rwb-colorbar">
-                            <div class="cbar" id="cbar-rwb"></div>
-                            <div class="cbar-labels" id="cbar-rwb-labels">
-                                <div class="cbar-num" id="cbar-rwb-l-20"></div><div class="cbar-num" id="cbar-rwb-l-18"></div><div class="cbar-num" id="cbar-rwb-l-16"></div><div class="cbar-num" id="cbar-rwb-l-14"></div><div class="cbar-num" id="cbar-rwb-l-12"></div><div class="cbar-num" id="cbar-rwb-l-10"></div><div class="cbar-num" id="cbar-rwb-l-8"></div><div class="cbar-num" id="cbar-rwb-l-6"></div><div class="cbar-num" id="cbar-rwb-l-4"></div><div class="cbar-num" id="cbar-rwb-l-2"></div><div class="cbar-num" id="cbar-rwb-l-0"></div>
-                            </div>
-                        </div>
-                        <div class="map-colorbar" id="rw-colorbar">
-                            <div class="cbar" id="cbar-rw"></div>
-                            <div class="cbar-labels" id="cbar-rw-labels">
-                                <div class="cbar-num" id="cbar-rw-l-10"></div><div class="cbar-num" id="cbar-rw-l-9"></div><div class="cbar-num" id="cbar-rw-l-8"></div><div class="cbar-num" id="cbar-rw-l-7"></div><div class="cbar-num" id="cbar-rw-l-6"></div><div class="cbar-num" id="cbar-rw-l-5"></div><div class="cbar-num" id="cbar-rw-l-4"></div><div class="cbar-num" id="cbar-rw-l-3"></div><div class="cbar-num" id="cbar-rw-l-2"></div><div class="cbar-num" id="cbar-rw-l-1"></div><div class="cbar-num" id="cbar-rw-l-0"></div>
-                            </div>
-                        </div>
-                        <div id="cbar-units">cm</div>
-                    </div>
+        <div class='content-container'><h1>Welcome</h1></div>
+        <div class='about-section' id='about-container'>
+			<h3> Overview </h3>
+			<a href="app.html"id='goto-tool'>Enter Projection Tool</a>
 
-                    <div id="map-div">
-						<div id="error-popup" class="popup-msg error-msg">That location is unavailable.<br>Either it is not in the dataset or there has been an error.</div>
-					</div>
-                    <div id="sidebar">
-                        <div class="sidebar-menu">
-                            <img id="sidebar-menu-button" src="img/ic_menu_white_48dp.png"/>
-                            <img id="sidebar-help-button" src="img/ic_help_white_48dp.png"/>
-                        </div>
-                        <div id="sidebar-contents">
-							<div class="sidebar-header" id="sidebar-basic-settings">
-								<div class="sidebar-header-select">
-									<img id="sidebar-basic-settings-active" src="img/ic_chevron_down_gray333_48dp.png"/>
-									<img id="sidebar-basic-settings-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
-								</div>
-								<h2>Basic Projection</h2>
-							</div>
-							<div class="sidebar-section" id="sidebar-basic">
-								<div class="sidebar-area">
-										<div id="projectionMenu">
-											<div id="co2-header">
-												<p>Carbon Emissions Scenario<img id="sidebar-question-button" src="img/ic_help_black_48dp.png"/></p>
-											</div>
-											Future sea level change depends on current and future carbon emissions.  Choose a 21st century carbon emission scenario.
-											<div  id="rcpBasicRadioSelect">
-												<input type="radio" id='r1' name='rcpBasicSelect' value="rcp26"> Drastic CO2 cuts <br>
-												<input type="radio" id='r2' name='rcpBasicSelect' value="rcp45"> Moderate CO2 cuts<br>
-												<input type="radio" id='r3' name='rcpBasicSelect' value="rcp85" checked="checked"> No CO2 cuts (Current path)<br>
-											</div>
-
-											<button id="runBasicProject" type="button">Calculate Projection</button>
-
-										</div>
-								</div>
-							</div>
-
-                            <div class="sidebar-header" id="sidebar-location-lookup">
-                                <div class="sidebar-header-select">
-                                    <img id="sidebar-location-lookup-active" src="img/ic_chevron_down_gray333_48dp.png"/>
-                                    <img id="sidebar-location-lookup-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
-                                </div>
-                                <h2>Custom Projection</h2>
-                            </div>
-
-                            <div class="sidebar-section" id="map-search">
-                                <div id="click-location">
-                                    <div id="projectionMenu">
-                                        <p>RCP Scenario</p>
-										<div  id="rcpRadioSelect">
-											<input type="radio" id='r1' name='rcpMenuSelect' value="rcp26"> 2.6
-											<input type="radio" id='r2' name='rcpMenuSelect' value="rcp45"> 4.5
-											<input type="radio" id='r3' name='rcpMenuSelect' value="rcp85" checked="checked"> 8.5
-										</div>
-
-                                        <p>Greenland Surface Mass Balance</p>
-                                        <select id="gsmbMenu">
-                                            <option value=""> None </option>
-                                        </select>
-
-                                        <p>Greenland Dynamic (Ice discharge)</p>
-                                        <select id="gdynMenu">
-                                            <option value=""> None </option>
-                                        </select>
-
-                                        <p>Antarctica Surface Mass Balance</p>
-                                        <select id="asmbMenu">
-                                            <option value="">None</option>
-                                        </select>
-
-                                        <p>Antarctica Dynamic (Ice Discharge)</p>
-
-                                        <select id="adynMenu">
-                                            <option value="">None</option>
-                                        </select>
-
-                                        <p>Ocean Dynamics</p>
-                                        <select id="thermoMenu">
-                                            <option value="">None </option>
-                                        </select>
-
-                                        <p>Mountain Glaciers</p>
-                                        <select id="glacierMenu">
-                                            <option value="">None </option>
-                                        </select>
-
-                                        <button id="runProject" type="button">Calculate Projection</button>
-                                    </div>
-                                </div>
-                            </div>
-							<!--
-                            <div class="sidebar-header" id="sidebar-map-settings">
-                                <div class="sidebar-header-select">
-                                    <img id="sidebar-map-settings-active" src="img/ic_chevron_down_gray333_48dp.png"/>
-                                    <img id="sidebar-map-settings-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
-                                </div>
-                                <h2>Map Settings</h2>
-                            </div>
-                            <div class="sidebar-section" id="sidebar-map">
-                                <div class="sidebar-area">
-                                    <span class="bold">Colormap</span>
-                                    <select id="sidebar-select-colormap">
-                                        <optgroup label="Linear Maps">
-                                            <option value="spectral" selected>Spectral</option>
-
-                                            <option value="plasma">Plasma</option>
-                                            <option value="rw">Red-White</option>
-                                        </optgroup>
-                                        <optgroup label="Diverging Maps">
-                                            <option value="rwb">Red-White-Blue</option>
-                                            <option value="spectral">Spectral</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                            </div> -->
-
-                        </div>
-
-                        <div id="map-data-source">
-                            <span class="bold">Data Sources:</span>&nbsp;<br>
-                            <span class="italics">IPCC AR5</span>&nbsp;<br>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class='content-container' id="chart-container">
-            <div id="maximize-plot">
-                <img id="maximize-plot-img" src="img/ic_add_circle_outline_black_48dp.png"/>
-            </div>
-
-            <div id="minimize-plot">
-                <img id="minimize-plot-img" src="img/ic_remove_circle_outline_black_48dp.png"/>
-            </div>
-
-            <div id="chart-area">
-
-                <div id="chart-topbar">CU Sea Level Projection Tool</div>
-                <!-- <div id="chart-options">
-                    <button class="form-button" id="save-button" type="button"><img src="img/ic_image_grey600_48dp.png"/><span id="save-button-text">Save Image</span></button>
-                </div> -->
-             <div id="timeseries">
-                    <div id="data-timeseries"></div>
-                    <div class="tooltip" id="plot-tooltip" style="opacity: 0;">
-                      <div class="tooltip-info" id="tooltip-info-0"></div><div class="tooltip-info" id="tooltip-info-1"></div>
-                    </div>
-                </div>
-                <div id="resize-triangle"></div>
-            </div>
-        </div>
+		</div>
     </div>
 
-    <div class='content-container' id="footer-container">
-        <div id="footer-area">
+	<div class='content-container' id="footer-container">
+		<div id="footer-area">
 			<a href="http://sealevel.colorado.edu/" target="_blank">CU Sea Level Research Group</a> &nbsp; | &nbsp;
-            <a href="privacy.html">Privacy Policy</a>
-            <br>
-        </div>
-    </div>
-
+			<a href="about.html">About the Project</a> &nbsp; | &nbsp;
+			<a href="about-sl.html">About Sea Level Projections</a>&nbsp; | &nbsp;
+			<a href="contact.html">Contact</a>&nbsp; | &nbsp;
+			<a href="privacy.html">Privacy Policy</a> &nbsp; | &nbsp;
+		</div>
+	</div>
 </div><!-- End of #foreground -->
 
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script type="text/javascript" src="js/globals.js"></script>
-<script type="text/javascript" src="js/oneDegreeMask.json"></script>
-<script type="text/javascript" src="js/twoDegreeMask.json"></script>
-<script type="text/javascript" src="js/sidebarReference.js"></script>
-<script type="text/javascript" src="js/customGrid.js"></script>
-<script type="text/javascript" src="js/sidebarOptions.js"></script>
-<script type="text/javascript" src="js/projPlot.js"></script>
-<script type="text/javascript" src="js/statistics.js"></script>
-<script type="text/javascript" src="js/plotting.js"></script>
-<script type="text/javascript" src="js/app.js"></script>
-<script type="text/javascript" src="js/mapcontrol-colormap.js"></script>
-<script type="text/javascript" src="js/mapcontrol.js"></script>
-
+<script type="text/javascript">
+</script>
 
 </body>
 </html>
