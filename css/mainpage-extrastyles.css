@@ -73,6 +73,7 @@
 	font-size: 10pt;
 	vertical-align: middle;
 	position: relative;
+	display: inline;
 	margin:0px;
 	padding-left: 5px;
 	background-color: #FFFFFF;
@@ -86,22 +87,18 @@
 .map-control-box div{
 	font-size: 10pt;
 	position: relative;
-	float: right;
 	margin:0px;
-	padding-right: 55px;
-	padding-top: 5px;
+	padding-top: 0px;
 	background-color: #FFFFFF;
 	color: #000000;
-	line-height: 120%;
+	line-height: 180%;
 
 }
 
-#project-mode{
-	width:140px;
-	margin: 0px;
-	border: 0px;
-	display: inline;
-	margin-top: 10px;
+#project-mode-div{
+	float:right;
+	padding-right:55px;
+	z-index:0;
 }
 
 #year-select-slider{
@@ -344,6 +341,7 @@ div.popup-msg {
 }
 
 
+/*Section for info styles*/
 #sidebar-help-button {
     width: 32px;
     height: 32px;
@@ -356,6 +354,52 @@ div.popup-msg {
 
 #sidebar-help-button:hover {
     opacity: 1;
+}
+
+.question-button {
+	position:relative;
+    width: 16px;
+    height: 16px;
+    margin: 0px;
+    cursor: pointer;
+	padding: 0px;
+    opacity: 0.5;
+    display: inline;
+	vertical-align: middle;
+	padding-bottom: 3px;
+	padding-right: 0px;
+}
+
+.question-button .question-button-text {
+	position:relative;
+    visibility: hidden;
+    width: 160px;
+    background-color: #FFFFFF;
+    color: #000000;
+    text-align: left;
+	margin: 5px;
+	padding: 5px;
+    border: 1px;
+	border-style:solid;
+	border-radius: 2px;
+	border-color: #000000;
+    padding: 5px;
+	float:left;
+	line-height: 100%;
+	opacity: 1;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 99999;
+}
+.question-button:hover{
+	opacity:1;
+	z-index: 99999;
+
+}
+
+.question-button:hover .question-button-text {
+    visibility: visible;
+	z-index: 99999;
 }
 
 #sidebar-question-button {
@@ -373,6 +417,7 @@ div.popup-msg {
 #sidebar-question-button:hover {
     opacity: 1;
 }
+
 
 #co2-header{
 	display: table-cell;
@@ -670,7 +715,7 @@ img#coast-tip { height: 16px; width: 16px; display: inline-block; padding-top: 2
 
 
 #clm-toggler { display: none; width: 100%; }
-
+/*
 div.tooltip {
     text-align: center;
     vertical-align: middle;
@@ -698,7 +743,7 @@ div.tooltip {
 
 #tooltip-info-0 { width: 120px; }
 #tooltip-info-1 { width: 110px; }
-
+*/
 .tot-proj-title {
     margin: 0 10px 0 0;
     font-weight: bold;

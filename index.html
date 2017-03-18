@@ -21,7 +21,6 @@
 <div id='background'></div>
 
 <div id="foreground">
-
     <div id='main-container'>
         <div class='content-container' id="map-container">
             <div id='map-area'>
@@ -31,22 +30,37 @@
 					</div>
 					<div id='year-select-container'>
 						<div class = 'map-control-box'>
-							<p id='projection-name-val' title="See menu to right to change projection"><b>Current Projection:</b> RCP8.5 IPCC AR5 (Median)</p>
-							<p><b>Map Display Year <img id="sidebar-question-button" src="img/ic_help_black_48dp.png"/>:</b>
+							<div id='projection-name-val' title="See menu to right to change projection">
+								<b>Current Projection:</b> RCP8.5 IPCC AR5 (Median)
+							</div>
+							<div>
+								<b>Map Display Year
+									<div class="question-button">
+										<img class="question-button" src="img/ic_help_black_48dp.png">
+											<span class="question-button-text">Select a year to view the projected change in sea level relative to 2015 for the selected scenario</span>
+										</img>
+									</div>
+								:</b>
 								<select id="display-year" onchange="updateMapYear()">
 									<option value="2025">2025 </option>
 									<option value="2050">2050 </option>
 									<option value="2075">2075 </option>
 									<option value="2100" selected="selected">2100 </option>
 								</select><br>
-							</p>
-							<p id='project-mode'>
-								<b>Projection Mode<img id="sidebar-question-button" src="img/ic_help_black_48dp.png"/>:</b>
-								<div>
+							</div>
+							<div>
+								<b>Projection Mode
+									<div class="question-button">
+										<img class="question-button" src="img/ic_help_black_48dp.png">
+											<span class="question-button-text">Select a sea level projection mode.  <i>Relative sea level</i> refers to the the sea level "felt at the coast". Data is therefore only displayed at coastal locations. This mode accounts for future changes in both land and ocean heights.  <i>Absolute sea level</i>  refers to only changes in ocean height and is displayed as a grid over the ocean. </span>
+										</img>
+									</div>
+								:</b>
+								<div id='project-mode-div'>
 									<input type="radio" id='sl1' name='sl-opt' value="rel"> Relative Sea Level <br>
-									<input type="radio" id='sl2' name='sl-opt' value="abs" selected="selected"> Absolute Sea Level
+									<input type="radio" id='sl2' name='sl-opt' value="abs" checked="checked"> Absolute Sea Level
 								</div>
-							</p>
+							</div>
 						</div>
 					</div>
                     <div id='map-cbar-container'>
@@ -56,28 +70,10 @@
                                 <div class="cbar-num" id="cbar-vir-l-20"></div><div class="cbar-num" id="cbar-vir-l-18"></div><div class="cbar-num" id="cbar-vir-l-16"></div><div class="cbar-num" id="cbar-vir-l-14"></div><div class="cbar-num" id="cbar-vir-l-12"></div><div class="cbar-num" id="cbar-vir-l-10"></div><div class="cbar-num" id="cbar-vir-l-8"></div><div class="cbar-num" id="cbar-vir-l-6"></div><div class="cbar-num" id="cbar-vir-l-4"></div><div class="cbar-num" id="cbar-vir-l-2"></div><div class="cbar-num" id="cbar-vir-l-0"></div>
                             </div>
                         </div>
-                        <div class="map-colorbar" id="plasma-colorbar">
-                            <div class="cbar" id="cbar-plasma"></div>
-                            <div class="cbar-labels" id="cbar-plasma-labels">
-                                <div class="cbar-num" id="cbar-pla-l-20"></div><div class="cbar-num" id="cbar-pla-l-18"></div><div class="cbar-num" id="cbar-pla-l-16"></div><div class="cbar-num" id="cbar-pla-l-14"></div><div class="cbar-num" id="cbar-pla-l-12"></div><div class="cbar-num" id="cbar-pla-l-10"></div><div class="cbar-num" id="cbar-pla-l-8"></div><div class="cbar-num" id="cbar-pla-l-6"></div><div class="cbar-num" id="cbar-pla-l-4"></div><div class="cbar-num" id="cbar-pla-l-2"></div><div class="cbar-num" id="cbar-pla-l-0"></div>
-                            </div>
-                        </div>
                         <div class="map-colorbar" id="spectral-colorbar">
                             <div class="cbar" id="cbar-spectral"></div>
                             <div class="cbar-labels" id="cbar-spectral-labels">
                                 <div class="cbar-num" id="cbar-spe-l-20"></div><div class="cbar-num" id="cbar-spe-l-18"></div><div class="cbar-num" id="cbar-spe-l-16"></div><div class="cbar-num" id="cbar-spe-l-14"></div><div class="cbar-num" id="cbar-spe-l-12"></div><div class="cbar-num" id="cbar-spe-l-10"></div><div class="cbar-num" id="cbar-spe-l-8"></div><div class="cbar-num" id="cbar-spe-l-6"></div><div class="cbar-num" id="cbar-spe-l-4"></div><div class="cbar-num" id="cbar-spe-l-2"></div><div class="cbar-num" id="cbar-spe-l-0"></div>
-                            </div>
-                        </div>
-                        <div class="map-colorbar" id="rwb-colorbar">
-                            <div class="cbar" id="cbar-rwb"></div>
-                            <div class="cbar-labels" id="cbar-rwb-labels">
-                                <div class="cbar-num" id="cbar-rwb-l-20"></div><div class="cbar-num" id="cbar-rwb-l-18"></div><div class="cbar-num" id="cbar-rwb-l-16"></div><div class="cbar-num" id="cbar-rwb-l-14"></div><div class="cbar-num" id="cbar-rwb-l-12"></div><div class="cbar-num" id="cbar-rwb-l-10"></div><div class="cbar-num" id="cbar-rwb-l-8"></div><div class="cbar-num" id="cbar-rwb-l-6"></div><div class="cbar-num" id="cbar-rwb-l-4"></div><div class="cbar-num" id="cbar-rwb-l-2"></div><div class="cbar-num" id="cbar-rwb-l-0"></div>
-                            </div>
-                        </div>
-                        <div class="map-colorbar" id="rw-colorbar">
-                            <div class="cbar" id="cbar-rw"></div>
-                            <div class="cbar-labels" id="cbar-rw-labels">
-                                <div class="cbar-num" id="cbar-rw-l-10"></div><div class="cbar-num" id="cbar-rw-l-9"></div><div class="cbar-num" id="cbar-rw-l-8"></div><div class="cbar-num" id="cbar-rw-l-7"></div><div class="cbar-num" id="cbar-rw-l-6"></div><div class="cbar-num" id="cbar-rw-l-5"></div><div class="cbar-num" id="cbar-rw-l-4"></div><div class="cbar-num" id="cbar-rw-l-3"></div><div class="cbar-num" id="cbar-rw-l-2"></div><div class="cbar-num" id="cbar-rw-l-1"></div><div class="cbar-num" id="cbar-rw-l-0"></div>
                             </div>
                         </div>
                         <div id="cbar-units">cm</div>
