@@ -201,13 +201,13 @@ header { background-color: #333333; margin: 0px; border: 0px; }
 
 #menuhead-map { width: 100%; margin: 0px auto; height: 43px; }
 #menucontentname  { margin-left:  18px; text-align:  left; float:  left; }
-#menucontentname-landing  { margin-left:  0px; text-align: left; width:100%}
-#menucontentname-landing  h1{ margin-left:  0px; text-align: left; width:100%}
+#menucontentname-landing  { margin-left:  10px; text-align: left; width:100%}
+#menucontentname-landing  h1{ margin-left:  10px; text-align: left; width:100%}
 
 #menucontenttitle { margin-right: 10px; text-align: left; float: right; }
 #menucontentname, #menucontenttitle { line-height: 43px; vertical-align: middle; }
-#menucontenttitle-landing{margin-left:  0px; text-align: left; width:100%}
-#menucontenttitle-landing h2{margin-left:  0px; text-align: left; width:100%}
+#menucontenttitle-landing{margin-left:  10px; text-align: left; width:100%}
+#menucontenttitle-landing h2{margin-left:  10px; text-align: left; width:100%}
 
 .top { color: #FFFFFF; margin:0px auto; }
 
@@ -268,6 +268,10 @@ a.navbar:link, a.navbar:visited {
 	border-color: #d3d3d3;
 	-webkit-transition: background-color 0.5s; /* Safari 3.1 to 6.0 */
   	transition: background-color 0.5s;
+}
+
+#navbar-last-box{
+	border: 0px;
 }
 
 a.navbar:hover, a.navbar:active { background-color: #d3d3d3; }
