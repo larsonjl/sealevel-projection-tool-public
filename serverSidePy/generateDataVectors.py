@@ -14,14 +14,18 @@ import numpy as np
 import pandas as pd
 import pickle
 import scipy.ndimage
+import json
 
 bothMasks = pickle.load(open('webGridMasks.pkl', "rb"))
 oneDegreeMask = np.array(bothMasks['oneDeg']).astype(bool)
 twoDegreeMask = np.array(bothMasks['twoDeg']).astype(bool)
+coastLocs = './data/coast/coastLocsRef.json' #  Location of map scatter points 
+with open(coastLocs) as data_file:
+    coastalData = json.load(data_file)
 
 
 # TODO: Latitude weighted mean
-def grid2db(ncfile, variable):
+def grid2griddb(ncfile, variable):
     '''This function takes in a netCDF file and a given variable name and
     outputs data vectors in accordance with the indexing standard established
     for the sea level projection website.  Data is assumed to be one a
@@ -62,7 +66,59 @@ def grid2db(ncfile, variable):
     return dataOut, tsMean
 
 
-def referenceFile2Pickles():
+def oneDegLatlon2gridcell(in_lon, in_lat, gridlon_min, gridlat_min):
+    indxLat = np.round(in_lat - gridlat_min)
+    indxLon = np.round(in_lon - gridlon_min)
+    if indxLon == 360:
+        indxLon -= 1
+    return int(indxLon), int(indxLat)
+
+
+def lon180tolon360(longitude):
+    if longitude < 0:
+        longitude += 360
+    return longitude
+
+def grid2coastLocsDB(ncfile, variable):
+    '''
+    Same as for grid but this is used for the scatter coast locs
+    '''
+    # Load in requested variable
+    print(ncfile)
+    dFile = Dataset(ncfile)
+    varGrid = dFile.variables[variable][:]
+    varGrid = varGrid - varGrid[8, :, :] # Indx 8 makes data relative to 2015
+    varGrid = varGrid[8::,:,:] # remove data before 2015
+    
+    outDataVector = np.nan * np.ones((varGrid.shape[0], len(coastalData['features'])))
+    i = 0
+    for features in coastalData['features']:
+        lonPt, latPt = features['geometry']['coordinates']
+        lonPt = lon180tolon360(lonPt)
+        lonIndx, latIndx = oneDegLatlon2gridcell(lonPt, latPt, 0, -89.5)
+        outDataVector[:, i] = varGrid[:, latIndx, lonIndx].astype('float16')
+        i += 1
+    
+    outDataVector[outDataVector == np.inf] = -999.99
+    
+    return outDataVector
+
+def referencePointFile2Pickles():
+    masterDict = {'rcp85': {}, 'rcp45': {}, 'rcp26': {}}
+    refFile = pd.read_csv('referenceFile.csv')
+    
+    for indx in refFile.index:
+        dFile = refFile.iloc[indx]
+        dataSetString = './data/' + dFile.Scenario + '/' + dFile.component +\
+                        '/' + dFile.meta + '/' + dFile.rawFile
+        dataArray = grid2coastLocsDB(dataSetString, dFile.variableName)
+        masterDict[dFile.Scenario][dFile.referenceName] = dataArray
+    
+    masterDictOut = open('vectorDataForWebsite.pkl', 'wb')
+    pickle.dump([masterDict], masterDictOut)
+    masterDictOut.close()
+    
+def referenceGridFile2Pickles():
     '''Here we use our reference file and the individual projection
     files in our database to generate a dictionary that contains
     all of the projections, already masked, with a mask value of
@@ -71,16 +127,16 @@ def referenceFile2Pickles():
     calculates the global mean value at every time step.'''
 
     masterDict = {'rcp85': {}, 'rcp45': {}, 'rcp26': {}}
-    masterDictTS = {'rcp85': {}, 'rcp45': {}, 'rcp26': {}}
+    masterDictTS = {'rcp85': {}, 'rzcp45': {}, 'rcp26': {}}
     refFile = pd.read_csv('referenceFile.csv')
     for indx in refFile.index:
         dFile = refFile.iloc[indx]
         dataSetString = './data/' + dFile.Scenario + '/' + dFile.component +\
                         '/' + dFile.meta + '/' + dFile.rawFile
-        dataArray, tsMean = grid2db(dataSetString, dFile.variableName)
+        dataArray, tsMean = grid2griddb(dataSetString, dFile.variableName)
         masterDict[dFile.Scenario][dFile.referenceName] = dataArray
         masterDictTS[dFile.Scenario][dFile.referenceName] = tsMean
-
+    
     masterDictOut = open('dataForWebsite.pkl', 'wb')
     pickle.dump([masterDict, masterDictTS], masterDictOut)
     masterDictOut.close()
@@ -106,5 +162,7 @@ def constructGridReference():
 
     dictOut = open('maskRef.pkl', 'wb')
     pickle.dump(gridRef, dictOut)
+
+
+referenceGridFile2Pickles()
 constructGridReference()
-referenceFile2Pickles()
