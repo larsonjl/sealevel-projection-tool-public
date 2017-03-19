@@ -131,11 +131,6 @@ function initializeTiles(){
             "type": "geojson",
             "data": oneDegGrid
                 });
-
-	map.addSource("coastScatter", {
-            "type": "geojson",
-            "data": coastLocs
-                });
 }
 
 // Add coast scatter to map
@@ -146,8 +141,24 @@ function addCoastScatter(){
             "source": "coastScatter",
 			"z-index":999,
             "layout": {
-                    'visibility': 'visible'}
+                    'visibility': 'visible'},
+			"paint": {
+				"circle-color": {
+				type:'exponential',
+					property: 'sl2100',
+					stops: getColorbarStops('spectral', dMin, dMax)
+					}}
             });
+}
+
+function coastPointInteractions() {
+    "use strict";
+	map.on('click', function(e) {
+	        // set bbox as 5px reactangle area around clicked point
+	        var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
+	        var features = map.queryRenderedFeatures(bbox, { layers: ['coastPoints'] });
+			console.log(features)
+		});
 }
 
 function loadCustomLayers(){
