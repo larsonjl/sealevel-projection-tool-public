@@ -31,8 +31,8 @@ def createDatasetMultiYear(requestString):
     dOut = np.around(dOut, decimals=2)
     dMean = np.mean(dOut[dOut>-99999])
     dStd = np.std(dOut[dOut>-99999])
-    dMin = np.float16(dMean - 2*dStd)
-    dMax = np.float16(dMean + dStd)
+    dMin = np.float16(dMean - 2 * dStd)
+    dMax = np.float16(dMean + 2 * dStd)
     # dMin = np.float16(np.min(dOut[dOut > -10]))  # min not masked value
     # dMax = np.float16(np.max(dOut))
     output = {'cLims': [float(dMin), float(dMax)], 'gridData': dOut.tolist(),

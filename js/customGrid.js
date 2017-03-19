@@ -58,10 +58,10 @@ function makeOneDegGrid() {
 	}
 };
 
-var scaleBy
 // Change geojson data values to queried data
+var scaleBy;
 function changeGridDat(queriedData, cbarLims){
-	scaleBy = (1/100.) //mm to cm
+	scaleBy = (1/10.) //mm to cm
 	dMax = cbarLims[1] * scaleBy + 5
 	dMin = cbarLims[0] * scaleBy
 
@@ -118,6 +118,7 @@ function loadDefaultMap(){
         loadCustomLayers();
 		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
 		maximizePlot();
+		minimizePlot();
 		rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
     });
 }
@@ -128,7 +129,7 @@ function loadBasicProjection(rcpScenario){
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
         loadCustomLayers();
-		var currentYear = document.getElementById('colorbar-max-bounds').value;
+		var currentYear = document.getElementById('display-year').value;
 		updateMapYear(Number(currentYear));
 		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
 		maximizePlot();
@@ -137,40 +138,10 @@ function loadBasicProjection(rcpScenario){
 
 function changeProjectionName(){
 	var rcpScen = document.querySelector('input[name="rcpMenuSelect"]:checked').value;
-	document.getElementById('projection-name-val').innerHTML = rcpScen + ' custom'
+	document.getElementById('projection-name-val').innerHTML = '<b>Current Projection: </b>' + rcpScen.toUpperCase() + ' custom'
 }
 
 function changeBasicProjectionName(){
 	var rcpScen = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-	document.getElementById('projection-name-val').innerHTML = rcpScen.toUpperCase() + ' IPCC AR5 (Median)'
+	document.getElementById('projection-name-val').innerHTML = '<b>Current Projection: </b>' + rcpScen.toUpperCase() + ' IPCC AR5 (Median)'
 }
-
-// On 'make projection' click, query data and display
-$('#runProject').click(function(){
-	defaultMap = 'false';
-    queryString = constructQueryArray();
-    $.get(apiLoc + "/projection_api?datastring=" + rcpScenario + queryString, function(data, status){
-				datasetIn = data
-				changeGridDat(data['gridData'], data['cLims']);
-        map.getSource('twoDegreeData').setData(twoDegGrid);
-        map.getSource('oneDegreeData').setData(oneDegGrid);
-		var currentYear = document.getElementById('colorbar-max-bounds').value
-        loadCustomLayers();
-		updateMapYear(Number(currentYear));
-		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
-		maximizePlot();
-		changeProjectionName();
-		rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-    });
-});
-
-// On 'make basic projection' click, query data and display
-$('#runBasicProject').click(function(){
-	defaultMap = 'true';
-	var currentYear = document.getElementById('colorbar-max-bounds').value
-	var rcpScen = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-	loadBasicProjection(rcpScen);
-	changeBasicProjectionName();
-	rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-	queryString = defaultQueryString;
-});
