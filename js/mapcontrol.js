@@ -102,6 +102,7 @@ function centerMap(lngLat) {
     }
 }
 
+// Removes all grid layers
 function removeGridVisibility(){
 	map.setLayoutProperty('oneDeg2025', 'visibility', 'none')
 	map.setLayoutProperty('oneDeg2050', 'visibility', 'none')
@@ -111,33 +112,33 @@ function removeGridVisibility(){
 	map.setLayoutProperty('twoDeg2050', 'visibility', 'none')
 	map.setLayoutProperty('twoDeg2075', 'visibility', 'none')
 	map.setLayoutProperty('twoDeg2100', 'visibility', 'none')
-}
+};
 
+// Removes all coast scatter layers
 function removeScatterVisibility(){
 	map.setLayoutProperty('rel2025', 'visibility', 'none')
 	map.setLayoutProperty('rel2050', 'visibility', 'none')
 	map.setLayoutProperty('rel2075', 'visibility', 'none')
 	map.setLayoutProperty('rel2100', 'visibility', 'none')
-}
+};
 
-
+// Updates map year of data displayed
 function updateMapYear(){
 	var year = document.getElementById('display-year').value
 
-	// If relative sea level has been loaded, change update those years
+	// If relative sea level has been loaded, update those years
 	if (absoluteOn === false){
 		if (map.getLayer('rel2025') !== undefined){
-			removeGridVisibility()
-			removeScatterVisibility()
+			removeGridVisibility();
+			removeScatterVisibility();
 			var relDict = {2025:"rel2025", 2050:"rel2050",2075:"rel2075", 2100:"rel2100"}
 			map.setLayoutProperty(relDict[year], 'visibility', 'visible')
 		}
 	}
-
 	else{
 		if (map.getLayer('rel2025') !== undefined){
 			removeScatterVisibility();}
-		removeGridVisibility()
+		removeGridVisibility();
 	    var layerOneDict = {2025:"oneDeg2025", 2050:"oneDeg2050",2075:"oneDeg2075", 2100:"oneDeg2100"}
 	    var layerTWoDict = {2025:"twoDeg2025", 2050:"twoDeg2050",2075:"twoDeg2075", 2100:"twoDeg2100"}
 	    map.setLayoutProperty(layerOneDict[year], 'visibility', 'visible')
@@ -146,7 +147,6 @@ function updateMapYear(){
 		minimizePlot();
 	}
 }
-
 
 // Add sources for both 1deg and 2deg grids and coast scatter
 function initializeTiles(){
@@ -236,7 +236,7 @@ function loadCustomRelative(){
 		}
 
 // Add all grid layers (i.e. one for each year)
-function loadCustomLayers(){
+function loadGridLayers(){
     if (map.getLayer('oneDeg2025') !== undefined){
         map.removeLayer('oneDeg2025')
         map.removeLayer('twoDeg2025')
@@ -396,5 +396,4 @@ function initializeMap() {
         var nav = new mapboxgl.NavigationControl();
         map.addControl(nav, 'top-left')
         map.on('click', function (e) { queryTimeseries(e, constructQueryArray());});
-
 }

@@ -115,52 +115,59 @@ function changeCoastData(queriedData, cbarLims){
 };
 
 // Constructs string that is sent to the server based on user selections
-function constructQueryArray(){
+function updateQueryString(){
+	rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
 	if (defaultMap == 'true'){
-		queryString = defaultQueryString
+		queryString = rcpScenario + defaultQueryString
 	}
 	else{
 	   databaseString = [gsmbMenu.value, gdynMenu.value,
 	                     adynMenu.value, asmbMenu.value, thermoMenu.value,
 	                     glacierMenu.value]
-	    queryString = '_' + '60'
+	    queryString = rcpScenario + '_' + '60'
 	    for (elements in databaseString){
 	        if (databaseString[elements]!=='none'){
 	            queryString+= ('_' + databaseString[elements])
 	        }
 	    }
 	}
-	return queryString
 };
 
-
-function loadDefaultMap(){
-	$.get(apiLoc + "/projection_api?datastring=rcp85" + defaultQueryString, function(data, status){
+// Queries and loads grid data
+function loadMap(){
+	updateQueryString();
+	$.get(apiLoc + "/projection_api?datastring=" + queryString, function(data, status){
 				changeGridDat(data['gridData'], data['cLims']);
-		console.log("Def")
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
-        loadCustomLayers();
+		var currentYear = document.getElementById('display-year').value
+        loadGridLayers();
 		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
 		maximizePlot();
 		minimizePlot();
-		rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
+		changeProjectionName();
+		updateMapYear();
     });
 };
 
-function loadRelSL(queryString){
-	$.get(apiLoc + "?relativeSL=" + rcpScenario + queryString, function(data, status){
+// Queries and loads relative SL data
+function loadRelSL(){
+	updateQueryString();
+	$.get(apiLoc + "?relativeSL="  + queryString, function(data, status){
 				changeCoastData(data['pointData'], data['cLims']);
 		map.getSource('coastScatter').setData(coastLocs);
+		loadCustomRelative();
+		changeProjectionName();
+		updateMapYear();
 	});
 }
 
 function loadBasicProjection(rcpScenario){
-	$.get(apiLoc + "/projection_api?datastring=" + rcpScenario + defaultQueryString, function(data, status){
+	$.get(apiLoc + "/projection_api?datastring=" + rcpScenario + queryString, function(data, status){
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
-        loadCustomLayers();
+        loadGridLayers();
 		var currentYear = document.getElementById('display-year').value;
 		updateMapYear(Number(currentYear));
 		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');

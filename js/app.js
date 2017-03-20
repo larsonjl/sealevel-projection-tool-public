@@ -1,39 +1,27 @@
 // On 'make projection' click, query data and display
 $('#runProject').click(function(){
 	defaultMap = 'false';
-    queryString = constructQueryArray();
-	rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-
 	if (absoluteOn === true) {
-	    $.get(apiLoc + "/projection_api?datastring=" + rcpScenario + queryString, function(data, status){
-					datasetIn = data
-					changeGridDat(data['gridData'], data['cLims']);
-	        map.getSource('twoDegreeData').setData(twoDegGrid);
-	        map.getSource('oneDegreeData').setData(oneDegGrid);
-			var currentYear = document.getElementById('display-year').value
-	        loadCustomLayers();
-			updateMapYear();
-			plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
-			maximizePlot();
-			changeProjectionName();
-	    });}
-	else {
-		loadRelSL(queryString);
-		loadCustomRelative();
+	    loadMap();
 		updateMapYear();
-		changeProjectionName();
+	}
+	else {
+		loadRelSL();
+		updateMapYear();
 	}
 });
 
 // On 'make basic projection' click, query data and display
 $('#runBasicProject').click(function(){
 	defaultMap = 'true';
-	var currentYear = document.getElementById('display-year').value
-	var rcpScen = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-	loadBasicProjection(rcpScen);
-	changeBasicProjectionName();
-	rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-	queryString = defaultQueryString;
+	if (absoluteOn === true) {
+	    loadMap();
+		updateMapYear();
+	}
+	else {
+		loadRelSL();
+		updateMapYear();
+	}
 });
 
 // On switch to relative sea level mode, query data and display
@@ -41,14 +29,11 @@ $(document).ready(function() {
     $('input[type=radio][name=sl-opt]').change(function() {
         if (this.value == 'rel') {
 			absoluteOn = false;
-			queryString = constructQueryArray();
-        	loadRelSL(queryString);
-			loadCustomRelative();
-			updateMapYear();
+			loadRelSL();
         }
         else if (this.value == 'abs') {
 			absoluteOn = true;
-			updateMapYear();
+			loadMap();
         }
     });
 });
@@ -354,7 +339,7 @@ function loadApp() {
     // Listeners: Detrend, Deseason, Show Trend, Boxcar:
     map.on('load', initializeTiles);
     // document.getElementById("set-smooth-width").addEventListener("click", onPlottingFormChange, false);
-    map.on('load', loadCustomLayers);
+    map.on('load', loadGridLayers);
 
     // Plot minimize/maximize listeners:
     document.getElementById("minimize-plot-img").addEventListener("click", minimizePlot, false);
@@ -363,16 +348,12 @@ function loadApp() {
     // Plot movement listeners
     document.getElementById('chart-topbar').addEventListener('mousedown', mouseDownDragging, false);
     window.addEventListener('mouseup', mouseUpDragging, false);
-
     document.getElementById('resize-triangle').addEventListener('mousedown', mouseDownResize, false);
-
-	// document.getElementById('year-select-lower').addEventListener('click', decreaseMapYear, false);
-	// document.getElementById('year-select-higher').addEventListener('click',  increaseMapYear, false);
 
     window.addEventListener('mouseup', mouseUpResize, false);
 
 	// Create default map
-	map.on('load', loadDefaultMap);
+	map.on('load', loadMap);
 }
 
 // Wait until all content is loaded to do anything:
