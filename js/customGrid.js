@@ -90,25 +90,25 @@ function changeGridDat(queriedData, cbarLims){
 	document.getElementById('year-select-container').style.display = 'block';
 };
 
+
 var scaleBy;
+// Used to change values default values of coast data to queried data from server
 function changeCoastData(queriedData, cbarLims){
 	scaleBy = (1/10.) //mm to cm
 	dMax = cbarLims[1] * scaleBy + 5
 	dMin = cbarLims[0] * scaleBy
-
 	// Loop through features, assign data to proper grid cells and properties
 	var i = 0
 	var coastFeatures = coastLocs['features']
-
 	for (features in coastFeatures){
-		var vlm = scaleBy * coastLocs['features'][features]['properties']['vcm_mmyr']
+		// var vlm = scaleBy * coastLocs['features'][features]['properties']['vcm_mmyr']
+		var vlm = 0
 		coastLocs['features'][features].properties.sl2025 = scaleBy * queriedData[0][i] + 10 * vlm
 		coastLocs['features'][features].properties.sl2050 = scaleBy * queriedData[1][i] + 35 * vlm
 		coastLocs['features'][features].properties.sl2075 = scaleBy * queriedData[2][i] + 60 * vlm
 		coastLocs['features'][features].properties.sl2100 = scaleBy * queriedData[3][i] + 85 * vlm
 		i+=1
 	}
-
 	document.getElementById('spectral' + '-colorbar').style.display = 'inline-block';
 	document.getElementById('map-cbar-container').style.display = 'block';
 	document.getElementById('year-select-container').style.display = 'block';
@@ -137,6 +137,7 @@ function constructQueryArray(){
 function loadDefaultMap(){
 	$.get(apiLoc + "/projection_api?datastring=rcp85" + defaultQueryString, function(data, status){
 				changeGridDat(data['gridData'], data['cLims']);
+		console.log("Def")
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
         loadCustomLayers();
@@ -145,26 +146,17 @@ function loadDefaultMap(){
 		minimizePlot();
 		rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
     });
-}
+};
 
-function loadRelativeSealevel(){
-	$.get(apiLoc + "/projection_api?relativeSL=rcp85" + defaultQueryString, function(data, status){
+function loadRelSL(queryString){
+	$.get(apiLoc + "?relativeSL=" + rcpScenario + queryString, function(data, status){
 				changeCoastData(data['pointData'], data['cLims']);
-
-		// plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
-		// maximizePlot();
-		// minimizePlot();
-		rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-
-		map.addSource("coastScatter", {
-	            "type": "geojson",
-	            "data": coastLocs
-	                });
-    });
+		map.getSource('coastScatter').setData(coastLocs);
+	});
 }
 
 function loadBasicProjection(rcpScenario){
-	$.get(apiLoc + "/projection_api?datastring=" +rcpScenario + defaultQueryString, function(data, status){
+	$.get(apiLoc + "/projection_api?datastring=" + rcpScenario + defaultQueryString, function(data, status){
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);

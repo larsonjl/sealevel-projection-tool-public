@@ -2,19 +2,27 @@
 $('#runProject').click(function(){
 	defaultMap = 'false';
     queryString = constructQueryArray();
-    $.get(apiLoc + "/projection_api?datastring=" + rcpScenario + queryString, function(data, status){
-				datasetIn = data
-				changeGridDat(data['gridData'], data['cLims']);
-        map.getSource('twoDegreeData').setData(twoDegGrid);
-        map.getSource('oneDegreeData').setData(oneDegGrid);
-		var currentYear = document.getElementById('display-year').value
-        loadCustomLayers();
+	rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
+
+	if (absoluteOn === true) {
+	    $.get(apiLoc + "/projection_api?datastring=" + rcpScenario + queryString, function(data, status){
+					datasetIn = data
+					changeGridDat(data['gridData'], data['cLims']);
+	        map.getSource('twoDegreeData').setData(twoDegGrid);
+	        map.getSource('oneDegreeData').setData(oneDegGrid);
+			var currentYear = document.getElementById('display-year').value
+	        loadCustomLayers();
+			updateMapYear();
+			plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
+			maximizePlot();
+			changeProjectionName();
+	    });}
+	else {
+		loadRelSL(queryString);
+		loadCustomRelative();
 		updateMapYear();
-		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
-		maximizePlot();
 		changeProjectionName();
-		rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-    });
+	}
 });
 
 // On 'make basic projection' click, query data and display
@@ -28,6 +36,22 @@ $('#runBasicProject').click(function(){
 	queryString = defaultQueryString;
 });
 
+// On switch to relative sea level mode, query data and display
+$(document).ready(function() {
+    $('input[type=radio][name=sl-opt]').change(function() {
+        if (this.value == 'rel') {
+			absoluteOn = false;
+			queryString = constructQueryArray();
+        	loadRelSL(queryString);
+			loadCustomRelative();
+			updateMapYear();
+        }
+        else if (this.value == 'abs') {
+			absoluteOn = true;
+			updateMapYear();
+        }
+    });
+});
 
 function onPlottingFormChange() {
     "use strict";
@@ -39,28 +63,6 @@ function onPlottingFormChange() {
     if (plot_num > 0 && boxWidthValue >= 0) {
         selectPlotting({"lngLat":{"lng":LNG,"lat":LAT}}, 'change');
     }
-}
-
-// getTimeSeries :: retrieves timeseries data for the location and initializes plots.
-function getTimeSeries() {
-    "use strict";
-    // Get file:
-    var req = new XMLHttpRequest();
-    //req.open('GET', 'v2/JSON/time.json', true);
-    req.open('GET', 'api/v2/altimetry/time.json', true);
-    req.onload = function () {
-        if (req.status >= 200 && req.status < 400) { // Success!
-            time = JSON.parse(req.responseText);
-        } else {
-            time = 0; /* Reached server, returned error */
-            alert("[Error Code 1] We're sorry. It seems that the server had an error loading required files. Please contact us and let us know about your problem.");
-        }
-    };
-    req.onerror = function () {
-        time = 0; /* Connection error */
-        alert("[Error Code 2] We're sorry. It seems that the server had an error loading required files. Please contact us and let us know about your problem.");
-    };
-    req.send();
 }
 
 // inputLatLon :: gets page form inputs and grabs time series.

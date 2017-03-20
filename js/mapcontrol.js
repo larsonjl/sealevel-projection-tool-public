@@ -102,8 +102,7 @@ function centerMap(lngLat) {
     }
 }
 
-function updateMapYear(){
-	var year = document.getElementById('display-year').value
+function removeGridVisibility(){
 	map.setLayoutProperty('oneDeg2025', 'visibility', 'none')
 	map.setLayoutProperty('oneDeg2050', 'visibility', 'none')
 	map.setLayoutProperty('oneDeg2075', 'visibility', 'none')
@@ -112,13 +111,42 @@ function updateMapYear(){
 	map.setLayoutProperty('twoDeg2050', 'visibility', 'none')
 	map.setLayoutProperty('twoDeg2075', 'visibility', 'none')
 	map.setLayoutProperty('twoDeg2100', 'visibility', 'none')
-    var layerOneDict = {2025:"oneDeg2025", 2050:"oneDeg2050",2075:"oneDeg2075", 2100:"oneDeg2100"}
-    var layerTWoDict = {2025:"twoDeg2025", 2050:"twoDeg2050",2075:"twoDeg2075", 2100:"twoDeg2100"}
-    map.setLayoutProperty(layerOneDict[year], 'visibility', 'visible')
-    map.setLayoutProperty(layerTWoDict[year], 'visibility', 'visible')
-	maximizePlot();
-	minimizePlot();
 }
+
+function removeScatterVisibility(){
+	map.setLayoutProperty('rel2025', 'visibility', 'none')
+	map.setLayoutProperty('rel2050', 'visibility', 'none')
+	map.setLayoutProperty('rel2075', 'visibility', 'none')
+	map.setLayoutProperty('rel2100', 'visibility', 'none')
+}
+
+
+function updateMapYear(){
+	var year = document.getElementById('display-year').value
+
+	// If relative sea level has been loaded, change update those years
+	if (absoluteOn === false){
+		if (map.getLayer('rel2025') !== undefined){
+			removeGridVisibility()
+			removeScatterVisibility()
+			var relDict = {2025:"rel2025", 2050:"rel2050",2075:"rel2075", 2100:"rel2100"}
+			map.setLayoutProperty(relDict[year], 'visibility', 'visible')
+		}
+	}
+
+	else{
+		if (map.getLayer('rel2025') !== undefined){
+			removeScatterVisibility();}
+		removeGridVisibility()
+	    var layerOneDict = {2025:"oneDeg2025", 2050:"oneDeg2050",2075:"oneDeg2075", 2100:"oneDeg2100"}
+	    var layerTWoDict = {2025:"twoDeg2025", 2050:"twoDeg2050",2075:"twoDeg2075", 2100:"twoDeg2100"}
+	    map.setLayoutProperty(layerOneDict[year], 'visibility', 'visible')
+	    map.setLayoutProperty(layerTWoDict[year], 'visibility', 'visible')
+		maximizePlot();
+		minimizePlot();
+	}
+}
+
 
 // Add sources for both 1deg and 2deg grids and coast scatter
 function initializeTiles(){
@@ -131,36 +159,83 @@ function initializeTiles(){
             "type": "geojson",
             "data": oneDegGrid
                 });
+
+	map.addSource("coastScatter", {
+			"type": "geojson",
+			"data": coastLocs
+	});
 }
 
-// Add coast scatter to map
-function addCoastScatter(){
+// Add all relative sea level layers (i.e. one for each year)
+function loadCustomRelative(){
+	if (map.getLayer('rel2025') !== undefined){
+        map.removeLayer('rel2025')
+        map.removeLayer('rel2050')
+        map.removeLayer('rel2075')
+        map.removeLayer('rel2100')
+    }
 	map.addLayer({
-            "id": "coastPoints",
+            "id": "rel2025",
             "type": "circle",
             "source": "coastScatter",
 			"z-index":999,
             "layout": {
-                    'visibility': 'visible'},
-			"paint": {
-				"circle-color": {
-				type:'exponential',
-					property: 'sl2100',
-					stops: getColorbarStops('spectral', dMin, dMax)
-					}}
+                    'visibility': 'none'},
+			"paint":	{
+					"circle-color": {
+	                    property: 'sl2025',
+	                    stops: getColorbarStops('spectral', dMin, dMax)
+                    }
+				}
             });
-}
 
-function coastPointInteractions() {
-    "use strict";
-	map.on('click', function(e) {
-	        // set bbox as 5px reactangle area around clicked point
-	        var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
-	        var features = map.queryRenderedFeatures(bbox, { layers: ['coastPoints'] });
-			console.log(features)
-		});
-}
+	map.addLayer({
+			"id": "rel2050",
+			"type": "circle",
+			"source": "coastScatter",
+			"z-index":999,
+			"layout": {
+					'visibility': 'none'},
+			"paint":	{
+					"circle-color": {
+						property: 'sl2050',
+						stops: getColorbarStops('spectral', dMin, dMax)
+					}
+				}
+			});
 
+	map.addLayer({
+			"id": "rel2075",
+			"type": "circle",
+			"source": "coastScatter",
+			"z-index":999,
+			"layout": {
+					'visibility': 'none'},
+			"paint":	{
+					"circle-color": {
+						property: 'sl2075',
+						stops: getColorbarStops('spectral', dMin, dMax)
+					}
+				}
+			});
+
+	map.addLayer({
+			"id": "rel2100",
+			"type": "circle",
+			"source": "coastScatter",
+			"z-index":999,
+			"layout": {
+					'visibility': 'none'},
+			"paint":	{
+					"circle-color": {
+						property: 'sl2100',
+						stops: getColorbarStops('spectral', dMin, dMax)
+					}
+				}
+			});
+		}
+
+// Add all grid layers (i.e. one for each year)
 function loadCustomLayers(){
     if (map.getLayer('oneDeg2025') !== undefined){
         map.removeLayer('oneDeg2025')

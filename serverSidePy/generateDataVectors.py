@@ -96,15 +96,36 @@ def grid2coastLocsDB(ncfile, variable):
         lonPt, latPt = features['geometry']['coordinates']
         lonPt = lon180tolon360(lonPt)
         lonIndx, latIndx = oneDegLatlon2gridcell(lonPt, latPt, 0, -89.5)
-        outDataVector[:, i] = varGrid[:, latIndx, lonIndx].astype('float16')
+        outDataVector[:, i] = varGrid[:, latIndx, lonIndx].astype('float16').data
+        
+        dataAround = varGrid[:, latIndx-1:latIndx+2, lonIndx-1:lonIndx+2]
+        
+        if np.isinf(outDataVector[0, i]):
+            if (np.sum(dataAround[-1, :, :].mask) < 9):
+                outDataVector[:, i] = np.ma.mean(dataAround, axis=(1,2)).astype('float16').data
+        
         i += 1
-    
+        '''
+        # If nan, look for data one more grid cell out (i.e. one degree away)
+        if np.isinf(outDataVector[0, i]) and (lonIndx > 0) and (lonIndx<360) and \
+            (latIndx>0) and (latIndx<180):
+            dataAround = varGrid[:, latIndx-1:latIndx+2, lonIndx-1:lonIndx+2]
+            if np.sum(dataAround[0, :, :].mask) < 9:
+                for tt in range(0, varGrid.shape[0]):
+                    outDataVector[tt, i] = np.mean(dataAround[tt, :, :])    
+        
+        i += 1
+        '''
     outDataVector[outDataVector == np.inf] = -999.99
+    outDataVector[np.isnan(outDataVector)] = -999.99
+    # outDataVector[outDataVector < -1000] = -999.99
     
     return outDataVector
 
 def referencePointFile2Pickles():
     masterDict = {'rcp85': {}, 'rcp45': {}, 'rcp26': {}}
+    # masterDict = {'rcp85': {}}
+
     refFile = pd.read_csv('referenceFile.csv')
     
     for indx in refFile.index:
@@ -115,7 +136,7 @@ def referencePointFile2Pickles():
         masterDict[dFile.Scenario][dFile.referenceName] = dataArray
     
     masterDictOut = open('vectorDataForWebsite.pkl', 'wb')
-    pickle.dump([masterDict], masterDictOut)
+    pickle.dump(masterDict, masterDictOut)
     masterDictOut.close()
     
 def referenceGridFile2Pickles():
@@ -164,5 +185,5 @@ def constructGridReference():
     pickle.dump(gridRef, dictOut)
 
 
-referenceGridFile2Pickles()
-constructGridReference()
+# referenceGridFile2Pickles()
+# constructGridReference()

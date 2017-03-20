@@ -49,7 +49,7 @@ def createDatasetCoastMultYear(requestString):
     # tsData = {}
     # References [18,44,69,93] refer to 2025, 2050, 2075, 2100  8
     for datasets in params[2::]:
-        dOut += scaleBy * coastData[0][rcpScen][datasets][[10, 35, 60, 85], :]
+        dOut += scaleBy * coastData[rcpScen][datasets][[10, 35, 60, 85], :]
         # tsData[datasets] = np.around(scaleBy * (coastData[1][rcpScen][datasets]), decimals=2).tolist()
     dOut = np.around(dOut, decimals=2)
     dMean = np.mean(dOut[dOut>-99999])
