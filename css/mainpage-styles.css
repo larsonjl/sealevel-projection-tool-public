@@ -54,6 +54,7 @@ div.hline { height: 1px; margin: 6px 0px; width: 100%; background-color: #DDDDDD
     text-align: center; display: block; float: left; z-index: 2;
 }
 
+
 /* About sections */
 .about-section {
     width: calc( 100% - 100px );
@@ -96,7 +97,7 @@ Define Content Properties
 
 #main-container {
     width: 100%;
-	min-height: calc(100vh - 95px);
+	min-height: calc(100vh - 133px);
     padding: 0px;
     background-color: #FFFFFF;
 }
@@ -197,17 +198,48 @@ header { background-color: #333333; margin: 0px; border: 0px; }
 
 /* All content above the navigation bar */
 #menuhead { width: 100%; max-width: 1090px; margin: 0px auto; height: 43px; }
-#menuhead-landing { width: 100%; max-width: 1090px; margin: 0px auto; height: 83px; text-align:  left}
+#menuhead-landing { width: 100%; max-width: 1090px; margin: 0px auto; height: 83px; display: inline-block; text-align:  left;}
 
 #menuhead-map { width: 100%; margin: 0px auto; height: 43px; }
 #menucontentname  { margin-left:  18px; text-align:  left; float:  left; }
-#menucontentname-landing  { margin-left:  10px; text-align: left; width:100%}
-#menucontentname-landing  h1{ margin-left:  10px; text-align: left; width:100%}
+#menucontentname-landing  { margin-left:  10px; text-align: left; width:100%; display: inline;}
+#menucontentname-landing  h1{ margin-left:  10px; text-align: left; width:100%; display: inline;}
 
 #menucontenttitle { margin-right: 10px; text-align: left; float: right; }
 #menucontentname, #menucontenttitle { line-height: 43px; vertical-align: middle; }
 #menucontenttitle-landing{margin-left:  10px; text-align: left; width:100%}
 #menucontenttitle-landing h2{margin-left:  10px; text-align: left; width:100%}
+
+.header {
+  text-align: center;
+}
+.header h1{
+   padding-top: 20px;
+   text-align: left;
+   color: #FFFFFF
+}
+.header h2{
+   padding-top: 5px;
+   text-align: left;
+}
+.header img {
+  float: left;
+}
+.clear {
+  clear: both;
+}
+#header-image{
+	position:relative;
+	width: 110px;
+	height: 110px;
+	cursor: pointer;
+	opacity: 0.9;
+	margin-left: 25px;
+	margin-bottom: -5px;
+	padding-left:5px;
+	padding-right: 15px;
+	vertical-align: middle;
+}
 
 .top { color: #FFFFFF; margin:0px auto; }
 
@@ -260,10 +292,9 @@ a.navbar:link, a.navbar:visited {
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
-    padding: 0px 20px;
-	margin: 0px 0px;
+    padding: 0px 25px;
+	margin: 0px;
 	border: 0px;
-	border-right:1px;
 	border-style: solid;
 	border-color: #d3d3d3;
 	-webkit-transition: background-color 0.5s; /* Safari 3.1 to 6.0 */

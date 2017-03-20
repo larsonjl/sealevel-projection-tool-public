@@ -388,7 +388,7 @@ div.popup-msg {
 .question-button .question-button-text {
 	position:relative;
     visibility: hidden;
-    width: 160px;
+    width: 200px;
 	font-size: 16px;
 	font-weight:normal;
     background-color: #d3d3d3;

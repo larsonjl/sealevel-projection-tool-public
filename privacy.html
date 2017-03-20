@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>CU Sea Level Projection Project</title>
+    <title>CU Sea Level Projection Project </title>
 
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
     <meta name="keywords" content="CCAR, Sea, Level, Projection, Colorado, Inundation, Rise, Geodesy, Larson, Nerem"/>
     <meta name="description" content="Colorado Sea Level Projection Project."/>
     <meta name="author" content="Jacob Larson and Michael Croteau"/>
     <meta charset='utf-8'/>
 
     <link rel="icon" href="http://ccar.colorado.edu/images/culogo_sm.jpg" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="css/pages-mainstyles.css"/>
-    <link rel="stylesheet" type="text/css" href="css/pages-extrastyles.css"/>
-
+    <link rel="stylesheet" type="text/css" href="css/mainpage-styles.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mainpage-extrastyles.css"/>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjs/2.6.0/math.min.js'></script>
 </head>
 
@@ -21,22 +20,27 @@
 <div id='background'></div>
 
 <div id="foreground">
+	<div id="menu-container">
+		<header>
+			<div class="header">
+				<img id="header-image" src="img/sl_icon.png"></img>
+				<h1>CU Sea Level Projection Tool</h1>
+				<h2 class="top"><a href="/"><a href="https://www.colorado.edu">University of Colorado Boulder</a></h2>			  <div class="clear"></div>
+			</div>
+			<div id="menulinks">
+				<ul>
+					<div>
+						<li><a class="navbar" href="index.html">Home </a></li>
+						<li><a class="navbar" href="app.html">App</a></li>
+	                    <li><a class="navbar" href="about.html">About the Project</a></li>
+						<li><a class="navbar" href="about-sl.html">About Sea Level Projections</a></li>
+	                    <li><a class="navbar" href="contact.html" id='navbar-last-box'>Contact</a></li>
+					</div>
+				</ul>
+			</div>
+		</header>
+	</div>
 
-    <div id="menu-container">
-        <header>
-			<div id="menuhead">
-                <div id="menucontentname"><h1 class="top" id="mvt-title">CU Sea Level Projection Tool (Beta Mode)</h1></div>
-                <div id="menucontenttitle"><h2 class="top"><a href="/"><a href="https://www.colorado.edu">University of Colorado Boulder</a></h2></div>
-            </div>
-            <div id="menulinks"><ul>
-				<li><a class="navbar" href="index.html">Main</a></li>
-				<li><a class="navbar" href="about.html">About the Project</a></li>
-				<li><a class="navbar" href="about-sl.html">About Sea Level Projections</a></li>
-				<li><a class="navbar" href="contact.html">Contact</a></li>
-
-            </ul></div>
-        </header>
-    </div>
 
     <div id='main-container'>
 
