@@ -46,20 +46,17 @@ def createDatasetCoastMultYear(requestString):
     params = requestString.split('_')
     rcpScen = params[0]
     dOut = np.zeros((4, 4941))
-    # tsData = {}
-    # References [18,44,69,93] refer to 2025, 2050, 2075, 2100  8
     for datasets in params[2::]:
+        # References [10, 35, 60, 85] refer to 2025, 2050, 2075, 2100  8
         dOut += scaleBy * coastData[rcpScen][datasets][[10, 35, 60, 85], :]
-        # tsData[datasets] = np.around(scaleBy * (coastData[1][rcpScen][datasets]), decimals=2).tolist()
     dOut = np.around(dOut, decimals=2)
     dMean = np.mean(dOut[dOut>-99999])
     dStd = np.std(dOut[dOut>-99999])
     dMin = np.float16(dMean - 2 * dStd)
     dMax = np.float16(dMean + 2 * dStd)
-    # dMin = np.float16(np.min(dOut[dOut > -10]))  # min not masked value
-    # dMax = np.float16(np.max(dOut))
     output = {'cLims': [float(dMin), float(dMax)], 'pointData': dOut.tolist()}
     return output
+
 
 def getGridCell(lat, lon):
     latRefs = np.arange(-89.5, 89.5, 1)
@@ -70,7 +67,7 @@ def getGridCell(lat, lon):
 
 
 def getLocationData(requestString):
-    scaleBy = 1000 # m to mm
+    scaleBy = 1000  # m to mm
     params = requestString.split('_')
     lat = params[0]
     lon = params[1]
@@ -85,6 +82,17 @@ def getLocationData(requestString):
                               .astype('float16'), decimals=4)).tolist()
         return dOut
 
+
+def getCoastLocationData(requestString):
+    scaleBy = 1000  # m to mm
+    params = requestString.split('_')
+    locIndx = params[0]
+    rcpScen = params[1]
+    dOut = {}
+    for datasets in params[3::]:
+        dOut[datasets] = (np.around(scaleBy * projDict[0][rcpScen][datasets][:, locIndx]
+                          .astype('float16'), decimals=4)).tolist()
+    return dOut
 
 # Load projection data into memory
 projDict = pickle.load(open(dataFile, "rb"))
