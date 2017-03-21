@@ -2,35 +2,34 @@
 <html>
 <head>
     <title>CU Sea Level Projection Project</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
     <meta name="keywords" content="CCAR, Sea, Level, Projection, Colorado, Inundation, Rise, Geodesy, Larson, Nerem"/>
     <meta name="description" content="Colorado Sea Level Projection Project."/>
     <meta name="author" content="Jacob Larson and Michael Croteau"/>
-    <meta charset='utf-8'/>
+    <meta charset="utf-8"/>
     <link rel="icon" href="http://ccar.colorado.edu/images/culogo_sm.jpg" type="image/x-icon"/>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.css" rel="stylesheet"/>
 	<link rel="stylesheet" type="text/css" href="css/mainpage-styles.css"/>
     <link rel="stylesheet" type="text/css" href="css/mainpage-extrastyles.css"/>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjs/2.6.0/math.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/2.6.0/math.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 
 <body>
-
-<div id='background'></div>
+<div id="background"></div>
 
 <div id="foreground">
-    <div id='main-container'>
-        <div class='content-container' id="map-container">
-            <div id='map-area'>
+    <div id="main-container">
+        <div class="content-container" id="map-container">
+            <div id="map-area">
                 <div id="map-and-cbar">
-					<div id='map-title-container'>
+					<div id="map-title-container">
 						CU Sea Level Projection Project
 					</div>
-					<div id='year-select-container'>
-						<div class = 'map-control-box'>
-							<div id='projection-name-val' title="See menu to right to change projection">
+					<div id="year-select-container">
+						<div class = "map-control-box">
+							<div id="projection-name-val" title="See menu to right to change projection">
 								<b>Current Projection:</b> RCP8.5 IPCC AR5 (Median)
 							</div>
 							<div>
@@ -56,14 +55,14 @@
 										</img>
 									</div>
 								:</b>
-								<div id='project-mode-div'>
-									<input type="radio" id='sl1' name='sl-opt' value="rel"> Relative Sea Level <br>
-									<input type="radio" id='sl2' name='sl-opt' value="abs" checked="checked"> Absolute Sea Level
+								<div id="project-mode-div">
+									<input type="radio" id="sl1" name="sl-opt" value="rel"> Relative Sea Level <br>
+									<input type="radio" id="sl2" name="sl-opt" value="abs" checked="checked"> Absolute Sea Level
 								</div>
 							</div>
 						</div>
 					</div>
-                    <div id='map-cbar-container'>
+                    <div id="map-cbar-container">
                         <div class="map-colorbar" id="viridis-colorbar">
                             <div class="cbar" id="cbar-viridis"></div>
                             <div class="cbar-labels" id="cbar-viridis-labels">
@@ -101,7 +100,7 @@
 											<div id="co2-header">
 												<p>Carbon Emissions Scenario</p>
 											</div>
-											<div class="question-button" id='sidebar-question-first'>
+											<div class="question-button" id="sidebar-question-first">
 												<img class="question-button" src="img/ic_help_black_48dp.png">
 													<span class="question-button-text" id = "sidebar-question-button-text">Coming soon: carbon emission info...</span>
 												</img>
@@ -110,15 +109,14 @@
 											<br>Future sea level change depends on current and future carbon emissions.  Choose a 21st century carbon emission scenario.
 
 											<div  id="rcpBasicRadioSelect">
-												<input type="radio" id='r1' name='rcpBasicSelect' value="rcp26"> Drastic CO2 cuts <br>
-												<input type="radio" id='r2' name='rcpBasicSelect' value="rcp45"> Moderate CO2 cuts<br>
-												<input type="radio" id='r3' name='rcpBasicSelect' value="rcp85" checked="checked"> No CO2 cuts (Current path)<br>
+												<input type="radio" id="r1" name="rcpBasicSelect" value="rcp26"> Drastic CO2 cuts <br>
+												<input type="radio" id="r2" name="rcpBasicSelect" value="rcp45"> Moderate CO2 cuts<br>
+												<input type="radio" id="r3" name="rcpBasicSelect" value="rcp85" checked="checked"> No CO2 cuts (Current path)<br>
 											</div>
 											<button id="runBasicProject" type="button">Calculate Projection</button>
 										</div>
 								</div>
 							</div>
-
                             <div class="sidebar-header" id="sidebar-location-lookup">
                                 <div class="sidebar-header-select">
                                     <img id="sidebar-location-lookup-active" src="img/ic_chevron_down_gray333_48dp.png"/>
@@ -230,9 +228,6 @@
             <div id="chart-area">
 
                 <div id="chart-topbar">CU Sea Level Projection Tool</div>
-                <!-- <div id="chart-options">
-                    <button class="form-button" id="save-button" type="button"><img src="img/ic_image_grey600_48dp.png"/><span id="save-button-text">Save Image</span></button>
-                </div> -->
              <div id="timeseries">
                     <div id="data-timeseries"></div>
                     <div class="tooltip" id="plot-tooltip" style="opacity: 0;">
