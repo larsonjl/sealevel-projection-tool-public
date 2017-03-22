@@ -69,24 +69,24 @@ function changeGridDat(queriedData, cbarLims){
 	dMin = cbarLims[0] * scaleBy
 
 	// Loop through features, assign data to proper grid cells and properties
-	var i = 0
+	var j = 0
 	var oneDegFeatures = oneDegGrid['features']
 	var twoDegFeatures = twoDegGrid['features']
 
-	for (var features in oneDegFeatures){
-		oneDegGrid['features'][features].properties.sl2025 = scaleBy * queriedData[0][i]
-		oneDegGrid['features'][features].properties.sl2050 = scaleBy * queriedData[1][i]
-		oneDegGrid['features'][features].properties.sl2075 = scaleBy * queriedData[2][i]
-		oneDegGrid['features'][features].properties.sl2100 = scaleBy * queriedData[3][i]
-		i+=1
+	for (var i = 0, len = oneDegFeatures.length; i < len; i++){
+		oneDegGrid['features'][i].properties.sl2025 = scaleBy * queriedData[0][j]
+		oneDegGrid['features'][i].properties.sl2050 = scaleBy * queriedData[1][j]
+		oneDegGrid['features'][i].properties.sl2075 = scaleBy * queriedData[2][j]
+		oneDegGrid['features'][i].properties.sl2100 = scaleBy * queriedData[3][j]
+		j+=1
 	}
-	for (var features in twoDegFeatures){
-		twoDegGrid['features'][features].properties.sl2025 = scaleBy * queriedData[0][i]
-		twoDegGrid['features'][features].properties.sl2050 = scaleBy * queriedData[1][i]
-		twoDegGrid['features'][features].properties.sl2075 = scaleBy * queriedData[2][i]
-		twoDegGrid['features'][features].properties.sl2100 = scaleBy * queriedData[3][i]
-		i+=1
-		}
+	for (var i = 0, len = twoDegFeatures.length; i < len; i++){
+		twoDegGrid['features'][i].properties.sl2025 = scaleBy * queriedData[0][j]
+		twoDegGrid['features'][i].properties.sl2050 = scaleBy * queriedData[1][j]
+		twoDegGrid['features'][i].properties.sl2075 = scaleBy * queriedData[2][j]
+		twoDegGrid['features'][i].properties.sl2100 = scaleBy * queriedData[3][j]
+		j+=1
+	}
 
 	document.getElementById('spectral' + '-colorbar').style.display = 'inline-block';
 	document.getElementById('map-cbar-container').style.display = 'block';
