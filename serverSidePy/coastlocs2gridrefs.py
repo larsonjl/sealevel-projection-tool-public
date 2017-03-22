@@ -64,14 +64,13 @@ for i in range(len(data['features'])):
             vcm_out = look_at_neighbors(indx_lon, indx_lat)
         else:
             vcm_out = np.nan
-    
-    
+
     if np.isnan(vcm_out):
-        data['features'][i]
+        data['features'][i]['properties']['data_index'] = j        
     else:
         data['features'][i]['properties']['vcm_mmyr'] = vcm_out
         data['features'][i]['properties']['data_index'] = j
-        j += 1
+    j += 1
 
 with open('coastLocsVCM.geojson', 'w') as outfile:
     outfile.write('var coastLocs = ' +json.dumps(data, separators=(',', ':')))

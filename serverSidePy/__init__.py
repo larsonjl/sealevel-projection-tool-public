@@ -90,16 +90,15 @@ def getCoastLocationData(requestString):
     rcpScen = params[1]
     dOut = {}
     for datasets in params[3::]:
-        dOut[datasets] = (np.around(scaleBy * projDict[0][rcpScen][datasets][:, locIndx]
+        dOut[datasets] = (np.around(scaleBy * coastData[rcpScen][datasets][:, locIndx]
                           .astype('float16'), decimals=4)).tolist()
     return dOut
+
 
 # Load projection data into memory
 projDict = pickle.load(open(dataFile, "rb"))
 gridRef = pickle.load(open(gridFile, "rb"))
 coastData = pickle.load(open(coastLocsFile, "rb"))
-# Load grid cell reference file into memory
-
 
 # Start Flask
 app = Flask(__name__)
@@ -115,6 +114,8 @@ def api_hello():
         return jsonify(getLocationData(request.args['latlonloc']))
     if 'relativeSL' in request.args:
         return jsonify(createDatasetCoastMultYear(request.args['relativeSL']))
+    if 'coastLoc' in request.args:
+        return jsonify(getCoastLocationData(request.args['coastLoc']))
 
 if __name__ == '__main__':
     app.run(debug=True)

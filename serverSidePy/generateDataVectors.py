@@ -106,7 +106,7 @@ def grid2coastLocsDB(ncfile, variable):
         
         i += 1
         '''
-        # If nan, look for data one more grid cell out (i.e. one degree away)
+        # If nan, look for data one more grid cell out (izne. one degree away)
         if np.isinf(outDataVector[0, i]) and (lonIndx > 0) and (lonIndx<360) and \
             (latIndx>0) and (latIndx<180):
             dataAround = varGrid[:, latIndx-1:latIndx+2, lonIndx-1:lonIndx+2]
