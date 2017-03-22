@@ -163,7 +163,7 @@ function loadMap(){
 function loadRelSL(){
 	"use strict";
 	updateQueryString();
-	$.get(apiLoc + "?relativeSL="  + queryString, function(data, status){
+	$.get(apiLoc + "?/projection_api/relativeSL="  + queryString, function(data, status){
 				changeCoastData(data['pointData'], data['cLims']);
 		map.getSource('coastScatter').setData(coastLocs);
 		loadCustomRelative();
