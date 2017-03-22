@@ -1,3 +1,9 @@
 /serverSidePy/data
 /serverSidePy/vectorDataForWebsite.pkl
 /serverSidePy/dataForWebsite.pkl
+
+*.pkl
+
+serverSidePy/vectorDataForWebsite.pkl
+
+serverSidePy/vectorDataForWebsite.pkl
