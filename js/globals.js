@@ -1,9 +1,11 @@
 // Initialize global variables:
 var map,
+	absoluteOn = true,
 	rcpScenario,
-	apiLoc = 'http://sealevel.colorado.edu',
+	apiLoc = 'http://127.0.0.1:5000/',
 	defaultMap = 'true',
 	defaultQueryString = '_60_gsm1_gdm1_adm1_asm1_thm1_glm1',
+	queryString = defaultQueryString,
 	rcpMenu,
     oneDegGrid,
     twoDegGrid,

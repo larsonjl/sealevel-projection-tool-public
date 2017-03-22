@@ -1,33 +1,42 @@
 // On 'make projection' click, query data and display
 $('#runProject').click(function(){
 	defaultMap = 'false';
-    queryString = constructQueryArray();
-    $.get(apiLoc + "/projection_api?datastring=" + rcpScenario + queryString, function(data, status){
-				datasetIn = data
-				changeGridDat(data['gridData'], data['cLims']);
-        map.getSource('twoDegreeData').setData(twoDegGrid);
-        map.getSource('oneDegreeData').setData(oneDegGrid);
-		var currentYear = document.getElementById('display-year').value
-        loadCustomLayers();
+	if (absoluteOn === true) {
+	    loadMap();
 		updateMapYear();
-		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
-		maximizePlot();
-		changeProjectionName();
-		rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-    });
+	}
+	else {
+		loadRelSL();
+		updateMapYear();
+	}
 });
 
 // On 'make basic projection' click, query data and display
 $('#runBasicProject').click(function(){
 	defaultMap = 'true';
-	var currentYear = document.getElementById('display-year').value
-	var rcpScen = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-	loadBasicProjection(rcpScen);
-	changeBasicProjectionName();
-	rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-	queryString = defaultQueryString;
+	if (absoluteOn === true) {
+	    loadMap();
+		updateMapYear();
+	}
+	else {
+		loadRelSL();
+		updateMapYear();
+	}
 });
 
+// On switch to relative sea level mode, query data and display
+$(document).ready(function() {
+    $('input[type=radio][name=sl-opt]').change(function() {
+        if (this.value == 'rel') {
+			absoluteOn = false;
+			loadRelSL();
+        }
+        else if (this.value == 'abs') {
+			absoluteOn = true;
+			loadMap();
+        }
+    });
+});
 
 function onPlottingFormChange() {
     "use strict";
@@ -39,28 +48,6 @@ function onPlottingFormChange() {
     if (plot_num > 0 && boxWidthValue >= 0) {
         selectPlotting({"lngLat":{"lng":LNG,"lat":LAT}}, 'change');
     }
-}
-
-// getTimeSeries :: retrieves timeseries data for the location and initializes plots.
-function getTimeSeries() {
-    "use strict";
-    // Get file:
-    var req = new XMLHttpRequest();
-    //req.open('GET', 'v2/JSON/time.json', true);
-    req.open('GET', 'api/v2/altimetry/time.json', true);
-    req.onload = function () {
-        if (req.status >= 200 && req.status < 400) { // Success!
-            time = JSON.parse(req.responseText);
-        } else {
-            time = 0; /* Reached server, returned error */
-            alert("[Error Code 1] We're sorry. It seems that the server had an error loading required files. Please contact us and let us know about your problem.");
-        }
-    };
-    req.onerror = function () {
-        time = 0; /* Connection error */
-        alert("[Error Code 2] We're sorry. It seems that the server had an error loading required files. Please contact us and let us know about your problem.");
-    };
-    req.send();
 }
 
 // inputLatLon :: gets page form inputs and grabs time series.
@@ -352,7 +339,7 @@ function loadApp() {
     // Listeners: Detrend, Deseason, Show Trend, Boxcar:
     map.on('load', initializeTiles);
     // document.getElementById("set-smooth-width").addEventListener("click", onPlottingFormChange, false);
-    map.on('load', loadCustomLayers);
+    map.on('load', loadGridLayers);
 
     // Plot minimize/maximize listeners:
     document.getElementById("minimize-plot-img").addEventListener("click", minimizePlot, false);
@@ -361,16 +348,13 @@ function loadApp() {
     // Plot movement listeners
     document.getElementById('chart-topbar').addEventListener('mousedown', mouseDownDragging, false);
     window.addEventListener('mouseup', mouseUpDragging, false);
-
     document.getElementById('resize-triangle').addEventListener('mousedown', mouseDownResize, false);
-
-	// document.getElementById('year-select-lower').addEventListener('click', decreaseMapYear, false);
-	// document.getElementById('year-select-higher').addEventListener('click',  increaseMapYear, false);
 
     window.addEventListener('mouseup', mouseUpResize, false);
 
 	// Create default map
-	map.on('load', loadDefaultMap);
+	map.on('load', loadMap);
+
 }
 
 // Wait until all content is loaded to do anything:

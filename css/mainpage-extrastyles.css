@@ -2,18 +2,25 @@
 /* CU Colors [ Black:#000000, Gold:#CFB87C, Dark Gray:#565A5C, Light Gray:#A2A4A3 ] */
 
 /*Enter site box*/
-#goto-tool a:link, #goto-tool a:visited {
-    background-color: #f44336;
-    color: white;
-    padding: 14px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
+#goto-tool{
+	background-color: #d3d3d3;
+	color: #000000;
+	width: 100%;
+	display: inline-block;
+	border: 5px;
+	margin-top:20px;
+	margin-bottom:10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 25px;
+	vertical-align: middle;
+	border: solid;
+	border-radius: 5px;
+	text-align: center;
 }
 
-
-#goto-tool a:hover, #goto-tool a:active {
-    background-color: red;
+#goto-tool:hover{
+	color: #565A5C;
 }
 
 /* Mapping Things */
@@ -67,6 +74,16 @@
 	color: #E0E0E0;
 	z-index: 2;
 	box-shadow: 0 0 5px 1px rgba(0,0,0,0.5);
+}
+
+#map-title-container a{
+	color: #E0E0E0;
+	background-color: #333333;
+}
+
+#map-title-container a:hover{
+	color: #d3d3d3;
+	background-color: #333333;
 }
 
 .map-control-box{
@@ -319,7 +336,7 @@ div.popup-msg {
     top: 0;
     right: 0;
     width: 270px;
-    height: calc(100vh - 30px);
+    height: calc(100vh - 36px);
     padding: 0 2px;
     margin: 0;
     z-index: 2;
@@ -388,7 +405,7 @@ div.popup-msg {
 .question-button .question-button-text {
 	position:relative;
     visibility: hidden;
-    width: 160px;
+    width: 200px;
 	font-size: 16px;
 	font-weight:normal;
     background-color: #d3d3d3;
@@ -658,7 +675,7 @@ input#show-tide-gauges-checkbox {
     vertical-align: middle;
     position: absolute;
     right: 274px;
-    bottom: 30px;
+    bottom: 36px;
     border-top-left-radius: 5px;
     background-color: rgba(255,255,255,0.8);
     z-index: 3;

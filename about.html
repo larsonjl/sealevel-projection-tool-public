@@ -10,8 +10,8 @@
     <meta charset='utf-8'/>
 
     <link rel="icon" href="http://ccar.colorado.edu/images/culogo_sm.jpg" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="css/mainstyles.css"/>
-    <link rel="stylesheet" type="text/css" href="css/extrastyles.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mainpage-styles.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mainpage-extrastyles.css"/>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjs/2.6.0/math.min.js'></script>
 </head>
 
@@ -22,17 +22,20 @@
 <div id="foreground">
 	<div id="menu-container">
 		<header>
-			<div id="menuhead">
-				<div id="menucontentname"><h1 class="top" id="mvt-title">CU Sea Level Projection Tool (Beta Mode)</h1></div>
-				<div id="menucontenttitle"><h2 class="top"><a href="/"><a href="https://www.colorado.edu">University of Colorado Boulder</a></h2></div>
+			<div class="header">
+				<img id="header-image" src="img/sl_icon.png"></img>
+				<h1>CU Sea Level Projection Tool</h1>
+				<h2 class="top"><a href="/"><a href="https://www.colorado.edu">University of Colorado Boulder</a></h2>			  <div class="clear"></div>
 			</div>
 			<div id="menulinks">
 				<ul>
-					<li><a class="navbar" href="index.html">Main</a></li>
-                    <li><a class="navbar" href="about.html">About the Project</a></li>
-					<li><a class="navbar" href="about-sl.html">About Sea Level Projections</a></li>
-                    <li><a class="navbar" href="contact.html">Contact</a></li>
-
+					<div>
+						<li><a class="navbar" href="index.html">Home </a></li>
+						<li><a class="navbar" href="app.html">App</a></li>
+	                    <li><a class="navbar" href="about.html">About the Project</a></li>
+						<li><a class="navbar" href="about-sl.html">About Sea Level Projections</a></li>
+	                    <li><a class="navbar" href="contact.html" id='navbar-last-box'>Contact</a></li>
+					</div>
 				</ul>
 			</div>
 		</header>
@@ -79,14 +82,16 @@
 	<div class='content-container' id="footer-container">
 		<div id="footer-area">
 			<a href="http://sealevel.colorado.edu/" target="_blank">CU Sea Level Research Group</a> &nbsp; | &nbsp;
-			<a href="privacy.html">Privacy Policy</a>
-			<br>
+			<a href="about.html">About the Project</a> &nbsp; | &nbsp;
+			<a href="about-sl.html">About Sea Level Projections</a>&nbsp; | &nbsp;
+			<a href="contact.html">Contact</a>&nbsp; | &nbsp;
+			<a href="privacy.html">Privacy Policy</a> &nbsp; | &nbsp;
 		</div>
 	</div>
-</div><!-- End of #foreground -->
+	</div><!-- End of #foreground -->
 
-<script type="text/javascript">
-</script>
+	<script type="text/javascript">
+	</script>
 
-</body>
-</html>
+	</body>
+	</html>
