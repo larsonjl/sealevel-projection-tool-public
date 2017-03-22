@@ -8,7 +8,9 @@ $('#runProject').click(function(){
 	else {
 		loadRelSL();
 		updateMapYear();
-		queryCoastLoc(currentLocation, currentVCM);
+		if (currentVCM!==0){
+			queryCoastLoc(currentLocation, currentVCM, currentLatLon);
+		}
 	}
 });
 
@@ -22,7 +24,10 @@ $('#runBasicProject').click(function(){
 	else {
 		loadRelSL();
 		updateMapYear();
-		queryCoastLoc(currentLocation, currentVCM);
+		if (currentVCM!==0){
+			queryCoastLoc(currentLocation, currentVCM, currentLatLon);
+		}
+
 	}
 });
 
@@ -32,10 +37,18 @@ $(document).ready(function() {
         if (this.value == 'rel') {
 			absoluteOn = false;
 			loadRelSL();
+			var vcmDataOn = document.getElementById('vcmMenu');
+			vcmDataOn['options'][1].selected = true;
+			document.getElementById('chart-container').style.display = 'none';
+			currentVCM = 0;
+			currentLocation = 0;
+			currentLatLon = 0;
         }
         else if (this.value == 'abs') {
 			absoluteOn = true;
 			loadMap();
+			var vcmDataOn = document.getElementById('vcmMenu');
+			vcmDataOn['options'][0].selected = true;
         }
     });
 });
@@ -328,8 +341,8 @@ function loadApp() {
 	// document.getElementById("sidebar-question-button").addEventListener("click", viewRcpExplain, false);
 
     document.getElementById("sidebar-location-lookup").addEventListener("click", viewLocationLookup, false);
-	document.getElementById("sidebar-basic-settings").addEventListener("click", viewBasicSettings, false);
-
+	document.getElementById("sidebar-basic-settings").addEventListener("click", viewBasicSettings, true);
+	viewBasicSettings();
     // document.getElementById("sidebar-map-settings").addEventListener("click", viewMapSettings, false);
     // document.getElementById("sidebar-plot-settings").addEventListener("click", viewPlotSettings, false);
 
