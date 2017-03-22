@@ -135,7 +135,7 @@ def referencePointFile2Pickles():
         dataArray = grid2coastLocsDB(dataSetString, dFile.variableName)
         masterDict[dFile.Scenario][dFile.referenceName] = dataArray
     
-    masterDictOut = open('vectorDataForWebsite.pkl', 'wb')
+    masterDictOut = open('vectorDataForWebsiteNew.pkl', 'wb')
     pickle.dump(masterDict, masterDictOut)
     masterDictOut.close()
     
@@ -148,7 +148,7 @@ def referenceGridFile2Pickles():
     calculates the global mean value at every time step.'''
 
     masterDict = {'rcp85': {}, 'rcp45': {}, 'rcp26': {}}
-    masterDictTS = {'rcp85': {}, 'rzcp45': {}, 'rcp26': {}}
+    masterDictTS = {'rcp85': {}, 'rcp45': {}, 'rcp26': {}}
     refFile = pd.read_csv('referenceFile.csv')
     for indx in refFile.index:
         dFile = refFile.iloc[indx]
