@@ -107,6 +107,7 @@ Define Content Properties
 
 #footer-container {
 	display: block;
+	position:fixed;
 	top: calc(100vh - 36px);
     width: 100%;
     height: 30px;
