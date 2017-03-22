@@ -163,7 +163,11 @@ function loadMap(){
 function loadRelSL(){
 	"use strict";
 	updateQueryString();
+<<<<<<< HEAD
 	$.get(apiLoc + "?/projection_api/relativeSL="  + queryString, function(data, status){
+=======
+	$.get(apiLoc + "projection_api?relativeSL="  + queryString, function(data, status){
+>>>>>>> a8d89b089ac3c689b7103012cc4c45b06ecd9430
 				changeCoastData(data['pointData'], data['cLims']);
 		map.getSource('coastScatter').setData(coastLocs);
 		loadCustomRelative();
@@ -174,7 +178,7 @@ function loadRelSL(){
 
 function loadBasicProjection(rcpScenario){
 	"use strict";
-	$.get(apiLoc + "/projection_api?datastring=" + rcpScenario + queryString, function(data, status){
+	$.get(apiLoc + "projection_api?datastring=" + rcpScenario + queryString, function(data, status){
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);

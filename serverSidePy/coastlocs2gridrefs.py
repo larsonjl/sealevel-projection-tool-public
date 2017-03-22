@@ -81,8 +81,3 @@ with open('coastLocsVCM.geojson', 'w') as outfile:
             
 with open('./data/coast/coastLocsRef.json', 'w') as outfile:
     outfile.write(json.dumps(data, separators=(',', ':')))
-            
-            
-                     
-            
-    
