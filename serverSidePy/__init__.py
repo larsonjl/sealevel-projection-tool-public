@@ -7,6 +7,8 @@ import os
 
 dataFile = os.path.join(os.path.dirname(__file__), 'dataForWebsite.pkl')
 gridFile = os.path.join(os.path.dirname(__file__), 'maskRef.pkl')
+coastLocsFile = os.path.join(os.path.dirname(__file__), 'vectorDataForWebsite.pkl')
+
 
 # Class for json print so no spaces after comma
 class MiniJSONEncoder(JSONEncoder):
@@ -39,6 +41,22 @@ def createDatasetMultiYear(requestString):
               'timeSeries': tsData}
     return output
 
+def createDatasetCoastMultYear(requestString):
+    scaleBy = 1000 # m to mm
+    params = requestString.split('_')
+    rcpScen = params[0]
+    dOut = np.zeros((4, 4941))
+    for datasets in params[2::]:
+        # References [10, 35, 60, 85] refer to 2025, 2050, 2075, 2100  8
+        dOut += scaleBy * coastData[rcpScen][datasets][[10, 35, 60, 85], :]
+    dOut = np.around(dOut, decimals=2)
+    dMean = np.mean(dOut[dOut>-99999])
+    dStd = np.std(dOut[dOut>-99999])
+    dMin = np.float16(dMean - 2 * dStd)
+    dMax = np.float16(dMean + 2 * dStd)
+    output = {'cLims': [float(dMin), float(dMax)], 'pointData': dOut.tolist()}
+    return output
+
 
 def getGridCell(lat, lon):
     latRefs = np.arange(-89.5, 89.5, 1)
@@ -49,7 +67,7 @@ def getGridCell(lat, lon):
 
 
 def getLocationData(requestString):
-    scaleBy = 1000 # m to mm
+    scaleBy = 1000  # m to mm
     params = requestString.split('_')
     lat = params[0]
     lon = params[1]
@@ -65,12 +83,22 @@ def getLocationData(requestString):
         return dOut
 
 
+def getCoastLocationData(requestString):
+    scaleBy = 1000  # m to mm
+    params = requestString.split('_')
+    locIndx = params[0]
+    rcpScen = params[1]
+    dOut = {}
+    for datasets in params[3::]:
+        dOut[datasets] = (np.around(scaleBy * coastData[rcpScen][datasets][:, locIndx]
+                          .astype('float16'), decimals=4)).tolist()
+    return dOut
+
+
 # Load projection data into memory
 projDict = pickle.load(open(dataFile, "rb"))
 gridRef = pickle.load(open(gridFile, "rb"))
-
-# Load grid cell reference file into memory
-
+coastData = pickle.load(open(coastLocsFile, "rb"))
 
 # Start Flask
 app = Flask(__name__)
@@ -84,6 +112,10 @@ def api_hello():
         return jsonify(createDatasetMultiYear(request.args['datastring']))
     if 'latlonloc' in request.args:
         return jsonify(getLocationData(request.args['latlonloc']))
+    if 'relativeSL' in request.args:
+        return jsonify(createDatasetCoastMultYear(request.args['relativeSL']))
+    if 'coastLoc' in request.args:
+        return jsonify(getCoastLocationData(request.args['coastLoc']))
 
 if __name__ == '__main__':
     app.run(debug=True)

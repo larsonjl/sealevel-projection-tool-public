@@ -25,10 +25,19 @@ function saveImageListener() {
     saveSvgAsPng(document.getElementById(svg_id), imgName, {scale: 2, backgroundColor: "#FFFFFF"});
 }
 
-function plotFillProjection(projTimeSeries, plot_title){
-	var fillStyles  = {'gs':'fillgsmb', 'gd':'fillgdyn', 'th':'fillodyn', 'ad':'filladyn', 'as':'fillasmb', 'gl':'fillglac'}
-	var fillNames  = {'gs':'Greenland SMB', 'gd':'Greenland Dyn.', 'th':'Ocean Dynamics', 'ad':'Antarctic Dyn.', 'as':'Antarctic SMB', 'gl':'Mountain Glaciers'}
+function plotFillProjection(projTimeSeries, vcm_mmyr, plot_title){
 	var tsLen = 86 //length of time series
+
+	var vcmArray = new Array(tsLen).fill(0);
+	if (vcm_mmyr!==-999){
+		var vcm = - vcm_mmyr; // Decrease in crustal motion = increase in sea level
+		for (var i=0; i<tsLen; ++i){
+			vcmArray[i] = i * vcm}
+		projTimeSeries['vcm'] = vcmArray
+	}
+	console.log(projTimeSeries)
+	var fillStyles  = {'gs':'fillgsmb', 'gd':'fillgdyn', 'th':'fillodyn', 'ad':'filladyn', 'as':'fillasmb', 'gl':'fillglac', 'vc':'fillvcm'}
+	var fillNames  = {'gs':'Greenland SMB', 'gd':'Greenland Dyn.', 'th':'Ocean Dynamics', 'ad':'Antarctic Dyn.', 'as':'Antarctic SMB', 'gl':'Mountain Glaciers', 'vc':'Vertical Land Motion'}
 
 	// Define plotting area
 	plot_num = 1;
@@ -53,6 +62,7 @@ function plotFillProjection(projTimeSeries, plot_title){
 	   .domain([2015, 2100]);
 
 	// Find yLims...Redo smarter at a latter date
+
 	var temphi = new Array(tsLen).fill(0);
 	var templo = new Array(tsLen).fill(0);
 
@@ -142,14 +152,14 @@ function plotFillProjection(projTimeSeries, plot_title){
 
 	legend.append("rect")
 	   .attr("x", 600)
-	   .attr("y", 120)
+	   .attr("y", 100)
 	   .attr("width", 15)
 	   .attr("height", 2)
 	   .attr("style", 'black');
 
 	legend.append("text")
 	  .attr("x", 625)
-	  .attr("y", 120 + 5)
+	  .attr("y", 100 + 5)
 	  .text("Projection Total");
 
 	// Construct x dimension for plot
@@ -206,14 +216,14 @@ function plotFillProjection(projTimeSeries, plot_title){
 	      // Add legend element
 	      legend.append("rect")
 	           .attr("x", 600)
-	           .attr("y", 150 + legendMover)
+	           .attr("y", 120 + legendMover)
 	           .attr("width", 15)
 	           .attr("height", 15)
 	           .attr("class", fillStyles[variables[0]+variables[1]]);
 
 	       legend.append("text")
 	          .attr("x", 625)
-	          .attr("y", 163 + legendMover)
+	          .attr("y", 133 + legendMover)
 	          .text(fillNames[variables[0]+variables[1]]);
 	      legendMover += 40
 	      // Update running sum
