@@ -1,8 +1,8 @@
 function queryTimeseries(e){
 	var lngSym = 'E', latSym = 'N', lat, lng, decimLat, wholeLat, wholeLon, latitude, longitude, decimLat, decimLng
 
-	lat = e.lngLat.lat;
-	lng = e.lngLat.lng;
+	lat = e.lngLat.lat + 0.5;
+	lng = e.lngLat.lng + 0.5;
 
 	while (lng > 180){
 		lng = lng - 360
@@ -465,7 +465,7 @@ function loadGridLayers(){
 // CoastLocs Hover functionality
 function coastHover(e) {
 	var zoom = map.getZoom();
-	if (zoom>3.0){
+	if (zoom>2.0){
 		if (map.getLayer('rel2025') !== undefined){
 			var year = document.getElementById('display-year').value
 			var features = map.queryRenderedFeatures(e.point, { layers: ["rel" + year] });
@@ -491,7 +491,8 @@ function clickDecider(e, status){
 		if (features.length > 0){
 			currentLocation = features[0].properties.data_index
 			currentVCM = features[0].properties.vcm_mmyr
-			queryCoastLoc(currentLocation, currentVCM, features[0].geometry.coordinates);
+			currentLatLon = features[0].geometry.coordinates
+			queryCoastLoc(currentLocation, currentVCM, currentLatLon);
 		};
 	}
 	else{
