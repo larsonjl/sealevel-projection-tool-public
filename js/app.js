@@ -8,6 +8,7 @@ $('#runProject').click(function(){
 	else {
 		loadRelSL();
 		updateMapYear();
+		queryCoastLoc(currentLocation, currentVCM);
 	}
 });
 
@@ -21,6 +22,7 @@ $('#runBasicProject').click(function(){
 	else {
 		loadRelSL();
 		updateMapYear();
+		queryCoastLoc(currentLocation, currentVCM);
 	}
 });
 

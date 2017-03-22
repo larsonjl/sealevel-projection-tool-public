@@ -44,15 +44,17 @@ function queryTimeseries(e){
 			}, 3000);
 		}
 		else{
-			plotFillProjection(data, -999, "Sea level projection for " + wholeLng + 'E'+ ', ' + wholeLat + 'N')
+			plotFillProjection(data, -999, "Absolute sea level projection for " + wholeLng + 'E'+ ', ' + wholeLat + 'N')
 			maximizePlot();
 			}
   });
 };
 
-function queryCoastLoc(indxNum, vcm){
+function queryCoastLoc(indxNum, vcm, loc){
 	$.get(apiLoc + "/projection_api?coastLoc=" + indxNum + '_' + queryString  , function(data, status){
-		plotFillProjection(data, vcm, "Sea level projection for " + indxNum);
+		var wholeLon = loc[0] - loc[0]%1
+		var wholeLat = loc[1] - loc[1]%1
+		plotFillProjection(data, vcm, "Relative sea level projection for " + wholeLon + 'E'+ ', ' + wholeLat +  'N');
 		maximizePlot();
 	});
 };
@@ -487,8 +489,9 @@ function clickDecider(e, status){
 	if (absoluteOn === false){
 		var features = map.queryRenderedFeatures(e.point, { layers: ["rel" + year + "-hover"]});
 		if (features.length > 0){
-			console.log(features[0].properties)
-			queryCoastLoc(features[0].properties.data_index, features[0].properties.vcm_mmyr);
+			currentLocation = features[0].properties.data_index
+			currentVCM = features[0].properties.vcm_mmyr
+			queryCoastLoc(currentLocation, currentVCM, features[0].geometry.coordinates);
 		};
 	}
 	else{

@@ -1,6 +1,8 @@
 // Initialize global variables:
 var map,
 	absoluteOn = true,
+	currentVCM = 0,
+	currentLocation = 0,
 	rcpScenario,
 	apiLoc = 'http://sealevel.colorado.edu/',
 	defaultMap = 'true',

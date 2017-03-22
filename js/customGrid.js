@@ -105,7 +105,7 @@ function changeCoastData(queriedData, cbarLims){
 	var i = 0
 	var coastFeatures = coastLocs['features']
 	for (var features in coastFeatures){
-		var vlm = scaleBy * coastLocs['features'][features]['properties']['vcm_mmyr']
+		var vlm = - scaleBy * coastLocs['features'][features]['properties']['vcm_mmyr']
 		if (isNaN(vlm)){
 			vlm = -999999.
 		}

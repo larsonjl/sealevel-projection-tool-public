@@ -35,7 +35,6 @@ function plotFillProjection(projTimeSeries, vcm_mmyr, plot_title){
 			vcmArray[i] = i * vcm}
 		projTimeSeries['vcm'] = vcmArray
 	}
-	console.log(projTimeSeries)
 	var fillStyles  = {'gs':'fillgsmb', 'gd':'fillgdyn', 'th':'fillodyn', 'ad':'filladyn', 'as':'fillasmb', 'gl':'fillglac', 'vc':'fillvcm'}
 	var fillNames  = {'gs':'Greenland SMB', 'gd':'Greenland Dyn.', 'th':'Ocean Dynamics', 'ad':'Antarctic Dyn.', 'as':'Antarctic SMB', 'gl':'Mountain Glaciers', 'vc':'Vertical Land Motion'}
 
