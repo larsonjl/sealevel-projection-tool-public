@@ -45,7 +45,7 @@ def createDatasetCoastMultYear(requestString):
     scaleBy = 1000 # m to mm
     params = requestString.split('_')
     rcpScen = params[0]
-    dOut = np.zeros((4, 4941))
+    dOut = np.zeros((4, 3885))
     for datasets in params[2::]:
         # References [10, 35, 60, 85] refer to 2025, 2050, 2075, 2100  8
         dOut += scaleBy * coastData[rcpScen][datasets][[10, 35, 60, 85], :]
