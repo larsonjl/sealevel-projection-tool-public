@@ -76,6 +76,16 @@
 	box-shadow: 0 0 5px 1px rgba(0,0,0,0.5);
 }
 
+#map-title-container a{
+	color: #E0E0E0;
+	background-color: #333333;
+}
+
+#map-title-container a:hover{
+	color: #d3d3d3;
+	background-color: #333333;
+}
+
 .map-control-box{
 	font-size: 10pt;
 	vertical-align: middle;
