@@ -354,6 +354,7 @@ function loadApp() {
 
 	// Create default map
 	map.on('load', loadMap);
+
 }
 
 // Wait until all content is loaded to do anything:

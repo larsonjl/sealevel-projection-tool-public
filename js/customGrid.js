@@ -148,7 +148,7 @@ function loadMap(){
         map.getSource('oneDegreeData').setData(oneDegGrid);
 		var currentYear = document.getElementById('display-year').value
         loadGridLayers();
-		plotFillProjection(data['timeSeries'], 'Global Mean Absolute Sea Level Projection');
+		plotFillProjection(data['timeSeries'], -999, 'Global Mean Absolute Sea Level Projection');
 		maximizePlot();
 		minimizePlot();
 		changeProjectionName();

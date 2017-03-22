@@ -1,20 +1,20 @@
-function queryTimeseries(e, queryString){
+function queryTimeseries(e){
 	var lngSym = 'E', latSym = 'N', lat, lng, decimLat, wholeLat, wholeLon, latitude, longitude, decimLat, decimLng
 
-	lat = e.lngLat.lat
-	lng = e.lngLat.lng
+	lat = e.lngLat.lat;
+	lng = e.lngLat.lng;
 
 	while (lng > 180){
 		lng = lng - 360
-	}
+	};
 
 	while (lng < -180){
 		lng = lng + 360
-	}
+	};
 
 	// Get lat and lon signs, then make positive:
-	if (lng < 0) { lng = -lng; lngSym = 'W'; }
-	if (lat < 0) { lat = -lat; latSym = 'S'; }
+	if (lng < 0) { lng = -lng; lngSym = 'W'; };
+	if (lat < 0) { lat = -lat; latSym = 'S'; };
 
 	decimLng = lng % 1.0;
 	wholeLng = lng - decimLng;
@@ -23,17 +23,15 @@ function queryTimeseries(e, queryString){
 
 	if (decimLat > 0.5){
 		wholeLat += 1
-	}
+	};
 	if (decimLng > 0.5){
 		wholeLng += 1
-	}
+	};
 
-	if (lngSym === 'W') { wholeLng = - wholeLng; }
-	if (latSym === 'S') { wholeLat = - wholeLat; }
+	if (lngSym === 'W') { wholeLng = - wholeLng; };
+	if (latSym === 'S') { wholeLat = - wholeLat; };
 
-	queryString = wholeLat + '_' + wholeLng + '_' + rcpScenario + queryString
-
-    $.get(apiLoc + "/projection_api?latlonloc=" + queryString  , function(data, status){
+    $.get(apiLoc + "/projection_api?latlonloc=" + wholeLat + '_' + wholeLng + '_' + queryString  , function(data, status){
 		//If selected land... else...
 		if (data.hasOwnProperty('locTS')){
 			scrollPopup = document.getElementById('error-popup');
@@ -46,11 +44,18 @@ function queryTimeseries(e, queryString){
 			}, 3000);
 		}
 		else{
-			plotFillProjection(data, "Sea level projection for " + wholeLng + 'E'+ ', ' + wholeLat + 'N')
+			plotFillProjection(data, -999, "Sea level projection for " + wholeLng + 'E'+ ', ' + wholeLat + 'N')
 			maximizePlot();
 			}
   });
-}
+};
+
+function queryCoastLoc(indxNum, vcm){
+	$.get(apiLoc + "/projection_api?coastLoc=" + indxNum + '_' + queryString  , function(data, status){
+		plotFillProjection(data, vcm, "Sea level projection for " + indxNum);
+		maximizePlot();
+	});
+};
 
 // setPopupAndCenter :: When a new plot is requested, reset the Map Popup.
 function setPopupAndCenter(e) {
@@ -120,6 +125,10 @@ function removeScatterVisibility(){
 	map.setLayoutProperty('rel2050', 'visibility', 'none')
 	map.setLayoutProperty('rel2075', 'visibility', 'none')
 	map.setLayoutProperty('rel2100', 'visibility', 'none')
+	map.setLayoutProperty('rel2025-hover', 'visibility', 'none')
+	map.setLayoutProperty('rel2050-hover', 'visibility', 'none')
+	map.setLayoutProperty('rel2075-hover', 'visibility', 'none')
+	map.setLayoutProperty('rel2100-hover', 'visibility', 'none')
 };
 
 // Updates map year of data displayed
@@ -133,6 +142,7 @@ function updateMapYear(){
 			removeScatterVisibility();
 			var relDict = {2025:"rel2025", 2050:"rel2050",2075:"rel2075", 2100:"rel2100"}
 			map.setLayoutProperty(relDict[year], 'visibility', 'visible')
+			map.setLayoutProperty(relDict[year]+'-hover', 'visibility', 'visible')
 		}
 	}
 	else{
@@ -173,6 +183,10 @@ function loadCustomRelative(){
         map.removeLayer('rel2050')
         map.removeLayer('rel2075')
         map.removeLayer('rel2100')
+		map.removeLayer('rel2025-hover')
+		map.removeLayer('rel2050-hover')
+		map.removeLayer('rel2075-hover')
+		map.removeLayer('rel2100-hover')
     }
 	map.addLayer({
             "id": "rel2025",
@@ -182,6 +196,7 @@ function loadCustomRelative(){
             "layout": {
                     'visibility': 'none'},
 			"paint":	{
+					"circle-radius": 8,
 					"circle-color": {
 	                    property: 'sl2025',
 	                    stops: getColorbarStops('spectral', dMin, dMax)
@@ -194,9 +209,10 @@ function loadCustomRelative(){
 			"type": "circle",
 			"source": "coastScatter",
 			"z-index":999,
-			"layout": {
+			"layout":{
 					'visibility': 'none'},
-			"paint":	{
+			"paint":{
+					"circle-radius": 8,
 					"circle-color": {
 						property: 'sl2050',
 						stops: getColorbarStops('spectral', dMin, dMax)
@@ -211,7 +227,8 @@ function loadCustomRelative(){
 			"z-index":999,
 			"layout": {
 					'visibility': 'none'},
-			"paint":	{
+			"paint":{
+					"circle-radius": 8,
 					"circle-color": {
 						property: 'sl2075',
 						stops: getColorbarStops('spectral', dMin, dMax)
@@ -226,12 +243,81 @@ function loadCustomRelative(){
 			"z-index":999,
 			"layout": {
 					'visibility': 'none'},
-			"paint":	{
+			"paint":{
+					"circle-radius": 8,
 					"circle-color": {
 						property: 'sl2100',
 						stops: getColorbarStops('spectral', dMin, dMax)
 					}
 				}
+			});
+	// Hover layers
+	map.addLayer({
+			"id": "rel2025-hover",
+			"type": "circle",
+			"source": "coastScatter",
+			"z-index":999,
+			"layout": {
+					'visibility': 'none'},
+			"paint":	{
+					"circle-radius": 12,
+					"circle-color": {
+						property: 'sl2025',
+						stops: getColorbarStops('spectral', dMin, dMax)
+					}
+				},
+			 "filter": ["==", "name", ""]
+			});
+
+	map.addLayer({
+			"id": "rel2050-hover",
+			"type": "circle",
+			"source": "coastScatter",
+			"z-index":999,
+			"layout": {
+					'visibility': 'none'},
+			"paint":	{
+				"circle-radius": 12,
+					"circle-color": {
+						property: 'sl2050',
+						stops: getColorbarStops('spectral', dMin, dMax)
+					}
+				},
+			 "filter": ["==", "name", ""]
+			});
+
+	map.addLayer({
+			"id": "rel2075-hover",
+			"type": "circle",
+			"source": "coastScatter",
+			"z-index":999,
+			"layout": {
+					'visibility': 'none'},
+			"paint":	{
+				"circle-radius": 12,
+					"circle-color": {
+						property: 'sl2075',
+						stops: getColorbarStops('spectral', dMin, dMax)
+					}
+				},
+			 "filter": ["==", "name", ""]
+			});
+
+	map.addLayer({
+			"id": "rel2100-hover",
+			"type": "circle",
+			"source": "coastScatter",
+			"z-index":999,
+			"layout": {
+					'visibility': 'none'},
+			"paint":	{
+				"circle-radius": 12,
+					"circle-color": {
+						property: 'sl2100',
+						stops: getColorbarStops('spectral', dMin, dMax)
+					}
+				},
+			 "filter": ["==", "name", ""]
 			});
 		}
 
@@ -374,6 +460,43 @@ function loadGridLayers(){
 
 }
 
+// CoastLocs Hover functionality
+function coastHover(e) {
+	var zoom = map.getZoom();
+	if (zoom>3.0){
+		if (map.getLayer('rel2025') !== undefined){
+			var year = document.getElementById('display-year').value
+			var features = map.queryRenderedFeatures(e.point, { layers: ["rel" + year] });
+			if (features.length) {
+				map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+				map.setFilter("rel" + year+ "-hover", ["==", "data_index", features[0].properties.data_index]);
+			} else {
+				map.setFilter("rel" + year+ "-hover", ["==", "data_index", ""]);
+			}
+		}
+	}
+};
+
+//map.on("mouseout", function() {
+//   map.setFilter("rel2100-hover", ["==", "data_index", ""]);
+// });
+
+function clickDecider(e, status){
+	"use strict";
+	var year = document.getElementById("display-year").value
+	if (absoluteOn === false){
+		var features = map.queryRenderedFeatures(e.point, { layers: ["rel" + year + "-hover"]});
+		if (features.length > 0){
+			console.log(features[0].properties)
+			queryCoastLoc(features[0].properties.data_index, features[0].properties.vcm_mmyr);
+		};
+	}
+	else{
+		queryTimeseries(e);
+	};
+};
+
+
 // initializeMap :: loads background and interactive maps and starts page listeners.
 function initializeMap() {
     "use strict";
@@ -395,5 +518,6 @@ function initializeMap() {
         })};
         var nav = new mapboxgl.NavigationControl();
         map.addControl(nav, 'top-left')
-        map.on('click', function (e) { queryTimeseries(e, constructQueryArray());});
+		map.on("mousemove", function (e) {coastHover(e)});
+		map.on('click', function (e, status) {clickDecider(e, status)});
 }

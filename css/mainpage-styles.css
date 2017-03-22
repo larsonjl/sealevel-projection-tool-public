@@ -424,3 +424,8 @@ a.navbar:hover, a.navbar:active { background-color: #d3d3d3; }
   fill: #a65628;
   opacity: 0.75;
 }
+
+.fillvcm{
+  fill: #f781bf;
+  opacity: 0.75;
+}
