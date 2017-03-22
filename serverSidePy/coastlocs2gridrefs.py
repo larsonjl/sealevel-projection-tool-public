@@ -51,7 +51,8 @@ def look_at_neighbors(indx_lon, indx_lat):
 tot_locs = 0
 tot_nans = 0
 j = 0
-for i in range(len(data['features'])):
+i = 0
+while i <(len(data['features'])):
     lon_loc, lat_loc = data['features'][i]['geometry']['coordinates']
     indx_lon, indx_lat = latlon2gridcell(lon_loc, lat_loc, 
                                      -180, -90, 0.25)
@@ -66,11 +67,13 @@ for i in range(len(data['features'])):
             vcm_out = np.nan
 
     if np.isnan(vcm_out):
-        data['features'][i]['properties']['data_index'] = j        
+        # data['features'][i]['properties']['data_index'] = j  
+        del data['features'][i]
     else:
         data['features'][i]['properties']['vcm_mmyr'] = vcm_out
         data['features'][i]['properties']['data_index'] = j
-    j += 1
+        j += 1
+        i +=1
 
 with open('coastLocsVCM.geojson', 'w') as outfile:
     outfile.write('var coastLocs = ' +json.dumps(data, separators=(',', ':')))
