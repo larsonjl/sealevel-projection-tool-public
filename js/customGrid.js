@@ -145,7 +145,7 @@ function updateQueryString(){
 function loadMap(){
 	"use strict";
 	updateQueryString();
-	$.get(apiLoc + "/projection_api?datastring=" + queryString, function(data, status){
+	$.get(apiLoc + "projection_api?datastring=" + queryString, function(data, status){
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
         map.getSource('oneDegreeData').setData(oneDegGrid);
