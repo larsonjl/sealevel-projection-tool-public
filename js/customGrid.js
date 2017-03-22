@@ -105,8 +105,11 @@ function changeCoastData(queriedData, cbarLims){
 	var i = 0
 	var coastFeatures = coastLocs['features']
 	for (var features in coastFeatures){
-		// var vlm = scaleBy * coastLocs['features'][features]['properties']['vcm_mmyr']
-		var vlm = 0
+		var vlm = scaleBy * coastLocs['features'][features]['properties']['vcm_mmyr']
+		if (isNaN(vlm)){
+			vlm = -999999.
+		}
+		// var vlm = 0
 		coastLocs['features'][features].properties.sl2025 = scaleBy * queriedData[0][i] + 10 * vlm
 		coastLocs['features'][features].properties.sl2050 = scaleBy * queriedData[1][i] + 35 * vlm
 		coastLocs['features'][features].properties.sl2075 = scaleBy * queriedData[2][i] + 60 * vlm
