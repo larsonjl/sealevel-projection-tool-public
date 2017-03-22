@@ -196,7 +196,7 @@ function loadCustomRelative(){
             "layout": {
                     'visibility': 'none'},
 			"paint":	{
-					"circle-radius": 8,
+					"circle-radius": 6,
 					"circle-color": {
 	                    property: 'sl2025',
 	                    stops: getColorbarStops('spectral', dMin, dMax)
@@ -212,7 +212,7 @@ function loadCustomRelative(){
 			"layout":{
 					'visibility': 'none'},
 			"paint":{
-					"circle-radius": 8,
+					"circle-radius": 6,
 					"circle-color": {
 						property: 'sl2050',
 						stops: getColorbarStops('spectral', dMin, dMax)
@@ -228,7 +228,7 @@ function loadCustomRelative(){
 			"layout": {
 					'visibility': 'none'},
 			"paint":{
-					"circle-radius": 8,
+					"circle-radius": 6,
 					"circle-color": {
 						property: 'sl2075',
 						stops: getColorbarStops('spectral', dMin, dMax)
@@ -244,7 +244,7 @@ function loadCustomRelative(){
 			"layout": {
 					'visibility': 'none'},
 			"paint":{
-					"circle-radius": 8,
+					"circle-radius": 6,
 					"circle-color": {
 						property: 'sl2100',
 						stops: getColorbarStops('spectral', dMin, dMax)
