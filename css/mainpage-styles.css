@@ -128,11 +128,11 @@ Define Content Properties
 }
 
 #footer-area div.hline { width: auto; margin: 20px; }
-#footer-area a:link, #footer-area a:visited { color: #FFFFFF; text-decoration: none; }
+#footer-area a:link, #footer-area a:visited { color: #FFFFFF; text-decoration: none; padding-right: 10px; }
 #footer-area a:hover, #footer-area a:active { color: #A2A4A3; }
 
 div#footer-left, div#footer-right {}
-div#footer-right { float: right; text-align: right; padding-right:20px}
+div#footer-right { float: right; text-align: right; padding-right: 40px}
 div#footer-left { float: left; text-align: left; padding-left: 20px;}
 
 /* mapbox attribution */
