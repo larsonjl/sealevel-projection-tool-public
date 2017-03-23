@@ -35,8 +35,8 @@ function plotFillProjection(projTimeSeries, vcm_mmyr, plot_title){
 			vcmArray[i] = i * vcm}
 		projTimeSeries['vcm'] = vcmArray
 	}
-	var fillStyles  = {'gs':'fillgsmb', 'gd':'fillgdyn', 'th':'fillodyn', 'ad':'filladyn', 'as':'fillasmb', 'gl':'fillglac', 'vc':'fillvcm'}
-	var fillNames  = {'gs':'Greenland SMB', 'gd':'Greenland Dyn.', 'th':'Ocean Dynamics', 'ad':'Antarctic Dyn.', 'as':'Antarctic SMB', 'gl':'Mountain Glaciers', 'vc':'Vertical Land Motion'}
+	var fillStyles  = {'gi':'fillgia', 'gs':'fillgsmb', 'gd':'fillgdyn', 'th':'fillodyn', 'ad':'filladyn', 'as':'fillasmb', 'gl':'fillglac', 'vc':'fillvcm'}
+	var fillNames  = {'gi': 'GIA', 'gs':'Greenland SMB', 'gd':'Greenland Dyn.', 'th':'Ocean Dynamics', 'ad':'Antarctic Dyn.', 'as':'Antarctic SMB', 'gl':'Mountain Glaciers', 'vc':'Vertical Land Motion'}
 
 	// Define plotting area
 	plot_num = 1;

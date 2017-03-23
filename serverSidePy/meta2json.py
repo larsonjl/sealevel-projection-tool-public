@@ -9,7 +9,7 @@ import pandas as pd
 projectMeta = pd.read_csv('referenceFile.csv')
 dataOut = {}
 dataOut['RCP'] = {}
-metaList = ['Lower Bound (p=0.05)', 'Median', 'Upper Bound (p=0.95)']
+metaList = ['low', 'medium', 'high']
 
 for scenarios in set(projectMeta['Scenario']):
     dataSlim = projectMeta[projectMeta['Scenario'] == scenarios]
@@ -20,10 +20,10 @@ for scenarios in set(projectMeta['Scenario']):
         for titles in set(dataSlimmer['webTitle']):
             dataSlimmest = dataSlimmer[dataSlim['webTitle'] == titles]
             dataOut['RCP'][scenarios][components][titles] = {}
-            for himedlo in metaList:
+            for himedlo in dataSlimmest['webName']:
                 dataOut['RCP'][scenarios][components][titles][himedlo] = {}
 
-                dataSlimmestest = dataSlimmest[dataSlimmest['meta'] == himedlo]
+                dataSlimmestest = dataSlimmest[dataSlimmest['webName'] == himedlo]
                 dataOut['RCP'][scenarios][components][titles][himedlo]['ref'] = \
                     dataSlimmestest.referenceName.values[0]
 

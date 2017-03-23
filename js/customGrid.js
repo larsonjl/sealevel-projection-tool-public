@@ -131,7 +131,7 @@ function updateQueryString(){
 	else{
 	   var databaseString = [gsmbMenu.value, gdynMenu.value,
 	                     adynMenu.value, asmbMenu.value, thermoMenu.value,
-	                     glacierMenu.value]
+	                     glacierMenu.value, giaMenu.value]
 	    queryString = rcpScenario + '_' + '60'
 	    for (var elements in databaseString){
 	        if (databaseString[elements]!=='none'){

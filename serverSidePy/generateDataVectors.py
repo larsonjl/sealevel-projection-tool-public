@@ -185,5 +185,5 @@ def constructGridReference():
     pickle.dump(gridRef, dictOut)
 
 
-# referenceGridFile2Pickles()
+referenceGridFile2Pickles()
 # constructGridReference()

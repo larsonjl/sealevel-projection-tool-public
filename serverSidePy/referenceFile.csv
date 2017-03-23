@@ -17,6 +17,7 @@ rcp85,antDyn,low,ipcc_l.nc,adl1,IPCC AR5,antdyn_l,Lower Bound (p=0.05)
 rcp85,glacier,high,ipcc_h.nc,glh1,IPCC AR5,glac_h,Upper Bound (p=0.95)
 rcp85,glacier,medium,ipcc_m.nc,glm1,IPCC AR5,glac_m,Median
 rcp85,glacier,low,ipcc_l.nc,gll1,IPCC AR5,glac_l,Lower Bound (p=0.05)
+rcp85,gia,medium,ipcc_m.nc,gia1,IPCC AR5,gia_m,Median
 rcp45,greenSmb,high,ipcc_h.nc,gsh1,IPCC AR5,greensmb_h,Upper Bound (p=0.95)
 rcp45,greenSmb,medium,ipcc_m.nc,gsm1,IPCC AR5,greensmb_m,Median
 rcp45,greenSmb,low,ipcc_l.nc,gsl1,IPCC AR5,greensmb_l,Lower Bound (p=0.05)
@@ -35,6 +36,7 @@ rcp45,antDyn,low,ipcc_l.nc,adl1,IPCC AR5,antdyn_l,Lower Bound (p=0.05)
 rcp45,glacier,high,ipcc_h.nc,glh1,IPCC AR5,glac_h,Upper Bound (p=0.95)
 rcp45,glacier,medium,ipcc_m.nc,glm1,IPCC AR5,glac_m,Median
 rcp45,glacier,low,ipcc_l.nc,gll1,IPCC AR5,glac_l,Lower Bound (p=0.05)
+rcp45,gia,medium,ipcc_m.nc,gia1,IPCC AR5,gia_m,Median
 rcp26,greenSmb,high,ipcc_h.nc,gsh1,IPCC AR5,greensmb_h,Upper Bound (p=0.95)
 rcp26,greenSmb,medium,ipcc_m.nc,gsm1,IPCC AR5,greensmb_m,Median
 rcp26,greenSmb,low,ipcc_l.nc,gsl1,IPCC AR5,greensmb_l,Lower Bound (p=0.05)
@@ -53,3 +55,4 @@ rcp26,antDyn,low,ipcc_l.nc,adl1,IPCC AR5,antdyn_l,Lower Bound (p=0.05)
 rcp26,glacier,high,ipcc_h.nc,glh1,IPCC AR5,glac_h,Upper Bound (p=0.95)
 rcp26,glacier,medium,ipcc_m.nc,glm1,IPCC AR5,glac_m,Median
 rcp26,glacier,low,ipcc_l.nc,gll1,IPCC AR5,glac_l,Lower Bound (p=0.05)
+rcp26,gia,medium,ipcc_m.nc,gia1,IPCC AR5,gia_m,Median

@@ -432,3 +432,8 @@ a.navbar:hover, a.navbar:active { background-color: #d3d3d3; }
   fill: #f781bf;
   opacity: 0.75;
 }
+
+.fillgia{
+	fill: #ffff33;
+	opacity: 0.75;
+}
