@@ -513,7 +513,7 @@ function initializeMap() {
         map = new mapboxgl.Map({
             version: 6,
             container: 'map-div',
-            style: 'mapbox://styles/jlarson630/cj0be6ppp001y2snxtd6slir6',
+            style: 'mapbox://styles/jlarson630/cj0my6omj006i2smrucl0x43c',
             center: [-88.137, 35.13],
             zoom: 2,
             maxZoom: 5,
