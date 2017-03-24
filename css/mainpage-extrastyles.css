@@ -622,7 +622,7 @@ input#show-tide-gauges-checkbox {
 	align: center;
 	width:85%;
 	position:relative;
-	margin-bottom: 0px;
+	margin-bottom: 10px;
     margin-top: 0px;
 	margin-left: 5px;
 	font-family: Helvetica;
@@ -688,8 +688,8 @@ input#show-tide-gauges-checkbox {
 #GetTimeseries { text-align: center; line-height: 22px; }
 #click-location p {
 	display: inline-block;
-    padding-top: 10px;
-    margin: 4px 0;
+    padding-top: 0px;
+    margin: 3px 0;
     font-size: 10pt;
 }
 .click-latlon-div { text-align: left; font-weight: bold; display: inline-block; width: 90px; }
