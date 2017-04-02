@@ -362,6 +362,8 @@ function loadApp() {
     // document.getElementById("set-smooth-width").addEventListener("click", onPlottingFormChange, false);
     map.on('load', loadGridLayers);
 
+	setTimeout(function(){removeLoadMenu()},4000);
+
     // Plot minimize/maximize listeners:
     document.getElementById("minimize-plot-img").addEventListener("click", minimizePlot, false);
     document.getElementById("maximize-plot-img").addEventListener("click", maximizePlot, false);
@@ -372,7 +374,6 @@ function loadApp() {
     document.getElementById('resize-triangle').addEventListener('mousedown', mouseDownResize, false);
 
     window.addEventListener('mouseup', mouseUpResize, false);
-	setTimeout(function(){removeLoadMenu()},4000);
 
 	// Create default map
 	map.on('load', loadMap);
