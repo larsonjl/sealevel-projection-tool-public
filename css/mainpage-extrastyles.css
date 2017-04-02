@@ -327,8 +327,24 @@ div.popup-msg {
     padding: 0;
     margin: 0;
     display: block;
+	position: absolute;
+
 }
 
+#load-menu {
+	position: absolute;
+	width: calc( 100% - 274px );
+    height: calc( 100vh - 33px );
+    padding: 0;
+    margin: 0;
+	float: left;
+	z-index: 9999;
+	background-color: #FFFFFF;
+	opacity: 0.98;
+
+}
+
+/* ----- Sidebar Styling ----- */
 /* ----- Sidebar Styling ----- */
 
 #sidebar {
