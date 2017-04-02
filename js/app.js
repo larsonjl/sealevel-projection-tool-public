@@ -322,6 +322,12 @@ function setPlottingMode(mode) {
     }
 }
 
+function removeLoadMenu(){
+	"use strict";
+	document.getElementById("load-menu").style.visibility = 'hidden'
+	document.getElementById("map-div").style.visibility = 'visible'
+}
+
 // loadApp :: Start app
 function loadApp() {
     "use strict";
@@ -366,6 +372,7 @@ function loadApp() {
     document.getElementById('resize-triangle').addEventListener('mousedown', mouseDownResize, false);
 
     window.addEventListener('mouseup', mouseUpResize, false);
+	setTimeout(function(){removeLoadMenu()},4000);
 
 	// Create default map
 	map.on('load', loadMap);

@@ -195,7 +195,23 @@ div.popup-msg {
     display: block;
 }
 
-/* ----- Sidebar Styling ----- */
+#map-div {
+    width: calc( 100% - 38px );
+    height: calc( 100vh - 95px );
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+#load-menu {
+	width: calc( 100% - 38px );
+    height: calc( 100vh - 95px );
+	display: block;
+    padding: 0;
+    margin: 0;
+	background-color: #ffffff;
+	z-index: 9999;
+}/* ----- Sidebar Styling ----- */
 
 #sidebar {
     position: absolute;
