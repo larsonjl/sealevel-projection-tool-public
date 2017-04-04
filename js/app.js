@@ -2,11 +2,11 @@
 $('#runProject').click(function(){
 	defaultMap = 'false';
 	if (absoluteOn === true) {
-	    loadMap();
+	    loadMap('custom');
 		updateMapYear();
 	}
 	else {
-		loadRelSL();
+		loadRelSL('custom');
 		updateMapYear();
 		if (currentVCM!==0){
 			queryCoastLoc(currentLocation, currentVCM, currentLatLon);
@@ -18,7 +18,7 @@ $('#runProject').click(function(){
 $('#runBasicProject').click(function(){
 	defaultMap = 'true';
 	if (absoluteOn === true) {
-	    loadMap();
+	    loadMap('basic');
 		updateMapYear();
 	}
 	else {
@@ -361,8 +361,6 @@ function loadApp() {
     map.on('load', initializeTiles);
     // document.getElementById("set-smooth-width").addEventListener("click", onPlottingFormChange, false);
     map.on('load', loadGridLayers);
-
-	setTimeout(function(){removeLoadMenu()},4000);
 
     // Plot minimize/maximize listeners:
     document.getElementById("minimize-plot-img").addEventListener("click", minimizePlot, false);
