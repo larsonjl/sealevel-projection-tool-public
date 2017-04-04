@@ -97,10 +97,9 @@ function changeGridDat(queriedData, cbarLims){
 var scaleBy;
 // Used to change values default values of coast data to queried data from server
 function changeCoastData(queriedData, cbarLims){
+	console.log(cbarLims)
 	"use strict";
 	scaleBy = (1/10.) //mm to cm
-	dMax = cbarLims[1] * scaleBy + 5
-	dMin = cbarLims[0] * scaleBy
 	// Loop through features, assign data to proper grid cells and properties
 	var i = 0
 	var coastFeatures = coastLocs['features']
@@ -116,6 +115,16 @@ function changeCoastData(queriedData, cbarLims){
 		coastLocs['features'][features].properties.sl2100 = scaleBy * queriedData[3][i] + 85 * vlm
 		i+=1
 	};
+
+	// If only VLM plotted
+	if (cbarLims[0] + cbarLims[1] === 0){
+		cbarLims[1] = 250
+		cbarLims[0] = -500
+	}
+
+	dMax = cbarLims[1] * scaleBy + 5
+	dMin = cbarLims[0] * scaleBy
+
 	document.getElementById('spectral' + '-colorbar').style.display = 'inline-block';
 	document.getElementById('map-cbar-container').style.display = 'block';
 	document.getElementById('year-select-container').style.display = 'block';
