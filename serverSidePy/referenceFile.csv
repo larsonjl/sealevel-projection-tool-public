@@ -1,58 +1,58 @@
-Scenario,component,meta,rawFile,referenceName,webTitle,variableName,webName
-rcp85,greenSmb,high,ipcc_h.nc,gsh1,IPCC AR5,greensmb_h,Upper Bound (p=0.95)
-rcp85,greenSmb,medium,ipcc_m.nc,gsm1,IPCC AR5,greensmb_m,Median
-rcp85,greenSmb,low,ipcc_l.nc,gsl1,IPCC AR5,greensmb_l,Lower Bound (p=0.05)
-rcp85,greenDyn,high,ipcc_h.nc,gdh1,IPCC AR5,greendyn_h,Upper Bound (p=0.95)
-rcp85,greenDyn,medium,ipcc_m.nc,gdm1,IPCC AR5,greendyn_m,Median
-rcp85,greenDyn,low,ipcc_l.nc,gdl1,IPCC AR5,greendyn_l,Lower Bound (p=0.05)
-rcp85,thermo,high,ipcc_h.nc,thh1,IPCC AR5,ocn_h,Upper Bound (p=0.95)
-rcp85,thermo,medium,ipcc_m.nc,thm1,IPCC AR5,ocn_m,Median
-rcp85,thermo,low,ipcc_l.nc,thl1,IPCC AR5,ocn_l,Lower Bound (p=0.05)
-rcp85,antSmb,high,ipcc_h.nc,ash1,IPCC AR5,antsmb_h,Upper Bound (p=0.95)
-rcp85,antSmb,medium,ipcc_m.nc,asm1,IPCC AR5,antsmb_m,Median
-rcp85,antSmb,low,ipcc_l.nc,asl1,IPCC AR5,antsmb_l,Lower Bound (p=0.05)
-rcp85,antDyn,high,ipcc_h.nc,adh1,IPCC AR5,antdyn_h,Upper Bound (p=0.95)
-rcp85,antDyn,medium,ipcc_m.nc,adm1,IPCC AR5,antdyn_m,Median
-rcp85,antDyn,low,ipcc_l.nc,adl1,IPCC AR5,antdyn_l,Lower Bound (p=0.05)
-rcp85,glacier,high,ipcc_h.nc,glh1,IPCC AR5,glac_h,Upper Bound (p=0.95)
-rcp85,glacier,medium,ipcc_m.nc,glm1,IPCC AR5,glac_m,Median
-rcp85,glacier,low,ipcc_l.nc,gll1,IPCC AR5,glac_l,Lower Bound (p=0.05)
-rcp85,gia,medium,ipcc_m.nc,gia1,IPCC AR5,gia_m,Median
-rcp45,greenSmb,high,ipcc_h.nc,gsh1,IPCC AR5,greensmb_h,Upper Bound (p=0.95)
-rcp45,greenSmb,medium,ipcc_m.nc,gsm1,IPCC AR5,greensmb_m,Median
-rcp45,greenSmb,low,ipcc_l.nc,gsl1,IPCC AR5,greensmb_l,Lower Bound (p=0.05)
-rcp45,greenDyn,high,ipcc_h.nc,gdh1,IPCC AR5,greendyn_h,Upper Bound (p=0.95)
-rcp45,greenDyn,medium,ipcc_m.nc,gdm1,IPCC AR5,greendyn_m,Median
-rcp45,greenDyn,low,ipcc_l.nc,gdl1,IPCC AR5,greendyn_l,Lower Bound (p=0.05)
-rcp45,thermo,high,ipcc_h.nc,thh1,IPCC AR5,ocn_h,Upper Bound (p=0.95)
-rcp45,thermo,medium,ipcc_m.nc,thm1,IPCC AR5,ocn_m,Median
-rcp45,thermo,low,ipcc_l.nc,thl1,IPCC AR5,ocn_l,Lower Bound (p=0.05)
-rcp45,antSmb,high,ipcc_h.nc,ash1,IPCC AR5,antsmb_h,Upper Bound (p=0.95)
-rcp45,antSmb,medium,ipcc_m.nc,asm1,IPCC AR5,antsmb_m,Median
-rcp45,antSmb,low,ipcc_l.nc,asl1,IPCC AR5,antsmb_l,Lower Bound (p=0.05)
-rcp45,antDyn,high,ipcc_h.nc,adh1,IPCC AR5,antdyn_h,Upper Bound (p=0.95)
-rcp45,antDyn,medium,ipcc_m.nc,adm1,IPCC AR5,antdyn_m,Median
-rcp45,antDyn,low,ipcc_l.nc,adl1,IPCC AR5,antdyn_l,Lower Bound (p=0.05)
-rcp45,glacier,high,ipcc_h.nc,glh1,IPCC AR5,glac_h,Upper Bound (p=0.95)
-rcp45,glacier,medium,ipcc_m.nc,glm1,IPCC AR5,glac_m,Median
-rcp45,glacier,low,ipcc_l.nc,gll1,IPCC AR5,glac_l,Lower Bound (p=0.05)
-rcp45,gia,medium,ipcc_m.nc,gia1,IPCC AR5,gia_m,Median
-rcp26,greenSmb,high,ipcc_h.nc,gsh1,IPCC AR5,greensmb_h,Upper Bound (p=0.95)
-rcp26,greenSmb,medium,ipcc_m.nc,gsm1,IPCC AR5,greensmb_m,Median
-rcp26,greenSmb,low,ipcc_l.nc,gsl1,IPCC AR5,greensmb_l,Lower Bound (p=0.05)
-rcp26,greenDyn,high,ipcc_h.nc,gdh1,IPCC AR5,greendyn_h,Upper Bound (p=0.95)
-rcp26,greenDyn,medium,ipcc_m.nc,gdm1,IPCC AR5,greendyn_m,Median
-rcp26,greenDyn,low,ipcc_l.nc,gdl1,IPCC AR5,greendyn_l,Lower Bound (p=0.05)
-rcp26,thermo,high,ipcc_h.nc,thh1,IPCC AR5,ocn_h,Upper Bound (p=0.95)
-rcp26,thermo,medium,ipcc_m.nc,thm1,IPCC AR5,ocn_m,Median
-rcp26,thermo,low,ipcc_l.nc,thl1,IPCC AR5,ocn_l,Lower Bound (p=0.05)
-rcp26,antSmb,high,ipcc_h.nc,ash1,IPCC AR5,antsmb_h,Upper Bound (p=0.95)
-rcp26,antSmb,medium,ipcc_m.nc,asm1,IPCC AR5,antsmb_m,Median
-rcp26,antSmb,low,ipcc_l.nc,asl1,IPCC AR5,antsmb_l,Lower Bound (p=0.05)
-rcp26,antDyn,high,ipcc_h.nc,adh1,IPCC AR5,antdyn_h,Upper Bound (p=0.95)
-rcp26,antDyn,medium,ipcc_m.nc,adm1,IPCC AR5,antdyn_m,Median
-rcp26,antDyn,low,ipcc_l.nc,adl1,IPCC AR5,antdyn_l,Lower Bound (p=0.05)
-rcp26,glacier,high,ipcc_h.nc,glh1,IPCC AR5,glac_h,Upper Bound (p=0.95)
-rcp26,glacier,medium,ipcc_m.nc,glm1,IPCC AR5,glac_m,Median
-rcp26,glacier,low,ipcc_l.nc,gll1,IPCC AR5,glac_l,Lower Bound (p=0.05)
-rcp26,gia,medium,ipcc_m.nc,gia1,IPCC AR5,gia_m,Median
+Scenario,component,meta,rawFile,referenceName,webTitle,variableName,webName,default
+rcp85,greenSmb,high,ipcc_h.nc,gsh1,IPCC AR5,greensmb_h,Upper Bound (p=0.95),FALSE
+rcp85,greenSmb,medium,ipcc_m.nc,gsm1,IPCC AR5,greensmb_m,Median,TRUE
+rcp85,greenSmb,low,ipcc_l.nc,gsl1,IPCC AR5,greensmb_l,Lower Bound (p=0.05),FALSE
+rcp85,greenDyn,high,ipcc_h.nc,gdh1,IPCC AR5,greendyn_h,Upper Bound (p=0.95),FALSE
+rcp85,greenDyn,medium,ipcc_m.nc,gdm1,IPCC AR5,greendyn_m,Median,TRUE
+rcp85,greenDyn,low,ipcc_l.nc,gdl1,IPCC AR5,greendyn_l,Lower Bound (p=0.05),FALSE
+rcp85,thermo,high,ipcc_h.nc,thh1,IPCC AR5,ocn_h,Upper Bound (p=0.95),FALSE
+rcp85,thermo,medium,ipcc_m.nc,thm1,IPCC AR5,ocn_m,Median,TRUE
+rcp85,thermo,low,ipcc_l.nc,thl1,IPCC AR5,ocn_l,Lower Bound (p=0.05),FALSE
+rcp85,antSmb,high,ipcc_h.nc,ash1,IPCC AR5,antsmb_h,Upper Bound (p=0.95),FALSE
+rcp85,antSmb,medium,ipcc_m.nc,asm1,IPCC AR5,antsmb_m,Median,TRUE
+rcp85,antSmb,low,ipcc_l.nc,asl1,IPCC AR5,antsmb_l,Lower Bound (p=0.05),FALSE
+rcp85,antDyn,high,ipcc_h.nc,adh1,IPCC AR5,antdyn_h,Upper Bound (p=0.95),FALSE
+rcp85,antDyn,medium,ipcc_m.nc,adm1,IPCC AR5,antdyn_m,Median,TRUE
+rcp85,antDyn,low,ipcc_l.nc,adl1,IPCC AR5,antdyn_l,Lower Bound (p=0.05),FALSE
+rcp85,glacier,high,ipcc_h.nc,glh1,IPCC AR5,glac_h,Upper Bound (p=0.95),FALSE
+rcp85,glacier,medium,ipcc_m.nc,glm1,IPCC AR5,glac_m,Median,TRUE
+rcp85,glacier,low,ipcc_l.nc,gll1,IPCC AR5,glac_l,Lower Bound (p=0.05),FALSE
+rcp85,gia,medium,ipcc_m.nc,gia1,IPCC AR5,gia_m,Median,TRUE
+rcp45,greenSmb,high,ipcc_h.nc,gsh1,IPCC AR5,greensmb_h,Upper Bound (p=0.95),FALSE
+rcp45,greenSmb,medium,ipcc_m.nc,gsm1,IPCC AR5,greensmb_m,Median,TRUE
+rcp45,greenSmb,low,ipcc_l.nc,gsl1,IPCC AR5,greensmb_l,Lower Bound (p=0.05),FALSE
+rcp45,greenDyn,high,ipcc_h.nc,gdh1,IPCC AR5,greendyn_h,Upper Bound (p=0.95),FALSE
+rcp45,greenDyn,medium,ipcc_m.nc,gdm1,IPCC AR5,greendyn_m,Median,TRUE
+rcp45,greenDyn,low,ipcc_l.nc,gdl1,IPCC AR5,greendyn_l,Lower Bound (p=0.05),FALSE
+rcp45,thermo,high,ipcc_h.nc,thh1,IPCC AR5,ocn_h,Upper Bound (p=0.95),FALSE
+rcp45,thermo,medium,ipcc_m.nc,thm1,IPCC AR5,ocn_m,Median,TRUE
+rcp45,thermo,low,ipcc_l.nc,thl1,IPCC AR5,ocn_l,Lower Bound (p=0.05),FALSE
+rcp45,antSmb,high,ipcc_h.nc,ash1,IPCC AR5,antsmb_h,Upper Bound (p=0.95),FALSE
+rcp45,antSmb,medium,ipcc_m.nc,asm1,IPCC AR5,antsmb_m,Median,TRUE
+rcp45,antSmb,low,ipcc_l.nc,asl1,IPCC AR5,antsmb_l,Lower Bound (p=0.05),FALSE
+rcp45,antDyn,high,ipcc_h.nc,adh1,IPCC AR5,antdyn_h,Upper Bound (p=0.95),FALSE
+rcp45,antDyn,medium,ipcc_m.nc,adm1,IPCC AR5,antdyn_m,Median,TRUE
+rcp45,antDyn,low,ipcc_l.nc,adl1,IPCC AR5,antdyn_l,Lower Bound (p=0.05),FALSE
+rcp45,glacier,high,ipcc_h.nc,glh1,IPCC AR5,glac_h,Upper Bound (p=0.95),FALSE
+rcp45,glacier,medium,ipcc_m.nc,glm1,IPCC AR5,glac_m,Median,TRUE
+rcp45,glacier,low,ipcc_l.nc,gll1,IPCC AR5,glac_l,Lower Bound (p=0.05),FALSE
+rcp45,gia,medium,ipcc_m.nc,gia1,IPCC AR5,gia_m,Median,TRUE
+rcp26,greenSmb,high,ipcc_h.nc,gsh1,IPCC AR5,greensmb_h,Upper Bound (p=0.95),FALSE
+rcp26,greenSmb,medium,ipcc_m.nc,gsm1,IPCC AR5,greensmb_m,Median,TRUE
+rcp26,greenSmb,low,ipcc_l.nc,gsl1,IPCC AR5,greensmb_l,Lower Bound (p=0.05),FALSE
+rcp26,greenDyn,high,ipcc_h.nc,gdh1,IPCC AR5,greendyn_h,Upper Bound (p=0.95),FALSE
+rcp26,greenDyn,medium,ipcc_m.nc,gdm1,IPCC AR5,greendyn_m,Median,TRUE
+rcp26,greenDyn,low,ipcc_l.nc,gdl1,IPCC AR5,greendyn_l,Lower Bound (p=0.05),FALSE
+rcp26,thermo,high,ipcc_h.nc,thh1,IPCC AR5,ocn_h,Upper Bound (p=0.95),FALSE
+rcp26,thermo,medium,ipcc_m.nc,thm1,IPCC AR5,ocn_m,Median,TRUE
+rcp26,thermo,low,ipcc_l.nc,thl1,IPCC AR5,ocn_l,Lower Bound (p=0.05),FALSE
+rcp26,antSmb,high,ipcc_h.nc,ash1,IPCC AR5,antsmb_h,Upper Bound (p=0.95),FALSE
+rcp26,antSmb,medium,ipcc_m.nc,asm1,IPCC AR5,antsmb_m,Median,TRUE
+rcp26,antSmb,low,ipcc_l.nc,asl1,IPCC AR5,antsmb_l,Lower Bound (p=0.05),FALSE
+rcp26,antDyn,high,ipcc_h.nc,adh1,IPCC AR5,antdyn_h,Upper Bound (p=0.95),FALSE
+rcp26,antDyn,medium,ipcc_m.nc,adm1,IPCC AR5,antdyn_m,Median,TRUE
+rcp26,antDyn,low,ipcc_l.nc,adl1,IPCC AR5,antdyn_l,Lower Bound (p=0.05),FALSE
+rcp26,glacier,high,ipcc_h.nc,glh1,IPCC AR5,glac_h,Upper Bound (p=0.95),FALSE
+rcp26,glacier,medium,ipcc_m.nc,glm1,IPCC AR5,glac_m,Median,TRUE
+rcp26,glacier,low,ipcc_l.nc,gll1,IPCC AR5,glac_l,Lower Bound (p=0.05),FALSE
+rcp26,gia,medium,ipcc_m.nc,gia1,IPCC AR5,gia_m,Median,TRUE

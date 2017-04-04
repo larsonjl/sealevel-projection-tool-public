@@ -26,6 +26,8 @@ for scenarios in set(projectMeta['Scenario']):
                 dataSlimmestest = dataSlimmest[dataSlimmest['webName'] == himedlo]
                 dataOut['RCP'][scenarios][components][titles][himedlo]['ref'] = \
                     dataSlimmestest.referenceName.values[0]
+                dataOut['RCP'][scenarios][components][titles][himedlo]['default'] = \
+                    str(dataSlimmestest.default.values[0])
 
 with open('referenceFile.js', 'w') as outfile:
     outfile.write('var sidebar = ')

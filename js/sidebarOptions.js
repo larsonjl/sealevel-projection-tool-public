@@ -59,7 +59,14 @@ function getHtmlOptions(rcp, component){
     for (options in compOptions){
         for (scenarios in sidebar.RCP[rcp][component][options]){
             metaData = sidebar.RCP[rcp][component][options][scenarios]
-            outString += '<option value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'}
+			if (metaData.default === 'True'){
+				outString += '<option selected="selected" value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
+			}
+			else{
+
+            	outString += '<option value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
+			}
+		}
     }
     return outString
 }
