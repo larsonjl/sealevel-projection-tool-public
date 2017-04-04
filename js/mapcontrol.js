@@ -465,7 +465,7 @@ function loadGridLayers(){
 // CoastLocs Hover functionality
 function coastHover(e) {
 	var zoom = map.getZoom();
-	if (zoom>2.0){
+	if (zoom>1.0){
 		if (map.getLayer('rel2025') !== undefined){
 			var year = document.getElementById('display-year').value
 			var features = map.queryRenderedFeatures(e.point, { layers: ["rel" + year] });
