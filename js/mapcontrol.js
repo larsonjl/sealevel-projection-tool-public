@@ -510,6 +510,11 @@ function initializeMap() {
     if (!mapboxgl.supported()) {
         alert('Your browser does not support Mapbox GL. Please try a different browser, or make sure that you have WebGL enabled on your current browser.');
     } else {
+		var bounds = [
+    			[-720, -70], // Southwest coordinates
+    			[720.0, 75]  // Northeast coordinates
+				];
+
         map = new mapboxgl.Map({
             version: 6,
             container: 'map-div',
@@ -518,7 +523,8 @@ function initializeMap() {
             zoom: 2,
             maxZoom: 5,
             minZoom: 1.0,
-			attributionControl: false
+			attributionControl: false,
+			maxBounds: bounds
         })};
         var nav = new mapboxgl.NavigationControl();
         map.addControl(nav, 'top-left')
