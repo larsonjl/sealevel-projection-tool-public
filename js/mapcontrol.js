@@ -176,6 +176,43 @@ function initializeTiles(){
 			"type": "geojson",
 			"data": coastLocs
 	});
+	
+	map.addSource('vcmLand', {
+        type: "vector",
+        url: 'mapbox://jlarson630.4dr7gv23'
+            });
+}
+
+
+function addCrustLandSource(){
+	"use strict";
+	map.addSource('vcmLand', {
+        type: "vector",
+        url: 'mapbox://jlarson630.4dr7gv23'
+            });
+}
+
+function loadCrustLandLayer(){
+	"use strict";
+	if (map.getLayer('vcmLandLayer') !== undefined){
+		map.removeLayer('vcmLandLayer')
+	}
+
+	map.addLayer({
+            "id": "vcmLandLayer",
+            "type": "fill",
+            "source": "vcmLand",
+			"z-index":999,
+			'source-layer': "vcmHalfgeojson",
+            "layout": {
+                    'visibility': 'visible'
+            },
+            "paint": {
+                "fill-color": {
+                    property: 'sl2100',
+                    stops: getColorbarStops('spectral', dMin, dMax)
+                    }, 'fill-opacity': 1.0}
+            }, 'water');
 }
 
 // Add all relative sea level layers (i.e. one for each year)
