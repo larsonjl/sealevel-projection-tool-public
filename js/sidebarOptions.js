@@ -1,4 +1,4 @@
-$(document).ready(function() {
+function setSidebarOptions() {
 	$("#gsmbMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'greenSmb'));
 	$("#gdynMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'greenDyn'));
 	$("#adynMenu").removeAttr('disabled').html(getHtmlOptions('rcp85', 'antDyn'));
@@ -50,7 +50,7 @@ $(document).ready(function() {
 
         }
     });
-});
+};
 
 // Sets menu options based on reference file!
 function getHtmlOptions(rcp, component){
@@ -59,33 +59,60 @@ function getHtmlOptions(rcp, component){
     for (options in compOptions){
         for (scenarios in sidebar.RCP[rcp][component][options]){
             metaData = sidebar.RCP[rcp][component][options][scenarios]
-			if (metaData.default === 'True'){
-				outString += '<option selected="selected" value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
+			if (deselectOptions === false){
+				if (metaData.default === 'True'){
+					outString += '<option selected="selected" value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
+				}
+				else{
+
+	            	outString += '<option value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
+				}
+
 			}
 			else{
-
-            	outString += '<option value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
+				console.log("here")
+				outString += '<option value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
 			}
 		}
     }
     return outString
 }
 
-// When basic setting clicked, changes advanced too
+// Turn all sidebar options to none setting
+function turnOptionsToNone(){
+	if (deselectOptions === false){
+		deselectOptions = true;
+	}
+	setSidebarOptions();
+}
+
+// Turn all sidebar options to default setting
+function turnOptionsOn(){
+	if (deselectOptions === true){
+		deselectOptions = false;
+	}
+	setSidebarOptions();
+}
+
+// When basic setting clicked, changes advanced too.  Also resets options
+// to default values.
  $(document).ready(function() {
     $(':radio[value=rcp85]').change(function(){
         $(':radio[value=rcp85]').prop('checked',true);
+		turnOptionsOn();
     });
  });
 
  $(document).ready(function() {
     $(':radio[value=rcp45]').change(function(){
         $(':radio[value=rcp45]').prop('checked',true);
+		turnOptionsOn();
     });
  });
 
  $(document).ready(function() {
    $(':radio[value=rcp26]').change(function(){
         $(':radio[value=rcp26]').prop('checked',true);
+		turnOptionsOn();
     });
  });
