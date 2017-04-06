@@ -70,9 +70,19 @@ div.hline { height: 1px; margin: 6px 0; width: 100%; background-color: #DDDDDD; 
 
 .about-section ul { width: 80%; }
 .about-section ul li { width: 100%; }
+.about-section h3{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.about-section h4{
+	margin-left: 15px;
+	margin-right: 15px;
+}
 .about-section p {
 	text-align: left;
 	margin: 0px;
+	margin-left: 15px;
+	margin-right: 15px;
 }
 
 
@@ -101,6 +111,7 @@ Define Content Properties
     width: 100%;
 	min-height: calc(100vh - 163px);
     padding: 0px;
+	padding-bottom: 30px;
     background-color: #FFFFFF;
 }
 
@@ -144,8 +155,8 @@ Define Content Properties
 #footer-area a:hover, #footer-area a:active { color: #A2A4A3; }
 
 div#footer-left, div#footer-right {}
-div#footer-right { float: right; text-align: right; padding-right: 40px}
-div#footer-left { float: left; text-align: left; padding-left: 20px;}
+div#footer-left {  position: relative; float: left; text-align: center; display:inline; z-index: -1}
+div#footer-right { float: right; text-align: center; displa:inline; margin-right: 10px;}
 
 /* mapbox attribution */
 #attribution {
