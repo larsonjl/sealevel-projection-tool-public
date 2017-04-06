@@ -36,7 +36,7 @@ function plotFillProjection(projTimeSeries, vcm_mmyr, plot_title){
 		projTimeSeries['vcm'] = vcmArray
 	}
 	var fillStyles  = {'gi':'fillgia', 'gs':'fillgsmb', 'gd':'fillgdyn', 'th':'fillodyn', 'ad':'filladyn', 'as':'fillasmb', 'gl':'fillglac', 'vc':'fillvcm'}
-	var fillNames  = {'gi': 'GIA', 'gs':'Greenland SMB', 'gd':'Greenland Dyn.', 'th':'Ocean Dynamics', 'ad':'Antarctic Dyn.', 'as':'Antarctic SMB', 'gl':'Mountain Glaciers', 'vc':'Vertical Land Motion'}
+	var fillNames  = {'gi': 'GIA (Ocean)', 'gs':'Greenland SMB', 'gd':'Greenland Dyn.', 'th':'Ocean Dynamics', 'ad':'Antarctic Dyn.', 'as':'Antarctic SMB', 'gl':'Mountain Glaciers', 'vc':'Vertical Land Motion'}
 
 	// Define plotting area
 	plot_num = 1;
@@ -151,14 +151,14 @@ function plotFillProjection(projTimeSeries, vcm_mmyr, plot_title){
 
 	legend.append("rect")
 	   .attr("x", 600)
-	   .attr("y", 100)
+	   .attr("y", 35)
 	   .attr("width", 15)
 	   .attr("height", 2)
 	   .attr("style", 'black');
 
 	legend.append("text")
 	  .attr("x", 625)
-	  .attr("y", 100 + 5)
+	  .attr("y", 35 + 5)
 	  .text("Projection Total");
 
 	// Construct x dimension for plot
@@ -215,14 +215,14 @@ function plotFillProjection(projTimeSeries, vcm_mmyr, plot_title){
 	      // Add legend element
 	      legend.append("rect")
 	           .attr("x", 600)
-	           .attr("y", 120 + legendMover)
+	           .attr("y", 60 + legendMover)
 	           .attr("width", 15)
 	           .attr("height", 15)
 	           .attr("class", fillStyles[variables[0]+variables[1]]);
 
 	       legend.append("text")
 	          .attr("x", 625)
-	          .attr("y", 133 + legendMover)
+	          .attr("y", 73 + legendMover)
 	          .text(fillNames[variables[0]+variables[1]]);
 	      legendMover += 40
 	      // Update running sum
