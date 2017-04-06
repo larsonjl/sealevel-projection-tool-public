@@ -70,7 +70,6 @@ function getHtmlOptions(rcp, component){
 
 			}
 			else{
-				console.log("here")
 				outString += '<option value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
 			}
 		}
