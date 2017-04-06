@@ -86,6 +86,14 @@
 	background-color: #333333;
 }
 
+#map-title-container a img{
+	height: 24px;
+	width: 24px;
+	display: inline;
+	vertical-align: middle;
+	padding-bottom: 5px;
+}
+
 .map-control-box{
 	font-size: 10pt;
 	vertical-align: middle;
