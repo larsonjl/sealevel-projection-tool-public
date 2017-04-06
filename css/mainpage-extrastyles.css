@@ -133,6 +133,7 @@
 	z-index:0;
 }
 
+/*
 #year-select-slider{
 	padding: 2px;
 }
@@ -184,7 +185,6 @@
 	position: relative;
 	float: left;
 	padding: 2px;
-
 }
 
 #year-name{
@@ -195,7 +195,7 @@
 	padding: 2px;
 }
 
-/*
+
 #projection-name{
 	font-size: 10pt;
 	vertical-align: middle;
@@ -391,6 +391,20 @@ div.popup-msg {
     opacity: 1;
 }
 
+#deselect-model-button-div button{
+	background-color: #FFFFFF;
+	border-color: #FFFFFF;
+	border: none;
+    text-align: left;
+    text-decoration: none;
+    font-size: 12px;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 0;
+}
+#deselect-model-button:hover{
+	font-size: 12px;
+}
 
 /*Section for info styles*/
 #sidebar-help-button {
@@ -657,6 +671,24 @@ input#show-tide-gauges-checkbox {
 	margin-left: 15px;
 	font-family: Helvetica;
     font-size: 16px;
+}
+
+#projectionMenu div button{
+	background-color: #FFFFFF;
+	border-color: #FFFFFF;
+	border: none;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 0;
+}
+
+#projectionMenu div button:hover{
+	background-color: #FFFFFF;
+	border-color: #FFFFFF;
+	color: #3887BE;
 }
 
 #projectionMenu p{
