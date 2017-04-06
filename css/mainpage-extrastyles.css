@@ -515,7 +515,7 @@ div.popup-msg {
 #sidebar-contents {
     border-bottom: 1px solid #555555;
     color: #333333;
-    height: calc( 100% - 88px );
+    height: calc( 100% - 60px );
     background-color: #FFFFFF;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -697,6 +697,7 @@ input#show-tide-gauges-checkbox {
 	background-color: #FFFFFF;
 	border-color: #FFFFFF;
 	color: #3887BE;
+	cursor: pointer; 
 }
 
 #projectionMenu p{
@@ -1019,18 +1020,25 @@ div.tooltip {
 
 #map-data-source {
     position: absolute;
+	text-align: center;
+	vertical-align: middle;
     bottom: 0;
     left: 0;
     right: 0;
-    height:39px;
     font-size: 8pt;
-    line-height: 13px;
-    text-align: left;
     padding: 5px;
     z-index: 1;
     color: #FAFAFA;
     border: 0 solid #555555;
-    border-top-width: 1px;
+}
+
+#map-data-source a {
+	color: #FAFAFA;
+	font-size: 12px;
+}
+
+#map-data-source a:hover {
+	color: #d3d3d3;
 }
 
 div.map-colorbar {
