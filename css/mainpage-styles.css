@@ -111,7 +111,6 @@ Define Content Properties
     width: 100%;
 	min-height: calc(100vh - 163px);
     padding: 0px;
-	padding-bottom: 30px;
     background-color: #FFFFFF;
 }
 
