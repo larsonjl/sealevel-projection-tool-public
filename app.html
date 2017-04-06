@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CU Sea Level Projection Project</title>
+    <title>CU Sea Level Projection Tool</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
     <meta name="keywords" content="CCAR, Sea, Level, Projection, Colorado, Inundation, Rise, Geodesy, Larson, Nerem"/>
-    <meta name="description" content="Colorado Sea Level Projection Project."/>
+    <meta name="description" content="Colorado Sea Level Projection Tool"/>
     <meta name="author" content="Jacob Larson and Michael Croteau"/>
     <meta charset="utf-8"/>
     <link rel="icon" href="http://ccar.colorado.edu/images/culogo_sm.jpg" type="image/x-icon"/>
@@ -25,7 +25,7 @@
             <div id="map-area">
                 <div id="map-and-cbar">
 					<div id="map-title-container">
-						<a href="index.html">CU Sea Level Projection Project</a>
+						<a href="index.html">CU Sea Level Projection Tool</a>
 					</div>
 					<div id="year-select-container">
 						<div class = "map-control-box">
@@ -146,7 +146,9 @@
 											<input type="radio" id='r2' name='rcpMenuSelect' value="rcp45"> 4.5
 											<input type="radio" id='r3' name='rcpMenuSelect' value="rcp85" checked="checked"> 8.5
 										</div>
-
+										<hr>
+										<div><button  type="button" onclick="turnOptionsToNone()">(Click here to deselect all models)</button>
+										</div>
                                         <p>Greenland Surface Mass Balance</p>
 										<div class="question-button" id='sidebar-question-button'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
@@ -270,9 +272,8 @@
     <div class='content-container' id="footer-container-app">
         <div id="footer-area">
 			<div id="footer-right">
-				<a href="https://www.mapbox.com/map-feedback/">© Mapbox | </a>
-				<a href="http://www.openstreetmap.org/copyright">© OpenStreetMap | </a>
-				<a href="https://www.mapbox.com/map-feedback/" target="_blank"><strong>Improve this map</strong></a>
+				<a href="https://www.mapbox.com/map-feedback/">© Mapbox &nbsp; | &nbsp; </a>
+				<a href="http://www.openstreetmap.org/copyright">© OpenStreetMap </a>
 			</div>
 
 			<div id="footer-right">
@@ -280,7 +281,6 @@
 				<a href="about.html">About the Project</a> &nbsp; | &nbsp;
 				<a href="about-sl.html">About Sea Level Projections</a>&nbsp; | &nbsp;
 				<a href="contact.html">Contact</a>&nbsp; | &nbsp;
-				<a href="privacy.html">Privacy Policy</a> &nbsp; | &nbsp;
 			</div>
 		</div>
     </div>
