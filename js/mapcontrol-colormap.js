@@ -70,6 +70,31 @@ function setupColorbar(type, cbar) {
             [cbar[19], '#f7e425'],
             [cbar[20], '#f0f921']
         ];
+	}
+		else if (type === 'piyg') { // Matplotlib's Plasma Colorbar
+	        stops = [
+	            [cbar[0],  '#0d0887'],
+	            [cbar[1],  '#2a0593'],
+	            [cbar[2],  '#41049d'],
+	            [cbar[3],  '#5601a4'],
+	            [cbar[4],  '#6a00a8'],
+	            [cbar[5],  '#7e03a8'],
+	            [cbar[6],  '#8f0da4'],
+	            [cbar[7],  '#a11b9b'],
+	            [cbar[8],  '#b12a90'],
+	            [cbar[9],  '#bf3984'],
+	            [cbar[10], '#cc4778'],
+	            [cbar[11], '#d6556d'],
+	            [cbar[12], '#e16462'],
+	            [cbar[13], '#ea7457'],
+	            [cbar[14], '#f2844b'],
+	            [cbar[15], '#f89540'],
+	            [cbar[16], '#fca636'],
+	            [cbar[17], '#feba2c'],
+	            [cbar[18], '#fcce25'],
+	            [cbar[19], '#f7e425'],
+	            [cbar[20], '#f0f921']
+	        ];
     } else { // Matplotlib's Spectral Colorbar
         stops = [
             [-500, '#d3d3d3'],
