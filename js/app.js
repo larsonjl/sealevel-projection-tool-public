@@ -237,6 +237,7 @@ function viewSidebar() {
 
 function viewHelp() {
     "use strict";
+	// loadCrustLandLayer();
     alert("This feature is in development and will be available soon.")
 }
 
@@ -370,8 +371,8 @@ function loadApp() {
     document.getElementById('chart-topbar').addEventListener('mousedown', mouseDownDragging, false);
     window.addEventListener('mouseup', mouseUpDragging, false);
     document.getElementById('resize-triangle').addEventListener('mousedown', mouseDownResize, false);
-
     window.addEventListener('mouseup', mouseUpResize, false);
+	$(document).ready(setSidebarOptions);
 
 	// Create default map
 	map.on('load', loadMap);
