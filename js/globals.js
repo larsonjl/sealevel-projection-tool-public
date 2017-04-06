@@ -1,5 +1,6 @@
 // Initialize global variables:
 var map,
+	deselectOptions = false,
 	absoluteOn = true,
 	currentVCM = 0,
 	currentLocation = 0,
