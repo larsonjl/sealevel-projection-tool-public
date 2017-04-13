@@ -53,24 +53,30 @@ function setSidebarOptions() {
 };
 
 // Sets menu options based on reference file!
+// TO input references again do the following...
+// outString += '<option value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
+
+
+
 function getHtmlOptions(rcp, component){
     outString = "<option value='none'>None</option>"
     compOptions = sidebar.RCP[rcp][component]
+	console.log(compOptions)
     for (options in compOptions){
         for (scenarios in sidebar.RCP[rcp][component][options]){
             metaData = sidebar.RCP[rcp][component][options][scenarios]
 			if (deselectOptions === false){
 				if (metaData.default === 'True'){
-					outString += '<option selected="selected" value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
+					outString += '<option selected="selected" value=' + metaData.ref + '>' + scenarios + '</option>'
 				}
 				else{
 
-	            	outString += '<option value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
+	            	outString += '<option value=' + metaData.ref + '>' + scenarios + '</option>'
 				}
 
 			}
 			else{
-				outString += '<option value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
+				outString += '<option value=' + metaData.ref + '>' + scenarios + '</option>'
 			}
 		}
     }
