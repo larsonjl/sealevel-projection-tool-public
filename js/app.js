@@ -1,7 +1,7 @@
 // On 'make projection' click, query data and display
 $('#runProject').click(function(){
 	defaultMap = 'false';
-	if (absoluteOn === true) {
+	if (displayMode === 'absolute') {
 	    loadMap('custom');
 		updateMapYear();
 	}
@@ -17,7 +17,7 @@ $('#runProject').click(function(){
 // On 'make basic projection' click, query data and display
 $('#runBasicProject').click(function(){
 	defaultMap = 'true';
-	if (absoluteOn === true) {
+	if (displayMode === 'absolute') {
 	    loadMap('basic');
 		updateMapYear();
 	}
@@ -31,12 +31,13 @@ $('#runBasicProject').click(function(){
 	}
 });
 
-// On switch to relative sea level mode, query data and display
+// On mode switch, query data and display
 $(document).ready(function() {
     $('input[type=radio][name=sl-opt]').change(function() {
         if (this.value == 'rel') {
-			absoluteOn = false;
+			displayMode = 'relative';
 			loadRelSL();
+			unfreezeAllOptions();
 			var vcmDataOn = document.getElementById('vcmMenu');
 			vcmDataOn['options'][1].selected = true;
 			document.getElementById('chart-container').style.display = 'none';
@@ -45,11 +46,24 @@ $(document).ready(function() {
 			currentLatLon = 0;
         }
         else if (this.value == 'abs') {
-			absoluteOn = true;
+			displayMode = 'absolute';
 			loadMap();
+			unfreezeAllOptions();
 			var vcmDataOn = document.getElementById('vcmMenu');
 			vcmDataOn['options'][0].selected = true;
         }
+		else if (this.value == 'crust'){
+			displayMode = 'crust'
+			loadCrustLandLayer();
+			freezeAllOptions();
+			var vcmDataOn = document.getElementById('vcmMenu');
+			vcmDataOn['options'][1].selected = true;
+			document.getElementById('chart-container').style.display = 'none';
+			currentVCM = 0;
+			currentLocation = 0;
+			currentLatLon = 0;
+		}
+
     });
 });
 
