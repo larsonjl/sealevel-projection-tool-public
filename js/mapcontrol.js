@@ -121,6 +121,16 @@ function removeGridVisibility(){
 	map.setLayoutProperty('twoDeg2100', 'visibility', 'none')
 };
 
+function removeCrustalVisibility(){
+	"use strict";
+	if (map.getLayer('vcmLand2100') !== undefined){
+		map.setLayoutProperty('vcmLand2025', 'visibility', 'none')
+		map.setLayoutProperty('vcmLand2050', 'visibility', 'none')
+		map.setLayoutProperty('vcmLand2075', 'visibility', 'none')
+		map.setLayoutProperty('vcmLand2100', 'visibility', 'none')
+	};
+};
+
 // Removes all coast scatter layers
 function removeScatterVisibility(){
 	map.setLayoutProperty('rel2025', 'visibility', 'none')
@@ -138,19 +148,21 @@ function updateMapYear(){
 	var year = document.getElementById('display-year').value
 
 	// If relative sea level has been loaded, update those years
-	if (absoluteOn === false){
+	if (displayMode === 'relative'){
 		if (map.getLayer('rel2025') !== undefined){
 			removeGridVisibility();
 			removeScatterVisibility();
+			removeCrustalVisibility();
 			var relDict = {2025:"rel2025", 2050:"rel2050",2075:"rel2075", 2100:"rel2100"}
 			map.setLayoutProperty(relDict[year], 'visibility', 'visible')
 			map.setLayoutProperty(relDict[year]+'-hover', 'visibility', 'visible')
 		}
 	}
-	else{
+	else if (displayMode === 'absolute'){
 		if (map.getLayer('rel2025') !== undefined){
 			removeScatterVisibility();}
 		removeGridVisibility();
+		removeCrustalVisibility();
 	    var layerOneDict = {2025:"oneDeg2025", 2050:"oneDeg2050",2075:"oneDeg2075", 2100:"oneDeg2100"}
 	    var layerTWoDict = {2025:"twoDeg2025", 2050:"twoDeg2050",2075:"twoDeg2075", 2100:"twoDeg2100"}
 	    map.setLayoutProperty(layerOneDict[year], 'visibility', 'visible')
@@ -158,6 +170,17 @@ function updateMapYear(){
 		maximizePlot();
 		minimizePlot();
 	}
+	else if (displayMode === 'crust'){
+		if (map.getLayer('vcmLand2100') === undefined){
+			loadCrustLandLayer()};
+		if (map.getLayer('rel2025') !== undefined){
+			removeScatterVisibility();}
+		if (map.getLayer('sl2025') !== undefined){
+			removeGridVisibility();}
+		removeCrustalVisibility();
+		var layerOneDict = {2025:"vcmLand2025", 2050:"vcmLand2050",2075:"vcmLand2075", 2100:"vcmLand2100"}
+		map.setLayoutProperty(layerOneDict[year], 'visibility', 'visible')
+	};
 }
 
 // Add sources for both 1deg and 2deg grids and coast scatter
@@ -176,7 +199,7 @@ function initializeTiles(){
 			"type": "geojson",
 			"data": coastLocs
 	});
-	
+
 	map.addSource('vcmLand', {
         type: "vector",
         url: 'mapbox://jlarson630.4dr7gv23'
@@ -192,14 +215,21 @@ function addCrustLandSource(){
             });
 }
 
+function removeCrustLandLayer(){
+	"use strict";
+	if (map.getLayer('vcmLand2100') !== undefined){
+		map.removeLayer('vcmLand2100')
+	};
+};
+
 function loadCrustLandLayer(){
 	"use strict";
-	if (map.getLayer('vcmLandLayer') !== undefined){
-		map.removeLayer('vcmLandLayer')
-	}
-
+	dMin = -15;
+	dMax = 25;
+	removeRelativeLayers();
+	removeAbsoluteLayers();
 	map.addLayer({
-            "id": "vcmLandLayer",
+            "id": "vcmLand2100",
             "type": "fill",
             "source": "vcmLand",
 			"z-index":999,
@@ -213,20 +243,75 @@ function loadCrustLandLayer(){
                     stops: getColorbarStops('spectral', dMin, dMax)
                     }, 'fill-opacity': 1.0}
             }, 'water');
+
+	map.addLayer({
+            "id": "vcmLand2075",
+            "type": "fill",
+            "source": "vcmLand",
+			"z-index":999,
+			'source-layer': "vcmHalfgeojson",
+            "layout": {
+                    'visibility': 'none'
+            },
+            "paint": {
+                "fill-color": {
+                    property: 'sl2075',
+                    stops: getColorbarStops('spectral', dMin, dMax)
+                    }, 'fill-opacity': 1.0}
+            }, 'water');
+
+	map.addLayer({
+            "id": "vcmLand2050",
+            "type": "fill",
+            "source": "vcmLand",
+			"z-index":999,
+			'source-layer': "vcmHalfgeojson",
+            "layout": {
+                    'visibility': 'none'
+            },
+            "paint": {
+                "fill-color": {
+                    property: 'sl2050',
+                    stops: getColorbarStops('spectral', dMin, dMax)
+                    }, 'fill-opacity': 1.0}
+            }, 'water');
+
+	map.addLayer({
+            "id": "vcmLand2025",
+            "type": "fill",
+            "source": "vcmLand",
+			"z-index":999,
+			'source-layer': "vcmHalfgeojson",
+            "layout": {
+                    'visibility': 'none'
+            },
+            "paint": {
+                "fill-color": {
+                    property: 'sl2025',
+                    stops: getColorbarStops('spectral', dMin, dMax)
+                    }, 'fill-opacity': 1.0}
+            }, 'water');
 }
 
 // Add all relative sea level layers (i.e. one for each year)
-function loadCustomRelative(){
+function removeRelativeLayers(){
+	"use strict";
 	if (map.getLayer('rel2025') !== undefined){
-        map.removeLayer('rel2025')
-        map.removeLayer('rel2050')
-        map.removeLayer('rel2075')
-        map.removeLayer('rel2100')
+		map.removeLayer('rel2025')
+		map.removeLayer('rel2050')
+		map.removeLayer('rel2075')
+		map.removeLayer('rel2100')
 		map.removeLayer('rel2025-hover')
 		map.removeLayer('rel2050-hover')
 		map.removeLayer('rel2075-hover')
 		map.removeLayer('rel2100-hover')
-    }
+	}
+};
+
+function loadCustomRelative(){
+	"use strict";
+	removeRelativeLayers();
+	removeCrustLandLayer();
 	map.addLayer({
             "id": "rel2025",
             "type": "circle",
@@ -361,18 +446,22 @@ function loadCustomRelative(){
 		}
 
 // Add all grid layers (i.e. one for each year)
-function loadGridLayers(){
-    if (map.getLayer('oneDeg2025') !== undefined){
-        map.removeLayer('oneDeg2025')
-        map.removeLayer('twoDeg2025')
-        map.removeLayer('oneDeg2050')
-        map.removeLayer('twoDeg2050')
-        map.removeLayer('oneDeg2075')
-        map.removeLayer('twoDeg2075')
-        map.removeLayer('oneDeg2100')
-        map.removeLayer('twoDeg2100')
-    }
+function removeAbsoluteLayers(){
+	if (map.getLayer('oneDeg2025') !== undefined){
+		map.removeLayer('oneDeg2025')
+		map.removeLayer('twoDeg2025')
+		map.removeLayer('oneDeg2050')
+		map.removeLayer('twoDeg2050')
+		map.removeLayer('oneDeg2075')
+		map.removeLayer('twoDeg2075')
+		map.removeLayer('oneDeg2100')
+		map.removeLayer('twoDeg2100')
+	}
+}
 
+function loadGridLayers(){
+	removeAbsoluteLayers();
+	removeCrustLandLayer()
     map.addLayer({
             "id": "oneDeg2025",
             "type": "fill",
@@ -523,7 +612,7 @@ function coastHover(e) {
 function clickDecider(e, status){
 	"use strict";
 	var year = document.getElementById("display-year").value
-	if (absoluteOn === false){
+	if (displayMode === 'relative'){
 		var features = map.queryRenderedFeatures(e.point, { layers: ["rel" + year + "-hover"]});
 		if (features.length > 0){
 			currentLocation = features[0].properties.data_index
@@ -532,9 +621,13 @@ function clickDecider(e, status){
 			queryCoastLoc(currentLocation, currentVCM, currentLatLon);
 		};
 	}
-	else{
+	else if (displayMode === 'absolute'){
 		queryTimeseries(e);
-	};
+	}
+	else if (displayMode === 'crustal'){
+
+	}
+
 };
 
 
