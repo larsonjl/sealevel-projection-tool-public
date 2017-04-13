@@ -2,6 +2,8 @@
 var map,
 	deselectOptions = false,
 	absoluteOn = true,
+	displayMode = 'absolute',
+	freezeOptions = false,
 	currentVCM = 0,
 	currentLocation = 0,
 	currentLatLon = 0,
