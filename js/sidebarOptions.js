@@ -70,17 +70,36 @@ function getHtmlOptions(rcp, component){
 					outString += '<option selected="selected" value=' + metaData.ref + '>' + scenarios + '</option>'
 				}
 				else{
-
 	            	outString += '<option value=' + metaData.ref + '>' + scenarios + '</option>'
 				}
 
 			}
-			else{
+			else if (deselectOptions === true & freezeOptions === false ){
 				outString += '<option value=' + metaData.ref + '>' + scenarios + '</option>'
+			}
+			else{
+				outString += '<option value=' + metaData.ref + ' disabled>' + scenarios + '</option>'
 			}
 		}
     }
+	console.log(outString)
     return outString
+}
+
+function freezeAllOptions(){
+	if (freezeOptions === false){
+		freezeOptions = true;
+	}
+	turnOptionsToNone();
+	setSidebarOptions();
+}
+
+function unfreezeAllOptions(){
+	if (freezeOptions === true){
+		freezeOptions = false;
+	}
+	turnOptionsOn();
+	setSidebarOptions();
 }
 
 // Turn all sidebar options to none setting
