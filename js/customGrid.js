@@ -196,5 +196,5 @@ function changeProjectionName(){
 function changeBasicProjectionName(){
 	"use strict";
 	var rcpScen = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
-	document.getElementById('projection-name-val').innerHTML = '<b>Current Projection: </b>' + rcpScen.toUpperCase() + ' IPCC AR5 (Median)'
+	document.getElementById('projection-name-val').innerHTML = '<b>Current Projection: </b>' + rcpScen.toUpperCase() + ' Median'
 }
