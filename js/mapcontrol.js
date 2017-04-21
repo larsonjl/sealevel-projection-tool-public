@@ -202,18 +202,18 @@ function initializeTiles(){
 
 	map.addSource('vcmLand', {
         type: "vector",
-        url: 'mapbox://jlarson630.4dr7gv23'
+        url: 'mapbox://jlarson630.1d0a9p4k'
             });
-}
+};
 
 
 function addCrustLandSource(){
 	"use strict";
 	map.addSource('vcmLand', {
         type: "vector",
-        url: 'mapbox://jlarson630.4dr7gv23'
+        url: 'mapbox://jlarson630.67mxd7i0'
             });
-}
+};
 
 function removeCrustLandLayer(){
 	"use strict";
@@ -291,7 +291,7 @@ function loadCrustLandLayer(){
                     stops: getColorbarStops('spectral', dMin, dMax)
                     }, 'fill-opacity': 1.0}
             }, 'water');
-}
+};
 
 // Add all relative sea level layers (i.e. one for each year)
 function removeRelativeLayers(){
@@ -442,8 +442,8 @@ function loadCustomRelative(){
 					}
 				},
 			 "filter": ["==", "name", ""]
-			});
-		}
+		});
+}
 
 // Add all grid layers (i.e. one for each year)
 function removeAbsoluteLayers(){
