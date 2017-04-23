@@ -18,7 +18,6 @@
 
 <body>
 <div id="background"></div>
-
 <div id="foreground">
     <div id="main-container">
         <div class="content-container" id="map-container">
@@ -39,8 +38,8 @@
 										<img class="question-button" src="img/ic_help_black_48dp.png">
 											<span class="question-button-text">Select a year to view the projected change in sea level relative to 2015 for the selected scenario</span>
 										</img>
-									</div>
-								:</b>
+									</div>:
+								</b>
 								<select id="display-year" onchange="updateMapYear()">
 									<option value="2025">2025 </option>
 									<option value="2050">2050 </option>
@@ -54,13 +53,12 @@
 										<img class="question-button" src="img/ic_help_black_48dp.png">
 											<span class="question-button-text">Select a sea level projection mode.  <i>Relative sea level</i> refers to the the sea level "felt at the coast". Data is therefore only displayed at coastal locations. This mode accounts for future changes in both land and ocean heights.  <i>Absolute sea level</i>  refers to only changes in ocean height and is displayed as a grid over the ocean. </span>
 										</img>
-									</div>
-								:</b>
+									</div>:
+								</b>
 								<div id="project-mode-div">
 									<input type="radio" id="sl1" name="sl-opt" value="rel"> Coastal Relative Sea Level <br>
 									<input type="radio" id="sl2" name="sl-opt" value="abs" checked="checked"> Absolute Sea Level <br>
 									<input type="radio" id="sl3" name="sl-opt" value="crust"> Crustal motion only
-
 								</div>
 							</div>
 						</div>
@@ -69,13 +67,33 @@
                         <div class="map-colorbar" id="viridis-colorbar">
                             <div class="cbar" id="cbar-viridis"></div>
                             <div class="cbar-labels" id="cbar-viridis-labels">
-                                <div class="cbar-num" id="cbar-vir-l-20"></div><div class="cbar-num" id="cbar-vir-l-18"></div><div class="cbar-num" id="cbar-vir-l-16"></div><div class="cbar-num" id="cbar-vir-l-14"></div><div class="cbar-num" id="cbar-vir-l-12"></div><div class="cbar-num" id="cbar-vir-l-10"></div><div class="cbar-num" id="cbar-vir-l-8"></div><div class="cbar-num" id="cbar-vir-l-6"></div><div class="cbar-num" id="cbar-vir-l-4"></div><div class="cbar-num" id="cbar-vir-l-2"></div><div class="cbar-num" id="cbar-vir-l-0"></div>
+                                <div class="cbar-num" id="cbar-vir-l-20"></div>
+								<div class="cbar-num" id="cbar-vir-l-18"></div>
+								<div class="cbar-num" id="cbar-vir-l-16"></div>
+								<div class="cbar-num" id="cbar-vir-l-14"></div>
+								<div class="cbar-num" id="cbar-vir-l-12"></div>
+								<div class="cbar-num" id="cbar-vir-l-10"></div>
+								<div class="cbar-num" id="cbar-vir-l-8"></div>
+								<div class="cbar-num" id="cbar-vir-l-6"></div>
+								<div class="cbar-num" id="cbar-vir-l-4"></div>
+								<div class="cbar-num" id="cbar-vir-l-2"></div>
+								<div class="cbar-num" id="cbar-vir-l-0"></div>
                             </div>
                         </div>
                         <div class="map-colorbar" id="spectral-colorbar">
                             <div class="cbar" id="cbar-spectral"></div>
                             <div class="cbar-labels" id="cbar-spectral-labels">
-                                <div class="cbar-num" id="cbar-spe-l-20"></div><div class="cbar-num" id="cbar-spe-l-18"></div><div class="cbar-num" id="cbar-spe-l-16"></div><div class="cbar-num" id="cbar-spe-l-14"></div><div class="cbar-num" id="cbar-spe-l-12"></div><div class="cbar-num" id="cbar-spe-l-10"></div><div class="cbar-num" id="cbar-spe-l-8"></div><div class="cbar-num" id="cbar-spe-l-6"></div><div class="cbar-num" id="cbar-spe-l-4"></div><div class="cbar-num" id="cbar-spe-l-2"></div><div class="cbar-num" id="cbar-spe-l-0"></div>
+                                <div class="cbar-num" id="cbar-spe-l-20"></div>
+								<div class="cbar-num" id="cbar-spe-l-18"></div>
+								<div class="cbar-num" id="cbar-spe-l-16"></div>
+								<div class="cbar-num" id="cbar-spe-l-14"></div>
+								<div class="cbar-num" id="cbar-spe-l-12"></div>
+								<div class="cbar-num" id="cbar-spe-l-10"></div>
+								<div class="cbar-num" id="cbar-spe-l-8"></div>
+								<div class="cbar-num" id="cbar-spe-l-6"></div>
+								<div class="cbar-num" id="cbar-spe-l-4"></div>
+								<div class="cbar-num" id="cbar-spe-l-2"></div>
+								<div class="cbar-num" id="cbar-spe-l-0"></div>
                             </div>
                         </div>
                         <div id="cbar-units">cm</div>
@@ -88,7 +106,6 @@
                     <div id="map-div">
 						<div id="error-popup" class="popup-msg error-msg">That location is unavailable.<br>Either it is not in the dataset or there has been an error.</div>
 					</div>
-
                     <div id="sidebar">
                         <div class="sidebar-menu">
                             <img id="sidebar-menu-button" src="img/ic_menu_white_48dp.png"/>
@@ -109,14 +126,11 @@
 												<p>Carbon Emissions Scenario</p>
 											</div>
 											<div class="question-button" id='sidebar-question-button'>
-
 												<img class="question-button" src="img/ic_help_black_48dp.png">
 													<span class="question-button-text" id = "sidebar-question-button-text">These are three of the possible future greenhouse gas emission scenarios as decided on by the IPCC.</span>
 												</img>
 											</div>
-
 											<br>Future sea level change depends on current and future carbon emissions.  Choose a 21st century carbon emission scenario.
-
 											<div  id="rcpBasicRadioSelect">
 												<input type="radio" id="r1" name="rcpBasicSelect" value="rcp26"> Drastic CO2 cuts <br>
 												<input type="radio" id="r2" name="rcpBasicSelect" value="rcp45"> Moderate CO2 cuts<br>
@@ -126,10 +140,10 @@
 										</div>
 								</div>
 							</div>
-                            <div class="sidebar-header" id="sidebar-location-lookup">
+                            <div class="sidebar-header" id="sidebar-custom-settings">
                                 <div class="sidebar-header-select">
-                                    <img id="sidebar-location-lookup-active" src="img/ic_chevron_down_gray333_48dp.png"/>
-                                    <img id="sidebar-location-lookup-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
+                                    <img id="sidebar-custom-settings-active" src="img/ic_chevron_down_gray333_48dp.png"/>
+                                    <img id="sidebar-custom-settings-hidden" src="img/ic_chevron_right_gray333_48dp.png"/>
                                 </div>
                                 <h2>Custom Projection</h2>
                             </div>
@@ -161,7 +175,6 @@
                                         <select id="gsmbMenu">
                                             <option value=""> None </option>
                                         </select>
-
                                         <p>Greenland Solid Ice discharge</p>
 										<div class="question-button" id='sidebar-question-button'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
@@ -171,7 +184,6 @@
                                         <select id="gdynMenu">
                                             <option value=""> None </option>
                                         </select>
-
                                         <p>Antarctica Surface Mass Balance</p>
 										<div class="question-button" id='sidebar-question-button'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
@@ -181,7 +193,6 @@
                                         <select id="asmbMenu">
                                             <option value="">None</option>
                                         </select>
-
                                         <p>Antarctica Solid Ice Discharge</p>
 										<div class="question-button" id='sidebar-question-button'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
@@ -191,7 +202,6 @@
                                         <select id="adynMenu">
                                             <option value="">None</option>
                                         </select>
-
                                         <p>Ocean Dynamics</p>
 										<div class="question-button" id='sidebar-question-button'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
@@ -201,7 +211,6 @@
                                         <select id="thermoMenu">
                                             <option value="">None </option>
                                         </select>
-
                                         <p>Mountain Glaciers</p>
 										<div class="question-button" id='sidebar-question-button'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
@@ -211,7 +220,6 @@
                                         <select id="glacierMenu">
                                             <option value="">None </option>
                                         </select>
-
 										<p>Glacial Isostatic Adjustment (GIA)</p>
 										<div class="question-button" id='sidebar-question-button'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
@@ -221,7 +229,6 @@
                                         <select id="giaMenu">
                                             <option value="">None </option>
                                         </select>
-
 										<p>Vertical Crustal Motion</p>
 										<div class="question-button" id='sidebar-question-button'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
@@ -232,13 +239,11 @@
                                             <option value="">None</option>
 											<option value="unr_vm">Hammond et al., 2016</option>
                                         </select>
-
                                         <button id="runProject" type="button">Calculate Projection</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div id="map-data-source">
                             <a href = 'about.html#references'><span class="bold">View references and sources</span>&nbsp;<br></a>
                         </div>
@@ -246,18 +251,14 @@
                 </div>
             </div>
         </div>
-
         <div class='content-container' id="chart-container">
             <div id="maximize-plot">
                 <img id="maximize-plot-img" src="img/ic_add_circle_outline_black_48dp.png"/>
             </div>
-
             <div id="minimize-plot">
                 <img id="minimize-plot-img" src="img/ic_remove_circle_outline_black_48dp.png"/>
             </div>
-
             <div id="chart-area">
-
                 <div id="chart-topbar">CU Sea Level Projection Tool</div>
              <div id="timeseries">
                     <div id="data-timeseries"></div>
@@ -269,8 +270,6 @@
             </div>
         </div>
     </div>
-
-
     <div class='content-container' id="footer-container-app">
         <div id="footer-area">
 			<div id="footer-left">
@@ -280,16 +279,13 @@
 				<a href="https://sealevel.nasa.gov">N-SLCT</a>&nbsp; | &nbsp;
 				<a href="contact.html">Contact</a>&nbsp; | &nbsp;
 			</div>
-
 			<div id="footer-right">
 				<a href="https://www.mapbox.com/map-feedback/">© Mapbox &nbsp; | &nbsp; </a>
 				<a href="http://www.openstreetmap.org/copyright">© OpenStreetMap </a>
 			</div>
 		</div>
     </div>
-
-</div><!-- End of #foreground -->
-
+</div>
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript" src="js/globals.js"></script>
 <script type="text/javascript" src="js/oneDegreeMask.json"></script>
@@ -299,12 +295,10 @@
 <script type="text/javascript" src="js/customGrid.js"></script>
 <script type="text/javascript" src="js/sidebarOptions.js"></script>
 <script type="text/javascript" src="js/projPlot.js"></script>
-<script type="text/javascript" src="js/statistics.js"></script>
-<script type="text/javascript" src="js/plotting.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="js/mapcontrol-colormap.js"></script>
 <script type="text/javascript" src="js/mapcontrol.js"></script>
-
+<script type="text/javascript" src="js/mapLayerManagement.js"></script>
 
 </body>
 </html>
