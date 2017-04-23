@@ -184,6 +184,7 @@ function updateMapYear(){
 }
 
 // Add sources for both 1deg and 2deg grids and coast scatter
+/*
 function initializeTiles(){
     map.addSource("twoDegreeData", {
         "type":"geojson",
@@ -205,7 +206,7 @@ function initializeTiles(){
         url: 'mapbox://jlarson630.1d0a9p4k'
             });
 };
-
+*/
 
 function addCrustLandSource(){
 	"use strict";
