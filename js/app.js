@@ -63,7 +63,6 @@ $(document).ready(function() {
 			currentLocation = 0;
 			currentLatLon = 0;
 		}
-
     });
 });
 
@@ -201,10 +200,7 @@ function minimizePlot() {
     document.getElementById('maximize-plot').style.display = 'block';
     document.getElementById('minimize-plot').style.display = 'none';
     document.getElementById('chart-topbar').style.display = 'none';
-    // document.getElementById('chart-options').style.display = 'none';
     document.getElementById('resize-triangle').style.display = 'none';
-    // document.getElementById('SL-params').style.display = 'none';
-    // document.getElementById('data-navbar').style.display = 'none';
     document.getElementById('chart-container').style.top = (pageHeight - 125) + 'px';
     document.getElementById('chart-container').style.left = '10px';
     document.getElementById('chart-container').style.width = '105px';
@@ -218,10 +214,7 @@ function maximizePlot() {
     document.getElementById('maximize-plot').style.display = 'none';
     document.getElementById('minimize-plot').style.display = 'block';
     document.getElementById('chart-topbar').style.display = 'block';
-    // document.getElementById('chart-options').style.display = 'inline-block';
     document.getElementById('resize-triangle').style.display = 'block';
-    // document.getElementById('SL-params').style.display = 'block';
-    // document.getElementById('data-navbar').style.display = 'block';
     document.getElementById('chart-container').style.left = chart_container_maximize_left + 'px';
     document.getElementById('chart-container').style.top = chart_container_maximize_top + 'px';
     document.getElementById('chart-container').style.width = chart_container_maximize_width + 'px';
@@ -251,7 +244,6 @@ function viewSidebar() {
 
 function viewHelp() {
     "use strict";
-	// loadCrustLandLayer();
     alert("This feature is in development and will be available soon.")
 }
 
@@ -260,12 +252,12 @@ function viewLocationLookup() {
     var sidebar_area = document.getElementById("map-search");
     if (sidebar_area.style.display !== 'block') {
         sidebar_area.style.display = 'block';
-        document.getElementById("sidebar-location-lookup-active").style.display = 'block';
-        document.getElementById("sidebar-location-lookup-hidden").style.display = 'none';
+        document.getElementById("sidebar-custom-settings-active").style.display = 'block';
+        document.getElementById("sidebar-custom-settings-hidden").style.display = 'none';
     } else {
         sidebar_area.style.display = 'none';
-        document.getElementById("sidebar-location-lookup-active").style.display = 'none';
-        document.getElementById("sidebar-location-lookup-hidden").style.display = 'block';
+        document.getElementById("sidebar-custom-settings-active").style.display = 'none';
+        document.getElementById("sidebar-custom-settings-hidden").style.display = 'block';
     }
 }
 
@@ -283,60 +275,6 @@ function viewBasicSettings() {
     }
 }
 
-function viewMapSettings() {
-    "use strict";
-    var sidebar_area = document.getElementById("sidebar-map");
-    if (sidebar_area.style.display === 'none') {
-        sidebar_area.style.display = 'block';
-        document.getElementById("sidebar-map-settings-active").style.display = 'block';
-        document.getElementById("sidebar-map-settings-hidden").style.display = 'none';
-    } else {
-        sidebar_area.style.display = 'none';
-        document.getElementById("sidebar-map-settings-active").style.display = 'none';
-        document.getElementById("sidebar-map-settings-hidden").style.display = 'block';
-    }
-}
-
-function viewPlotSettings() {
-    "use strict";
-    var sidebar_area = document.getElementById("sidebar-plot");
-    if (sidebar_area.style.display === 'none') {
-        sidebar_area.style.display = 'block';
-        document.getElementById("sidebar-plot-settings-active").style.display = 'block';
-        document.getElementById("sidebar-plot-settings-hidden").style.display = 'none';
-        document.getElementById("sidebar-contents").style.background = '#FFFFFF';
-        document.getElementById("sidebar-plot-settings").style.borderWidth = '1px 0 0';
-    } else {
-        sidebar_area.style.display = 'none';
-        document.getElementById("sidebar-plot-settings-active").style.display = 'none';
-        document.getElementById("sidebar-plot-settings-hidden").style.display = 'block';
-        document.getElementById("sidebar-contents").style.background = '#FAFAFA';
-        document.getElementById("sidebar-plot-settings").style.borderWidth = '1px 0';
-    }
-}
-
-function setActiveColormap() {
-    "use strict";
-    var min, max = Number(document.getElementById('cbar-max-set').textContent);
-    activeColormap = document.getElementById("sidebar-select-colormap").value;
-    updateColorbarMap(Number(document.getElementById("display-year").value));
-}
-
-function setPlottingMode(mode) {
-    "use strict";
-    if (mode === 'compare') {
-        difference_plotted = false;
-        if (tidegauge_plotted === true) {
-            selectPlotting({"lngLat":{"lng":LNG,"lat":LAT}}, 'change');
-        }
-    } else {
-        difference_plotted = true;
-        if (tidegauge_plotted === true) {
-            selectPlotting({"lngLat":{"lng":LNG,"lat":LAT}}, 'change');
-        }
-    }
-}
-
 function removeLoadMenu(){
 	"use strict";
 	document.getElementById("load-menu").style.visibility = 'hidden'
@@ -346,51 +284,34 @@ function removeLoadMenu(){
 // loadApp :: Start app
 function loadApp() {
     "use strict";
-
-    // Load Time JSON file:
-
     // Initialize map:
     initializeMap();
-
     // Construct geojson files
     makeOneDegGrid();
     makeTwoDegGrid();
-
-    // Listener: Sidebar Menu
+    // Listener: Whole sidebar menu slide out, slide in
     document.getElementById("sidebar-menu-button").addEventListener("click", viewSidebar, false);
     document.getElementById("sidebar-help-button").addEventListener("click", viewHelp, false);
-	// document.getElementById("sidebar-question-button").addEventListener("click", viewRcpExplain, false);
-
-    document.getElementById("sidebar-location-lookup").addEventListener("click", viewLocationLookup, false);
+	//Listener: Sidebar sections collapse
+    document.getElementById("sidebar-custom-settings").addEventListener("click", viewLocationLookup, false);
 	document.getElementById("sidebar-basic-settings").addEventListener("click", viewBasicSettings, true);
+	// Open basic settings in sidebar on menu on load
 	viewBasicSettings();
-    // document.getElementById("sidebar-map-settings").addEventListener("click", viewMapSettings, false);
-    // document.getElementById("sidebar-plot-settings").addEventListener("click", viewPlotSettings, false);
-
-    // document.getElementById("sidebar-select-colormap").addEventListener("change", setActiveColormap, false);
-
-    // Listener: Map Location Form:
-    // document.getElementById("GetTimeseries").addEventListener("submit", function (e) {inputLatLon(e); });
-
-    // Listeners: Detrend, Deseason, Show Trend, Boxcar:
+	// Add sources
     map.on('load', initializeTiles);
-    // document.getElementById("set-smooth-width").addEventListener("click", onPlottingFormChange, false);
     map.on('load', loadGridLayers);
-
     // Plot minimize/maximize listeners:
     document.getElementById("minimize-plot-img").addEventListener("click", minimizePlot, false);
     document.getElementById("maximize-plot-img").addEventListener("click", maximizePlot, false);
-
     // Plot movement listeners
     document.getElementById('chart-topbar').addEventListener('mousedown', mouseDownDragging, false);
     window.addEventListener('mouseup', mouseUpDragging, false);
     document.getElementById('resize-triangle').addEventListener('mousedown', mouseDownResize, false);
     window.addEventListener('mouseup', mouseUpResize, false);
+	// Load in options for advanced projection
 	$(document).ready(setSidebarOptions);
-
 	// Create default map
 	map.on('load', loadMap);
-
 }
 
 // Wait until all content is loaded to do anything:
