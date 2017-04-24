@@ -97,7 +97,6 @@ function changeGridDat(queriedData, cbarLims){
 var scaleBy;
 // Used to change values default values of coast data to queried data from server
 function changeCoastData(queriedData, cbarLims){
-	console.log(cbarLims)
 	"use strict";
 	scaleBy = (1/10.) //mm to cm
 	// Loop through features, assign data to proper grid cells and properties
