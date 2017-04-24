@@ -1,68 +1,68 @@
 // On 'make projection' click, query data and display
 $('#runProject').click(function(){
 	defaultMap = 'false';
-	if (displayMode === 'absolute') {
-	    loadMap('custom');
-		updateMapYear();
-	}
-	else {
-		loadRelSL('custom');
-		updateMapYear();
-		if (currentVCM!==0){
-			queryCoastLoc(currentLocation, currentVCM, currentLatLon);
-		}
+	switch (displayMode){
+		case 'absolute':
+			loadMap('custom');
+			break;
+		case 'relative':
+			loadRelSL('custom');
+			if (currentVCM!==0){
+				queryCoastLoc(currentLocation, currentVCM, currentLatLon);
+			}
+			break;
 	}
 });
 
 // On 'make basic projection' click, query data and display
 $('#runBasicProject').click(function(){
 	defaultMap = 'true';
-	if (displayMode === 'absolute') {
-	    loadMap('basic');
-		updateMapYear();
-	}
-	else {
-		loadRelSL();
-		updateMapYear();
-		if (currentVCM!==0){
-			queryCoastLoc(currentLocation, currentVCM, currentLatLon);
-		}
+	switch (displayMode){
+		case 'absolute':
+			loadMap('basic');
+			break;
+		case 'relative':
 
+			break;
 	}
+	updateMapYear();
 });
 
 // On mode switch, query data and display
 $(document).ready(function() {
     $('input[type=radio][name=sl-opt]').change(function() {
-        if (this.value == 'rel') {
-			displayMode = 'relative';
-			loadRelSL();
-			unfreezeAllOptions();
-			var vcmDataOn = document.getElementById('vcmMenu');
-			vcmDataOn['options'][1].selected = true;
-			document.getElementById('chart-container').style.display = 'none';
-			currentVCM = 0;
-			currentLocation = 0;
-			currentLatLon = 0;
-        }
-        else if (this.value == 'abs') {
-			displayMode = 'absolute';
-			loadMap();
-			unfreezeAllOptions();
-			var vcmDataOn = document.getElementById('vcmMenu');
-			vcmDataOn['options'][0].selected = true;
-        }
-		else if (this.value == 'crust'){
-			displayMode = 'crust'
-			loadCrustLandLayer();
-			freezeAllOptions();
-			var vcmDataOn = document.getElementById('vcmMenu');
-			vcmDataOn['options'][1].selected = true;
-			document.getElementById('chart-container').style.display = 'none';
-			currentVCM = 0;
-			currentLocation = 0;
-			currentLatLon = 0;
-		}
+		removeAllVisibility();
+		switch(this.value){
+			case 'rel':
+				displayMode = 'relative';
+				loadRelSL();
+				unfreezeAllOptions();
+				var vcmDataOn = document.getElementById('vcmMenu');
+				vcmDataOn['options'][1].selected = true;
+				document.getElementById('chart-container').style.display = 'none';
+				currentVCM = 0;
+				currentLocation = 0;
+				currentLatLon = 0;
+				break;
+			case 'abs':
+				displayMode = 'absolute';
+				loadMap();
+				unfreezeAllOptions();
+				var vcmDataOn = document.getElementById('vcmMenu');
+				vcmDataOn['options'][0].selected = true;
+				break;
+			case 'crust':
+				displayMode = 'crust'
+				loadCrustLandLayer();
+				freezeAllOptions();
+				var vcmDataOn = document.getElementById('vcmMenu');
+				vcmDataOn['options'][1].selected = true;
+				document.getElementById('chart-container').style.display = 'none';
+				currentVCM = 0;
+				currentLocation = 0;
+				currentLatLon = 0;
+				break;
+			}
     });
 });
 
