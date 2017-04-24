@@ -72,7 +72,7 @@ def getLocationData(requestString):
     lat = params[0]
     lon = params[1]
     rcpScen = params[2]
-    cellNum = getGridCell(float(lat), float(lon))
+    cellNum = int(getGridCell(float(lat), float(lon)))
     if np.isnan(cellNum):
         return {'locTS': 'masked'}
     else:
@@ -86,7 +86,7 @@ def getLocationData(requestString):
 def getCoastLocationData(requestString):
     scaleBy = 1000  # m to mm
     params = requestString.split('_')
-    locIndx = params[0]
+    locIndx = int(params[0])
     rcpScen = params[1]
     dOut = {}
     for datasets in params[3::]:
