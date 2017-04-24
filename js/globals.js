@@ -1,5 +1,9 @@
 // Initialize global variables:
 var map,
+	coastLayerNames = {2025:"rel2025", 2050:"rel2050",2075:"rel2075", 2100:"rel2100"},
+	oneDegGridLayers = {2025:"oneDeg2025", 2050:"oneDeg2050",2075:"oneDeg2075", 2100:"oneDeg2100"},
+	twoDegGridLayers = {2025:"twoDeg2025", 2050:"twoDeg2050",2075:"twoDeg2075", 2100:"twoDeg2100"},
+	vcmLayerNames = {2025:"vcmLand2025", 2050:"vcmLand2050",2075:"vcmLand2075", 2100:"vcmLand2100"},
 	deselectOptions = false,
 	absoluteOn = true,
 	displayMode = 'absolute',
