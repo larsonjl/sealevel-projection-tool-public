@@ -60,6 +60,7 @@ function queryCoastLoc(indxNum, vcm, loc){
 };
 
 // setPopupAndCenter :: When a new plot is requested, reset the Map Popup.
+/*
 function setPopupAndCenter(e) {
     "use strict";
     var popupText, jsonAltimetryLocation, jsonLat, jsonLon, latitude, longitude, geojson;
@@ -99,7 +100,7 @@ function setPopupAndCenter(e) {
 
     centerMap({ lng: longitude, lat: latitude });
 }
-
+*/
 function centerMap(lngLat) {
     "use strict";
     if (map.getZoom() < 5.5) {
@@ -108,7 +109,7 @@ function centerMap(lngLat) {
         map.jumpTo({ "center": lngLat });
     }
 }
-
+/*
 // Removes all grid layers
 function removeGridVisibility(){
 	map.setLayoutProperty('oneDeg2025', 'visibility', 'none')
@@ -142,12 +143,28 @@ function removeScatterVisibility(){
 	map.setLayoutProperty('rel2075-hover', 'visibility', 'none')
 	map.setLayoutProperty('rel2100-hover', 'visibility', 'none')
 };
+*/
 
 // Updates map year of data displayed
 function updateMapYear(){
 	var year = document.getElementById('display-year').value
-
+	removeAllVisibility();
+	switch(displayMode){
+		case 'relative':
+			map.setLayoutProperty(coastLayerNames[year], 'visibility', 'visible')
+			map.setLayoutProperty(coastLayerNames[year]+'-hover', 'visibility', 'visible')
+			break;
+		case 'absolute':
+			map.setLayoutProperty(oneDegGridLayers[year], 'visibility', 'visible')
+			map.setLayoutProperty(twoDegGridLayers[year], 'visibility', 'visible')
+			break;
+		case 'crust':
+			map.setLayoutProperty(vcmLayerNames[year], 'visibility', 'visible')
+			break;
+	}
+};
 	// If relative sea level has been loaded, update those years
+	/*
 	if (displayMode === 'relative'){
 		if (map.getLayer('rel2025') !== undefined){
 			removeGridVisibility();
@@ -182,7 +199,7 @@ function updateMapYear(){
 		map.setLayoutProperty(layerOneDict[year], 'visibility', 'visible')
 	};
 }
-
+*/
 // Add sources for both 1deg and 2deg grids and coast scatter
 /*
 function initializeTiles(){
@@ -206,7 +223,6 @@ function initializeTiles(){
         url: 'mapbox://jlarson630.1d0a9p4k'
             });
 };
-*/
 
 function addCrustLandSource(){
 	"use strict";
@@ -293,7 +309,6 @@ function loadCrustLandLayer(){
                     }, 'fill-opacity': 1.0}
             }, 'water');
 };
-
 // Add all relative sea level layers (i.e. one for each year)
 function removeRelativeLayers(){
 	"use strict";
@@ -588,7 +603,7 @@ function loadGridLayers(){
                         }, 'landcover');
 
 }
-
+*/
 // CoastLocs Hover functionality
 function coastHover(e) {
 	var zoom = map.getZoom();
@@ -613,31 +628,29 @@ function coastHover(e) {
 function clickDecider(e, status){
 	"use strict";
 	var year = document.getElementById("display-year").value
-	if (displayMode === 'relative'){
-		var features = map.queryRenderedFeatures(e.point, { layers: ["rel" + year + "-hover"]});
-		if (features.length > 0){
-			currentLocation = features[0].properties.data_index
-			currentVCM = features[0].properties.vcm_mmyr
-			currentLatLon = features[0].geometry.coordinates
-			queryCoastLoc(currentLocation, currentVCM, currentLatLon);
-		};
-	}
-	else if (displayMode === 'absolute'){
-		queryTimeseries(e);
-	}
-	else if (displayMode === 'crustal'){
-
-	}
-
+	switch(displayMode){
+		case 'relative':
+			var features = map.queryRenderedFeatures(e.point, { layers: ["rel" + year + "-hover"]});
+			if (features.length > 0){
+				currentLocation = features[0].properties.data_index
+				currentVCM = features[0].properties.vcm_mmyr
+				currentLatLon = features[0].geometry.coordinates
+				queryCoastLoc(currentLocation, currentVCM, currentLatLon);
+			};
+			break;
+		case 'absolute':
+			queryTimeseries(e);
+			break;
+		case 'crust':
+			break;
+	};
 };
-
 
 // initializeMap :: loads background and interactive maps and starts page listeners.
 function initializeMap() {
     "use strict";
     // Initialize Mapbox Interactive Map:
     mapboxgl.accessToken = 'pk.eyJ1IjoiamxhcnNvbjYzMCIsImEiOiJjaXh3ZWMxcDcwMDI1MndyeTM0cGt4NzNqIn0.7_AO6fr8Cwl7x-XSPylN-w';
-
     if (!mapboxgl.supported()) {
         alert('Your browser does not support Mapbox GL. Please try a different browser, or make sure that you have WebGL enabled on your current browser.');
     } else {
@@ -645,7 +658,6 @@ function initializeMap() {
     			[-720, -70], // Southwest coordinates
     			[720.0, 75]  // Northeast coordinates
 				];
-
         map = new mapboxgl.Map({
             version: 6,
             container: 'map-div',
@@ -658,7 +670,7 @@ function initializeMap() {
 			maxBounds: bounds
         })};
         var nav = new mapboxgl.NavigationControl();
-        map.addControl(nav, 'top-left')
+        map.addControl(nav, 'top-left');
 		map.on("mousemove", function (e) {coastHover(e)});
 		map.on('click', function (e, status) {clickDecider(e, status)});
 }
