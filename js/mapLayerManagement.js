@@ -164,7 +164,7 @@ function loadGridLayers(){
 	            "layout": {
 	                    'visibility': 'none'
 	            },
-	            'minzoom': 3,
+	            'maxzoom': 3,
 	            "paint": {
 	                "fill-color": {
 	                    property: 'sl' + years,
