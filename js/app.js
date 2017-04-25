@@ -3,10 +3,10 @@ $('#runProject').click(function(){
 	defaultMap = 'false';
 	switch (displayMode){
 		case 'absolute':
-			loadMap('custom');
+			loadMap('custom', 'true');
 			break;
 		case 'relative':
-			loadRelSL('custom');
+			loadRelSL('true');
 			if (currentVCM!==0){
 				queryCoastLoc(currentLocation, currentVCM, currentLatLon);
 			}
@@ -19,7 +19,7 @@ $('#runBasicProject').click(function(){
 	defaultMap = 'true';
 	switch (displayMode){
 		case 'absolute':
-			loadMap('basic');
+			loadMap('basic', 'true');
 			break;
 		case 'relative':
 
@@ -35,8 +35,8 @@ $(document).ready(function() {
 		switch(this.value){
 			case 'rel':
 				displayMode = 'relative';
-				loadRelSL();
-				unfreezeAllOptions();
+				loadRelSL('false');
+				restoreOptionMenu();
 				var vcmDataOn = document.getElementById('vcmMenu');
 				vcmDataOn['options'][1].selected = true;
 				document.getElementById('chart-container').style.display = 'none';
@@ -46,15 +46,15 @@ $(document).ready(function() {
 				break;
 			case 'abs':
 				displayMode = 'absolute';
-				loadMap();
-				unfreezeAllOptions();
+				loadMap('true', 'false');
+				restoreOptionMenu();
 				var vcmDataOn = document.getElementById('vcmMenu');
 				vcmDataOn['options'][0].selected = true;
 				break;
 			case 'crust':
 				displayMode = 'crust'
 				loadCrustLandLayer();
-				freezeAllOptions();
+				removeOptionMenu();
 				var vcmDataOn = document.getElementById('vcmMenu');
 				vcmDataOn['options'][1].selected = true;
 				document.getElementById('chart-container').style.display = 'none';
