@@ -56,12 +56,9 @@ function setSidebarOptions() {
 // TO input references again do the following...
 // outString += '<option value=' + metaData.ref + '>' + options + ': ' + scenarios + '</option>'
 
-
-
 function getHtmlOptions(rcp, component){
     outString = "<option value='none'>None</option>"
     compOptions = sidebar.RCP[rcp][component]
-	console.log(compOptions)
     for (options in compOptions){
         for (scenarios in sidebar.RCP[rcp][component][options]){
             metaData = sidebar.RCP[rcp][component][options][scenarios]
@@ -82,7 +79,6 @@ function getHtmlOptions(rcp, component){
 			}
 		}
     }
-	console.log(outString)
     return outString
 }
 
@@ -116,6 +112,33 @@ function turnOptionsOn(){
 		deselectOptions = false;
 	}
 	setSidebarOptions();
+}
+
+function removeOptionMenu(){
+	optionsToRemove = ['giaMenu', 'gdynMenu', "gsmbMenu", "adynMenu", "asmbMenu", "thermoMenu", "glacierMenu"]
+	for (options in optionsToRemove){
+		document.getElementById(optionsToRemove[options]).style.display = 'none'
+		document.getElementById(optionsToRemove[options] + '-p').style.display = 'none'
+		document.getElementById(optionsToRemove[options] + '-q').style.display = 'none'
+	}
+	document.getElementById("rcpRadioSelect").style.display = 'none'
+	document.getElementById("co2-header").style.display = 'none'
+	document.getElementById("rcp-q").style.display = 'none'
+	document.getElementById("rcpHeader").style.display = 'none'
+
+}
+
+function restoreOptionMenu(){
+	optionsToRemove = ['giaMenu', 'gdynMenu', "gsmbMenu", "adynMenu", "asmbMenu", "thermoMenu", "glacierMenu"]
+	for (options in optionsToRemove){
+		document.getElementById(optionsToRemove[options]).style.display = 'inline'
+		document.getElementById(optionsToRemove[options] + '-p').style.display = 'inline'
+		document.getElementById(optionsToRemove[options] + '-q').style.display = 'inline'
+	}
+	document.getElementById("rcpRadioSelect").style.display = 'inline-block'
+	document.getElementById("co2-header").style.display = 'inline'
+	document.getElementById("rcp-q").style.display = 'inline'
+	document.getElementById("rcpHeader").style.display = 'inline-block'
 }
 
 // When basic setting clicked, changes advanced too.  Also resets options
