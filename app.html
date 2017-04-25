@@ -151,9 +151,9 @@
                                 <div id="click-location">
                                     <div id="projectionMenu">
 										<div id="co2-header">
-											<p>RCP Scenario</p>
+											<p id='rcpHeader'>RCP Scenario</p>
 										</div>
-										<div class="question-button" id='sidebar-question-button'>
+										<div class="question-button" id='rcp-q'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
 												<span class="question-button-text" id = "sidebar-question-button-text"><b>RCP: </b>Representative Concentration Pathways.</span>
 											</img>
@@ -166,8 +166,8 @@
 										<hr>
 										<div><button  type="button" onclick="turnOptionsToNone()">(Click here to deselect all models)</button>
 										</div>
-                                        <p>Greenland Surface Mass Balance</p>
-										<div class="question-button" id='sidebar-question-button'>
+                                        <p id='gsmbMenu-p'>Greenland Surface Mass Balance</p>
+										<div class="question-button" id='gsmbMenu-q'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
 												<span class="question-button-text" id = "sidebar-question-button-text"><b>Greenland Surface Mass Balance: </b>Accounts for differences between precipitation and runoff on the Greenland ice sheet</span>
 											</img>
@@ -175,8 +175,8 @@
                                         <select id="gsmbMenu">
                                             <option value=""> None </option>
                                         </select>
-                                        <p>Greenland Solid Ice discharge</p>
-										<div class="question-button" id='sidebar-question-button'>
+                                        <p id='gdynMenu-p'>Greenland Solid Ice discharge</p>
+										<div class="question-button" id='gdynMenu-q'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
 												<span class="question-button-text" id = "sidebar-question-button-text"><b>Greenland Dynamic: </b>Accounts for ice discharge (i.e. calving) from the Greenland ice sheet</span>
 											</img>
@@ -184,8 +184,8 @@
                                         <select id="gdynMenu">
                                             <option value=""> None </option>
                                         </select>
-                                        <p>Antarctica Surface Mass Balance</p>
-										<div class="question-button" id='sidebar-question-button'>
+                                        <p id='asmbMenu-p'>Antarctica Surface Mass Balance</p>
+										<div class="question-button" id='asmbMenu-q'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
 												<span class="question-button-text" id = "sidebar-question-button-text"><b>Antarctica Surface Mass Balance: </b> Accounts for differences between precipitation and runoff on the Antarctic ice sheet</span>
 											</img>
@@ -193,8 +193,8 @@
                                         <select id="asmbMenu">
                                             <option value="">None</option>
                                         </select>
-                                        <p>Antarctica Solid Ice Discharge</p>
-										<div class="question-button" id='sidebar-question-button'>
+                                        <p id='adynMenu-p'>Antarctica Solid Ice Discharge</p>
+										<div class="question-button" id='adynMenu-q'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
 												<span class="question-button-text" id = "sidebar-question-button-text"><b>Antarctica Dynamic (Ice Discharge): </b>Accounts for ice discharge (i.e. calving) from the Antarctic ice sheet</span>
 											</img>
@@ -202,8 +202,8 @@
                                         <select id="adynMenu">
                                             <option value="">None</option>
                                         </select>
-                                        <p>Ocean Dynamics</p>
-										<div class="question-button" id='sidebar-question-button'>
+                                        <p id='thermoMenu-p'>Ocean Dynamics</p>
+										<div class="question-button" id='thermoMenu-q'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
 												<span class="question-button-text" id = "sidebar-question-button-text"><b>Ocean Dynamics: </b>Accounts for thermal expansion and changes in circulation due to changes in ocean heat content.</span>
 											</img>
@@ -211,8 +211,8 @@
                                         <select id="thermoMenu">
                                             <option value="">None </option>
                                         </select>
-                                        <p>Mountain Glaciers</p>
-										<div class="question-button" id='sidebar-question-button'>
+                                        <p id='glacierMenu-p'>Mountain Glaciers</p>
+										<div class="question-button" id='glacierMenu-q'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
 												<span class="question-button-text" id = "sidebar-question-button-text"><b>Mountain Glaciers: </b>Accounts for mass changes in mountain glaciers</span>
 											</img>
@@ -220,8 +220,8 @@
                                         <select id="glacierMenu">
                                             <option value="">None </option>
                                         </select>
-										<p>Glacial Isostatic Adjustment (GIA)</p>
-										<div class="question-button" id='sidebar-question-button'>
+										<p id='giaMenu-p'>Glacial Isostatic Adjustment</p>
+										<div class="question-button" id='giaMenu-q'>
 											<img class="question-button" src="img/ic_help_black_48dp.png">
 												<span class="question-button-text" id = "sidebar-question-button-text"><b>Glacial Isostatic Adjustment (GIA): </b>Accounts for geoid change due to glacial isostatic adjustment (does NOT include uplft due to GIA)</span>
 											</img>
@@ -230,7 +230,7 @@
                                             <option value="">None </option>
                                         </select>
 										<p>Vertical Crustal Motion</p>
-										<div class="question-button" id='sidebar-question-button'>
+										<div class="question-button" >
 											<img class="question-button" src="img/ic_help_black_48dp.png">
 												<span class="question-button-text" id = "sidebar-question-button-text"><b>Vertical Crustal Motion: </b>Accounts for changes in land height</span>
 											</img>
