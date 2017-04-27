@@ -97,7 +97,6 @@ function changeGridDat(queriedData, cbarLims){
 var scaleBy;
 // Used to change values default values of coast data to queried data from server
 function changeCoastData(queriedData, cbarLims){
-	console.log(cbarLims)
 	"use strict";
 	scaleBy = (1/10.) //mm to cm
 	// Loop through features, assign data to proper grid cells and properties
@@ -133,9 +132,10 @@ function changeCoastData(queriedData, cbarLims){
 // Constructs string that is sent to the server based on user selections
 function updateQueryString(){
 	"use strict";
+	console.log("update query")
 	rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
 	if (defaultMap == 'true'){
-		queryString = rcpScenario + defaultQueryString
+		queryString = rcpScenario + standardQueryString
 	}
 	else{
 	   var databaseString = [gsmbMenu.value, gdynMenu.value,
@@ -151,9 +151,12 @@ function updateQueryString(){
 };
 
 // Queries and loads grid data
-function loadMap(version){
+function loadMap(version, update){
 	"use strict";
-	updateQueryString();
+	if (update === 'true') {
+		updateQueryString();
+		console.log("updated")
+	}
 	$.get(apiLoc + "projection_api?datastring=" + queryString, function(data, status){
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
@@ -175,9 +178,12 @@ function loadMap(version){
 };
 
 // Queries and loads relative SL data
-function loadRelSL(){
+function loadRelSL(update){
 	"use strict";
-	updateQueryString();
+	if (update === 'true'){
+		updateQueryString();
+		console.log("Updates here too...")
+	}
 	$.get(apiLoc + "projection_api?relativeSL="  + queryString, function(data, status){
 				changeCoastData(data['pointData'], data['cLims']);
 		map.getSource('coastScatter').setData(coastLocs);

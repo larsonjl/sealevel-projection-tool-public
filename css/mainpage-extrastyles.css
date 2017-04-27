@@ -141,100 +141,6 @@
 	z-index:0;
 }
 
-/*
-#year-select-slider{
-	padding: 2px;
-}
-
-#year-select-labels{
-	font-size: 10.5pt;
-}
-
-#year-num-container{
-	font-size: 12pt;
-	width: 65px;
-	position: relative;
-	float: left;
-	text-align: center;
-	vertical-align: middle;
-}
-
-#year-select-lower{
-	font-size: 16pt;
-	vertical-align: middle;
-	position: relative;
-	float: left;
-	padding: 2px;
-
-}
-
-#year-select-higher{
-	font-size: 16pt;
-	vertical-align: middle;
-	position: relative;
-	float: left;
-	padding: 2px;
-	color:  #000000;
-}
-
-#year-select-lower:hover{
-	color: #FAFAFA;
-	cursor: pointer;
-}
-
-#year-select-higher:hover{
-	color:  #000000;
-	cursor: pointer;
-}
-
-#year-selected{
-	font-size: 16pt;
-	vertical-align: middle;
-	position: relative;
-	float: left;
-	padding: 2px;
-}
-
-#year-name{
-	font-size: 16pt;
-	vertical-align: middle;
-	position: relative;
-	float: left;
-	padding: 2px;
-}
-
-
-#projection-name{
-	font-size: 10pt;
-	vertical-align: middle;
-	position: relative;
-	float: left;
-	padding-right: 5px;
-	padding-top: 5px;
-	margin-top:10px;
-	border: 10px;
-	border-radius: 5px;
-	background-color: #FFFFFF;
-	color: #000000;
-	opacity: 1;
-}
-
-#projection-name:hover{
-}
-
-#projection-name-val{
-	font-size: 10pt;
-	vertical-align: middle;
-	position: relative;
-	float: left;
-	margin-top:10px;
-	border-radius: 5px;
-	padding-top: 5px;
-	background-color: #FFFFFF;
-	color: #000000;
-	opacity: 1;
-}
-*/
 /* Mapping Things */
 #slider-container {
     text-align: center;
@@ -245,8 +151,6 @@
 .mapboxgl-ctrl-top-left{
 	top: 45px;
 }
-
-
 
 #chart-container h2 { font-size: 12pt; }
 #about-container, #contact-container { min-height: 65vh; }
@@ -264,8 +168,6 @@
     font-weight: bold;
     cursor: all-scroll;
 }
-
-
 
 div.popup-msg {
     position: absolute;
@@ -370,7 +272,7 @@ div.popup-msg {
     background-color: #333333;
     font-size: 12pt;
     color: #FAFAFA;
-    overflow: hidden;
+	overflow:visible;
 }
 
 .sidebar-menu {
@@ -467,6 +369,30 @@ div.popup-msg {
     z-index: 99999;
 }
 
+.sidebar-question-button .question-button-text {
+	position:relative;
+    visibility: hidden;
+    width: 200px;
+	font-size: 16px;
+	font-weight:normal;
+    background-color: #d3d3d3;
+    color: #000000;
+    text-align: left;
+	margin: 5px;
+	padding: 5px;
+    border: 1px;
+	border-style:solid;
+	border-radius: 2px;
+	border-color: #000000;
+    padding: 5px;
+	float:left;
+	line-height: 100%;
+	opacity: 1;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 99999;
+}
+
 .question-button:hover{
 	opacity:1;
 	z-index: 99999;
@@ -478,6 +404,18 @@ div.popup-msg {
 	z-index: 99999;
 }
 
+.sidebar-question-button:hover{
+	opacity:1;
+	z-index: 99999;
+
+}
+
+.sidebar-question-button:hover .question-button-text {
+    visibility: visible;
+	z-index: 99999;
+}
+
+
 #sidebar-question-first{
 	width: 20px;
 	height: 20px;
@@ -485,7 +423,26 @@ div.popup-msg {
 	margin: 3px;
 }
 
-#sidebar-question-button{
+.sidebar-question-button{
+	position:relative;
+	width: 16px;
+	height: 16px;
+	margin: 0px;
+	cursor: pointer;
+	padding: 0px;
+	opacity: 0.5;
+	display: inline;
+	vertical-align: middle;
+	padding-bottom: 3px;
+	padding-right: 0px;
+	margin-left: 2px;
+	margin-top: 5px;
+	padding-top:5px;
+	float:right;
+	display: inline-block;
+}
+
+#sidebar-question-button-vcm{
 	margin-left: 2px;
 	margin-top: 5px;
 	padding-top:5px;
@@ -518,7 +475,6 @@ div.popup-msg {
     height: calc( 100% - 60px );
     background-color: #FFFFFF;
     overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 #rcpRadioSelect {
@@ -557,7 +513,7 @@ div.popup-msg {
 .sidebar-header h2 { color: #333333; }
 .sidebar-header-select img { height: 100%; width: 100%; }
 
-img#sidebar-location-lookup-active, img#sidebar-map-settings-hidden, img#sidebar-basic-settings-active, img#sidebar-basic-settings-hidden
+img#sidebar-custom-settings-active, img#sidebar-map-settings-hidden, img#sidebar-basic-settings-active, img#sidebar-basic-settings-hidden
 img#sidebar-plot-settings-active, img#sidebar-plot-settings-hidden { display: none; }
 
 #map-search { display: none; }
@@ -668,6 +624,7 @@ input#show-tide-gauges-checkbox {
 	margin-left: 5px;
 	font-family: Helvetica;
 	display: inline;
+	overflow:visible;
 
 }
 
@@ -994,6 +951,7 @@ div.tooltip {
     border-radius: 15px;
     box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
     cursor: pointer;
+	overflow:visible;
 }
 
 #sidebar-basic-show:hover { background: #F0F0F0; }

@@ -76,6 +76,7 @@ def getLocationData(requestString):
     if np.isnan(cellNum):
         return {'locTS': 'masked'}
     else:
+		cellNum = int(cellNum)
         dOut = {}
         for datasets in params[4::]:
             dOut[datasets] = (np.around(scaleBy * projDict[0][rcpScen][datasets][:, cellNum]
@@ -86,7 +87,7 @@ def getLocationData(requestString):
 def getCoastLocationData(requestString):
     scaleBy = 1000  # m to mm
     params = requestString.split('_')
-    locIndx = params[0]
+    locIndx = int(params[0])
     rcpScen = params[1]
     dOut = {}
     for datasets in params[3::]:
