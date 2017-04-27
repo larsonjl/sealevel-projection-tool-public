@@ -1,3 +1,19 @@
+function checkForNans(data){
+	for (var keys in data){
+		var ts = data[keys]
+		var filtered = ts.filter(function(data_pts){
+			return data_pts <= -999;
+		})
+	}
+	if (filtered.length > 1){
+		return true
+	}
+	else{
+		return false
+	};
+};
+
+
 function queryTimeseries(e){
 	var lngSym = 'E', latSym = 'N', lat, lng, decimLat, wholeLat, wholeLon, latitude, longitude, decimLat, decimLng
 
@@ -44,9 +60,23 @@ function queryTimeseries(e){
 			}, 3000);
 		}
 		else{
-			plotFillProjection(data, -999, "Absolute sea level projection for " + wholeLng + 'E'+ ', ' + wholeLat + 'N')
-			maximizePlot();
+			var tf = checkForNans(data)
+			if (tf === true){
+				scrollPopup = document.getElementById('error-popup');
+				scrollPopup.style.zIndex = 5000;
+				scrollPopup.style.transition = "opacity 1s";
+				scrollPopup.style.opacity = 1;
+				setTimeout(function () {
+					scrollPopup.style.opacity = 0;
+					scrollPopup.style.zIndex = 0;
+				}, 3000);
+
 			}
+			else{
+				plotFillProjection(data, -999, "Absolute sea level projection for " + wholeLng + 'E'+ ', ' + wholeLat + 'N')
+				maximizePlot();
+			}
+		}
   });
 };
 
@@ -87,385 +117,6 @@ function updateMapYear(){
 	}
 };
 
-function addCrustLandSource(){
-	"use strict";
-	map.addSource('vcmLand', {
-        type: "vector",
-        url: 'mapbox://jlarson630.67mxd7i0'
-            });
-};
-
-function removeCrustLandLayer(){
-	"use strict";
-	if (map.getLayer('vcmLand2100') !== undefined){
-		map.removeLayer('vcmLand2100')
-	};
-};
-
-function loadCrustLandLayer(){
-	"use strict";
-	dMin = -15;
-	dMax = 25;
-	removeRelativeLayers();
-	removeAbsoluteLayers();
-	map.addLayer({
-            "id": "vcmLand2100",
-            "type": "fill",
-            "source": "vcmLand",
-			"z-index":999,
-			'source-layer': "vcmHalfgeojson",
-            "layout": {
-                    'visibility': 'visible'
-            },
-            "paint": {
-                "fill-color": {
-                    property: 'sl2100',
-                    stops: getColorbarStops('spectral', dMin, dMax)
-                    }, 'fill-opacity': 1.0}
-            }, 'water');
-
-	map.addLayer({
-            "id": "vcmLand2075",
-            "type": "fill",
-            "source": "vcmLand",
-			"z-index":999,
-			'source-layer': "vcmHalfgeojson",
-            "layout": {
-                    'visibility': 'none'
-            },
-            "paint": {
-                "fill-color": {
-                    property: 'sl2075',
-                    stops: getColorbarStops('spectral', dMin, dMax)
-                    }, 'fill-opacity': 1.0}
-            }, 'water');
-
-	map.addLayer({
-            "id": "vcmLand2050",
-            "type": "fill",
-            "source": "vcmLand",
-			"z-index":999,
-			'source-layer': "vcmHalfgeojson",
-            "layout": {
-                    'visibility': 'none'
-            },
-            "paint": {
-                "fill-color": {
-                    property: 'sl2050',
-                    stops: getColorbarStops('spectral', dMin, dMax)
-                    }, 'fill-opacity': 1.0}
-            }, 'water');
-
-	map.addLayer({
-            "id": "vcmLand2025",
-            "type": "fill",
-            "source": "vcmLand",
-			"z-index":999,
-			'source-layer': "vcmHalfgeojson",
-            "layout": {
-                    'visibility': 'none'
-            },
-            "paint": {
-                "fill-color": {
-                    property: 'sl2025',
-                    stops: getColorbarStops('spectral', dMin, dMax)
-                    }, 'fill-opacity': 1.0}
-            }, 'water');
-};
-// Add all relative sea level layers (i.e. one for each year)
-function removeRelativeLayers(){
-	"use strict";
-	if (map.getLayer('rel2025') !== undefined){
-		map.removeLayer('rel2025')
-		map.removeLayer('rel2050')
-		map.removeLayer('rel2075')
-		map.removeLayer('rel2100')
-		map.removeLayer('rel2025-hover')
-		map.removeLayer('rel2050-hover')
-		map.removeLayer('rel2075-hover')
-		map.removeLayer('rel2100-hover')
-	}
-};
-
-function loadCustomRelative(){
-	"use strict";
-	removeRelativeLayers();
-	removeCrustLandLayer();
-	map.addLayer({
-            "id": "rel2025",
-            "type": "circle",
-            "source": "coastScatter",
-			"z-index":999,
-            "layout": {
-                    'visibility': 'none'},
-			"paint":	{
-					"circle-radius": 6,
-					"circle-color": {
-	                    property: 'sl2025',
-	                    stops: getColorbarStops('spectral', dMin, dMax)
-                    }
-				}
-            });
-
-	map.addLayer({
-			"id": "rel2050",
-			"type": "circle",
-			"source": "coastScatter",
-			"z-index":999,
-			"layout":{
-					'visibility': 'none'},
-			"paint":{
-					"circle-radius": 6,
-					"circle-color": {
-						property: 'sl2050',
-						stops: getColorbarStops('spectral', dMin, dMax)
-					}
-				}
-			});
-
-	map.addLayer({
-			"id": "rel2075",
-			"type": "circle",
-			"source": "coastScatter",
-			"z-index":999,
-			"layout": {
-					'visibility': 'none'},
-			"paint":{
-					"circle-radius": 6,
-					"circle-color": {
-						property: 'sl2075',
-						stops: getColorbarStops('spectral', dMin, dMax)
-					}
-				}
-			});
-
-	map.addLayer({
-			"id": "rel2100",
-			"type": "circle",
-			"source": "coastScatter",
-			"z-index":999,
-			"layout": {
-					'visibility': 'none'},
-			"paint":{
-					"circle-radius": 6,
-					"circle-color": {
-						property: 'sl2100',
-						stops: getColorbarStops('spectral', dMin, dMax)
-					}
-				}
-			});
-	// Hover layers
-	map.addLayer({
-			"id": "rel2025-hover",
-			"type": "circle",
-			"source": "coastScatter",
-			"z-index":999,
-			"layout": {
-					'visibility': 'none'},
-			"paint":	{
-					"circle-radius": 12,
-					"circle-color": {
-						property: 'sl2025',
-						stops: getColorbarStops('spectral', dMin, dMax)
-					}
-				},
-			 "filter": ["==", "name", ""]
-			});
-
-	map.addLayer({
-			"id": "rel2050-hover",
-			"type": "circle",
-			"source": "coastScatter",
-			"z-index":999,
-			"layout": {
-					'visibility': 'none'},
-			"paint":	{
-				"circle-radius": 12,
-					"circle-color": {
-						property: 'sl2050',
-						stops: getColorbarStops('spectral', dMin, dMax)
-					}
-				},
-			 "filter": ["==", "name", ""]
-			});
-
-	map.addLayer({
-			"id": "rel2075-hover",
-			"type": "circle",
-			"source": "coastScatter",
-			"z-index":999,
-			"layout": {
-					'visibility': 'none'},
-			"paint":	{
-				"circle-radius": 12,
-					"circle-color": {
-						property: 'sl2075',
-						stops: getColorbarStops('spectral', dMin, dMax)
-					}
-				},
-			 "filter": ["==", "name", ""]
-			});
-
-	map.addLayer({
-			"id": "rel2100-hover",
-			"type": "circle",
-			"source": "coastScatter",
-			"z-index":999,
-			"layout": {
-					'visibility': 'none'},
-			"paint":	{
-				"circle-radius": 12,
-					"circle-color": {
-						property: 'sl2100',
-						stops: getColorbarStops('spectral', dMin, dMax)
-					}
-				},
-			 "filter": ["==", "name", ""]
-		});
-}
-
-// Add all grid layers (i.e. one for each year)
-function removeAbsoluteLayers(){
-	if (map.getLayer('oneDeg2025') !== undefined){
-		map.removeLayer('oneDeg2025')
-		map.removeLayer('twoDeg2025')
-		map.removeLayer('oneDeg2050')
-		map.removeLayer('twoDeg2050')
-		map.removeLayer('oneDeg2075')
-		map.removeLayer('twoDeg2075')
-		map.removeLayer('oneDeg2100')
-		map.removeLayer('twoDeg2100')
-	}
-}
-
-function loadGridLayers(){
-	removeAbsoluteLayers();
-	removeCrustLandLayer()
-    map.addLayer({
-            "id": "oneDeg2025",
-            "type": "fill",
-            "source": "oneDegreeData",
-            "layout": {
-                    'visibility': 'none'
-            },
-            'minzoom': 3,
-            "paint": {
-                "fill-color": {
-                    property: 'sl2025',
-                    stops: getColorbarStops('spectral', dMin, dMax)
-                    }, 'fill-opacity': 1.0}
-            }, 'landcover');
-
-        map.addLayer({
-                "id": "twoDeg2025",
-                "type": "fill",
-                "source": "twoDegreeData",
-                'maxzoom': 3,
-                "layout": {
-                        'visibility': 'none'
-                },
-                "paint": {
-                    "fill-color": {
-                    type:'exponential',
-                    property: 'sl2025',
-                    stops: getColorbarStops('spectral', dMin, dMax)
-                    }, 'fill-opacity': 1.0}
-            }, 'landcover');
-
-        map.addLayer({
-                "id": "oneDeg2050",
-                "type": "fill",
-                "source": "oneDegreeData",
-                "layout": {
-                        'visibility': 'none'
-                },
-                'minzoom': 3,
-                "paint": {
-                    "fill-color": {
-                        property: 'sl2050',
-                        stops: getColorbarStops('spectral', dMin, dMax)
-                        }, 'fill-opacity': 1.0}
-                }, 'landcover');
-
-            map.addLayer({
-                    "id": "twoDeg2050",
-                    "type": "fill",
-                    "source": "twoDegreeData",
-                    'maxzoom': 3,
-                    "layout": {
-                            'visibility': 'none'
-                    },
-                    "paint": {
-                        "fill-color": {
-                        type:'exponential',
-                            property: 'sl2050',
-                            stops: getColorbarStops('spectral', dMin, dMax)
-                            }, 'fill-opacity': 1.0}
-                }, 'landcover');
-
-            map.addLayer({
-                    "id": "oneDeg2075",
-                    "type": "fill",
-                    "source": "oneDegreeData",
-                    "layout": {
-                            'visibility': 'none'
-                    },
-                    'minzoom': 3,
-                    "paint": {
-                        "fill-color": {
-                            property: 'sl2075',
-                            stops: getColorbarStops('spectral', dMin, dMax)
-                            }, 'fill-opacity': 1.0}
-                    }, 'landcover');
-
-                map.addLayer({
-                        "id": "twoDeg2075",
-                        "type": "fill",
-                        "source": "twoDegreeData",
-                        'maxzoom': 3,
-                        "layout": {
-                                'visibility': 'none'
-                        },
-                        "paint": {
-                            "fill-color": {
-                                type:'exponential',
-                                property: 'sl2075',
-                                stops: getColorbarStops('spectral', dMin, dMax)
-                                }, 'fill-opacity': 1.0}
-                    }, 'landcover');
-
-                map.addLayer({
-                        "id": "oneDeg2100",
-                        "type": "fill",
-                        "source": "oneDegreeData",
-                        "layout": {
-                                'visibility': 'visible'
-                        },
-                        'minzoom': 3,
-                        "paint": {
-                            "fill-color": {
-                                property: 'sl2100',
-                                stops: getColorbarStops('spectral', dMin, dMax)
-                                }, 'fill-opacity': 1.0}
-                        }, 'landcover');
-
-                    map.addLayer({
-                            "id": "twoDeg2100",
-                            "type": "fill",
-                            "source": "twoDegreeData",
-                            'maxzoom': 3,
-                            "layout": {
-                                    'visibility': 'visible'
-                            },
-                            "paint": {
-                                "fill-color": {
-                                    type:'exponential',
-                                    property: 'sl2100',
-                                    stops: getColorbarStops('spectral', dMin, dMax)
-                                    }, 'fill-opacity': 1.0}
-                        }, 'landcover');
-
-}
 
 // CoastLocs Hover functionality
 function coastHover(e) {
@@ -483,10 +134,6 @@ function coastHover(e) {
 		}
 	}
 };
-
-//map.on("mouseout", function() {
-//   map.setFilter("rel2100-hover", ["==", "data_index", ""]);
-// });
 
 function clickDecider(e, status){
 	"use strict";
