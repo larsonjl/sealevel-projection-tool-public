@@ -72,10 +72,11 @@ def getLocationData(requestString):
     lat = params[0]
     lon = params[1]
     rcpScen = params[2]
-    cellNum = int(getGridCell(float(lat), float(lon)))
+    cellNum = getGridCell(float(lat), float(lon))
     if np.isnan(cellNum):
         return {'locTS': 'masked'}
     else:
+		cellNum = int(cellNum)
         dOut = {}
         for datasets in params[4::]:
             dOut[datasets] = (np.around(scaleBy * projDict[0][rcpScen][datasets][:, cellNum]
