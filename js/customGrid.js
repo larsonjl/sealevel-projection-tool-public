@@ -132,7 +132,6 @@ function changeCoastData(queriedData, cbarLims){
 // Constructs string that is sent to the server based on user selections
 function updateQueryString(){
 	"use strict";
-	console.log("update query")
 	rcpScenario = document.querySelector('input[name="rcpBasicSelect"]:checked').value;
 	if (defaultMap == 'true'){
 		queryString = rcpScenario + standardQueryString
@@ -155,7 +154,6 @@ function loadMap(version, update){
 	"use strict";
 	if (update === 'true') {
 		updateQueryString();
-		console.log("updated")
 	}
 	$.get(apiLoc + "projection_api?datastring=" + queryString, function(data, status){
 				changeGridDat(data['gridData'], data['cLims']);
@@ -182,7 +180,6 @@ function loadRelSL(update){
 	"use strict";
 	if (update === 'true'){
 		updateQueryString();
-		console.log("Updates here too...")
 	}
 	$.get(apiLoc + "projection_api?relativeSL="  + queryString, function(data, status){
 				changeCoastData(data['pointData'], data['cLims']);
