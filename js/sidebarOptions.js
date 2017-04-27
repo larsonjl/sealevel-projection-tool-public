@@ -119,26 +119,38 @@ function removeOptionMenu(){
 	for (options in optionsToRemove){
 		document.getElementById(optionsToRemove[options]).style.display = 'none'
 		document.getElementById(optionsToRemove[options] + '-p').style.display = 'none'
-		document.getElementById(optionsToRemove[options] + '-q').style.display = 'none'
+	}
+	var elements = document.getElementsByClassName("sidebar-question-button");
+	for(var ii=0; ii <elements.length; ii++) {
+		console.log(elements[ii])
+	    elements[ii].style.display = 'none'
 	}
 	document.getElementById("rcpRadioSelect").style.display = 'none'
 	document.getElementById("co2-header").style.display = 'none'
-	document.getElementById("rcp-q").style.display = 'none'
 	document.getElementById("rcpHeader").style.display = 'none'
-
+	document.getElementById("rcpBasicRadioSelect").style.display = 'none'
+	document.getElementById("runBasicProject").style.display = 'none'
+	document.getElementById('basic-sl-text').textContent = 'No basic projection options in vertical crustal motion mode'
 }
 
 function restoreOptionMenu(){
-	optionsToRemove = ['giaMenu', 'gdynMenu', "gsmbMenu", "adynMenu", "asmbMenu", "thermoMenu", "glacierMenu"]
-	for (options in optionsToRemove){
-		document.getElementById(optionsToRemove[options]).style.display = 'inline'
-		document.getElementById(optionsToRemove[options] + '-p').style.display = 'inline'
-		document.getElementById(optionsToRemove[options] + '-q').style.display = 'inline'
+	optionsToRestore = ['giaMenu', 'gdynMenu', "gsmbMenu", "adynMenu", "asmbMenu", "thermoMenu", "glacierMenu"]
+	for (options in optionsToRestore){
+		document.getElementById(optionsToRestore[options]).style.display = 'inline'
+		document.getElementById(optionsToRestore[options] + '-p').style.display = 'inline'
+	}
+
+	var elements = document.getElementsByClassName("sidebar-question-button");
+	for(var ii=0; ii <elements.length; ii++) {
+		console.log(elements[ii])
+	    elements[ii].style.display = 'inline'
 	}
 	document.getElementById("rcpRadioSelect").style.display = 'inline-block'
 	document.getElementById("co2-header").style.display = 'inline'
-	document.getElementById("rcp-q").style.display = 'inline'
-	document.getElementById("rcpHeader").style.display = 'inline-block'
+	document.getElementById("rcpHeader").style.display = 'inline'
+	document.getElementById("rcpBasicRadioSelect").style.display = 'inline'
+	document.getElementById("runBasicProject").style.display = 'inline'
+	document.getElementById('basic-sl-text').textContent = 'Future sea level change depends on current and future carbon emissions.  Choose a 21st century carbon emission scenario.'
 }
 
 // When basic setting clicked, changes advanced too.  Also resets options
