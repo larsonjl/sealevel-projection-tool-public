@@ -131,6 +131,8 @@ function removeOptionMenu(){
 	document.getElementById("rcpBasicRadioSelect").style.display = 'none'
 	document.getElementById("runBasicProject").style.display = 'none'
 	document.getElementById('basic-sl-text').textContent = 'No basic projection options in vertical crustal motion mode'
+	document.getElementById('deselect-all-models').style.display = 'none'
+
 }
 
 function restoreOptionMenu(){
@@ -139,7 +141,6 @@ function restoreOptionMenu(){
 		document.getElementById(optionsToRestore[options]).style.display = 'inline'
 		document.getElementById(optionsToRestore[options] + '-p').style.display = 'inline'
 	}
-
 	var elements = document.getElementsByClassName("sidebar-question-button");
 	for(var ii=0; ii <elements.length; ii++) {
 		console.log(elements[ii])
@@ -150,6 +151,7 @@ function restoreOptionMenu(){
 	document.getElementById("rcpHeader").style.display = 'inline'
 	document.getElementById("rcpBasicRadioSelect").style.display = 'inline'
 	document.getElementById("runBasicProject").style.display = 'inline'
+	document.getElementById('deselect-all-models').style.display = 'inline' 
 	document.getElementById('basic-sl-text').textContent = 'Future sea level change depends on current and future carbon emissions.  Choose a 21st century carbon emission scenario.'
 }
 
