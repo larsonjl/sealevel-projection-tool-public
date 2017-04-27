@@ -59,48 +59,6 @@ function queryCoastLoc(indxNum, vcm, loc){
 	});
 };
 
-// setPopupAndCenter :: When a new plot is requested, reset the Map Popup.
-/*
-function setPopupAndCenter(e) {
-    "use strict";
-    var popupText, jsonAltimetryLocation, jsonLat, jsonLon, latitude, longitude, geojson;
-
-    if (marker) {
-        marker.remove();
-    }
-
-    jsonAltimetryLocation = getLatLonGridLocation(e.lngLat.lng, e.lngLat.lat);
-    jsonLat = jsonAltimetryLocation[0];
-    jsonLon = jsonAltimetryLocation[1];
-    latitude = jsonAltimetryLocation[2];
-    longitude = jsonAltimetryLocation[3];
-
-    geojson = getAltimetryLocationBox(jsonLat, jsonLon);
-
-    if (altimetry_outlined === true) {
-        map.removeLayer('altimetry-location-box');
-        map.removeSource('altimetry-location-box');
-        outlineAltimetry(geojson);
-    } else {
-        outlineAltimetry(geojson);
-    }
-
-
-    popupText = "<div class='altimetry-popup'><h2>Altimetry</h2>" +
-        "<span class='bold'>Lat:</span> " + jsonLat + "<br><span class='bold'>Lon:</span> " + jsonLon + "</div>";
-
-    marker = new mapboxgl.Popup({anchor: "top-left"})
-        .setLngLat({ lng: (longitude + 0.08333), lat: (latitude - 0.08333) })
-        .setHTML(popupText)
-        .addTo(map);
-
-    if (gauge_marker) {
-        gauge_marker.addTo(map);
-    }
-
-    centerMap({ lng: longitude, lat: latitude });
-}
-*/
 function centerMap(lngLat) {
     "use strict";
     if (map.getZoom() < 5.5) {
@@ -109,41 +67,6 @@ function centerMap(lngLat) {
         map.jumpTo({ "center": lngLat });
     }
 }
-/*
-// Removes all grid layers
-function removeGridVisibility(){
-	map.setLayoutProperty('oneDeg2025', 'visibility', 'none')
-	map.setLayoutProperty('oneDeg2050', 'visibility', 'none')
-	map.setLayoutProperty('oneDeg2075', 'visibility', 'none')
-	map.setLayoutProperty('oneDeg2100', 'visibility', 'none')
-	map.setLayoutProperty('twoDeg2025', 'visibility', 'none')
-	map.setLayoutProperty('twoDeg2050', 'visibility', 'none')
-	map.setLayoutProperty('twoDeg2075', 'visibility', 'none')
-	map.setLayoutProperty('twoDeg2100', 'visibility', 'none')
-};
-
-function removeCrustalVisibility(){
-	"use strict";
-	if (map.getLayer('vcmLand2100') !== undefined){
-		map.setLayoutProperty('vcmLand2025', 'visibility', 'none')
-		map.setLayoutProperty('vcmLand2050', 'visibility', 'none')
-		map.setLayoutProperty('vcmLand2075', 'visibility', 'none')
-		map.setLayoutProperty('vcmLand2100', 'visibility', 'none')
-	};
-};
-
-// Removes all coast scatter layers
-function removeScatterVisibility(){
-	map.setLayoutProperty('rel2025', 'visibility', 'none')
-	map.setLayoutProperty('rel2050', 'visibility', 'none')
-	map.setLayoutProperty('rel2075', 'visibility', 'none')
-	map.setLayoutProperty('rel2100', 'visibility', 'none')
-	map.setLayoutProperty('rel2025-hover', 'visibility', 'none')
-	map.setLayoutProperty('rel2050-hover', 'visibility', 'none')
-	map.setLayoutProperty('rel2075-hover', 'visibility', 'none')
-	map.setLayoutProperty('rel2100-hover', 'visibility', 'none')
-};
-*/
 
 // Updates map year of data displayed
 function updateMapYear(){
@@ -162,66 +85,6 @@ function updateMapYear(){
 			map.setLayoutProperty(vcmLayerNames[year], 'visibility', 'visible')
 			break;
 	}
-};
-	// If relative sea level has been loaded, update those years
-	/*
-	if (displayMode === 'relative'){
-		if (map.getLayer('rel2025') !== undefined){
-			removeGridVisibility();
-			removeScatterVisibility();
-			removeCrustalVisibility();
-			var relDict = {2025:"rel2025", 2050:"rel2050",2075:"rel2075", 2100:"rel2100"}
-			map.setLayoutProperty(relDict[year], 'visibility', 'visible')
-			map.setLayoutProperty(relDict[year]+'-hover', 'visibility', 'visible')
-		}
-	}
-	else if (displayMode === 'absolute'){
-		if (map.getLayer('rel2025') !== undefined){
-			removeScatterVisibility();}
-		removeGridVisibility();
-		removeCrustalVisibility();
-	    var layerOneDict = {2025:"oneDeg2025", 2050:"oneDeg2050",2075:"oneDeg2075", 2100:"oneDeg2100"}
-	    var layerTWoDict = {2025:"twoDeg2025", 2050:"twoDeg2050",2075:"twoDeg2075", 2100:"twoDeg2100"}
-	    map.setLayoutProperty(layerOneDict[year], 'visibility', 'visible')
-	    map.setLayoutProperty(layerTWoDict[year], 'visibility', 'visible')
-		maximizePlot();
-		minimizePlot();
-	}
-	else if (displayMode === 'crust'){
-		if (map.getLayer('vcmLand2100') === undefined){
-			loadCrustLandLayer()};
-		if (map.getLayer('rel2025') !== undefined){
-			removeScatterVisibility();}
-		if (map.getLayer('sl2025') !== undefined){
-			removeGridVisibility();}
-		removeCrustalVisibility();
-		var layerOneDict = {2025:"vcmLand2025", 2050:"vcmLand2050",2075:"vcmLand2075", 2100:"vcmLand2100"}
-		map.setLayoutProperty(layerOneDict[year], 'visibility', 'visible')
-	};
-}
-*/
-// Add sources for both 1deg and 2deg grids and coast scatter
-/*
-function initializeTiles(){
-    map.addSource("twoDegreeData", {
-        "type":"geojson",
-        "data": twoDegGrid
-            });
-
-    map.addSource("oneDegreeData", {
-            "type": "geojson",
-            "data": oneDegGrid
-                });
-
-	map.addSource("coastScatter", {
-			"type": "geojson",
-			"data": coastLocs
-	});
-
-	map.addSource('vcmLand', {
-        type: "vector",
-        url: 'mapbox://jlarson630.1d0a9p4k'
-            });
 };
 
 function addCrustLandSource(){
