@@ -7,7 +7,8 @@ import os
 
 dataFile = os.path.join(os.path.dirname(__file__), 'dataForWebsite.pkl')
 gridFile = os.path.join(os.path.dirname(__file__), 'maskRef.pkl')
-coastLocsFile = os.path.join(os.path.dirname(__file__), 'vectorDataForWebsite.pkl')
+coastLocsFile = os.path.join(os.path.dirname(__file__), 
+                             'vectorDataForWebsite.pkl')
 
 
 # Class for json print so no spaces after comma
@@ -21,7 +22,7 @@ class MiniJSONEncoder(JSONEncoder):
 
 # Takes in request string, does addition
 def createDatasetMultiYear(requestString):
-    scaleBy = 1000 # m to mm
+    scaleBy = 1000  # m to mm
     params = requestString.split('_')
     rcpScen = params[0]
     dOut = np.zeros((4, 53584))
@@ -29,10 +30,11 @@ def createDatasetMultiYear(requestString):
     # References [18,44,69,93] refer to 2025, 2050, 2075, 2100  8
     for datasets in params[2::]:
         dOut += scaleBy * projDict[0][rcpScen][datasets][[10, 35, 60, 85], :]
-        tsData[datasets] = np.around(scaleBy * (projDict[1][rcpScen][datasets]), decimals=2).tolist()
+        tsData[datasets] = np.around(scaleBy * (projDict[1][rcpScen][datasets]),
+                                      decimals=2).tolist()
     dOut = np.around(dOut, decimals=2)
-    dMean = np.mean(dOut[dOut>-99999])
-    dStd = np.std(dOut[dOut>-99999])
+    dMean = np.mean(dOut[dOut > -99999])
+    dStd = np.std(dOut[dOut > -99999])
     dMin = np.float16(dMean - 2 * dStd)
     dMax = np.float16(dMean + 2 * dStd)
     # dMin = np.float16(np.min(dOut[dOut > -10]))  # min not masked value
@@ -41,8 +43,9 @@ def createDatasetMultiYear(requestString):
               'timeSeries': tsData}
     return output
 
+
 def createDatasetCoastMultYear(requestString):
-    scaleBy = 1000 # m to mm
+    scaleBy = 1000  # m to mm
     params = requestString.split('_')
     rcpScen = params[0]
     dOut = np.zeros((4, 3885))
@@ -50,8 +53,8 @@ def createDatasetCoastMultYear(requestString):
         # References [10, 35, 60, 85] refer to 2025, 2050, 2075, 2100  8
         dOut += scaleBy * coastData[rcpScen][datasets][[10, 35, 60, 85], :]
     dOut = np.around(dOut, decimals=2)
-    dMean = np.mean(dOut[dOut>-99999])
-    dStd = np.std(dOut[dOut>-99999])
+    dMean = np.mean(dOut[dOut > -99999])
+    dStd = np.std(dOut[dOut > -99999])
     dMin = np.float16(dMean - 2 * dStd)
     dMax = np.float16(dMean + 2 * dStd)
     output = {'cLims': [float(dMin), float(dMax)], 'pointData': dOut.tolist()}
@@ -76,10 +79,11 @@ def getLocationData(requestString):
     if np.isnan(cellNum):
         return {'locTS': 'masked'}
     else:
-		cellNum = int(cellNum)
+        cellNum = int(cellNum)
         dOut = {}
         for datasets in params[4::]:
-            dOut[datasets] = (np.around(scaleBy * projDict[0][rcpScen][datasets][:, cellNum]
+            dOut[datasets] = (np.around(scaleBy * projDict[0][rcpScen]\
+                              [datasets][:, cellNum]
                               .astype('float16'), decimals=4)).tolist()
         return dOut
 
@@ -91,7 +95,8 @@ def getCoastLocationData(requestString):
     rcpScen = params[1]
     dOut = {}
     for datasets in params[3::]:
-        dOut[datasets] = (np.around(scaleBy * coastData[rcpScen][datasets][:, locIndx]
+        dOut[datasets] = (np.around(scaleBy * coastData[rcpScen]\
+                          [datasets][:, locIndx]
                           .astype('float16'), decimals=4)).tolist()
     return dOut
 
