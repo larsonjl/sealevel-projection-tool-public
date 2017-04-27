@@ -466,7 +466,7 @@ function loadGridLayers(){
                         }, 'landcover');
 
 }
-*/
+
 // CoastLocs Hover functionality
 function coastHover(e) {
 	var zoom = map.getZoom();
