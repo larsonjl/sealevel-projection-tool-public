@@ -23,7 +23,7 @@ function initializeTiles(){
 
 	map.addSource('vcmLand', {
         type: "vector",
-        url: 'mapbox://jlarson630.1d0a9p4k'
+        url: 'mapbox://jlarson630.965yd3n2'
             });
 };
 
