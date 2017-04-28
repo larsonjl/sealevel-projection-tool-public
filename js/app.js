@@ -275,6 +275,12 @@ function viewBasicSettings() {
     }
 }
 
+function addLoadMenu(){
+	"use strict";
+	document.getElementById("load-menu").style.visibility = 'visible'
+	document.getElementById("map-div").style.visibility = 'hidden'
+}
+
 function removeLoadMenu(){
 	"use strict";
 	document.getElementById("load-menu").style.visibility = 'hidden'

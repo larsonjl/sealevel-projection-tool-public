@@ -155,6 +155,7 @@ function loadMap(version, update){
 	if (update === 'true') {
 		updateQueryString();
 	}
+	addLoadMenu();
 	$.get(apiLoc + "projection_api?datastring=" + queryString, function(data, status){
 				changeGridDat(data['gridData'], data['cLims']);
         map.getSource('twoDegreeData').setData(twoDegGrid);
@@ -178,6 +179,7 @@ function loadMap(version, update){
 // Queries and loads relative SL data
 function loadRelSL(update){
 	"use strict";
+	addLoadMenu();
 	if (update === 'true'){
 		updateQueryString();
 	}
@@ -188,6 +190,7 @@ function loadRelSL(update){
 		changeBasicProjectionName();
 		updateMapYear();
 	});
+	removeLoadMenu();
 };
 
 function changeProjectionName(){
