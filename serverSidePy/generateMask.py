@@ -47,8 +47,8 @@ maskOut.close()
 mask1deg = [int(x) for x in mask1deg.tolist()]
 mask2deg = [int(x) for x in mask2deg.tolist()]
 
-with open('twoDegreeMask.json', 'w') as outfile:
+with open('../js/twoDegreeMask.json', 'w') as outfile:
    outfile.write('var twoDegMask = ' +json.dumps(mask2deg, separators=(',', ':')))
 
-with open('oneDegreeMask.json', 'w') as outfile:
-    outfile.write('var oneDegMask = ' + json.dumps(mask1deg, separators=(',', ':')))    
+with open('../js/oneDegreeMask.json', 'w') as outfile:
+    outfile.write('var oneDegMask = ' + json.dumps(mask1deg, separators=(',', ':')))
