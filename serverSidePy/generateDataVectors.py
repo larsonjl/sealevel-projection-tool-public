@@ -20,7 +20,7 @@ import json
 bothMasks = pickle.load(open('webGridMasks.pkl', "rb"))
 oneDegreeMask = np.array(bothMasks['oneDeg']).astype(bool)
 twoDegreeMask = np.array(bothMasks['twoDeg']).astype(bool)
-coastLocs = './data/coast/coastLocsRef.json' #  Location of map scatter points
+coastLocs = './data/coast/coastLocsRef.json'  # Location of map scatter points
 with open(coastLocs) as data_file:
     coastalData = json.load(data_file)
 
@@ -37,8 +37,8 @@ def grid2griddb(ncfile, variable):
     print(ncfile)
     dFile = Dataset(ncfile)
     varGrid = dFile.variables[variable][:]
-    varGrid = varGrid - varGrid[8, :, :] # Indx 8 makes data relative to 2015
-    varGrid = varGrid[8::,:,:]
+    varGrid = varGrid - varGrid[8, :, :]  # Indx 8 makes data relative to 2015
+    varGrid = varGrid[8::, :, :]
 
     # Compute time series mean
     tsMean = np.nanmean(varGrid, axis=(1, 2)).data.astype('float16')
@@ -80,6 +80,7 @@ def lon180tolon360(longitude):
         longitude += 360
     return longitude
 
+
 def grid2coastLocsDB(ncfile, variable):
     '''
     Same as for grid but this is used for the scatter coast locs
@@ -88,10 +89,11 @@ def grid2coastLocsDB(ncfile, variable):
     print(ncfile)
     dFile = Dataset(ncfile)
     varGrid = dFile.variables[variable][:]
-    varGrid = varGrid - varGrid[8, :, :] # Indx 8 makes data relative to 2015
-    varGrid = varGrid[8::,:,:] # remove data before 2015
+    varGrid = varGrid - varGrid[8, :, :]  # Indx 8 makes data relative to 2015
+    varGrid = varGrid[8::, :, :]  # remove data before 2015
 
-    outDataVector = np.nan * np.ones((varGrid.shape[0], len(coastalData['features'])))
+    outDataVector = np.nan * np.ones((varGrid.shape[0],
+                                      len(coastalData['features'])))
     i = 0
     for features in coastalData['features']:
         lonPt, latPt = features['geometry']['coordinates']
@@ -103,7 +105,8 @@ def grid2coastLocsDB(ncfile, variable):
 
         if np.isinf(outDataVector[0, i]):
             if (np.sum(dataAround[-1, :, :].mask) < 9):
-                outDataVector[:, i] = np.ma.mean(dataAround, axis=(1,2)).astype('float16').data
+                outDataVector[:, i] = np.ma.mean(dataAround,
+                             axis=(1, 2)).astype('float16').data
 
         i += 1
         '''
@@ -122,6 +125,7 @@ def grid2coastLocsDB(ncfile, variable):
 
     return outDataVector
 
+
 def referencePointFile2Pickles():
     masterDict = {'rcp85': {}, 'rcp45': {}, 'rcp26': {}}
     refFile = pd.read_csv('referenceFile.csv')
@@ -136,6 +140,7 @@ def referencePointFile2Pickles():
     masterDictOut = open('vectorDataForWebsiteNew.pkl', 'wb')
     pickle.dump(masterDict, masterDictOut)
     masterDictOut.close()
+
 
 def referenceGridFile2Pickles():
     '''Here we use our reference file and the individual projection
@@ -183,5 +188,5 @@ def constructGridReference():
     pickle.dump(gridRef, dictOut)
 
 
-referenceGridFile2Pickles()
-constructGridReference()
+# referenceGridFile2Pickles()
+# constructGridReference()

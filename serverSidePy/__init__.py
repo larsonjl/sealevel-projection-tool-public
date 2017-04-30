@@ -7,7 +7,7 @@ import os
 
 dataFile = os.path.join(os.path.dirname(__file__), 'dataForWebsite.pkl')
 gridFile = os.path.join(os.path.dirname(__file__), 'maskRef.pkl')
-coastLocsFile = os.path.join(os.path.dirname(__file__), 
+coastLocsFile = os.path.join(os.path.dirname(__file__),
                              'vectorDataForWebsite.pkl')
 
 
@@ -82,7 +82,7 @@ def getLocationData(requestString):
         cellNum = int(cellNum)
         dOut = {}
         for datasets in params[4::]:
-            dOut[datasets] = (np.around(scaleBy * projDict[0][rcpScen]\
+            dOut[datasets] = (np.around(scaleBy * projDict[0][rcpScen]
                               [datasets][:, cellNum]
                               .astype('float16'), decimals=4)).tolist()
         return dOut
@@ -95,7 +95,7 @@ def getCoastLocationData(requestString):
     rcpScen = params[1]
     dOut = {}
     for datasets in params[3::]:
-        dOut[datasets] = (np.around(scaleBy * coastData[rcpScen]\
+        dOut[datasets] = (np.around(scaleBy * coastData[rcpScen]
                           [datasets][:, locIndx]
                           .astype('float16'), decimals=4)).tolist()
     return dOut

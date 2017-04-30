@@ -19,6 +19,7 @@ vcm_data = sio.loadmat(vcm_file)
 vcm_locs = {'lons': vcm_data['LONI'][0, :],
             'lats': vcm_data['LATI'][:, 0]}
 
+
 def latlon2gridcell(in_lon, in_lat, gridlon_min, gridlat_min, resolution):
     cell_lat = (1 / resolution) * (np.floor(in_lat) - gridlat_min) + \
                     np.round((in_lat - np.floor(in_lat)) / resolution)
@@ -51,7 +52,7 @@ tot_locs = 0
 tot_nans = 0
 j = 0
 i = 0
-while i <(len(data['features'])):
+while i < (len(data['features'])):
     lon_loc, lat_loc = data['features'][i]['geometry']['coordinates']
     indx_lon, indx_lat = latlon2gridcell(lon_loc, lat_loc,
                                      -180, -90, 0.25)
@@ -72,10 +73,10 @@ while i <(len(data['features'])):
         data['features'][i]['properties']['vcm_mmyr'] = vcm_out
         data['features'][i]['properties']['data_index'] = j
         j += 1
-        i +=1
+        i += 1
 
 with open('coastLocsVCM.geojson', 'w') as outfile:
-    outfile.write('var coastLocs = ' +json.dumps(data, separators=(',', ':')))
+    outfile.write('var coastLocs = ' + json.dumps(data, separators=(',', ':')))
 
 
 with open('./data/coast/coastLocsRef.json', 'w') as outfile:

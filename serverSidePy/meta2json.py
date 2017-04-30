@@ -3,7 +3,6 @@
 # Script to create json file from metadata for sea level projection site
 
 import json
-import numpy as np
 import pandas as pd
 
 projectMeta = pd.read_csv('referenceFile.csv')
