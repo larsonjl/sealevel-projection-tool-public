@@ -34,11 +34,16 @@
 * clickDecider(e, status) - Decides what to do on user click.  Either runs  queryTimeseries(e), queryCoastLoc(indxNum, vcm, loc), or does nothing
 * initializeMap() - initializeMap :: loads background and interactive maps and starts page listeners.
 
+## sidebarOptions.js contains:
+* setSidebarOptions() - Calls getHtmlOptions() and creates the sidebar dropdown menus based off the sidebarOptions.js file
+* getHtmlOptions(rcp, component) - Creates sidebar dropdown menus and also ties the reference name for each data set to the dropdown option. These reference names are what are strung together by customGrid.js/updateQueryString() to eventually be sent to the server.  
+* turnOptionsOn(), turnOptionsToNone(), unfreezeAllOptions(), freezeAllOptions() - These are no longer used by the site but could be used again in the future.  They are fairly self explanatory.
+* removeOptionMenu() - When coastal location mode is selected, this function sets the display of all the sidebar options except for crustal motion to 'none'.  
+* restoreOptionMenu() - Brings back the sidebar options when not in crustal motion mode
+* There are three listeners here as well that link the rcp scenarios in the basic menu to the rcp scenarios in the advanced menu.
+
 ## mapLayerManagement.js:
 * This is used to add all of the map data sources and layers.  All functions here are well commented and fairly intuitive.
 
 ## projPlot.js:
 * Some semi-hacked together d3 to create the projection fill time series
-
-## sidebarOptions.js contains:
-* 
