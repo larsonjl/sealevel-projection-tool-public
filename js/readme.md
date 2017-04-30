@@ -1,33 +1,15 @@
-# Functions Index
+# Summary of scripts
 
-This page lists an index of functions defined within each script file.
+## app.js contains:
+* jquery listeners for data querying on click of 'basic projection' and 'advanced projection'
+* jquery listener for mode switch (i.e. relative, absolute, crustal)
+* Many functions for dragging, resizing, minimizing, maximizing the svg container for the location time series
+* viewSidebar() - Collapsing / opening sidebar
+* viewCustomSettings() - Opens / collapses custom settings menu
+* viewBasicSettings() - Opens / collapses basic settings menu
+* addLoadMenu() - adds data loading menu
+* removeLoadMenu() - removes data loading menu
+* loadApp() - This is an important one. It calls a bunch of functions on the page load. Initializes mapbox map, constructs the one / two degree geojson grids, adds a bunch of html listeners, loads in the sidebar names
 
-
-## app.js:
-
+## customGrid.js contains:
 * 
-
-
-## mapcontrol-colormap.js:
-
-* updateColorbarText
-* updateColorbarMap
-* hideColorbars
-* showColorbar
-* changeMapColorbar
-* getColorbarStops
-* setupColorbar
-* byte2Hex
-* makeColorGradient
-
-
-## mapcontrol.js:
-
-* initializeMap
-* addLayer
-* setPopupAndCenter
-* addHiLatMasksToMap
-* addMasksToMap
-* linspace
-* addTrendAnnualRMSmap
-* setColorbar
