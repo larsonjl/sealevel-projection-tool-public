@@ -66,47 +66,6 @@ $(document).ready(function() {
     });
 });
 
-function onPlottingFormChange() {
-    "use strict";
-    var boxWidth = document.getElementById("smooth-width"),
-        boxWidthValue = boxWidth.value;
-    boxWidthValue = (isNumber(boxWidthValue) ? boxWidthValue : 0);
-    boxWidth.value = boxWidthValue;
-
-    if (plot_num > 0 && boxWidthValue >= 0) {
-        selectPlotting({"lngLat":{"lng":LNG,"lat":LAT}}, 'change');
-    }
-}
-
-// inputLatLon :: gets page form inputs and grabs time series.
-function inputLatLon(e) {
-    "use strict";
-    var lat, lng, event;
-
-    e.preventDefault();
-
-    // Get lat and lng values from input fields
-    lat = document.getElementById('click-lat').value;
-    lng = document.getElementById('click-lon').value;
-    if (lng > 180 && lng <= 360) { lng = lng - 360; }
-    if (lng < -180) { lng = lng + 360; }
-
-    // Validate user input as numbers
-    lat = (!isNumber(lat) ? 0 : lat);
-    lng = (!isNumber(lng) ? 0 : lng);
-
-    // Validate user input as valid lat/lng values
-    lat = latRange(lat);
-    lng = lngRange(lng);
-
-    // Replace input values
-    document.getElementById('click-lat').value = lat;
-    document.getElementById('click-lon').value = lng;
-
-    event = { "lngLat": { "lng" : lng, "lat" : lat } };
-    selectPlotting(event, 'new');
-}
-
 // Move plots by dragging title bar
 function mouseUpDragging() {
     "use strict";
@@ -247,7 +206,7 @@ function viewHelp() {
     alert("This feature is in development and will be available soon.")
 }
 
-function viewLocationLookup() {
+function viewCustomSettings() {
     "use strict";
     var sidebar_area = document.getElementById("map-search");
     if (sidebar_area.style.display !== 'block') {
@@ -299,7 +258,7 @@ function loadApp() {
     document.getElementById("sidebar-menu-button").addEventListener("click", viewSidebar, false);
     document.getElementById("sidebar-help-button").addEventListener("click", viewHelp, false);
 	//Listener: Sidebar sections collapse
-    document.getElementById("sidebar-custom-settings").addEventListener("click", viewLocationLookup, false);
+    document.getElementById("sidebar-custom-settings").addEventListener("click", viewCustomSettings, false);
 	document.getElementById("sidebar-basic-settings").addEventListener("click", viewBasicSettings, true);
 	// Open basic settings in sidebar on menu on load
 	viewBasicSettings();
