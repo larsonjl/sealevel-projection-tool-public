@@ -69,7 +69,6 @@ function getHtmlOptions(rcp, component){
 				else{
 	            	outString += '<option value=' + metaData.ref + '>' + scenarios + '</option>'
 				}
-
 			}
 			else if (deselectOptions === true & freezeOptions === false ){
 				outString += '<option value=' + metaData.ref + '>' + scenarios + '</option>'
