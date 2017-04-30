@@ -4,7 +4,8 @@ This script contains the main functions for generating the
 dictionary that is called by our sea level website when a
 particular query is made.  It is *crucial* to update the reference
 file and follow the database conventions for the raw data files
-before running these functions.
+before running these functions.  Refer to README.md for an explanation of
+how to do this.
 
 @author: jakelarson
 """
@@ -19,7 +20,7 @@ import json
 bothMasks = pickle.load(open('webGridMasks.pkl', "rb"))
 oneDegreeMask = np.array(bothMasks['oneDeg']).astype(bool)
 twoDegreeMask = np.array(bothMasks['twoDeg']).astype(bool)
-coastLocs = './data/coast/coastLocsRef.json' #  Location of map scatter points 
+coastLocs = './data/coast/coastLocsRef.json' #  Location of map scatter points
 with open(coastLocs) as data_file:
     coastalData = json.load(data_file)
 
@@ -89,7 +90,7 @@ def grid2coastLocsDB(ncfile, variable):
     varGrid = dFile.variables[variable][:]
     varGrid = varGrid - varGrid[8, :, :] # Indx 8 makes data relative to 2015
     varGrid = varGrid[8::,:,:] # remove data before 2015
-    
+
     outDataVector = np.nan * np.ones((varGrid.shape[0], len(coastalData['features'])))
     i = 0
     for features in coastalData['features']:
@@ -97,13 +98,13 @@ def grid2coastLocsDB(ncfile, variable):
         lonPt = lon180tolon360(lonPt)
         lonIndx, latIndx = oneDegLatlon2gridcell(lonPt, latPt, 0, -89.5)
         outDataVector[:, i] = varGrid[:, latIndx, lonIndx].astype('float16').data
-        
+
         dataAround = varGrid[:, latIndx-1:latIndx+2, lonIndx-1:lonIndx+2]
-        
+
         if np.isinf(outDataVector[0, i]):
             if (np.sum(dataAround[-1, :, :].mask) < 9):
                 outDataVector[:, i] = np.ma.mean(dataAround, axis=(1,2)).astype('float16').data
-        
+
         i += 1
         '''
         # If nan, look for data one more grid cell out (izne. one degree away)
@@ -112,14 +113,14 @@ def grid2coastLocsDB(ncfile, variable):
             dataAround = varGrid[:, latIndx-1:latIndx+2, lonIndx-1:lonIndx+2]
             if np.sum(dataAround[0, :, :].mask) < 9:
                 for tt in range(0, varGrid.shape[0]):
-                    outDataVector[tt, i] = np.mean(dataAround[tt, :, :])    
-        
+                    outDataVector[tt, i] = np.mean(dataAround[tt, :, :])
+
         i += 1
         '''
     outDataVector[outDataVector == np.inf] = -999.99
     outDataVector[np.isnan(outDataVector)] = -999.99
     # outDataVector[outDataVector < -1000] = -999.99
-    
+
     return outDataVector
 
 def referencePointFile2Pickles():
@@ -127,18 +128,18 @@ def referencePointFile2Pickles():
     # masterDict = {'rcp85': {}}
 
     refFile = pd.read_csv('referenceFile.csv')
-    
+
     for indx in refFile.index:
         dFile = refFile.iloc[indx]
         dataSetString = './data/' + dFile.Scenario + '/' + dFile.component +\
                         '/' + dFile.meta + '/' + dFile.rawFile
         dataArray = grid2coastLocsDB(dataSetString, dFile.variableName)
         masterDict[dFile.Scenario][dFile.referenceName] = dataArray
-    
+
     masterDictOut = open('vectorDataForWebsiteNew.pkl', 'wb')
     pickle.dump(masterDict, masterDictOut)
     masterDictOut.close()
-    
+
 def referenceGridFile2Pickles():
     '''Here we use our reference file and the individual projection
     files in our database to generate a dictionary that contains
@@ -157,7 +158,7 @@ def referenceGridFile2Pickles():
         dataArray, tsMean = grid2griddb(dataSetString, dFile.variableName)
         masterDict[dFile.Scenario][dFile.referenceName] = dataArray
         masterDictTS[dFile.Scenario][dFile.referenceName] = tsMean
-    
+
     masterDictOut = open('dataForWebsite.pkl', 'wb')
     pickle.dump([masterDict, masterDictTS], masterDictOut)
     masterDictOut.close()
