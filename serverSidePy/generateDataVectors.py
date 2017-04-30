@@ -119,14 +119,11 @@ def grid2coastLocsDB(ncfile, variable):
         '''
     outDataVector[outDataVector == np.inf] = -999.99
     outDataVector[np.isnan(outDataVector)] = -999.99
-    # outDataVector[outDataVector < -1000] = -999.99
 
     return outDataVector
 
 def referencePointFile2Pickles():
     masterDict = {'rcp85': {}, 'rcp45': {}, 'rcp26': {}}
-    # masterDict = {'rcp85': {}}
-
     refFile = pd.read_csv('referenceFile.csv')
 
     for indx in refFile.index:
@@ -187,4 +184,4 @@ def constructGridReference():
 
 
 referenceGridFile2Pickles()
-# constructGridReference()
+constructGridReference()
