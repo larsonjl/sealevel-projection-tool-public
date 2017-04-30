@@ -29,7 +29,7 @@ for scenarios in set(projectMeta['Scenario']):
                 dataOut['RCP'][scenarios][components][titles][himedlo]['default'] = \
                     str(dataSlimmestest.default.values[0])
 
-with open('referenceFile.js', 'w') as outfile:
+with open('../js/referenceFile.js', 'w') as outfile:
     outfile.write('var sidebar = ')
     json.dump(dataOut, outfile, indent=2)
     outfile.write(';')
